@@ -1,15 +1,10 @@
 package com.medblocks.openfhir.kds.diagnose;
-
-import com.google.gson.JsonObject;
-import com.medblocks.openfhir.kds.KdsBidirectionalTest;
 import com.medblocks.openfhir.kds.KdsTest;
 import com.nedap.archie.json.JacksonUtil;
 import com.nedap.archie.rm.composition.Composition;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -27,9 +22,6 @@ import org.hl7.fhir.r4.model.Type;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class DiagnoseToFHIRTest extends KdsTest {
 
@@ -105,8 +97,6 @@ public class DiagnoseToFHIRTest extends KdsTest {
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_1), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
         standardsAsserter.assertBundle(bundle, FHIR_CONDITION_1);
-
-
     }
 
     @SneakyThrows

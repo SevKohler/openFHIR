@@ -14,9 +14,9 @@
         <other_details id="original_namespace"></other_details>
         <other_details id="original_publisher"></other_details>
         <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">13.2.0</other_details>
+        <other_details id="sem_ver">15.0.0</other_details>
         <other_details id="build_uid"></other_details>
-        <other_details id="MD5-CAM-1.0.1">5e7e5dd6081a0ab993a883e2c54a159d</other_details>
+        <other_details id="MD5-CAM-1.0.1">28ef3ac76cb19ac1eeef6db2e7bb755e</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">AFFFB351A3113D61F0822FEBDF5F42E3</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
         <details>
@@ -360,7 +360,7 @@
                                     </existence>
                                     <match_negated>false</match_negated>
                                     <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>DV_TEXT</rm_type_name>
+                                        <rm_type_name>DV_CODED_TEXT</rm_type_name>
                                         <occurrences>
                                             <lower_included>true</lower_included>
                                             <upper_included>true</upper_included>
