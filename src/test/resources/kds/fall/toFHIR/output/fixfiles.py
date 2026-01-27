@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Set, Union
 
 Json = Union[Dict[str, Any], List[Any], str, int, float, bool, None]
 
-# Reference patterns that "keep" an id if it appears anywhere in strings
 RE_RES_REF = re.compile(r"^[A-Z][A-Za-z]+/([A-Za-z0-9\-.]{1,128})$")
 RE_URN = re.compile(r"^urn:(?:uuid|oid):([A-Za-z0-9\-.]{1,128})$")
 RE_URL_TAIL = re.compile(r"^https?://.*/([A-Za-z0-9\-.]{1,128})$")
@@ -36,11 +35,11 @@ def collect_referenced_ids(doc: Json) -> Set[str]:
 
 
 def clean_node(node: Json) -> Json:
-    """Remove meta.security and request keys anywhere; remove empty meta."""
+    """Remove meta.security, request, and fullUrl keys anywhere; remove empty meta."""
     if isinstance(node, dict):
         out: Dict[str, Any] = {}
         for k, v in node.items():
-            if k == "request":
+            if k in ("request", "fullUrl"):
                 continue
             if k == "meta" and isinstance(v, dict):
                 meta = {mk: clean_node(mv) for mk, mv in v.items() if mk != "security"}
@@ -78,33 +77,26 @@ def clean_doc(doc: Json) -> Json:
 
     keep = collect_referenced_ids(doc)
 
-    # Root Bundle edits
     out = dict(doc)
     out.pop("id", None)
     out.pop("timestamp", None)
     if "type" in out:
         out["type"] = "collection"
 
-    # Remove meta.security + request anywhere (and remove empty meta)
     out = clean_node(out)
-
-    # Remove unreferenced ids anywhere else
     out = drop_unreferenced_ids(out, keep, is_root=True)
-
     return out
 
 
 def main() -> None:
-    here = Path(".")
-    files = sorted(here.glob("*.json"))
+    files = sorted(Path(".").glob("*.json"))
     if not files:
         print("No *.json files found in the current folder.")
         return
 
     for path in files:
         try:
-            raw = path.read_text(encoding="utf-8")
-            doc = json.loads(raw)
+            doc = json.loads(path.read_text(encoding="utf-8"))
         except Exception as e:
             print(f"SKIP (invalid json): {path.name} ({e})")
             continue

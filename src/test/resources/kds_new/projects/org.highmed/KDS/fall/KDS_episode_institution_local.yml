@@ -49,9 +49,34 @@ mappings:
       mappings:
         - name: "fallId"
           with:
-            fhir: "value"
-            openehr: "$composition/context/other_context[at0001]/items[at0003]"
-            
+            fhir: "$fhirRoot"
+            openehr: "context/other_context[at0001]/items[at0003]"
+            type: "NONE"
+          followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
+            mappings:
+              - name: "defining_code"
+                with:
+                  fhir: "$fhirRoot"
+                  openehr: "defining_code"
+                  type: "NONE"
+                followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
+                  mappings:
+                    - name: "system"
+                      with:
+                        fhir: "system"
+                        openehr: "terminology_id/value"
+
+                    - name: "value"
+                      with:
+                        fhir: "value"
+                        openehr: "code_string"
+
+              - name: "value"
+                unidirectional: "fhir->openehr"
+                with:
+                  fhir: "value"
+                  openehr: "value"
+
         - name: "vncodingcode"
           with:
             fhir: "type.coding"
@@ -60,6 +85,9 @@ mappings:
               fhir:
                 - path: "code"
                   value: "VN"
+                - path: "system"
+                  value: "http://terminology.hl7.org/CodeSystem/v2-0203"
+
 
 
   - name: "serviceProvider" # TODO deprecated needs to be deleted
@@ -180,10 +208,25 @@ mappings:
 
 
   - name: "problemDiagnoseParent"
+    unidirectional: "fhir->openehr"
     extension: "add"
     with:
       fhir: "$resource.diagnosis"
       openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
     slotArchetype: "EVALUATION.problem_diagnosis.v1"
 
-
+#  - name: "problemDiagnoseParent" # TODO BUG "message": "HAPI-2409: org.hl7.fhir.r4.utils.FHIRLexer$FHIRLexerException: Error in ?? at 1, 1: Premature ExpressionNode termination at unexpected token \"]\"",
+#    unidirectional: "openehr->fhir"
+#    extension: "add"
+#    with:
+#      fhir: "$resource.diagnosis.condition"
+#      openehr: "$reference"
+#    reference:
+#      resourceType: "Condition"
+#      mappings:
+#        - name: "condition"
+#          with:
+#            fhir: "$fhirRoot"
+#            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
+#          slotArchetype: "EVALUATION.problem_diagnosis.v1"
+#DiagnoseTyp etc mapping of use is missing

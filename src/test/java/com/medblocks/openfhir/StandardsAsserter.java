@@ -5,7 +5,6 @@ import ca.uhn.fhir.parser.IParser;
 import com.google.gson.*;
 import com.nedap.archie.rm.composition.Composition;
 import org.ehrbase.openehr.sdk.serialisation.jsonencoding.CanonicalJson;
-import org.hl7.fhir.common.hapi.validation.support.*;
 import org.hl7.fhir.r4.model.Bundle;
 import org.json.JSONObject;
 import org.openehr.schemas.v1.OPERATIONALTEMPLATE;
