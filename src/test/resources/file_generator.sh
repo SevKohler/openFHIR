@@ -2,39 +2,42 @@
 set -euo pipefail
 
 URL="http://localhost:8080/openfhir/toopenehr"
-ROOT="${1:-.}"
+BASE_DIR="${1:-kds/fall/toOpenEHR}"
+
+INPUT_DIR="$BASE_DIR/input"
+OUTPUT_DIR="$BASE_DIR/output"
 
 tmp_resp="$(mktemp)"
+trap 'rm -f "$tmp_resp"' EXIT
 
-cleanup() {
-  rm -f "$tmp_resp"
-}
-trap cleanup EXIT
+if [[ ! -d "$INPUT_DIR" ]]; then
+  echo "❌ Input directory not found: $INPUT_DIR"
+  exit 1
+fi
 
-find "$ROOT" -type d -name kds -print0 | while IFS= read -r -d '' kds_dir; do
-  find "$kds_dir" -type f -name "*.json" ! -name "Composition-*.json" -print0 \
-  | while IFS= read -r -d '' f; do
-      dir="$(dirname "$f")"
-      base="$(basename "$f")"
-      out_file="$dir/Composition-${base#*-}"
+mkdir -p "$OUTPUT_DIR"
 
-      echo "POST: $f"
+find "$INPUT_DIR" -type f -name "*.json" ! -name "Composition-*.json" -print0 \
+| while IFS= read -r -d '' f; do
+    base="$(basename "$f")"
+    out_file="$OUTPUT_DIR/Composition-${base#*-}"
 
-      code="$(
-        curl -sS \
-          -o "$tmp_resp" \
-          -w '%{http_code}' \
-          -H 'Content-Type: application/json' \
-          --data-binary "@$f" \
-          "$URL" \
-          || echo "000"
-      )"
+    echo "POST: $f"
 
-      if [[ "$code" == "200" ]]; then
-        mv "$tmp_resp" "$out_file"
-        echo "  ✔ wrote $out_file"
-      else
-        echo "  ✘ skipped (HTTP $code)"
-      fi
-    done
+    code="$(
+      curl -sS \
+        -o "$tmp_resp" \
+        -w '%{http_code}' \
+        -H 'Content-Type: application/json' \
+        --data-binary "@$f" \
+        "$URL" \
+        || echo "000"
+    )"
+
+    if [[ "$code" == "200" ]]; then
+      mv "$tmp_resp" "$out_file"
+      echo "  ✔ wrote $out_file"
+    else
+      echo "  ✘ skipped (HTTP $code)"
+    fi
 done
