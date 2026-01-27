@@ -157,11 +157,17 @@ mappings:
             mappings:
               - name: "entlassungsgrundValue"
                 with:
-                  fhir: "value.as(Coding)"
+                  fhir: "extension.value.as(Coding)"
                   openehr: "data[at0001]/items[at0006]"
+                fhirCondition:
+                  targetRoot: "extension"
+                  targetAttribute: "url"
+                  operator: "one of"
+                  criteria: "ErsteUndZweiteStelle"
+
               - name: "entlassungsgrundUrl"
                 with:
-                  fhir: "dischargeDisposition.extension"
+                  fhir: "$fhirRoot"
                 manual:
                   - name: "extension"
                     fhir:

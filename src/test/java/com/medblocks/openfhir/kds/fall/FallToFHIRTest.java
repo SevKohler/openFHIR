@@ -26,7 +26,7 @@ public class FallToFHIRTest extends KdsTest {
 
     // ===== INPUT =====
     final String FALL_EINFACH_COMPOSITION =
-            "/kds/fall/toOpenEHR/output/KDS_Fall_einfach.flat.json";
+            "/kds/fall/toOpenEHR/output/KDS_Fall_einfach.Bundle.json";
 
     final String OPENEHR_COMPOSITION_1 =
             "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-1.json";
@@ -53,7 +53,7 @@ public class FallToFHIRTest extends KdsTest {
 
     // ===== OUTPUT =====
     final String FALL_EINFACH =
-            "/kds/fall/toFHIR/output/KDS_fall_bundle.json";
+            "/kds/fall/toFHIR/output/KDS_fall_flat.json";
     final String FHIR_ENCOUNTER_1 =
             "/kds/fall/toFHIR/output/Encounter-mii-exa-test-data-patient-1-encounter-1.json";
     final String FHIR_ENCOUNTER_2 =
@@ -93,8 +93,6 @@ public class FallToFHIRTest extends KdsTest {
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_1), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
         standardsAsserter.assertBundle(bundle, FHIR_ENCOUNTER_1);
-
-
     }
 
 
@@ -105,8 +103,6 @@ public class FallToFHIRTest extends KdsTest {
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_1), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
         standardsAsserter.assertBundle(bundle, FALL_EINFACH);
-
-
     }
 
     @SneakyThrows
@@ -115,8 +111,6 @@ public class FallToFHIRTest extends KdsTest {
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_1), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
         standardsAsserter.assertBundle(bundle, FHIR_ENCOUNTER_1);
-
-
     }
 
     @SneakyThrows

@@ -60,83 +60,83 @@ public class DiagnoseToOpenEHRTest extends KdsTest {
     @Test
     public void assertToOpenEHRBundle() {
         final Composition composition = fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(BUNDLE_SINGLE), operationaltemplate);
-        standardsAsserter.assertComposition(composition, COMPOSITION_SINGLE);
+        standardsAsserter.assertComposition(composition, COMPOSITION_SINGLE, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHRBundleWhole() {
         final Composition composition = fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(BUNDLE), operationaltemplate);
-        standardsAsserter.assertComposition(composition, COMPOSITION_MULTIPLE);
+        standardsAsserter.assertComposition(composition, COMPOSITION_MULTIPLE, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR1() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_1), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR2() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_2), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR3() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_3), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR4() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_4), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR5() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_5), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR6() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_6), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR7() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_7), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR8() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_8), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR9() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_9), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9, operationaltemplate);
     }
 
     @Test
     public void assertToOpenEHR10() {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_CONDITION_10), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10, operationaltemplate);
     }
 
     private void assertCondition(final Condition condition, final boolean second) {
