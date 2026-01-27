@@ -76,38 +76,6 @@
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
-          "value" : "Falltyp"
-        },
-        "value" : {
-          "_type" : "DV_CODED_TEXT",
-          "value" : "Einrichtungskontakt",
-          "mappings" : [ {
-            "_type" : "TERM_MAPPING",
-            "match" : "?",
-            "target" : {
-              "_type" : "CODE_PHRASE",
-              "terminology_id" : {
-                "_type" : "TERMINOLOGY_ID",
-                "value" : "http://fhir.de/CodeSystem/kontaktart-de"
-              },
-              "code_string" : "begleitperson",
-              "preferred_term" : "Begleitperson"
-            }
-          } ],
-          "defining_code" : {
-            "_type" : "CODE_PHRASE",
-            "terminology_id" : {
-              "_type" : "TERMINOLOGY_ID",
-              "value" : "local_terms"
-            },
-            "code_string" : "einrichtungskontakt"
-          }
-        },
-        "archetype_node_id" : "at0005"
-      }, {
-        "_type" : "ELEMENT",
-        "name" : {
-          "_type" : "DV_TEXT",
           "value" : "Fallklasse"
         },
         "value" : {
@@ -127,7 +95,7 @@
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
-          "value" : "Fallart"
+          "value" : "Fallstatus"
         },
         "value" : {
           "_type" : "DV_CODED_TEXT",
@@ -136,7 +104,7 @@
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/ValueSet/kontaktart-de"
+              "value" : "http://fhir.de/ValueSet/EncounterStatusDe"
             },
             "code_string" : "finished"
           }

@@ -112,7 +112,7 @@
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
-          "value" : "Fallart"
+          "value" : "Fallstatus"
         },
         "value" : {
           "_type" : "DV_CODED_TEXT",
@@ -121,7 +121,7 @@
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/ValueSet/kontaktart-de"
+              "value" : "http://fhir.de/ValueSet/EncounterStatusDe"
             },
             "code_string" : "finished"
           }

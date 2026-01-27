@@ -14,7 +14,7 @@
           "coding": [
             {
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
-              "code": "G43.9",
+              "code": "G43.9"
             },
             {
               "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
