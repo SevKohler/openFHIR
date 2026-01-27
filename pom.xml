@@ -54,7 +54,7 @@
         <hapi-fhir.version>7.2.1</hapi-fhir.version>
         <jjwt.version>0.12.6</jjwt.version>
         <ucum.version>1.0.8</ucum.version>
-        <ehrbase.version>2.14.0</ehrbase.version>
+        <ehrbase.version>2.19.0</ehrbase.version>
         <json-schema-validator.version>2.2.14</json-schema-validator.version>
         <junit.version>4.13.2</junit.version>
     </properties>
@@ -125,6 +125,11 @@
             <dependency>
                 <groupId>org.ehrbase.openehr.sdk</groupId>
                 <artifactId>util</artifactId>
+                <version>${ehrbase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ehrbase.openehr.sdk</groupId>
+                <artifactId>validation</artifactId>
                 <version>${ehrbase.version}</version>
             </dependency>
             <dependency>
@@ -235,6 +240,10 @@
         <dependency>
             <groupId>org.ehrbase.openehr.sdk</groupId>
             <artifactId>web-template</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ehrbase.openehr.sdk</groupId>
+            <artifactId>validation</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.java-json-tools</groupId>

@@ -121,7 +121,7 @@
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/ValueSet/kontaktart-de?subset="
+              "value" : "http://fhir.de/ValueSet/kontaktart-de"
             },
             "code_string" : "finished"
           }

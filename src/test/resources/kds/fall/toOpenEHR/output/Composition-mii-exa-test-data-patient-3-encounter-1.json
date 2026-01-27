@@ -121,7 +121,7 @@
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/ValueSet/kontaktart-de?subset="
+              "value" : "http://fhir.de/ValueSet/kontaktart-de"
             },
             "code_string" : "finished"
           }
@@ -220,6 +220,25 @@
           "value" : "2022-04-22T00:00:00"
         },
         "archetype_node_id" : "at0002"
+      }, {
+        "_type" : "ELEMENT",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "EntlassungsgrundErsteUndZweiteStelle"
+        },
+        "value" : {
+          "_type" : "DV_CODED_TEXT",
+          "value" : "Behandlung regulär beendet, nachstationäre Behandlung vorgesehen",
+          "defining_code" : {
+            "_type" : "CODE_PHRASE",
+            "terminology_id" : {
+              "_type" : "TERMINOLOGY_ID",
+              "value" : "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundErsteUndZweiteStelle"
+            },
+            "code_string" : "02"
+          }
+        },
+        "archetype_node_id" : "at0006"
       } ],
       "archetype_node_id" : "at0001"
     },
@@ -262,6 +281,24 @@
         "value" : "Structure"
       },
       "items" : [ {
+        "_type" : "ELEMENT",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Name des Problems/ der Diagnose"
+        },
+        "value" : {
+          "_type" : "DV_CODED_TEXT",
+          "defining_code" : {
+            "_type" : "CODE_PHRASE",
+            "terminology_id" : {
+              "_type" : "TERMINOLOGY_ID",
+              "value" : "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+            },
+            "code_string" : "C21.8"
+          }
+        },
+        "archetype_node_id" : "at0002"
+      }, {
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",

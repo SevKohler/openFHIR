@@ -24,7 +24,7 @@ public class FallToOpenEHRTest extends KdsTest {
 
     // ===== INPUT =====
     final String FALL_EINFACH =
-            "/kds/fall/toOpenEHR/input/KDS_fall_bundle.json";
+            "/kds/fall/toOpenEHR/input/KDS_Fall_einfach.Bundle.json";
 
     final String FHIR_ENCOUNTER_1 =
             "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-1.json";
@@ -51,7 +51,7 @@ public class FallToOpenEHRTest extends KdsTest {
 
     // ===== OUTPUT =====
     final String FALL_EINFACH_COMPOSITION =
-            "/kds/fall/toOpenEHR/output/KDS_Fall_einfach.flat.json";
+            "/kds/fall/toOpenEHR/output/KDS_fall_flat.json";
 
     final String OPENEHR_COMPOSITION_1 =
             "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-1.json";
@@ -96,7 +96,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_1),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1, operationaltemplate);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_2),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2, operationaltemplate);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_3),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3, operationaltemplate);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_4),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4, operationaltemplate);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_5),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5, operationaltemplate);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_6),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6, operationaltemplate);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_7),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7, operationaltemplate);
     }
 
     @Test
@@ -173,7 +173,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_8),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8, operationaltemplate);
     }
 
     @Test
@@ -184,7 +184,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_9),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9, operationaltemplate);
     }
 
     @Test
@@ -195,7 +195,7 @@ public class FallToOpenEHRTest extends KdsTest {
                         getTestBundle(FHIR_ENCOUNTER_10),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10, operationaltemplate);
     }
 
     public JsonObject toOpenEhr() {

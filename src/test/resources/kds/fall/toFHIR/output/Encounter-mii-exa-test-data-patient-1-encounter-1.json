@@ -258,7 +258,6 @@
       },
       "resource": {
         "resourceType": "Condition",
-        "id": "mii-exa-test-data-patient-1-diagnose-1",
         "clinicalStatus": {
           "coding": [
             {
