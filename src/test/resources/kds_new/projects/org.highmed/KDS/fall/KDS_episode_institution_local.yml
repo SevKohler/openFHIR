@@ -14,7 +14,11 @@ mappings:
     with:
       fhir: "$resource.type"
       openehr: "$composition/context/other_context[at0001]/items[at0005]"
-      
+    fhirCondition:
+      targetRoot: "$resource.type.coding"
+      targetAttribute: "system"
+      operator: "one of"
+      criteria: "http://fhir.de/CodeSystem/Kontaktebene"
 
   - name: "fallklasse"
     extension: "add"
@@ -28,7 +32,7 @@ mappings:
     with:
       fhir: "$resource.status"
       openehr: "$composition/context/other_context[at0001]/items[at0010]"
-      
+
 
   - name: "fallIdParent"
     extension: "add"

@@ -133,8 +133,3 @@ mappings:
                     fhir:
                       - path: "system"
                         value: "http://fhir.de/CodeSystem/dki-diagnosesubtyp"
-
-
-
-
-

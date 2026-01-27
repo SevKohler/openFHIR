@@ -45,7 +45,7 @@
                 {
                   "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen",
                   "valueCoding": {
-                    "system": "http://fhir.de/ValueSet/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                    "system": "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen",
                     "code": "!",
                     "display": "!"
                   }

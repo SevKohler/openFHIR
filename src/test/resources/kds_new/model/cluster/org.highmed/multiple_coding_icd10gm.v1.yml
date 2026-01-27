@@ -37,7 +37,7 @@ mappings:
           - path: "display"
             value: "*"
           - path: "system"
-            value: "http://fhir.de/ValueSet/icd-10-gm-mehrfachcodierungs-kennzeichen"
+            value: "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen"
         openehrCondition:
           targetRoot: "$openehrRoot/items[at0001]"
           targetAttribute: "defining_code/code_string"
@@ -63,7 +63,7 @@ mappings:
           - path: "display"
             value: "†"
           - path: "system"
-            value: "http://fhir.de/ValueSet/icd-10-gm-mehrfachcodierungs-kennzeichen"
+            value: "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen"
         openehrCondition:
           targetRoot: "$openehrRoot/items[at0001]"
           targetAttribute: "defining_code/code_string"
@@ -77,7 +77,7 @@ mappings:
           - path: "display"
             value: "!"
           - path: "system"
-            value: "http://fhir.de/ValueSet/icd-10-gm-mehrfachcodierungs-kennzeichen"
+            value: "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen"
         openehrCondition:
           targetRoot: "$openehrRoot/items[at0001]"
           targetAttribute: "defining_code/code_string"
