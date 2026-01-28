@@ -75,8 +75,6 @@ public class DiagnoseToFHIRTest extends KdsTest {
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(COMPOSITION_SINGLE), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
         standardsAsserter.assertBundle(bundle, BUNDLE_SINGLE);
-
-
     }
 
 

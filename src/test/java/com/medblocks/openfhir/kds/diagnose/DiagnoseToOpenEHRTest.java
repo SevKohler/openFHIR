@@ -275,7 +275,7 @@ public class DiagnoseToOpenEHRTest extends KdsTest {
                 "diagnose/diagnose:0/mehrfachkodierungskennzeichen_icd-10-gm/mehrfachkodierungkennzeichen|value").getAsString());
         Assert.assertEquals("321667001", jsonObject.get("diagnose/diagnose:0/anatomische_lokalisation/name_der_körperstelle|code")
                 .getAsString());
-        Assert.assertEquals("http://snomed.info/sct",
+        Assert.assertEquals("http://snomed.info/sct (20230131)",
                             jsonObject.get("diagnose/diagnose:0/anatomische_lokalisation/name_der_körperstelle|terminology")
                                     .getAsString());
         Assert.assertEquals("Respiratory tract, Upper lobe, bronchus or lung",

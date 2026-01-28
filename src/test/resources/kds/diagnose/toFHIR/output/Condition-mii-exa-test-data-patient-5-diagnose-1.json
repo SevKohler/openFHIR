@@ -1,7 +1,8 @@
 {
   "resourceType": "Bundle",
   "type": "collection",
-  "entry": [{
+  "entry": [
+    {
       "resource": {
         "resourceType": "Condition",
         "meta": {
@@ -9,28 +10,61 @@
             "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose"
           ]
         },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active",
+              "display": "active"
+            }
+          ],
+          "text": "active"
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
         "code": {
           "coding": [
             {
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
-              "code": "N80.1"
+              "version": "2023",
+              "code": "N80.1",
+              "display": "N80.1",
+              "extension": [
+                {
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
+                  "valueCoding": {
+                    "coding": [
+                      {
+                        "system": "http://snomed.info/sct",
+                        "code": "15497006",
+                        "display": "Ovarian structure (body structure)"
+                      }
+                    ],
+                    "text": "Ovarian structure (body structure)"
+                  }
+                }
+              ]
             },
             {
               "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
-              "code": "I133980"
+              "code": "I133980",
+              "display": "Endometriose des Ovars"
             },
             {
               "system": "http://snomed.info/sct",
               "code": "129103003",
               "display": "Endometriosis (disorder)"
             }
-          ]
+          ],
+          "text": "N80.1"
         },
-        "note": [
-          {
-            "text": "Endometriose des Ovars"
-          }
-        ],
         "bodySite": [
           {
             "coding": [
@@ -43,24 +77,12 @@
             "text": "Ovarian structure (body structure)"
           }
         ],
-        "clinicalStatus": {
-          "coding": [
-            {
-              "code": "active",
-              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
-            }
-          ]
-        },
-        "verificationStatus": {
-          "coding": [
-            {
-              "code": "confirmed",
-              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-              "display": "Confirmed"
-            }
-          ]
-        },
-        "recordedDate": "2023-07-10T00:00:00+02:00"
+        "recordedDate": "2023-07-10T00:00:00+02:00",
+        "note": [
+          {
+            "text": "Endometriose des Ovars"
+          }
+        ]
       }
     }
   ]

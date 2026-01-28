@@ -2,7 +2,7 @@
 set -euo pipefail
 
 URL="http://localhost:8080/openfhir/toopenehr"
-BASE_DIR="${1:-kds/fall/toOpenEHR}"
+BASE_DIR="${1:-kds/diagnose/toOpenEHR}"
 
 INPUT_DIR="$BASE_DIR/input"
 OUTPUT_DIR="$BASE_DIR/output"

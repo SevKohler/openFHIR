@@ -20,7 +20,7 @@ public class StandardsAsserter {
         JSONObject actual = new JSONObject(new CanonicalJson().marshal(composition));
         JSONObject expected = loadJsonObject(expectedClasspathJson);
         JSONAssert.assertEquals(expected, actual, true);
-     //   OptCompositionValidator.assertValid(operationalTemplate, composition);
+        OptCompositionValidator.assertValid(operationalTemplate, composition);
     }
 
 //    public void assertBundle(Bundle bundle) { TODO add FHIR profile validation

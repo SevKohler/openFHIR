@@ -7,11 +7,9 @@ import static com.medblocks.openfhir.util.OpenFhirStringUtils.RECURRING_SYNTAX;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.medblocks.openfhir.fc.FhirConnectConst;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+
+import java.util.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Address;
@@ -367,9 +365,13 @@ public class OpenEhrPopulator {
                 // Handle the first coding as the primary coded text
                 Coding primaryCoding = codings.get(0);
                 addToConstructingFlat(path + "|code", primaryCoding.getCode(), flat);
-                addToConstructingFlat(path + "|terminology", primaryCoding.getSystem(), flat);
-                addToConstructingFlat(path + "|value", primaryCoding.getDisplay(), flat);
-                
+                setTerminology(path+"|terminology", primaryCoding, flat);
+                if(primaryCoding.hasDisplay()){
+                    addToConstructingFlat(path + "|value", primaryCoding.getDisplay(), flat);
+                }else if(primaryCoding.hasCode()){
+                    addToConstructingFlat(path + "|value", primaryCoding.getCode(), flat);
+                }
+
                 // Handle additional codings as mappings
                 addAdditionalCodingsAsMappings(path, codings, flat);
             }
@@ -377,7 +379,8 @@ public class OpenEhrPopulator {
             return true;
         } else if (value instanceof Coding coding) {
             addToConstructingFlat(path + "|code", coding.getCode(), flat);
-            addToConstructingFlat(path + "|terminology", coding.getSystem(), flat);
+            setTerminology(path +"|terminology", coding, flat);
+            setDisplay(path, coding, flat);
             addToConstructingFlat(path + "|value", coding.getDisplay(), flat);
             return true;
         } else if (value instanceof StringType extractedString && path.contains("|")) {
@@ -390,6 +393,28 @@ public class OpenEhrPopulator {
         return false;
     }
 
+
+    private void setDisplay(String path, Coding coding, JsonObject flat) {
+        if(coding.hasDisplay()){
+            addToConstructingFlat(path + "|value", coding.getDisplay(), flat);
+        }else if(coding.hasCode()){
+            addToConstructingFlat(path + "|value", coding.getCode(), flat);
+        }
+    }
+
+    private void setTerminology(String path, Coding coding, JsonObject flat) {
+        if (coding.hasVersion() & !Objects.equals(coding.getVersion(), "")){
+            String version;
+            if (coding.getVersion().contains("http://snomed.info/sct")) { // might be ugly but is defined by spec like that.
+                version = coding.getVersion().substring(coding.getVersion().lastIndexOf("/version/") + "/version/".length());
+            } else {
+                version = coding.getVersion();
+            }
+            addToConstructingFlat(path, coding.getSystem()+ " (" + version + ")", flat);
+        }else{
+            addToConstructingFlat(path , coding.getSystem(), flat);
+        }
+    }
     /**
      * Adds additional codings from a CodeableConcept as mappings in the openEHR flat format
      * 
@@ -405,10 +430,9 @@ public class OpenEhrPopulator {
             addToConstructingFlat(mappingPath + "/match", "=", flat);
             addToConstructingFlat(mappingPath + "/target|preferred_term", coding.getDisplay(), flat);
             addToConstructingFlat(mappingPath + "/target|code", coding.getCode(), flat);
-            addToConstructingFlat(mappingPath + "/target|terminology", coding.getSystem(), flat);
+            setTerminology(mappingPath + "/target|terminology", coding, flat);
         }
     }
-
     public boolean setNullFlavourForDataAbsentReason(final String openEhrPath,
                                                      final Base dataAbsentReasonValue,
                                                      final JsonObject constructingFlat) {
@@ -565,7 +589,7 @@ public class OpenEhrPopulator {
         if (value instanceof Coding coding) {
             addToConstructingFlat(path + "|code", coding.getCode(), flat);
             addToConstructingFlat(path + "|value", coding.getCode(), flat);
-            addToConstructingFlat(path + "|terminology", coding.getSystem(), flat);
+            setTerminology(path + "|terminology", coding, flat);
             return true;
         } else if (value instanceof Extension extension) {
             setFhirPathValue(path, extension.getValue(), openEhrType, flat);
