@@ -9,16 +9,6 @@ spec:
   extends: ADMIN_ENTRY.episode_institution_local.v0
 
 mappings:
-  - name: "falltyp"
-    extension: "add"
-    with:
-      fhir: "$resource.type"
-      openehr: "$composition/context/other_context[at0001]/items[at0005]"
-    fhirCondition:
-      targetRoot: "$resource.type.coding"
-      targetAttribute: "system"
-      operator: "one of"
-      criteria: "http://fhir.de/CodeSystem/Kontaktebene"
 
   - name: "fallklasse"
     extension: "add"
@@ -88,21 +78,20 @@ mappings:
                 - path: "system"
                   value: "http://terminology.hl7.org/CodeSystem/v2-0203"
 
-
-
-  - name: "serviceProvider" # TODO deprecated needs to be deleted
+  - name: "serviceType" # TODO deprecated needs to be deleted
     extension: "add"
     with:
-      fhir: "$resource.serviceProvider.as(Organization)"
-      openehr: "$reference"
-    reference:
-      resourceType: "Organization"
-      mappings:
-        - name: "organization"
-          with:
-            fhir: "$fhirRoot"
-            openehr: "$archetype/data[at0001]/items[openEHR-EHR-CLUSTER.organisation.v1]"
-          slotArchetype: "CLUSTER.organisation.v1"
+      fhir: "$resource.serviceType.coding"
+      openehr: "$composition/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.organization.v0]"
+    slotArchetype: "CLUSTER.organization.v0"
+
+  - name: "kontaktTyp" # TODO deprecated needs to be deleted
+    extension: "add"
+    with:
+      fhir: "$resource.type"
+      openehr: "$composition/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.kontakttyp.v0]"
+    slotArchetype: "CLUSTER.kontakttyp.v0"
+
 
   - name: "aufnahmegrundExtension"
     extension: "add"
@@ -208,25 +197,87 @@ mappings:
 
 
   - name: "problemDiagnoseParent"
-    unidirectional: "fhir->openehr"
     extension: "add"
     with:
       fhir: "$resource.diagnosis"
       openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
     slotArchetype: "EVALUATION.problem_diagnosis.v1"
-
-#  - name: "problemDiagnoseParent" # TODO BUG "message": "HAPI-2409: org.hl7.fhir.r4.utils.FHIRLexer$FHIRLexerException: Error in ?? at 1, 1: Premature ExpressionNode termination at unexpected token \"]\"",
-#    unidirectional: "openehr->fhir"
-#    extension: "add"
-#    with:
-#      fhir: "$resource.diagnosis.condition"
-#      openehr: "$reference"
-#    reference:
+#    reference: TODO needs fix due bug
 #      resourceType: "Condition"
 #      mappings:
 #        - name: "condition"
 #          with:
+#            fhir: "condition"
+#            openehr: "$openehrRoot"
+#    slotArchetype: "EVALUATION.problem_diagnosis.v1"
+#      type: "NONE"
+#    followedBy:
+#      mappings:
+#        - name: "reference"
+#          with:
 #            fhir: "$fhirRoot"
-#            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
-#          slotArchetype: "EVALUATION.problem_diagnosis.v1"
-#DiagnoseTyp etc mapping of use is missing
+#            openehr: "$openehrRoot"
+#          reference:
+#            resourceType: "Condition"
+#            mappings:
+#              - name: "condition"
+#                with:
+#                  fhir: "condition"
+#                  openehr: "$openehrRoot"
+#                slotArchetype: "EVALUATION.problem_diagnosis.v1"
+#        - name: "problemDiagnoseUse"
+#          with:
+#            fhir: "use"
+#            openehr: "$openehrRoot"
+#            type: "NONE"
+#          followedBy:
+#            mappings:
+#              - name: "diagnoseTyp"
+#                with:
+#                  fhir: "coding"
+#                  openehr: "data[at0001]/items[at0009]"
+#
+#                fhirCondition:
+#                  targetRoot: "coding"
+#                  targetAttribute: "code"
+#                  operator: "one of"
+#                  criterias:
+#                    - "referral-diagnosis"
+#                    - "treatment-diagnosis"
+#                followedBy:
+#                  mappings:
+#                    - name: "system"
+#                      with:
+#                        fhir: "$fhirRoot"
+#                      manual:
+#                        - name: "system"
+#                          fhir:
+#                            - path: "system"
+#                              value: "http://fhir.de/CodeSystem/dki-diagnosetyp"
+#
+#              - name: "diagnoseSubtyp"
+#                with:
+#                  fhir: "coding"
+#                  openehr: "data[at0001]/items[at0079]"
+#
+#                fhirCondition:
+#                  targetRoot: "coding"
+#                  targetAttribute: "code"
+#                  operator: "one of"
+#                  criterias:
+#                    - "surgery-diagnosis"
+#                    - "department-main-diagnosis"
+#                    - "cause-of-death"
+#                    - "infection-control-diagnosis"
+#                    - "AD"
+#                    - "DD"
+#                followedBy:
+#                  mappings:
+#                    - name: "system"
+#                      with:
+#                        fhir: "$fhirRoot"
+#                      manual:
+#                        - name: "system"
+#                          fhir:
+#                            - path: "system"
+#                              value: "http://fhir.de/CodeSystem/dki-diagnosesubtyp"

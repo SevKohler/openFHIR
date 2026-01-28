@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template xmlns="http://schemas.openehr.org/v1">
     <language>
         <terminology_id>
@@ -9,15 +8,15 @@
     <description>
         <original_author id="date">2024-07-02</original_author>
         <lifecycle_state>unmanaged</lifecycle_state>
-        <other_details id="licence"></other_details>
-        <other_details id="custodian_organisation"></other_details>
-        <other_details id="original_namespace"></other_details>
-        <other_details id="original_publisher"></other_details>
-        <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">15.0.0</other_details>
-        <other_details id="build_uid"></other_details>
-        <other_details id="MD5-CAM-1.0.1">28ef3ac76cb19ac1eeef6db2e7bb755e</other_details>
-        <other_details id="PARENT:MD5-CAM-1.0.1">AFFFB351A3113D61F0822FEBDF5F42E3</other_details>
+        <other_details id="licence"/>
+        <other_details id="custodian_organisation"/>
+        <other_details id="original_namespace"/>
+        <other_details id="original_publisher"/>
+        <other_details id="custodian_namespace"/>
+        <other_details id="sem_ver">20.0.0</other_details>
+        <other_details id="build_uid"/>
+        <other_details id="MD5-CAM-1.0.1">57d167fa0a001e53983eb7afc6ed1ee3</other_details>
+        <other_details id="PARENT:MD5-CAM-1.0.1">1fa06d56b4746d975400302192a97609</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
         <details>
             <language>
@@ -68,7 +67,7 @@
                     <lower>1</lower>
                     <upper>1</upper>
                 </occurrences>
-                <node_id></node_id>
+                <node_id/>
                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                     <rm_attribute_name>defining_code</rm_attribute_name>
                     <existence>
@@ -90,7 +89,7 @@
                             <lower>1</lower>
                             <upper>1</upper>
                         </occurrences>
-                        <node_id></node_id>
+                        <node_id/>
                         <terminology_id>
                             <value>openehr</value>
                         </terminology_id>
@@ -120,7 +119,7 @@
                     <lower>1</lower>
                     <upper>1</upper>
                 </occurrences>
-                <node_id></node_id>
+                <node_id/>
                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                     <rm_attribute_name>other_context</rm_attribute_name>
                     <existence>
@@ -183,10 +182,10 @@
                                             <upper_included>true</upper_included>
                                             <lower_unbounded>false</lower_unbounded>
                                             <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
+                                            <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -208,7 +207,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/kontaktebene-de/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -247,7 +246,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -269,7 +268,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/EncounterClassDE/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -308,7 +307,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -330,7 +329,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology:http://fhir.de/ValueSet/EncounterStatusDe</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -369,40 +368,181 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                     </children>
                                 </attributes>
                             </children>
-                            <children xsi:type="ARCHETYPE_SLOT">
+                            <children xsi:type="C_ARCHETYPE_ROOT">
                                 <rm_type_name>CLUSTER</rm_type_name>
                                 <occurrences>
                                     <lower_included>true</lower_included>
-                                    <upper_included>false</upper_included>
+                                    <upper_included>true</upper_included>
                                     <lower_unbounded>false</lower_unbounded>
-                                    <upper_unbounded>true</upper_unbounded>
+                                    <upper_unbounded>false</upper_unbounded>
                                     <lower>0</lower>
+                                    <upper>1</upper>
                                 </occurrences>
-                                <node_id>at0002</node_id>
-                                <includes>
-                                    <string_expression>archetype_id/value matches {/.*/}</string_expression>
-                                    <expression xsi:type="EXPR_BINARY_OPERATOR">
-                                        <type>Boolean</type>
-                                        <operator>2007</operator>
-                                        <precedence_overridden>false</precedence_overridden>
-                                        <left_operand xsi:type="EXPR_LEAF">
-                                            <type>String</type>
-                                            <item xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema">archetype_id/value</item>
-                                            <reference_type>attribute</reference_type>
-                                        </left_operand>
-                                        <right_operand xsi:type="EXPR_LEAF">
-                                            <type>String</type>
-                                            <item xsi:type="C_STRING">
-                                                <pattern>.*</pattern>
-                                            </item>
-                                            <reference_type>constraint</reference_type>
-                                        </right_operand>
-                                    </expression>
-                                </includes>
+                                <node_id>at0000</node_id>
+                                <attributes xsi:type="C_MULTIPLE_ATTRIBUTE">
+                                    <rm_attribute_name>items</rm_attribute_name>
+                                    <existence>
+                                        <lower_included>true</lower_included>
+                                        <upper_included>true</upper_included>
+                                        <lower_unbounded>false</lower_unbounded>
+                                        <upper_unbounded>false</upper_unbounded>
+                                        <lower>1</lower>
+                                        <upper>1</upper>
+                                    </existence>
+                                    <match_negated>false</match_negated>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0001</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id/>
+                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                    <rm_attribute_name>defining_code</rm_attribute_name>
+                                                    <existence>
+                                                        <lower_included>true</lower_included>
+                                                        <upper_included>true</upper_included>
+                                                        <lower_unbounded>false</lower_unbounded>
+                                                        <upper_unbounded>false</upper_unbounded>
+                                                        <lower>1</lower>
+                                                        <upper>1</upper>
+                                                    </existence>
+                                                    <match_negated>false</match_negated>
+                                                    <children xsi:type="C_CODE_REFERENCE">
+                                                        <rm_type_name>CODE_PHRASE</rm_type_name>
+                                                        <occurrences>
+                                                            <lower_included>true</lower_included>
+                                                            <upper_included>true</upper_included>
+                                                            <lower_unbounded>false</lower_unbounded>
+                                                            <upper_unbounded>false</upper_unbounded>
+                                                            <lower>0</lower>
+                                                            <upper>1</upper>
+                                                        </occurrences>
+                                                        <node_id/>
+                                                        <referenceSetUri>ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/kontaktebene-de</referenceSetUri>
+                                                    </children>
+                                                </attributes>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0002</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id/>
+                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                    <rm_attribute_name>defining_code</rm_attribute_name>
+                                                    <existence>
+                                                        <lower_included>true</lower_included>
+                                                        <upper_included>true</upper_included>
+                                                        <lower_unbounded>false</lower_unbounded>
+                                                        <upper_unbounded>false</upper_unbounded>
+                                                        <lower>1</lower>
+                                                        <upper>1</upper>
+                                                    </existence>
+                                                    <match_negated>false</match_negated>
+                                                    <children xsi:type="C_CODE_REFERENCE">
+                                                        <rm_type_name>CODE_PHRASE</rm_type_name>
+                                                        <occurrences>
+                                                            <lower_included>true</lower_included>
+                                                            <upper_included>true</upper_included>
+                                                            <lower_unbounded>false</lower_unbounded>
+                                                            <upper_unbounded>false</upper_unbounded>
+                                                            <lower>0</lower>
+                                                            <upper>1</upper>
+                                                        </occurrences>
+                                                        <node_id/>
+                                                        <referenceSetUri>ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/kontaktart-de</referenceSetUri>
+                                                    </children>
+                                                </attributes>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <cardinality>
+                                        <is_ordered>false</is_ordered>
+                                        <is_unique>false</is_unique>
+                                        <interval>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>false</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>true</upper_unbounded>
+                                            <lower>1</lower>
+                                        </interval>
+                                    </cardinality>
+                                </attributes>
+                                <archetype_id>
+                                    <value>openEHR-EHR-CLUSTER.kontakttyp.v0</value>
+                                </archetype_id>
+                                <term_definitions code="at0000">
+                                    <items id="text">KontaktTyp</items>
+                                    <items id="description">KontaktTyp</items>
+                                </term_definitions>
+                                <term_definitions code="at0001">
+                                    <items id="text">KontaktEbene</items>
+                                    <items id="description"/>
+                                </term_definitions>
+                                <term_definitions code="at0002">
+                                    <items id="text">KontaktArt</items>
+                                    <items id="description"/>
+                                </term_definitions>
                             </children>
                             <children xsi:type="C_ARCHETYPE_ROOT">
                                 <rm_type_name>CLUSTER</rm_type_name>
@@ -458,7 +598,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -494,7 +634,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                                     <rm_attribute_name>defining_code</rm_attribute_name>
                                                     <existence>
@@ -516,7 +656,7 @@
                                                             <lower>0</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                         <referenceSetUri>terminology://http://fhir.de/ValueSet/dkgev/Fachabteilungsschluessel/null</referenceSetUri>
                                                     </children>
                                                 </attributes>
@@ -555,7 +695,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -591,7 +731,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -774,7 +914,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                     </children>
                                 </attributes>
                             </children>
@@ -810,7 +950,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -832,7 +972,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://dkgev/AufnahmegrundErsteUndZweiteStelle/ValueSet/$expand?url=http://fhir.de/ValueSet/dkgev/AufnahmegrundErsteUndZweiteStelle</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -859,7 +999,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -881,7 +1021,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Aufnahmegrund - ErsteUndZweiteStelle</list>
                                                 </item>
@@ -922,7 +1062,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -944,7 +1084,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://dkgev/AufnahmegrundDritteStelle/ValueSet/$expand?url=http://fhir.de/ValueSet/dkgev/AufnahmegrundDritteStelle</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -971,7 +1111,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -993,7 +1133,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Aufnahmegrund - Dritte Stelle</list>
                                                 </item>
@@ -1034,7 +1174,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -1056,7 +1196,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://dkgev/AufnahmegrundVierteStelle/ValueSet/$expand?url=http://fhir.de/ValueSet/dkgev/AufnahmegrundVierteStelle</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -1083,7 +1223,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -1105,7 +1245,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Aufnahmegrund - Vierte Stelle</list>
                                                 </item>
@@ -1146,7 +1286,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -1168,7 +1308,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/dgkev/Aufnahmeanlass/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -1260,7 +1400,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -1295,7 +1435,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                             <children xsi:type="C_COMPLEX_OBJECT">
                                                 <rm_type_name>DV_TEXT</rm_type_name>
@@ -1307,7 +1447,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -1342,7 +1482,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -1399,7 +1539,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1434,7 +1574,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1469,7 +1609,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1505,7 +1645,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1541,7 +1681,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1577,7 +1717,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1644,7 +1784,7 @@
                                                             <lower>1</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
-                                                        <node_id></node_id>
+                                                        <node_id/>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1674,7 +1814,7 @@
                                         </term_definitions>
                                         <term_definitions code="at0002">
                                             <items id="text">Stadt / Gemeinde</items>
-                                            <items id="description">Der Name des Ortes der untersten Ebene der Adresse.&#13;
+                                            <items id="description">Der Name des Ortes der untersten Ebene der Adresse.
 </items>
                                             <items id="comment">Zum Beispiel: Vorort, Stadt, Stadt, Siedlung, Dorf oder Gemeinde. Die Codierung mit einer externen Terminologie wird nach Möglichkeit bevorzugt. Zum Beispiel: „Fitzroy“; 'Manchester'; „Kingston“ oder „Bergen“.</items>
                                         </term_definitions>
@@ -1922,7 +2062,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -1959,7 +2099,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -1981,7 +2121,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Überweiser</list>
                                                 </item>
@@ -2121,7 +2261,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2188,7 +2328,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2224,7 +2364,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2260,7 +2400,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2309,7 +2449,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                     </children>
                                 </attributes>
                             </children>
@@ -2344,7 +2484,7 @@
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -2366,7 +2506,7 @@
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/dkgev/EntlassungsgrundErsteUndZweiteStelle/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -2393,7 +2533,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -2415,7 +2555,7 @@
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>EntlassungsgrundErsteUndZweiteStelle</list>
                                                 </item>
@@ -2518,7 +2658,7 @@
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                     </children>
                                 </attributes>
                             </children>
@@ -2550,7 +2690,7 @@
                 <term_definitions code="at0002">
                     <items id="text">Entlassungsdatum</items>
                     <items id="description">Das Datum und/oder die Uhrzeit der formellen oder statistischen institutionellen Entlassung.</items>
-                    <items id="comment">Beispiel: Überführung in häusliche Pflege oder eine andere Institution, Todeszeitpunkt.&#13;
+                    <items id="comment">Beispiel: Überführung in häusliche Pflege oder eine andere Institution, Todeszeitpunkt.
 Für die Dokumentation des Todeszeitpunkts sollte CLUSTER.death_details genutzt werden.</items>
                 </term_definitions>
                 <term_definitions code="at0003">
@@ -2575,7 +2715,7 @@ Für die Dokumentation des Todeszeitpunkts sollte CLUSTER.death_details genutzt 
                 <term_definitions code="at0008">
                     <items id="text">Aufnahmegrund - Vierte Stelle</items>
                     <items id="description">Der Anlass, aus dem die Person zur Versorgung aufgenommen wurde.</items>
-                    <items id="comment">Zum Beispiel: Kurzzeitpflege, Rehabilitation, Isolierung aufgrund einer Infektion.&#13;
+                    <items id="comment">Zum Beispiel: Kurzzeitpflege, Rehabilitation, Isolierung aufgrund einer Infektion.
 Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem CLUSTER.problem_qualifier Archetyp dokumentiert werden.</items>
                 </term_definitions>
                 <term_definitions code="at0009">
@@ -2736,7 +2876,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -2758,7 +2898,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://snomed.info/sct/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -2797,7 +2937,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -2819,7 +2959,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/Diagnosesubtyp/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -2846,7 +2986,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -2868,7 +3008,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Diagnosesubtyp</list>
                                                 </item>
@@ -2909,7 +3049,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>0</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>defining_code</rm_attribute_name>
                                             <existence>
@@ -2931,7 +3071,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                                     <lower>0</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <referenceSetUri>terminology://http://fhir.de/ValueSet/DiagnoseTyp/null</referenceSetUri>
                                             </children>
                                         </attributes>
@@ -2958,7 +3098,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
                                             <rm_attribute_name>value</rm_attribute_name>
                                             <existence>
@@ -2980,7 +3120,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                                     <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
-                                                <node_id></node_id>
+                                                <node_id/>
                                                 <item xsi:type="C_STRING">
                                                     <list>Diagnosetyp</list>
                                                 </item>
@@ -3161,7 +3301,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                             <lower>1</lower>
                                             <upper>1</upper>
                                         </occurrences>
-                                        <node_id></node_id>
+                                        <node_id/>
                                     </children>
                                 </attributes>
                             </children>
@@ -3387,7 +3527,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
         </term_definitions>
         <term_definitions code="at0012">
             <items id="text">Verantwortliche Organisationseinheit</items>
-            <items id="description"></items>
+            <items id="description"/>
         </term_definitions>
     </definition>
     <annotations path="[openEHR-EHR-COMPOSITION.fall.v1]/context/other_context[at0001]/items[at0010]">

@@ -14,25 +14,28 @@
           "coding": [
             {
               "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              "code": "active"
+              "code": "active",
+              "display": "active"
+            }
+          ],
+          "text": "active"
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
             }
           ]
         },
         "code": {
           "coding": [
             {
-              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
-              "code": "I29578",
-              "display": "Masern mit Otitis"
-            },
-            {
-              "system": "http://snomed.info/sct",
-              "code": "13420004",
-              "display": "Post measles otitis media (disorder)"
-            },
-            {
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "version": "2023",
               "code": "B05.3",
+              "display": "B05.3",
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
@@ -59,17 +62,19 @@
                   }
                 }
               ]
-            }
-          ]
-        },
-        "verificationStatus": {
-          "coding": [
+            },
             {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-              "code": "confirmed",
-              "display": "Confirmed"
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "code": "I29578",
+              "display": "Masern mit Otitis"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "13420004",
+              "display": "Post measles otitis media (disorder)"
             }
-          ]
+          ],
+          "text": "B05.3"
         },
         "bodySite": [
           {

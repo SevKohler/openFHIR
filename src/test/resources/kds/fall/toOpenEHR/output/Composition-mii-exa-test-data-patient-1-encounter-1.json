@@ -76,28 +76,11 @@
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
-          "value" : "Falltyp"
-        },
-        "value" : {
-          "_type" : "DV_CODED_TEXT",
-          "defining_code" : {
-            "_type" : "CODE_PHRASE",
-            "terminology_id" : {
-              "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/CodeSystem/Kontaktebene"
-            },
-            "code_string" : "einrichtungskontakt"
-          }
-        },
-        "archetype_node_id" : "at0005"
-      }, {
-        "_type" : "ELEMENT",
-        "name" : {
-          "_type" : "DV_TEXT",
           "value" : "Fallklasse"
         },
         "value" : {
           "_type" : "DV_CODED_TEXT",
+          "value" : "IMP",
           "defining_code" : {
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
@@ -134,10 +117,83 @@
           "value" : "Fall-ID"
         },
         "value" : {
-          "_type" : "DV_TEXT",
-          "value" : "MII_0000001"
+          "_type" : "DV_CODED_TEXT",
+          "value" : "MII_0000001",
+          "defining_code" : {
+            "_type" : "CODE_PHRASE",
+            "terminology_id" : {
+              "_type" : "TERMINOLOGY_ID"
+            },
+            "code_string" : "MII_0000001"
+          }
         },
         "archetype_node_id" : "at0003"
+      }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "KontaktTyp"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.kontakttyp.v0"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "KontaktArt"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "normalstationaer",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://fhir.de/CodeSystem/kontaktart-de"
+              },
+              "code_string" : "normalstationaer"
+            }
+          },
+          "archetype_node_id" : "at0002"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.kontakttyp.v0"
+      }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Organisationseinheit"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.organization.v0"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Organisationsschlüssel"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "0100",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel"
+              },
+              "code_string" : "0100"
+            }
+          },
+          "archetype_node_id" : "at0024"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.organization.v0"
       } ],
       "archetype_node_id" : "at0001"
     }
@@ -386,11 +442,12 @@
         },
         "value" : {
           "_type" : "DV_CODED_TEXT",
+          "value" : "B05.3",
           "defining_code" : {
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+              "value" : "http://fhir.de/CodeSystem/bfarm/icd-10-gm (2023)"
             },
             "code_string" : "B05.3"
           }
@@ -445,11 +502,12 @@
         },
         "value" : {
           "_type" : "DV_CODED_TEXT",
+          "value" : "A15.0",
           "defining_code" : {
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://hl7.org/fhir/sid/icd-10"
+              "value" : "http://hl7.org/fhir/sid/icd-10 (2019)"
             },
             "code_string" : "A15.0"
           }

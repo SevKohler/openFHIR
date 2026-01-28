@@ -15,7 +15,6 @@ import static com.medblocks.openfhir.fc.FhirConnectConst.DV_QUANTITY;
 import static com.medblocks.openfhir.fc.FhirConnectConst.DV_TIME;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_ARCHETYPE_FC;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_COMPOSITION_FC;
-import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_TYPE_MEDIA;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_TYPE_NONE;
 import static com.medblocks.openfhir.fc.FhirConnectConst.THIS;
 import static com.medblocks.openfhir.fc.FhirConnectConst.UNIDIRECTIONAL_TOOPENEHR;
@@ -1994,8 +1993,9 @@ public class OpenEhrToFhir {
         // Try to get values from the path first, then fall back to the pre-fetched paths
         String textValue = getFromValueHolder(valueHolder, path + "|value");
         String codeValue = getFromValueHolder(valueHolder, path + "|code");
-        String systemValue = getFromValueHolder(valueHolder, path + "|terminology");
+        String systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, path + "|terminology"));
         String ordinalValue = getFromValueHolder(valueHolder, path + "|ordinal");
+        String version = getVersion(getFromValueHolder(valueHolder, path + "|terminology"));
 
         // Fall back to pre-fetched paths if needed
         if (textValue == null && value != null) {
@@ -2007,7 +2007,7 @@ public class OpenEhrToFhir {
         }
 
         if (systemValue == null && terminology != null) {
-            systemValue = getFromValueHolder(valueHolder, terminology);
+            systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, terminology));
         }
 
         if (ordinalValue == null && ordinal != null) {
@@ -2018,7 +2018,11 @@ public class OpenEhrToFhir {
 
         // Add the primary coding
         if (codeValue != null || systemValue != null) {
-            data.addCoding(new Coding(systemValue, codeValue, textValue));
+            Coding coding =new Coding(systemValue, codeValue, textValue);
+            if(version != null){
+                coding.setVersion(version);
+            }
+            data.addCoding(coding);
         }
 
         if (ordinalValue != null) {
@@ -2029,6 +2033,27 @@ public class OpenEhrToFhir {
         processMappings(valueHolder, path, data);
 
         return new OpenEhrToFhirHelper.DataWithIndex(data, lastIndex, path);
+    }
+
+    private String getVersion(String fromValueHolder) {
+        if(fromValueHolder!=null){
+            int open = fromValueHolder.indexOf('(');
+            int close = fromValueHolder.indexOf(')');
+            if (open >= 0 && close > open) {
+                return fromValueHolder.substring(open + 1, close);
+            }
+        }
+        return null;
+    }
+
+    private String cleanVersionFromSystem(String system) {
+        if (system == null) return null;
+        int open = system.lastIndexOf('(');
+        int close = system.lastIndexOf(')');
+        if (open >= 0 && close > open) {
+            return system.substring(0, open).trim();
+        }
+        return system;
     }
 
     /**
@@ -2053,7 +2078,7 @@ public class OpenEhrToFhir {
             }
 
             // Extract mapping details
-            String terminology = getFromValueHolder(valueHolder, mappingPrefix + "/target|terminology");
+            String terminology = cleanVersionFromSystem(getFromValueHolder(valueHolder, mappingPrefix + "/target|terminology"));
             String code = getFromValueHolder(valueHolder, mappingPrefix + "/target|code");
             String preferredTerm = getFromValueHolder(valueHolder, mappingPrefix + "/target|preferred_term");
 
@@ -2083,12 +2108,17 @@ public class OpenEhrToFhir {
     private OpenEhrToFhirHelper.DataWithIndex handleCoding(final JsonObject valueHolder,
                                                            final Integer lastIndex,
                                                            final String path,
-                                                           final String terminology,
-                                                           final String code,
-                                                           final String value) {
-        return new OpenEhrToFhirHelper.DataWithIndex(new Coding(getFromValueHolder(valueHolder, terminology),
-                                                                getFromValueHolder(valueHolder, code),
-                                                                getFromValueHolder(valueHolder, value)),
+                                                           final String terminologyPath,
+                                                           final String codePath,
+                                                           final String valuePath) {
+        String textValue = getFromValueHolder(valueHolder, valuePath);
+        String codeValue = getFromValueHolder(valueHolder, codePath);
+        String systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, terminologyPath));
+        String version = getVersion(getFromValueHolder(valueHolder, terminologyPath));
+        Coding coding = new Coding(systemValue, codeValue, textValue);
+        if(version!=null)
+            coding.setVersion(version);
+        return new OpenEhrToFhirHelper.DataWithIndex(coding,
                                                      lastIndex,
                                                      path);
     }

@@ -15,7 +15,7 @@ mappings:
     with:
       fhir: "$resource.recordedDate"
       openehr: "$composition/context/start_time"
-      
+
 
   - name: "note"
     extension: "overwrite"
@@ -29,14 +29,14 @@ mappings:
     with:
       fhir: "$resource.onset"
       openehr: "$archetype/data[at0001]/items[at0077]"
-      
+
 
   - name: "bodySite"
     extension: "overwrite"
     with:
       fhir: "$resource.bodySite"
       openehr: "$archetype/data[at0012]"
-      
+
 
   - name: "bodySiteCluster"
     extension: "overwrite"
@@ -50,9 +50,9 @@ mappings:
     with:
       fhir: "$resource.severity"
       openehr: "$archetype/data[at0001]/items[at0005]"
-      
 
-# -------------------------------#
+
+ #-------------------------------#
   - name: "problemDiagnose"
     extension: "overwrite"
     with:
@@ -69,7 +69,6 @@ mappings:
           with:
             fhir: "$fhirRoot.code.coding"
             openehr: "$archetype/data[at0001]/items[at0002]"
-            
 
   - name: "problemDiagnoseUse"
     extension: "add"
@@ -77,10 +76,6 @@ mappings:
       fhir: "$fhirRoot.use"
       openehr: "$archetype"
       type: "NONE"
-    fhirCondition:
-      targetRoot: "$fhirRoot"
-      operator: "type"
-      criteria: "Encounter.diagnosis"
     followedBy:
       mappings:
         # these have to be here, they can not be in the slot archetype because they're mapping to the DiagnosisComponent and not on Condition (resolved reference)
@@ -88,7 +83,7 @@ mappings:
           with:
             fhir: "coding"
             openehr: "data[at0001]/items[at0009]"
-            
+
           fhirCondition:
             targetRoot: "coding"
             targetAttribute: "code"
@@ -111,7 +106,7 @@ mappings:
           with:
             fhir: "coding"
             openehr: "data[at0001]/items[at0079]"
-            
+
           fhirCondition:
             targetRoot: "coding"
             targetAttribute: "code"
