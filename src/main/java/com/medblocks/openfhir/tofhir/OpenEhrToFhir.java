@@ -1,18 +1,9 @@
 package com.medblocks.openfhir.tofhir;
 
-import static com.medblocks.openfhir.fc.FhirConnectConst.CODE_PHRASE;
 import static com.medblocks.openfhir.fc.FhirConnectConst.CONDITION_OPERATOR_EMPTY;
 import static com.medblocks.openfhir.fc.FhirConnectConst.CONDITION_OPERATOR_NOT_EMPTY;
 import static com.medblocks.openfhir.fc.FhirConnectConst.CONDITION_OPERATOR_NOT_OF;
 import static com.medblocks.openfhir.fc.FhirConnectConst.CONDITION_OPERATOR_TYPE;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_BOOL;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_COUNT;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_DATE;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_DATE_TIME;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_MULTIMEDIA;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_PROPORTION;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_QUANTITY;
-import static com.medblocks.openfhir.fc.FhirConnectConst.DV_TIME;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_ARCHETYPE_FC;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_COMPOSITION_FC;
 import static com.medblocks.openfhir.fc.FhirConnectConst.OPENEHR_TYPE_NONE;
@@ -35,18 +26,12 @@ import com.medblocks.openfhir.fc.schema.context.FhirConnectContext;
 import com.medblocks.openfhir.fc.schema.model.Condition;
 import com.medblocks.openfhir.fc.schema.model.Mapping;
 import com.medblocks.openfhir.fc.schema.model.With;
+import com.medblocks.openfhir.tofhir.parser.ValueToFHIRParser;
 import com.medblocks.openfhir.toopenehr.FhirToOpenEhrHelper;
-import com.medblocks.openfhir.util.FhirInstanceCreator;
-import com.medblocks.openfhir.util.FhirInstanceCreatorUtility;
-import com.medblocks.openfhir.util.FhirInstancePopulator;
-import com.medblocks.openfhir.util.OpenEhrCachedUtils;
-import com.medblocks.openfhir.util.OpenEhrConditionEvaluator;
-import com.medblocks.openfhir.util.OpenFhirConst;
-import com.medblocks.openfhir.util.OpenFhirMapperUtils;
-import com.medblocks.openfhir.util.OpenFhirStringUtils;
+import com.medblocks.openfhir.util.*;
 import com.nedap.archie.rm.composition.Composition;
 import com.nedap.archie.rm.composition.ContentItem;
-import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -66,22 +51,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.ehrbase.openehr.sdk.serialisation.flatencoding.std.marshal.FlatJsonMarshaller;
 import org.ehrbase.openehr.sdk.webtemplate.model.WebTemplate;
 import org.hl7.fhir.r4.hapi.fluentpath.FhirPathR4;
-import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.Base;
-import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
-import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.DateTimeType;
-import org.hl7.fhir.r4.model.DateType;
-import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.IntegerType;
-import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
-import org.hl7.fhir.r4.model.TimeType;
 import org.hl7.fhir.r4.utils.FHIRPathUtilityClasses.ClassTypeInfo;
 import org.openehr.schemas.v1.OPERATIONALTEMPLATE;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1208,8 +1184,7 @@ public class OpenEhrToFhir {
                                       final String rmType, final String hardcodedValue,
                                       final boolean possibleRecursion) {
         String openEhrPath = null;
-        List<OpenEhrToFhirHelper.DataWithIndex> values = extractValues(mapping, joinedEntries, rmType, flatJsonObject,
-                                                                       hardcodedValue);
+        List<OpenEhrToFhirHelper.DataWithIndex> values = extractValues(mapping, joinedEntries, rmType, flatJsonObject, hardcodedValue, resourceType, fhirPath);
 //        if(values != null && openehr.equals(parentFollowedByOpenEhr) && rmType!=null  ){
 //           values.clear();
 //        }
@@ -1433,19 +1408,22 @@ public class OpenEhrToFhir {
      * Extracts values from joinedEntries and creates data points from that together with an index according
      * to flat path
      *
-     * @param mapping mapping currently being evaluated
-     * @param joinedEntries flat paths joined together
-     * @param rmType type of the data point
+     * @param mapping        mapping currently being evaluated
+     * @param joinedEntries  flat paths joined together
+     * @param rmType         type of the data point
      * @param flatJsonObject json object representing flat path format of a Composition
      * @param hardcodedValue if there is no mapping but rather a hardcoding, this will hold a value that needs
-     *         to be
-     *         hardcoded
+     *                       to be
+     *                       hardcoded
+     * @param resourceType
+     * @param fhirPath
      */
     private List<OpenEhrToFhirHelper.DataWithIndex> extractValues(final Mapping mapping,
                                                                   final Map<String, List<String>> joinedEntries,
                                                                   final String rmType,
                                                                   final JsonObject flatJsonObject,
-                                                                  final String hardcodedValue) {
+                                                                  final String hardcodedValue, String resourceType, String fhirPath) {
+        ValueToFHIRParser valueToFHIRParser = new ValueToFHIRParser(openFhirStringUtils, openFhirMapperUtils);
         List<OpenEhrToFhirHelper.DataWithIndex> values = new ArrayList<>();
         if (!OPENEHR_TYPE_NONE.equals(mapping.getWith().getType())) {
             if (StringUtils.isNotEmpty(hardcodedValue) && !joinedEntries.isEmpty()) {
@@ -1480,13 +1458,13 @@ public class OpenEhrToFhir {
 
             else {
                 values = joinedEntries.values().stream()
-                        .map(strings -> valueToDataPoint(strings, rmType, flatJsonObject, true))
+                        .map(strings -> valueToFHIRParser.parse(strings, rmType, flatJsonObject, true, resourceType, fhirPath))
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
             }
         } else if (mapping.getFhirCondition() != null) {
             values = joinedEntries.values().stream()
-                    .map(strings -> valueToDataPoint(strings, rmType, flatJsonObject, false))
+                    .map(strings -> valueToFHIRParser.parse(strings, rmType, flatJsonObject, false, resourceType, fhirPath))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
@@ -1797,374 +1775,9 @@ public class OpenEhrToFhir {
         return getLastReturn(instantiateAndSetReturn.getInner());
     }
 
-    /**
-     * Creates datapoints from extracted values from the given flat path format
-     *
-     * @param joinedValues flat path values as extracted from the given Composition in flat path format
-     * @param targetType target openEHR data type
-     * @param valueHolder original json object containing all the data
-     * @param canBeNull if returned data can be null, if false, a generic StringType will be added to the
-     *         returned object
-     * @return OpenEhrToFhirHelper.DataWithIndex with index and data populated
-     */
-    private OpenEhrToFhirHelper.DataWithIndex valueToDataPoint(final List<String> joinedValues,
-                                                               final String targetType,
-                                                               final JsonObject valueHolder,
-                                                               final boolean canBeNull) {
-        if (joinedValues == null || joinedValues.isEmpty()) {
-            return null;
-        }
 
-        final String path = joinedValues.get(0);
-        final Integer lastIndex = openFhirStringUtils.getLastIndex(path);
 
-        // Fetching common values once
-        final String value = fetchValue(joinedValues, "value");
-        final String code = fetchValue(joinedValues, "code");
-        final String terminology = fetchValue(joinedValues, "terminology");
-        final String id = fetchValue(joinedValues, "id");
-        final String ordinal = fetchValue(joinedValues, "ordinal");
 
-        return switch (targetType) {
-            case DV_PROPORTION, "PROPORTION" -> handleProportion(joinedValues, valueHolder, lastIndex, path);
-            case DV_QUANTITY, "QUANTITY" -> handleQuantity(joinedValues, valueHolder, lastIndex, path, value, code);
-            case DV_COUNT -> handleCount(valueHolder, lastIndex, path);
-            case DV_DATE_TIME, "DATETIME" -> handleDateTime(valueHolder, lastIndex, path);
-            case DV_TIME, "TIME" -> handleTime(valueHolder, lastIndex, path);
-            case DV_BOOL, "BOOL" -> handleBoolean(valueHolder, lastIndex, path);
-            case DV_DATE, "DATE" -> handleDate(valueHolder, lastIndex, path);
-            case FhirConnectConst.DV_CODED_TEXT, FhirConnectConst.DV_ORDINAL, "CODEABLECONCEPT" ->
-                    handleCodeableConcept(valueHolder, lastIndex, path, value, terminology, code, ordinal);
-            case CODE_PHRASE, "CODING" -> handleCoding(valueHolder, lastIndex, path, terminology, code, value);
-            case DV_MULTIMEDIA, "MEDIA" -> handleMedia(valueHolder, lastIndex, path);
-            case FhirConnectConst.DV_TEXT, "STRING", "TEXT" -> handleString(valueHolder, lastIndex, path, canBeNull);
-            case FhirConnectConst.DV_IDENTIFIER, "IDENTIFIER" -> handleIdentifier(valueHolder, lastIndex, path, id);
-            default -> handleString(valueHolder, lastIndex, path, canBeNull);
-        };
-    }
-
-    private List<String> getAllValues(final List<String> paths, final JsonObject valueHolder) {
-        if (paths == null || valueHolder == null) {
-            return null;
-        }
-        return paths.stream()
-                .map(path -> getFromValueHolder(valueHolder, path))
-                .collect(Collectors.toList());
-    }
-
-    private String fetchValue(final List<String> joinedValues, final String suffix) {
-        return joinedValues.stream()
-                .filter(s -> s.endsWith(suffix))
-                .findAny()
-                .orElse(null);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleProportion(final List<String> joinedValues,
-                                                               final JsonObject valueHolder,
-                                                               final Integer lastIndex,
-                                                               final String path) {
-        final String proportionVal = joinedValues.get(0);
-        final String numerator = proportionVal + "|numerator";
-        final String denominator = proportionVal + "|denominator";
-
-        final Quantity proportionQuantity = new Quantity();
-        final String proportionValueHolder = getFromValueHolder(valueHolder, denominator);
-        if ("100.0".equals(proportionValueHolder)) {
-            proportionQuantity.setCode("%");
-            proportionQuantity.setUnit("percent");
-            proportionQuantity.setSystem("http://unitsofmeasure.org");
-        }
-
-        final Object valueToAdd = getDoubleOrLong(getFromValueHolder(valueHolder, numerator));
-        if (valueToAdd instanceof Long) {
-            proportionQuantity.setValue((Long) valueToAdd);
-        } else if (valueToAdd instanceof Double) {
-            proportionQuantity.setValue((Double) valueToAdd);
-        }
-
-        return new OpenEhrToFhirHelper.DataWithIndex(proportionQuantity, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleCount(final JsonObject valueHolder,
-                                                          final Integer lastIndex,
-                                                          final String path) {
-        return new OpenEhrToFhirHelper.DataWithIndex(new IntegerType(getFromValueHolder(valueHolder, path)), lastIndex,
-                                                     path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleQuantity(final List<String> joinedValues,
-                                                             final JsonObject valueHolder,
-                                                             final Integer lastIndex,
-                                                             final String path,
-                                                             final String value,
-                                                             final String code) {
-        final String magnitude = fetchValue(joinedValues, "magnitude");
-        final String unit = fetchValue(joinedValues, "unit");
-        final String ordinal = fetchValue(joinedValues, "ordinal");
-
-        final Quantity quantity = new Quantity();
-        setQuantityValue(valueHolder, quantity, magnitude, ordinal);
-
-        if (unit != null) {
-            quantity.setUnit(getFromValueHolder(valueHolder, unit));
-        }
-        if (value != null) {
-            quantity.setUnit(getFromValueHolder(valueHolder, value));
-        }
-        if (code != null) {
-            quantity.setCode(getFromValueHolder(valueHolder, code));
-        }
-
-        if (magnitude == null && ordinal == null && unit == null && value == null && code == null) {
-            setQuantityFromPath(valueHolder, quantity, path);
-        }
-
-        return new OpenEhrToFhirHelper.DataWithIndex(quantity, lastIndex, path);
-    }
-
-    private void setQuantityValue(final JsonObject valueHolder, final Quantity quantity,
-                                  final String magnitude, final String ordinal) {
-        if (magnitude != null) {
-            final Object magVal = getDoubleOrLong(getFromValueHolder(valueHolder, magnitude));
-            if (magVal != null) {
-                quantity.setValue(magVal instanceof Long ? (Long) magVal : (Double) magVal);
-            }
-        } else if (ordinal != null) {
-            final Object ordVal = getDoubleOrLong(getFromValueHolder(valueHolder, ordinal));
-            if (ordVal instanceof Long) {
-                quantity.setValue((Long) ordVal);
-            } else if (ordVal instanceof Double) {
-                quantity.setValue((Double) ordVal);
-            }
-        }
-    }
-
-    private void setQuantityFromPath(final JsonObject valueHolder, final Quantity quantity,
-                                     final String path) {
-        final Object pathVal = getDoubleOrLong(getFromValueHolder(valueHolder, path));
-        if (pathVal instanceof Long) {
-            quantity.setValue((Long) pathVal);
-        } else if (pathVal instanceof Double) {
-            quantity.setValue((Double) pathVal);
-        }
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleDateTime(final JsonObject valueHolder,
-                                                             final Integer lastIndex,
-                                                             final String path) {
-        final DateTimeType dateTimeType = new DateTimeType();
-        dateTimeType.setValue(openFhirMapperUtils.stringToDate(getFromValueHolder(valueHolder, path)));
-        return new OpenEhrToFhirHelper.DataWithIndex(dateTimeType, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleTime(final JsonObject valueHolder,
-                                                         final Integer lastIndex,
-                                                         final String path) {
-        final TimeType timeType = new TimeType();
-        timeType.setValue(getFromValueHolder(valueHolder, path));
-        return new OpenEhrToFhirHelper.DataWithIndex(timeType, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleBoolean(final JsonObject valueHolder,
-                                                            final Integer lastIndex,
-                                                            final String path) {
-        final BooleanType booleanType = new BooleanType();
-        booleanType.setValue(Boolean.valueOf(getFromValueHolder(valueHolder, path)));
-        return new OpenEhrToFhirHelper.DataWithIndex(booleanType, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleDate(final JsonObject valueHolder,
-                                                         final Integer lastIndex,
-                                                         final String path) {
-        final DateType dateType = new DateType();
-        dateType.setValue(openFhirMapperUtils.stringToDate(getFromValueHolder(valueHolder, path)));
-        return new OpenEhrToFhirHelper.DataWithIndex(dateType, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleCodeableConcept(final JsonObject valueHolder,
-                                                                    final Integer lastIndex,
-                                                                    final String path,
-                                                                    final String value,
-                                                                    final String terminology,
-                                                                    final String code,
-                                                                    final String ordinal) {
-        final CodeableConcept data = new CodeableConcept();
-
-        // Try to get values from the path first, then fall back to the pre-fetched paths
-        String textValue = getFromValueHolder(valueHolder, path + "|value");
-        String codeValue = getFromValueHolder(valueHolder, path + "|code");
-        String systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, path + "|terminology"));
-        String ordinalValue = getFromValueHolder(valueHolder, path + "|ordinal");
-        String version = getVersion(getFromValueHolder(valueHolder, path + "|terminology"));
-
-        // Fall back to pre-fetched paths if needed
-        if (textValue == null && value != null) {
-            textValue = getFromValueHolder(valueHolder, value);
-        }
-
-        if (codeValue == null && code != null) {
-            codeValue = getFromValueHolder(valueHolder, code);
-        }
-
-        if (systemValue == null && terminology != null) {
-            systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, terminology));
-        }
-
-        if (ordinalValue == null && ordinal != null) {
-            ordinalValue = getFromValueHolder(valueHolder, ordinal);
-        }
-
-        data.setText(textValue);
-
-        // Add the primary coding
-        if (codeValue != null || systemValue != null) {
-            Coding coding =new Coding(systemValue, codeValue, textValue);
-            if(version != null){
-                coding.setVersion(version);
-            }
-            data.addCoding(coding);
-        }
-
-        if (ordinalValue != null) {
-            data.setText(ordinalValue);
-        }
-
-        // Process additional mappings
-        processMappings(valueHolder, path, data);
-
-        return new OpenEhrToFhirHelper.DataWithIndex(data, lastIndex, path);
-    }
-
-    private String getVersion(String fromValueHolder) {
-        if(fromValueHolder!=null){
-            int open = fromValueHolder.indexOf('(');
-            int close = fromValueHolder.indexOf(')');
-            if (open >= 0 && close > open) {
-                return fromValueHolder.substring(open + 1, close);
-            }
-        }
-        return null;
-    }
-
-    private String cleanVersionFromSystem(String system) {
-        if (system == null) return null;
-        int open = system.lastIndexOf('(');
-        int close = system.lastIndexOf(')');
-        if (open >= 0 && close > open) {
-            return system.substring(0, open).trim();
-        }
-        return system;
-    }
-
-    /**
-     * Process terminology mappings for a given path and add them as additional codings to the CodeableConcept.
-     * <p>
-     * In openEHR, a coded term can have multiple mappings to other terminologies. This method extracts those
-     * mappings from the flat JSON structure and adds them as additional codings to the FHIR CodeableConcept.
-     *
-     * @param valueHolder JSON object containing the values from the openEHR composition
-     * @param path Base path to the coded element
-     * @param codeableConcept CodeableConcept to add mappings to
-     */
-    private void processMappings(final JsonObject valueHolder, final String path,
-                                 final CodeableConcept codeableConcept) {
-        // Mappings in openEHR flat format are represented as _mapping:0, _mapping:1, etc.
-        for (int mappingIndex = 0; ; mappingIndex++) {
-            String mappingPrefix = path + "/_mapping:" + mappingIndex;
-
-            // Check if this mapping exists by looking for any key that starts with the mapping prefix
-            if (!mappingExistsInValueHolder(valueHolder, mappingPrefix)) {
-                break;  // No more mappings found
-            }
-
-            // Extract mapping details
-            String terminology = cleanVersionFromSystem(getFromValueHolder(valueHolder, mappingPrefix + "/target|terminology"));
-            String code = getFromValueHolder(valueHolder, mappingPrefix + "/target|code");
-            String preferredTerm = getFromValueHolder(valueHolder, mappingPrefix + "/target|preferred_term");
-
-            // Add mapping as a coding if we have at least a system or code
-            if (terminology != null || code != null) {
-                codeableConcept.addCoding(new Coding(terminology, code, preferredTerm));
-            }
-        }
-    }
-
-    /**
-     * Check if a mapping exists in the valueHolder by looking for any key that starts with the mapping prefix
-     *
-     * @param valueHolder JSON object containing the values
-     * @param mappingPrefix Prefix to check for
-     * @return true if a mapping with this prefix exists
-     */
-    private boolean mappingExistsInValueHolder(final JsonObject valueHolder, final String mappingPrefix) {
-        for (String key : valueHolder.keySet()) {
-            if (key.startsWith(mappingPrefix)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleCoding(final JsonObject valueHolder,
-                                                           final Integer lastIndex,
-                                                           final String path,
-                                                           final String terminologyPath,
-                                                           final String codePath,
-                                                           final String valuePath) {
-        String textValue = getFromValueHolder(valueHolder, valuePath);
-        String codeValue = getFromValueHolder(valueHolder, codePath);
-        String systemValue = cleanVersionFromSystem(getFromValueHolder(valueHolder, terminologyPath));
-        String version = getVersion(getFromValueHolder(valueHolder, terminologyPath));
-        Coding coding = new Coding(systemValue, codeValue, textValue);
-        if(version!=null)
-            coding.setVersion(version);
-        return new OpenEhrToFhirHelper.DataWithIndex(coding,
-                                                     lastIndex,
-                                                     path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleMedia(final JsonObject valueHolder,
-                                                          final Integer lastIndex,
-                                                          final String path) {
-        final Attachment att = new Attachment();
-        att.setContentType(getFromValueHolder(valueHolder, path + "|mediatype"));
-
-        final String size = getFromValueHolder(valueHolder, path + "|size");
-        if (size != null) {
-            att.setSize(Integer.parseInt(size));
-        }
-
-        att.setUrl(getFromValueHolder(valueHolder, path + "|url"));
-
-        final String dataBytes = getFromValueHolder(valueHolder, path + "|data");
-        att.setData(dataBytes == null ? null : dataBytes.getBytes(StandardCharsets.UTF_8));
-
-        return new OpenEhrToFhirHelper.DataWithIndex(att, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleIdentifier(final JsonObject valueHolder,
-                                                               final Integer lastIndex,
-                                                               final String path,
-                                                               final String id) {
-        final Identifier identifier = new Identifier();
-        identifier.setValue(
-                getFromValueHolder(valueHolder, StringUtils.isEmpty(id) ? (path + "/identifier_value|id") : id));
-        return new OpenEhrToFhirHelper.DataWithIndex(identifier, lastIndex, path);
-    }
-
-    private OpenEhrToFhirHelper.DataWithIndex handleString(final JsonObject valueHolder,
-                                                           final Integer lastIndex,
-                                                           final String path,
-                                                           final boolean canBeNull) {
-        final String fromValueHolder = getFromValueHolder(valueHolder, path);
-        if (StringUtils.isNotEmpty(fromValueHolder)) {
-            return new OpenEhrToFhirHelper.DataWithIndex(new StringType(fromValueHolder), lastIndex, path);
-        } else if (canBeNull) {
-            return null;
-        } else {
-            return new OpenEhrToFhirHelper.DataWithIndex(new StringType(), lastIndex, path);
-        }
-    }
 
 
     /**
@@ -2208,23 +1821,6 @@ public class OpenEhrToFhir {
         }
     }
 
-    private Object getDoubleOrLong(final String value) {
-        if (StringUtils.isEmpty(value)) {
-            return null;
-        }
-        try {
-            return Long.parseLong(value);
-        } catch (final Exception e) {
-            return Double.parseDouble(value);
-        }
-    }
-
-    private String getFromValueHolder(final JsonObject valueHolder, final String path) {
-        if (valueHolder.has(path)) {
-            return valueHolder.get(path).getAsString();
-        }
-        return null;
-    }
 
     @AllArgsConstructor
     @Data
