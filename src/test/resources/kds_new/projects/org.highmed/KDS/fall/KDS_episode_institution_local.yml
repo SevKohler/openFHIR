@@ -214,7 +214,7 @@ mappings:
         - name: "condition"
           with:
             fhir: "$fhirRoot"
-            openehr: "$openEhrRoot"
+            openehr: "$openehrRoot"
           slotArchetype: "EVALUATION.problem_diagnosis.v1"
 #    followedBy:
 #      mappings:
