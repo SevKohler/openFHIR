@@ -345,6 +345,31 @@
         "value" : {
           "_type" : "DV_CODED_TEXT",
           "value" : "C21.8",
+          "mappings" : [ {
+            "_type" : "TERM_MAPPING",
+            "match" : "?",
+            "target" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://fhir.de/CodeSystem/bfarm/alpha-id (2022)"
+              },
+              "code_string" : "I29975",
+              "preferred_term" : "Bösartige anorektale Neubildung"
+            }
+          }, {
+            "_type" : "TERM_MAPPING",
+            "match" : "?",
+            "target" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://snomed.info/sct (20230731)"
+              },
+              "code_string" : "447886005",
+              "preferred_term" : "Adenocarcinoma of anorectum (disorder)"
+            }
+          } ],
           "defining_code" : {
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
@@ -356,24 +381,49 @@
         },
         "archetype_node_id" : "at0002"
       }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Anatomische Lokalisation"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.anatomical_location.v1"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Name der Körperstelle"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "281088000",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://snomed.info/sct (20230731)"
+              },
+              "code_string" : "281088000"
+            }
+          },
+          "archetype_node_id" : "at0001"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.anatomical_location.v1"
+      }, {
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
-          "value" : "Diagnosetyp"
+          "value" : "Kommentar"
         },
         "value" : {
-          "_type" : "DV_CODED_TEXT",
-          "value" : "Überweisungsdiagnose",
-          "defining_code" : {
-            "_type" : "CODE_PHRASE",
-            "terminology_id" : {
-              "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur"
-            },
-            "code_string" : "referral-diagnosis"
-          }
+          "_type" : "DV_TEXT",
+          "value" : "Bösartige anorektale Neubildung"
         },
-        "archetype_node_id" : "at0009"
+        "archetype_node_id" : "at0069"
       } ],
       "archetype_node_id" : "at0001"
     },
