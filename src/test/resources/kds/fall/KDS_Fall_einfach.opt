@@ -14,7 +14,7 @@
         <other_details id="original_namespace"></other_details>
         <other_details id="original_publisher"></other_details>
         <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">22.0.0</other_details>
+        <other_details id="sem_ver">25.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <other_details id="MD5-CAM-1.0.1">678bafab2e7f5af3a3df821b02cfd2b7</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">1fa06d56b4746d975400302192a97609</other_details>
@@ -450,7 +450,7 @@
                                                             <upper>1</upper>
                                                         </occurrences>
                                                         <node_id></node_id>
-                                                        <referenceSetUri>ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/kontaktebene-de</referenceSetUri>
+                                                        <referenceSetUri>ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/kontaktebene</referenceSetUri>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -3609,6 +3609,10 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                 <archetype_id>
                                     <value>openEHR-EHR-CLUSTER.anatomical_location.v1</value>
                                 </archetype_id>
+                                <term_definitions code="at0000">
+                                    <items id="text">Anatomische Lokalisation</items>
+                                    <items id="description">Eine physische Stelle am oder innerhalb des menschlichen Körpers.</items>
+                                </term_definitions>
                                 <term_definitions code="at0001">
                                     <items id="text">Name der Körperstelle</items>
                                     <items id="description">Identifikation einer einzelnen physischen Stelle entweder am oder innerhalb des menschlichen Körpers.</items>
@@ -3752,10 +3756,6 @@ In den meisten Fällen wird es sich um eine einzige spezifische Stelle handeln. 
                                 <term_definitions code="at0082">
                                     <items id="text">Dorsal</items>
                                     <items id="description">In Richtung des Handrückens oder des Fußrückens hin gelegen. Als Gegenstück zu Palmar oder Plantar, nicht als Synonym für posterior.</items>
-                                </term_definitions>
-                                <term_definitions code="at0000">
-                                    <items id="text">Anatomische Lokalisation</items>
-                                    <items id="description">Eine physische Stelle am oder innerhalb des menschlichen Körpers.</items>
                                 </term_definitions>
                                 <term_bindings terminology="SNOMED-CT">
                                     <items code="at0002">

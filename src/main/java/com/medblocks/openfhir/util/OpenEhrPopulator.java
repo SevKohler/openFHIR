@@ -386,6 +386,11 @@ public class OpenEhrPopulator {
         } else if (value instanceof StringType extractedString && path.contains("|")) {
             addToConstructingFlat(path, extractedString.getValue(), flat);
             return true;
+        }else if(value instanceof Identifier identifier){
+            addToConstructingFlat(path + "|code", identifier.getValue(), flat);
+            addToConstructingFlat(path +"|terminology",  identifier.getSystem(), flat);
+            addToConstructingFlat(path + "|value", identifier.getValue(), flat);
+            return true;
         } else {
             log.warn("openEhrType is DV_CODED_TEXT but extracted value is not CodeableConcept; is {}",
                      value.getClass());
@@ -401,6 +406,7 @@ public class OpenEhrPopulator {
             addToConstructingFlat(path + "|value", coding.getCode(), flat);
         }
     }
+
 
     private void setTerminology(String path, Coding coding, JsonObject flat) {
         if (coding.hasVersion() & !Objects.equals(coding.getVersion(), "")){

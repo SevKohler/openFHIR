@@ -21,7 +21,7 @@ mappings:
       targetRoot: "$fhirRoot.coding"
       targetAttribute: "system"
       operator: "one of"
-      criteria: "http://fhir.de/CodeSystem/Kontaktebene-de"
+      criteria: "http://fhir.de/CodeSystem/kontaktebene"
 
   - name: "kontaktArt"
     with:
