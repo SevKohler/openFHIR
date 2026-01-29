@@ -196,21 +196,26 @@ mappings:
                         value: "http://fhir.de/StructureDefinition/Entlassungsgrund"
 
 
+#  - name: "problemDiagnoseParent"
+#    extension: "add"
+#    with:
+#      fhir: "$resource.diagnosis"
+#      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
+#    slotArchetype: "EVALUATION.problem_diagnosis.v1"
+
   - name: "problemDiagnoseParent"
     extension: "add"
     with:
-      fhir: "$resource.diagnosis"
-      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
-    slotArchetype: "EVALUATION.problem_diagnosis.v1"
-#    reference: TODO needs fix due bug
-#      resourceType: "Condition"
-#      mappings:
-#        - name: "condition"
-#          with:
-#            fhir: "condition"
-#            openehr: "$openehrRoot"
-#    slotArchetype: "EVALUATION.problem_diagnosis.v1"
-#      type: "NONE"
+      fhir: "$resource.diagnosis.condition"
+      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #needs to be here since for each diagnosis archetype do one condition and vice versa
+    reference:
+      resourceType: "Condition" # this creates an extra encounter with a condition inside
+      mappings:
+        - name: "condition"
+          with:
+            fhir: "$fhirRoot"
+            openehr: "$openEhrRoot"
+          slotArchetype: "EVALUATION.problem_diagnosis.v1"
 #    followedBy:
 #      mappings:
 #        - name: "reference"
