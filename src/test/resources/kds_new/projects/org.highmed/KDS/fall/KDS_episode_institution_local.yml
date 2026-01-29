@@ -207,14 +207,16 @@ mappings:
     extension: "add"
     with:
       fhir: "$resource.diagnosis.condition"
-      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #needs to be here since for each diagnosis archetype do one condition and vice versa
+      openehr: "$reference" #create one reference instead of two
+   #   openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #1 needs to be here since for each diagnosis archetype do one condition and vice versa
     reference:
       resourceType: "Condition" # this creates an extra encounter with a condition inside
       mappings:
         - name: "condition"
           with:
             fhir: "$fhirRoot"
-            openehr: "$openehrRoot"
+            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
+           # openehr: "$openehrRoot"  #1 corect mapping for n-to-n
           slotArchetype: "EVALUATION.problem_diagnosis.v1"
 #    followedBy:
 #      mappings:
