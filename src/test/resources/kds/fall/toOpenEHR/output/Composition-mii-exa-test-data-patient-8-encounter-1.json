@@ -355,6 +355,17 @@
           }
         },
         "archetype_node_id" : "at0002"
+      }, {
+        "_type" : "ELEMENT",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Kommentar"
+        },
+        "value" : {
+          "_type" : "DV_TEXT",
+          "value" : "Akuter Herzinfarkt"
+        },
+        "archetype_node_id" : "at0069"
       } ],
       "archetype_node_id" : "at0001"
     },

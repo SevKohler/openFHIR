@@ -23,6 +23,25 @@ mappings:
       fhir: "$resource.status"
       openehr: "$composition/context/other_context[at0001]/items[at0010]"
 
+#  - name: "fallIdParent"
+#    extension: "add"
+#    with:
+#      fhir: "$resource.identifier"
+#      openehr: "$composition/context"
+#      type: "NONE"
+#    followedBy:
+#      mappings:
+#        - name: "fallId"
+#          with:
+#            fhir: "$fhirRoot"
+#            openehr: "other_context[at0001]/items[at0003]/defining_code"
+#            type: "NONE"
+#          followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
+#            mappings:
+#              - name: "system"
+#                with:
+#                  fhir: "system"
+#                  openehr: "terminology"
 
   - name: "fallIdParent"
     extension: "add"
@@ -44,22 +63,15 @@ mappings:
             type: "NONE"
           followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
             mappings:
-              - name: "defining_code"
+              - name: "system"
                 with:
-                  fhir: "$fhirRoot"
-                  openehr: "defining_code"
-                  type: "NONE"
-                followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
-                  mappings:
-                    - name: "system"
-                      with:
-                        fhir: "system"
-                        openehr: "terminology_id/value"
+                  fhir: "system"
+                  openehr: "defining_code/terminology_id"
 
-                    - name: "value"
-                      with:
-                        fhir: "value"
-                        openehr: "code_string"
+              - name: "value"
+                with:
+                  fhir: "value"
+                  openehr: "defining_code/code_string"
 
               - name: "value"
                 unidirectional: "fhir->openehr"
