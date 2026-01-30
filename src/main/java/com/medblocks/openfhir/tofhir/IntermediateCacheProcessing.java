@@ -124,7 +124,9 @@ public class IntermediateCacheProcessing {
                     followedByParentOpenEhr);
             return;
         }
-        final boolean lastOpenEhrIsDigit = !fullOpenEhrPath.isEmpty() && Character.isDigit(fullOpenEhrPath.charAt(fullOpenEhrPath.length() - 1));
+        final boolean lastOpenEhrIsDigit = !fullOpenEhrPath.isEmpty()
+                && fullOpenEhrPath.lastIndexOf(":") != -1
+                && Character.isDigit(fullOpenEhrPath.charAt(fullOpenEhrPath.length() - 1));
         if (hardcodedReturn.isList() && followedByParentOpenEhr != null) {
             // store the whole list under the one without any index
             handlePopulationWhereParentAndList(hardcodedReturn, objectRef, instantiatedIntermediateElements, path,
