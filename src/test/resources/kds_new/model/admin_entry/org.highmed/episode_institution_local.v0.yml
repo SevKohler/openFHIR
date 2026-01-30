@@ -11,6 +11,7 @@ spec:
     revision: 0.0.1-alpha
   fhirConfig:
     structureDefinition: http://hl7.org/fhir/StructureDefinition/Encounter
+    multiple: false
 
 mappings:
 

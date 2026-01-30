@@ -20,13 +20,6 @@ preprocessor:
     criteria: "entered-in-error"
 
 mappings:
-
-  - name: "contextStartTime"
-    with:
-      fhir: "$resource.recordedDate"
-      openehr: "$composition/context/start_time"
-      
-
   #  - name: "participations"
   #    with:
   #      fhir: "$resource.asserter"
@@ -115,6 +108,10 @@ mappings:
       fhir: "$resource.severity"
       openehr: "$archetype/data[at0001]/items[at0005]"
       
+  - name: "contextStartTime"
+    with:
+      fhir: "$resource.recordedDate"
+      openehr: "$composition/context/start_time"
 
 
 
