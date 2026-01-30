@@ -166,17 +166,23 @@ mappings:
   - name: "problemDiagnoseParent"
     extension: "add"
     with:
-      fhir: "$resource.diagnosis"
-      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
+      fhir: "$resource.diagnosis.condition"
+      openehr: "$reference"
     reference:
       resourceType: "Condition" # this creates an extra encounter with a condition inside
       mappings:
         - name: "condition"
           with:
-            fhir: "condition"
-            openehr: "$openehrRoot" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
+            fhir: "$fhirRoot"
+            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
           slotArchetype: "EVALUATION.problem_diagnosis.v1"
-
+          followedBy:
+            mappings:
+              - name: "diagnoseTyp"
+                with:
+                  fhir: "..use"
+                  openehr: "data[at0001]/items[openEHR-EHR-CLUSTER.diagnosetyp.v0]"
+                slotArchetype: "CLUSTER.diagnosetyp.v0"
 
 #  - name: "problemDiagnoseParent"
 #    extension: "add"

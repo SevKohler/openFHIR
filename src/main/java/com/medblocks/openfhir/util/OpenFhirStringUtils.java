@@ -322,6 +322,64 @@ public class OpenFhirStringUtils {
                 .replace(FHIR_ROOT_FC, "");
     }
 
+    public String resolveRelativeFhirPath(final String parentPath, final String childPath) {
+        if (childPath == null) {
+            return null;
+        }
+        String remaining = childPath.trim();
+        if (!remaining.startsWith("..")) {
+            return remaining;
+        }
+        int upCount = 0;
+        while (remaining.startsWith("..")) {
+            upCount++;
+            remaining = remaining.substring(2);
+            if (remaining.startsWith(".")) {
+                remaining = remaining.substring(1);
+            }
+        }
+        if (StringUtils.isBlank(parentPath)) {
+            return remaining;
+        }
+        final List<String> parentParts = splitFhirPathTopLevel(parentPath);
+        final int endIndex = Math.max(0, parentParts.size() - upCount);
+        final String base = endIndex == 0 ? "" : String.join(".", parentParts.subList(0, endIndex));
+        if (StringUtils.isBlank(remaining)) {
+            return base;
+        }
+        if (StringUtils.isBlank(base)) {
+            return remaining;
+        }
+        return base + "." + remaining;
+    }
+
+    public List<String> splitFhirPathTopLevel(final String path) {
+        if (StringUtils.isBlank(path)) {
+            return List.of();
+        }
+        final List<String> parts = new ArrayList<>();
+        final StringBuilder current = new StringBuilder();
+        int depth = 0;
+        for (int i = 0; i < path.length(); i++) {
+            final char ch = path.charAt(i);
+            if (ch == '(') {
+                depth++;
+            } else if (ch == ')' && depth > 0) {
+                depth--;
+            }
+            if (ch == '.' && depth == 0) {
+                parts.add(current.toString());
+                current.setLength(0);
+            } else {
+                current.append(ch);
+            }
+        }
+        if (current.length() > 0) {
+            parts.add(current.toString());
+        }
+        return parts;
+    }
+
     /**
      * fixes fhirPath casting, as BooleanType is not a valid FHIR path, but boolean is.. similar to StringType > String,
      * ..
