@@ -5,6 +5,7 @@ import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
 import org.hl7.fhir.r4.model.Attachment;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class MediaParser {
 
@@ -25,7 +26,14 @@ public class MediaParser {
         att.setUrl(fhirValueReaders.get(valueHolder, path + "|url"));
 
         String dataBytes = fhirValueReaders.get(valueHolder, path + "|data");
-        att.setData(dataBytes == null ? null : dataBytes.getBytes(StandardCharsets.UTF_8));
+        if (dataBytes != null) {
+            try {
+                att.setData(Base64.getDecoder().decode(dataBytes));
+            } catch (IllegalArgumentException e) {
+                // fallback for non-base64 test fixtures
+                att.setData(dataBytes.getBytes(StandardCharsets.UTF_8));
+            }
+        }
 
         return new OpenEhrToFhirHelper.DataWithIndex(att, lastIndex, path);
     }

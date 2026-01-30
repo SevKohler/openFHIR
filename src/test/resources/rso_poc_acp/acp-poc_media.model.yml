@@ -16,6 +16,7 @@ mappings:
     with:
       fhir: "$fhirRoot"
       openehr: "$archetype/items[at0001]"
+      type: "DV_MULTIMEDIA"
     followedBy:
       mappings:
         - name: "title"

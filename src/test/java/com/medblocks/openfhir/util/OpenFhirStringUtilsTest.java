@@ -293,7 +293,7 @@ public class OpenFhirStringUtilsTest {
         condition.setTargetAttribute("system");
         condition.setCriteria("[external identifier]");
         condition.setOperator("one of");
-        Assert.assertEquals("MedicationStatement.identifier.where(system.toString() = 'external identifier')",
+        Assert.assertEquals("MedicationStatement.identifier.where(system.toString().lower() = 'external identifier')",
                 openFhirStringUtils.getFhirPathWithConditions("MedicationStatement.identifier",
                         condition,
                         "MedicationStatement",
@@ -310,7 +310,7 @@ public class OpenFhirStringUtilsTest {
         condition.setTargetAttribute("system");
         condition.setCriteria("[id]");
         condition.setOperator("one of");
-        Assert.assertEquals("Patient.identifier.where(system.toString() = 'id')",
+        Assert.assertEquals("Patient.identifier.where(system.toString().lower() = 'id')",
                 openFhirStringUtils.getFhirPathWithConditions("Patient.identifier",
                         condition,
                         "Patient",
@@ -335,7 +335,7 @@ public class OpenFhirStringUtilsTest {
         condition.setCriteria("[http://fhir.de/CodeSystem/bfarm/icd-10-gm]");
         condition.setOperator("one of");
         Assert.assertEquals(
-                "Condition.extension.where(url.toString().contains('http://hl7.org/fhir/StructureDefinition/condition-related')).value.resolve().code.coding.where(system.toString() = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm').code",
+                "Condition.extension.where(url.toString().contains('http://hl7.org/fhir/StructureDefinition/condition-related')).value.resolve().code.coding.where(system.toString().lower() = 'http://fhir.de/codesystem/bfarm/icd-10-gm').code",
                 openFhirStringUtils.getFhirPathWithConditions(
                         "Condition.extension.where(url.toString().contains('http://hl7.org/fhir/StructureDefinition/condition-related')).value.resolve().code.coding.code",
                         condition,

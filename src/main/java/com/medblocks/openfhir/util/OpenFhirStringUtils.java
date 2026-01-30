@@ -649,6 +649,8 @@ public class OpenFhirStringUtils {
                 .map(code -> {
                     if(targetAttr.contains("coding")){
                         return targetAttr.replace(".code",".where")+ "(code='" + code + "').exists()";
+                    } else if (targetAttr.contains("system")) {
+                        return targetAttr + ".toString().lower() = '" + code.toLowerCase() + "'";
                     } else if (targetAttr.contains("url")) {
                         return targetAttr +".toString().contains('"+code+"')";
                     } else {

@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.medblocks.openfhir.fc.FhirConnectConst;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -126,6 +127,7 @@ public class OpenEhrPopulator {
         switch (openEhrType) {
             case FhirConnectConst.DV_MULTIMEDIA:
                 handleDvMultimedia(openEhrPath, extractedValue, constructingFlat);
+                return;
             case FhirConnectConst.DV_QUANTITY:
                 final boolean addedQuantity = handleDvQuantity(openEhrPath, extractedValue, constructingFlat);
                 if (addedQuantity) {
@@ -216,12 +218,36 @@ public class OpenEhrPopulator {
             addToConstructingFlat(path + "|mediatype", attachment.getContentType(), flat);
             if (StringUtils.isNotEmpty(attachment.getUrl())) {
                 addToConstructingFlat(path + "|url", attachment.getUrl(), flat);
-            } else {
-                addToConstructingFlat(path + "|data", Base64.getEncoder().encodeToString(attachment.getData()), flat);
+            } else if (attachment.getData() != null) {
+                final String dataString = new String(attachment.getData(), StandardCharsets.UTF_8);
+                final String dataToStore = isLikelyBase64(dataString) ? dataString
+                        : Base64.getEncoder().encodeToString(attachment.getData());
+                addToConstructingFlat(path + "|data", dataToStore, flat);
             }
         } else {
             log.warn("openEhrType is MULTIMEDIA but extracted value is not Attachment; is {}", value.getClass());
         }
+    }
+
+    private boolean isLikelyBase64(final String value) {
+        if (StringUtils.isBlank(value)) {
+            return false;
+        }
+        final String trimmed = value.trim();
+        if (trimmed.length() % 4 != 0) {
+            return false;
+        }
+        for (int i = 0; i < trimmed.length(); i++) {
+            final char c = trimmed.charAt(i);
+            final boolean ok = (c >= 'A' && c <= 'Z')
+                    || (c >= 'a' && c <= 'z')
+                    || (c >= '0' && c <= '9')
+                    || c == '+' || c == '/' || c == '=';
+            if (!ok) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean handleDvQuantity(final String path, final Base value, final JsonObject flat) {

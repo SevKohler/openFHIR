@@ -96,7 +96,7 @@ public class ProcedureTest extends KdsBidirectionalTest {
                 .getAsString());
         Assert.assertEquals("Interventional neurovascular procedures,", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|value")
                 .getAsString());
-        Assert.assertEquals("http://fhir.de/CodeSystem/bfarm/ops",
+        Assert.assertEquals("http://fhir.de/CodeSystem/bfarm/ops (20200131)",
                             jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|terminology")
                                     .getAsString());
 

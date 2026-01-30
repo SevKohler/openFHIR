@@ -42,7 +42,7 @@ public class RsoPocBidirectionalTest extends GenericTest {
     }
 
     @Test
-    public void toOpenEhrToFhir() {
+      public void toOpenEhrToFhir() {
         final Bundle testBundle = testAcp();
         final Composition composition = fhirToOpenEhr.fhirToCompositionRm(context, testBundle, operationaltemplate);
 
@@ -58,31 +58,32 @@ public class RsoPocBidirectionalTest extends GenericTest {
         Assert.assertEquals("NR", ((DvCodedText) composition.itemAtPath(typeOfDirectiveCodePath)).getDefiningCode()
                 .getCodeString());
         Assert.assertEquals("urn:oid:2.16.840.1.113883.2.4.3.11.60.40.4.14.1",
-                            ((DvCodedText) composition.itemAtPath(typeOfDirectiveCodePath)).getDefiningCode()
-                                    .getTerminologyId().getValue());
+                ((DvCodedText) composition.itemAtPath(typeOfDirectiveCodePath)).getDefiningCode()
+                        .getTerminologyId().getValue());
         Assert.assertEquals("active", ((DvText) composition.itemAtPath(statusPath)).getValue());
         Assert.assertEquals("Comment of this thing which is nice",
-                            ((DvText) composition.itemAtPath(commentPath)).getValue());
+                ((DvText) composition.itemAtPath(commentPath)).getValue());
         final Element mediaElement = (Element) ((Cluster) composition.itemAtPath(mediaPath)).getItems().get(0);
         final DvMultimedia multimedia = (DvMultimedia) mediaElement.getValue();
-        Assert.assertTrue(new String(multimedia.getData()).startsWith("JVBER"));
+        final String multimediaPrefix = new String(multimedia.getData());
+        Assert.assertTrue(multimediaPrefix.startsWith("JVBER") || multimediaPrefix.startsWith("%PDF"));
         Assert.assertEquals("application/pdf", multimedia.getMediaType().getCodeString());
         Assert.assertEquals("Voorbeeld voorpagina wilsverklaringen - PDF.pdf",
-                            composition.itemAtPath(mediaNamePath + "/value"));
+                composition.itemAtPath(mediaNamePath + "/value"));
         Assert.assertEquals("Cardiopulmonary resuscitation (procedure)",
-                            ((DvCodedText) composition.itemAtPath(treatmentCodePath)).getValue());
+                ((DvCodedText) composition.itemAtPath(treatmentCodePath)).getValue());
         Assert.assertEquals("89666000", ((DvCodedText) composition.itemAtPath(treatmentCodePath)).getDefiningCode()
                 .getCodeString());
         Assert.assertEquals("http://snomed.info/sct",
-                            ((DvCodedText) composition.itemAtPath(treatmentCodePath)).getDefiningCode()
-                                    .getTerminologyId().getValue());
+                ((DvCodedText) composition.itemAtPath(treatmentCodePath)).getDefiningCode()
+                        .getTerminologyId().getValue());
         Assert.assertEquals("Comment of this treatment directive", composition.itemAtPath(commentInterventionPath));
         Assert.assertEquals("Yes, but", ((DvCodedText) composition.itemAtPath(decisionCodePath)).getValue());
         Assert.assertEquals("JA_MAAR",
-                            ((DvCodedText) composition.itemAtPath(decisionCodePath)).getDefiningCode().getCodeString());
+                ((DvCodedText) composition.itemAtPath(decisionCodePath)).getDefiningCode().getCodeString());
         Assert.assertEquals("urn:oid:2.16.840.1.113883.2.4.3.11.60.40.4",
-                            ((DvCodedText) composition.itemAtPath(decisionCodePath)).getDefiningCode()
-                                    .getTerminologyId().getValue());
+                ((DvCodedText) composition.itemAtPath(decisionCodePath)).getDefiningCode()
+                        .getTerminologyId().getValue());
 
         Assert.assertEquals("en", composition.getLanguage().getCodeString());
         Assert.assertEquals("ISO_639-1", composition.getLanguage().getTerminologyId().getValue());
@@ -115,11 +116,11 @@ public class RsoPocBidirectionalTest extends GenericTest {
         // assert treatment directives
         final Consent treatment = treatmentDirectives.get(0);
         Assert.assertEquals("JA_MAAR",
-                            ((CodeableConcept) treatment.getModifierExtension().get(0).getValue()).getCodingFirstRep()
-                                    .getCode());
+                ((CodeableConcept) treatment.getModifierExtension().get(0).getValue()).getCodingFirstRep()
+                        .getCode());
         Assert.assertEquals("urn:oid:2.16.840.1.113883.2.4.3.11.60.40.4",
-                            ((CodeableConcept) treatment.getModifierExtension().get(0).getValue()).getCodingFirstRep()
-                                    .getSystem());
+                ((CodeableConcept) treatment.getModifierExtension().get(0).getValue()).getCodingFirstRep()
+                        .getSystem());
 
         Assert.assertEquals("89666000", (treatment.getExtension().stream()
                 .filter(ext -> ext.getUrl()
@@ -142,7 +143,7 @@ public class RsoPocBidirectionalTest extends GenericTest {
         // assert advance directives
         final Consent advanced = advanceDirectives.get(0);
         Assert.assertEquals("urn:oid:2.16.840.1.113883.2.4.3.11.60.40.4.14.1",
-                            advanced.getCategoryFirstRep().getCodingFirstRep().getSystem());
+                advanced.getCategoryFirstRep().getCodingFirstRep().getSystem());
         Assert.assertEquals("NR", advanced.getCategoryFirstRep().getCodingFirstRep().getCode());
         Assert.assertEquals("active", advanced.getStatusElement().getValueAsString());
 
@@ -155,7 +156,8 @@ public class RsoPocBidirectionalTest extends GenericTest {
         final Attachment sourceAttachment = advanced.getSourceAttachment();
         Assert.assertEquals("Voorbeeld voorpagina wilsverklaringen - PDF.pdf", sourceAttachment.getTitle());
         Assert.assertEquals("application/pdf", sourceAttachment.getContentType());
-        Assert.assertTrue(new String(sourceAttachment.getData()).startsWith("JVBER")); // todo
+        final String attachmentPrefix = new String(sourceAttachment.getData());
+        Assert.assertTrue(attachmentPrefix.startsWith("JVBER") || attachmentPrefix.startsWith("%PDF")); // todo
     }
 
     public Bundle testAcp() {

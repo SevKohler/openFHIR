@@ -14,7 +14,7 @@
         <other_details id="original_namespace"></other_details>
         <other_details id="original_publisher"></other_details>
         <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">34.1.0</other_details>
+        <other_details id="sem_ver">35.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <other_details id="MD5-CAM-1.0.1">9211f1fc39b4c14552bdf5252de7adf7</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">1fa06d56b4746d975400302192a97609</other_details>
@@ -306,7 +306,7 @@
                                                     <upper>1</upper>
                                                 </occurrences>
                                                 <node_id></node_id>
-                                                <referenceSetUri>ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/EncounterStatusDe</referenceSetUri>
+                                                <referenceSetUri>terminology://ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/EncounterStatusDe</referenceSetUri>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2863,7 +2863,7 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                                     <upper_included>true</upper_included>
                                     <lower_unbounded>false</lower_unbounded>
                                     <upper_unbounded>false</upper_unbounded>
-                                    <lower>1</lower>
+                                    <lower>0</lower>
                                     <upper>1</upper>
                                 </occurrences>
                                 <node_id>at0079</node_id>

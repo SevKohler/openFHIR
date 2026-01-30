@@ -120,6 +120,12 @@ public class OpenFhirFhirConnectModelMapper {
                                                        .withValue(fhirManualEntry.getValue())
                                                        .withOpenehr(mapping.getWith().getOpenehr())
                                                        .withFhir(mapping.getWith().getFhir() + "." + fhirManualEntry.getPath()));
+                            final Condition baseFhirCondition =
+                                    manual.getFhirCondition() == null ? mapping.getFhirCondition() : null;
+                            if (shouldApplyFhirCondition(baseFhirCondition, mapping.getWith().getFhir(),
+                                                         fhirManualEntry.getPath())) {
+                                fromManual.setFhirCondition(baseFhirCondition);
+                            }
                             if (manual.getOpenehrCondition() != null) {
                                 final Condition openEhrCondition = manual.getOpenehrCondition().copy();
                                 if(openEhrCondition.getTargetRoot().equals(OPENEHR_ROOT_FC)) {
@@ -136,6 +142,26 @@ public class OpenFhirFhirConnectModelMapper {
             }
         }
         return toReturn;
+    }
+
+    private boolean shouldApplyFhirCondition(final Condition condition, final String baseFhirPath,
+                                             final String manualEntryPath) {
+        if (condition == null || condition.getTargetRoot() == null || condition.getTargetAttribute() == null) {
+            return condition != null;
+        }
+        final String conditionPath = normalizeFhirPath(condition.getTargetRoot() + "." + condition.getTargetAttribute());
+        final String manualPath = normalizeFhirPath(baseFhirPath + "." + manualEntryPath);
+        return !conditionPath.equals(manualPath);
+    }
+
+    private String normalizeFhirPath(final String path) {
+        if (path == null) {
+            return null;
+        }
+        return path.replace(FhirConnectConst.FHIR_ROOT_FC + ".", "")
+                .replace(FhirConnectConst.FHIR_RESOURCE_FC + ".", "")
+                .replace(FhirConnectConst.FHIR_ROOT_FC, "")
+                .replace(FhirConnectConst.FHIR_RESOURCE_FC, "");
     }
 
     private String parseResourceType(final FhirConnectModel fhirConnectModel) {

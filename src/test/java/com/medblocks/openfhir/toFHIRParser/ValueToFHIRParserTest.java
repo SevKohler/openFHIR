@@ -217,7 +217,7 @@ class ValueToFHIRParserTest {
         assertEquals("image/png", att.getContentType());
         assertEquals(3, att.getSize());
         assertEquals("http://example.test/a.png", att.getUrl());
-        assertArrayEquals("abc".getBytes(), att.getData());
+        assertArrayEquals(java.util.Base64.getDecoder().decode("abc"), att.getData());
     }
 
     // ---------- DV_TEXT / STRING ----------

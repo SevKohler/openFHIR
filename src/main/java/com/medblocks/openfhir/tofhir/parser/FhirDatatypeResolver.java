@@ -88,7 +88,7 @@ public final class FhirDatatypeResolver {
     private static Optional<IBase> getFirstValueSafe(FhirTerser terser, IBase current, String part) {
         try {
             return first(terser.getValues(current, part));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return Optional.empty();
         }
     }
@@ -97,7 +97,7 @@ public final class FhirDatatypeResolver {
         try {
             terser.addElement(current, part);
             return first(terser.getValues(current, part));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return Optional.empty();
         }
     }
