@@ -14,7 +14,7 @@ public class FhirValueReaders {
         this.mapperUtils = Objects.requireNonNull(mapperUtils);
     }
 
-    public String basePath(String path) {
+    public String basePath(String path) { //rewrite remove
         if (path == null) return null;
         int pipe = path.indexOf('|');
         return pipe >= 0 ? path.substring(0, pipe) : path;

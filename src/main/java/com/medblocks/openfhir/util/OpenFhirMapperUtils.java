@@ -228,6 +228,7 @@ public class OpenFhirMapperUtils {
                                           final String openehr,
                                           final String slotContext,
                                           final Mapping parentMapping) {
+        final OpenFhirStringUtils openFhirStringUtils = new OpenFhirStringUtils();
         for (final Mapping followedByMapping : followedByMappings) {
             final With with = followedByMapping.getWith();
             if (with == null) {
@@ -243,7 +244,8 @@ public class OpenFhirMapperUtils {
                 continue;
             }
             if (!followedByMapping.getWith().getFhir().startsWith(FhirConnectConst.FHIR_RESOURCE_FC)) {
-                followedByMapping.getWith().setFhir(fhirPath + "." + followedByMapping.getWith().getFhir());
+                followedByMapping.getWith().setFhir(
+                        openFhirStringUtils.resolveRelativeFhirPath(fhirPath, followedByMapping.getWith().getFhir()));
             }
 
             final Condition parentFhirCondition = parentMapping.getFhirCondition();
@@ -302,8 +304,10 @@ public class OpenFhirMapperUtils {
                     .startsWith(FhirConnectConst.FHIR_RESOURCE_FC)) {
                 final String condTargetRoot = followedByMapping.getFhirCondition().getTargetRoot()
                         .replace(FhirConnectConst.FHIR_ROOT_FC, "");
-                followedByMapping.getFhirCondition()
-                        .setTargetRoot(fhirPath + (StringUtils.isEmpty(condTargetRoot) ? "" : ("." + condTargetRoot)));
+                final String resolvedTargetRoot = StringUtils.isEmpty(condTargetRoot)
+                        ? fhirPath
+                        : openFhirStringUtils.resolveRelativeFhirPath(fhirPath, condTargetRoot);
+                followedByMapping.getFhirCondition().setTargetRoot(resolvedTargetRoot);
             }
 
             // now conditions
@@ -426,10 +430,15 @@ public class OpenFhirMapperUtils {
     private void fixFhirForwardingPaths(final List<Mapping> forwardMappers,
                                         final String fhirPath,
                                         boolean fhirPrefixing) {
+        final OpenFhirStringUtils openFhirStringUtils = new OpenFhirStringUtils();
         for (final Mapping slotArchetypeMappersMapping : forwardMappers) {
             final String fhir = slotArchetypeMappersMapping.getWith().getFhir();
             if (fhir == null) {
                 continue;
+            }
+            if (fhirPrefixing && fhir.startsWith(".")) {
+                slotArchetypeMappersMapping.getWith()
+                        .setFhir(openFhirStringUtils.resolveRelativeFhirPath(fhirPath, fhir));
             }
             if (FhirConnectConst.FHIR_ROOT_FC.equals(fhir) || FhirConnectConst.FHIR_RESOURCE_FC.equals(fhir)) {
                 if (!fhirPrefixing) {
@@ -449,6 +458,7 @@ public class OpenFhirMapperUtils {
                                                     final String fhirPath,
                                                     boolean fhirPrefixing) {
         if (slotArchetypeMappersMapping.getWith().getFhir().startsWith(constant)) {
+            final OpenFhirStringUtils openFhirStringUtils = new OpenFhirStringUtils();
             slotArchetypeMappersMapping.getWith().setFhir(slotArchetypeMappersMapping.getWith().getFhir()
                                                                   .replace(constant,
                                                                            fhirPrefixing ? fhirPath : ""));
@@ -457,6 +467,8 @@ public class OpenFhirMapperUtils {
                 slotArchetypeMappersMapping.getWith()
                         .setFhir(slotArchetypeMappersMapping.getWith().getFhir().substring(1));
             }
+            slotArchetypeMappersMapping.getWith()
+                    .setFhir(openFhirStringUtils.normalizeFhirPath(slotArchetypeMappersMapping.getWith().getFhir()));
         }
     }
 

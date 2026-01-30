@@ -91,6 +91,18 @@ public class OpenFhirStringUtilsTest {
         Assert.assertEquals(3, lastMostCommonIndex);
     }
 
+    @Test
+    public void resolveRelativeFhirPath_parentIteration() {
+        final OpenFhirStringUtils openFhirStringUtils = new OpenFhirStringUtils();
+
+        Assert.assertEquals("Encounter.diagnosis.use",
+                            openFhirStringUtils.resolveRelativeFhirPath("Encounter.diagnosis.condition", "..use"));
+        Assert.assertEquals("Encounter.diagnosis.where(use='foo').use",
+                            openFhirStringUtils.resolveRelativeFhirPath(
+                                    "Encounter.diagnosis.where(use='foo').condition",
+                                    "..use"));
+    }
+
 
     @Test
     public void joinValuesThatAreOne_oneContainsTheOther() {

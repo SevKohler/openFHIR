@@ -7,23 +7,22 @@ import org.hl7.fhir.r4.model.StringType;
 
 public class TextParser {
 
-    private final FhirValueReaders r;
+    private final FhirValueReaders fhirValueReaders;
 
     public TextParser(FhirValueReaders readers) {
-        this.r = readers;
+        this.fhirValueReaders = readers;
     }
 
     public OpenEhrToFhirHelper.DataWithIndex string(JsonObject valueHolder,
                                                     Integer lastIndex,
                                                     String path,
                                                     boolean canBeNull) {
-        String base = r.basePath(path);
 
-        String v = r.get(valueHolder, base);
+        String v = fhirValueReaders.get(valueHolder, path);
         if (StringUtils.isNotEmpty(v)) {
-            return new OpenEhrToFhirHelper.DataWithIndex(new StringType(v), lastIndex, base);
+            return new OpenEhrToFhirHelper.DataWithIndex(new StringType(v), lastIndex, path);
         }
         if (canBeNull) return null;
-        return new OpenEhrToFhirHelper.DataWithIndex(new StringType(), lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(new StringType(), lastIndex, path);
     }
 }
