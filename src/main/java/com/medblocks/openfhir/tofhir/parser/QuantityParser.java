@@ -16,18 +16,16 @@ public class QuantityParser {
     }
 
     public OpenEhrToFhirHelper.DataWithIndex count(JsonObject valueHolder, Integer lastIndex, String path) {
-        String base = fhirValueReaders.basePath(path);
-        return new OpenEhrToFhirHelper.DataWithIndex(new IntegerType(fhirValueReaders.get(valueHolder, base)), lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(new IntegerType(fhirValueReaders.get(valueHolder, path)), lastIndex, path);
     }
 
     public OpenEhrToFhirHelper.DataWithIndex proportion(List<String> joinedValues,
                                                         JsonObject valueHolder,
                                                         Integer lastIndex,
                                                         String path) {
-        String base = fhirValueReaders.basePath(path);
 
-        String numeratorPath = base + "|numerator";
-        String denominatorPath = base + "|denominator";
+        String numeratorPath = path + "|numerator";
+        String denominatorPath = path + "|denominator";
 
         Quantity q = new Quantity();
 
@@ -42,20 +40,19 @@ public class QuantityParser {
         if (numVal instanceof Long l) q.setValue(l);
         if (numVal instanceof Double d) q.setValue(d);
 
-        return new OpenEhrToFhirHelper.DataWithIndex(q, lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(q, lastIndex, path);
     }
 
     public OpenEhrToFhirHelper.DataWithIndex quantity(List<String> joinedValues,
                                                       JsonObject valueHolder,
                                                       Integer lastIndex,
                                                       String path) {
-        String base = fhirValueReaders.basePath(path);
 
-        String magnitudePath = find(joinedValues, "magnitude");
-        String unitPath = find(joinedValues, "unit");
-        String codePath = find(joinedValues, "code");
-        String valuePath = find(joinedValues, "value");
-        String ordinalPath = find(joinedValues, "ordinal");
+        String magnitudePath = find(joinedValues, "|magnitude");
+        String unitPath = find(joinedValues, "|unit");
+        String codePath = find(joinedValues, "|code");
+        String valuePath = find(joinedValues, "|value");
+        String ordinalPath = find(joinedValues, "|ordinal");
 
         Quantity q = new Quantity();
 
@@ -67,12 +64,12 @@ public class QuantityParser {
 
         // fallback if no extra fields are present
         if (magnitudePath == null && ordinalPath == null && unitPath == null && valuePath == null && codePath == null) {
-            Object n = fhirValueReaders.number(fhirValueReaders.get(valueHolder, base));
+            Object n = fhirValueReaders.number(fhirValueReaders.get(valueHolder, path));
             if (n instanceof Long l) q.setValue(l);
             if (n instanceof Double d) q.setValue(d);
         }
 
-        return new OpenEhrToFhirHelper.DataWithIndex(q, lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(q, lastIndex, path);
     }
 
     private void setQuantityValue(JsonObject valueHolder, Quantity q, String magnitudePath, String ordinalPath) {

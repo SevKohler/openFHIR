@@ -23,48 +23,28 @@ mappings:
       fhir: "$resource.status"
       openehr: "$composition/context/other_context[at0001]/items[at0010]"
 
-#  - name: "fallIdParent"
-#    extension: "add"
-#    with:
-#      fhir: "$resource.identifier"
-#      openehr: "$composition/context"
-#      type: "NONE"
-#    followedBy:
-#      mappings:
-#        - name: "fallId"
-#          with:
-#            fhir: "$fhirRoot"
-#            openehr: "other_context[at0001]/items[at0003]/defining_code"
-#            type: "NONE"
-#          followedBy: #Manually mapping identifier since its not supported to map coding idneitifer
-#            mappings:
-#              - name: "system"
-#                with:
-#                  fhir: "system"
-#                  openehr: "terminology"
-
   - name: "fallIdParent"
     extension: "add"
     with:
       fhir: "$resource.identifier"
       openehr: "$composition/context/other_context[at0001]/items[at0003]"
-#    fhirCondition:
-#      targetRoot: "$resource.identifier"
-#      targetAttribute: "type.coding.code"
-#      operator: "one of"
-#      criteria: "VN"
-#    followedBy:
-#      mappings:
-#        - name: "vncodingcode"
-#          with:
-#            fhir: "type.coding"
-#          manual:
-#            - name: "vncoding"
-#              fhir:
-#                - path: "code"
-#                  value: "VN"
-#                - path: "system"
-#                  value: "http://terminology.hl7.org/CodeSystem/v2-0203"
+    fhirCondition:
+      targetRoot: "$resource.identifier"
+      targetAttribute: "type.coding.code"
+      operator: "one of"
+      criteria: "VN"
+    followedBy:
+      mappings:
+        - name: "vncodingcode"
+          with:
+            fhir: "type.coding"
+          manual:
+            - name: "vncoding"
+              fhir:
+                - path: "code"
+                  value: "VN"
+                - path: "system"
+                  value: "http://terminology.hl7.org/CodeSystem/v2-0203"
 
   - name: "serviceType" # TODO deprecated needs to be deleted
     extension: "add"
@@ -183,6 +163,26 @@ mappings:
                       - path: "url"
                         value: "http://fhir.de/StructureDefinition/Entlassungsgrund"
 
+  - name: "problemDiagnoseParent"
+    extension: "add"
+    with:
+      fhir: "$resource.diagnosis"
+      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
+    reference:
+      resourceType: "Condition" # this creates an extra encounter with a condition inside
+      mappings:
+        - name: "condition"
+          with:
+            fhir: "condition"
+            openehr: "$openehrRoot" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
+          slotArchetype: "EVALUATION.problem_diagnosis.v1"
+    followedBy:
+      mappings:
+        - name: "diagnoseTyp"
+          with:
+            fhir: "..use"
+            openehr: "data[at0001]/items[openEHR-EHR-CLUSTER.diagnosetyp.v0]"
+          slotArchetype: "CLUSTER.diagnosetyp.v0"
 
 #  - name: "problemDiagnoseParent"
 #    extension: "add"
@@ -191,21 +191,34 @@ mappings:
 #      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
 #    slotArchetype: "EVALUATION.problem_diagnosis.v1"
 
-  - name: "problemDiagnoseParent"
-    extension: "add"
-    with:
-      fhir: "$resource.diagnosis.condition"
-      openehr: "$reference" #create one reference instead of two
-   #   openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #1 needs to be here since for each diagnosis archetype do one condition and vice versa
-    reference:
-      resourceType: "Condition" # this creates an extra encounter with a condition inside
-      mappings:
-        - name: "condition"
-          with:
-            fhir: "$fhirRoot"
-            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
-           # openehr: "$openehrRoot"  #1 corect mapping for n-to-n
-          slotArchetype: "EVALUATION.problem_diagnosis.v1"
+#  - name: "problemDiagnoseParent"
+#    extension: "add"
+#    with:
+#      fhir: "$resource.diagnosis"
+#      openehr: "$reference" #create one reference instead of two
+##      type: "NONE"
+##   #   openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #1 needs to be here since for each diagnosis archetype do one condition and vice versa
+##    followedBy:
+##      mappings:
+##        - name: "use"
+##          with:
+##            fhir: "$fhirRoot"
+##            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
+#    reference:
+#      resourceType: "Condition" # this creates an extra encounter with a condition inside
+#      mappings:
+#        - name: "condition"
+#          with:
+#            fhir: "condition"
+#            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
+#           # openehr: "$openehrRoot"  #1 corect mapping for n-to-n
+#          slotArchetype: "EVALUATION.problem_diagnosis.v1"
+##          followedBy:
+##            mappings:
+##              - name: "use"
+##                with:
+##                  fhir: "$fhirRoot"
+##                  openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
 #    followedBy:
 #      mappings:
 #        - name: "reference"

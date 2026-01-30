@@ -8,26 +8,25 @@ import java.nio.charset.StandardCharsets;
 
 public class MediaParser {
 
-    private final FhirValueReaders r;
+    private final FhirValueReaders fhirValueReaders;
 
     public MediaParser(FhirValueReaders readers) {
-        this.r = readers;
+        this.fhirValueReaders = readers;
     }
 
     public OpenEhrToFhirHelper.DataWithIndex attachment(JsonObject valueHolder, Integer lastIndex, String path) {
-        String base = r.basePath(path);
 
         Attachment att = new Attachment();
-        att.setContentType(r.get(valueHolder, base + "|mediatype"));
+        att.setContentType(fhirValueReaders.get(valueHolder, path + "|mediatype"));
 
-        String size = r.get(valueHolder, base + "|size");
+        String size = fhirValueReaders.get(valueHolder, path + "|size");
         if (size != null) att.setSize(Integer.parseInt(size));
 
-        att.setUrl(r.get(valueHolder, base + "|url"));
+        att.setUrl(fhirValueReaders.get(valueHolder, path + "|url"));
 
-        String dataBytes = r.get(valueHolder, base + "|data");
+        String dataBytes = fhirValueReaders.get(valueHolder, path + "|data");
         att.setData(dataBytes == null ? null : dataBytes.getBytes(StandardCharsets.UTF_8));
 
-        return new OpenEhrToFhirHelper.DataWithIndex(att, lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(att, lastIndex, path);
     }
 }

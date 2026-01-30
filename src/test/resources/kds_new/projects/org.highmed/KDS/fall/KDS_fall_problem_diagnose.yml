@@ -53,6 +53,38 @@ mappings:
 
 #
 # #-------------------------------#
+#
+#  - name: "diagnoseTyp"
+#    extension: "add"
+#    with:
+#      fhir: "..use"
+#      openehr: "$archetype/data[at0001]/items[openEHR-EHR-CLUSTER.diagnosetyp.v0]"
+#    slotArchetype: "CLUSTER.diagnosetyp.v0"
+#
+#  - name: "problemDiagnose"
+#    extension: "overwrite"
+#    with:
+#      fhir: "$resource.code"
+#      openehr: "$archetype/data[at0001]/items[at0002]"
+
+
+#  - name: "problemDiagnose"
+#    extension: "overwrite"
+#    with:
+#      fhir: "$fhirRoot.condition"
+#      openehr: "$reference"
+#    fhirCondition:
+#      targetRoot: "$fhirRoot"
+#      operator: "type"
+#      criteria: "Encounter.diagnosis"
+#    reference:
+#      resourceType: "Condition"
+#      mappings:
+#        - name: "diagnoseName"
+#          with:
+#            fhir: "$fhirRoot.code.coding"
+#            openehr: "$archetype/data[at0001]/items[at0002]"
+
 #  - name: "problemDiagnose"
 #    extension: "overwrite"
 #    with:

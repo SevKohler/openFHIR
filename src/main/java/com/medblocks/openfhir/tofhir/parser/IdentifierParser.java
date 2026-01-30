@@ -9,26 +9,24 @@ import java.util.List;
 
 public class IdentifierParser {
 
-    private final FhirValueReaders r;
+    private final FhirValueReaders fhirValueReaders;
 
     public IdentifierParser(FhirValueReaders readers) {
-        this.r = readers;
+        this.fhirValueReaders = readers;
     }
 
     public OpenEhrToFhirHelper.DataWithIndex identifier(List<String> joinedValues,
                                                         JsonObject valueHolder,
                                                         Integer lastIndex,
                                                         String path) {
-        String base = r.basePath(path);
-
         // try to find an explicit "|id" path from joinedValues
-        String idPath = find(joinedValues, "id");
+        String idPath = find(joinedValues, "|id");
 
         Identifier identifier = new Identifier();
-        String resolvedIdPath = StringUtils.isEmpty(idPath) ? (base + "/identifier_value|id") : idPath;
-        identifier.setValue(r.get(valueHolder, resolvedIdPath));
+        String resolvedIdPath = StringUtils.isEmpty(idPath) ? (path + "/identifier_value|id") : idPath;
+        identifier.setValue(fhirValueReaders.get(valueHolder, resolvedIdPath));
 
-        return new OpenEhrToFhirHelper.DataWithIndex(identifier, lastIndex, base);
+        return new OpenEhrToFhirHelper.DataWithIndex(identifier, lastIndex, path);
     }
 
     private String find(List<String> joinedValues, String suffix) {
