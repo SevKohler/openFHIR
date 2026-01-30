@@ -451,9 +451,13 @@ public class FhirToOpenEhr {
         } else {
             final String fhirPathToEvaluateOn = openFhirStringUtils.fixFhirPathCasting(
                     fhirPath.startsWith(".") ? fhirPath.substring(1) : fhirPath);
-            results = fhirPathR4.evaluate(toResolveOn,
-                                          fhirPathToEvaluateOn,
-                                          Base.class);
+            if (StringUtils.isEmpty(fhirPathToEvaluateOn) && fhirPath.startsWith("..")) {
+                results = Collections.singletonList(toResolveOn);
+            } else {
+                results = fhirPathR4.evaluate(toResolveOn,
+                                              fhirPathToEvaluateOn,
+                                              Base.class);
+            }
             if (fhirPath.endsWith(RESOLVE) && results.isEmpty()) {
                 final List<Base> reference = fhirPathR4.evaluate(toResolveOn,
                                                                  fhirPath.replace("." + RESOLVE, ""),
@@ -472,7 +476,15 @@ public class FhirToOpenEhr {
             final List<String> parts = openFhirStringUtils.splitFhirPathTopLevel(withoutResolve);
             if (parts.size() > 1) {
                 resolveContainerPath = String.join(".", parts.subList(0, parts.size() - 1));
-                resolveContainers = fhirPathR4.evaluate(toResolveOn, resolveContainerPath, Base.class);
+                String containerPath = resolveContainerPath;
+                if (containerPath.startsWith(".")) {
+                    containerPath = containerPath.substring(1);
+                }
+                if (StringUtils.isEmpty(containerPath)) {
+                    resolveContainers = Collections.singletonList(toResolveOn);
+                } else {
+                    resolveContainers = fhirPathR4.evaluate(toResolveOn, containerPath, Base.class);
+                }
             } else {
                 resolveContainerPath = null;
                 resolveContainers = null;
