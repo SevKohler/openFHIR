@@ -341,7 +341,9 @@ public class OpenFhirStringUtils {
         if (StringUtils.isBlank(parentPath)) {
             return remaining;
         }
-        final List<String> parentParts = splitFhirPathTopLevel(parentPath);
+        final List<String> parentParts = splitFhirPathTopLevel(parentPath).stream()
+                .filter(part -> !RESOLVE.equals(part))
+                .toList();
         final int endIndex = Math.max(0, parentParts.size() - upCount);
         final String base = endIndex == 0 ? "" : String.join(".", parentParts.subList(0, endIndex));
         if (StringUtils.isBlank(remaining)) {
