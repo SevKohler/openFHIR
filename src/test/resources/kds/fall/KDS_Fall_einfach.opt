@@ -14,7 +14,7 @@
         <other_details id="original_namespace"></other_details>
         <other_details id="original_publisher"></other_details>
         <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">35.0.0</other_details>
+        <other_details id="sem_ver">36.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <other_details id="MD5-CAM-1.0.1">9211f1fc39b4c14552bdf5252de7adf7</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">1fa06d56b4746d975400302192a97609</other_details>
@@ -284,31 +284,6 @@
                                             <upper>1</upper>
                                         </occurrences>
                                         <node_id></node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>defining_code</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>1</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_CODE_REFERENCE">
-                                                <rm_type_name>CODE_PHRASE</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>0</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                                <referenceSetUri>terminology://ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/EncounterStatusDe</referenceSetUri>
-                                            </children>
-                                        </attributes>
                                     </children>
                                 </attributes>
                             </children>
