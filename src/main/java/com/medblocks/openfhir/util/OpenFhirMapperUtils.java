@@ -37,6 +37,7 @@ public class OpenFhirMapperUtils {
     final SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
     final SimpleDateFormat time2 = new SimpleDateFormat("HH:mm");
     final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+    private final OpenFhirStringUtils openFhirStringUtils = new OpenFhirStringUtils();
 
 
     public String getFhirConnectTypeToFhir(final String fhirConnectType) {
@@ -169,7 +170,8 @@ public class OpenFhirMapperUtils {
                                           final List<Mapping> referencedMapping,
                                           final String firstFlatPath) {
         for (final Mapping mapping : referencedMapping) {
-            mapping.getWith().setFhir(parentFhirPath + "." + RESOLVE + "." + mapping.getWith().getFhir());
+            final String parent = parentFhirPath + "." + RESOLVE;
+            mapping.getWith().setFhir(combineFhirPath(parent, mapping.getWith().getFhir()));
             if (FhirConnectConst.REFERENCE.equals(openEhrPath) || mapping.getWith().getOpenehr() == null) {
                 continue;
             }
@@ -243,7 +245,7 @@ public class OpenFhirMapperUtils {
                 continue;
             }
             if (!followedByMapping.getWith().getFhir().startsWith(FhirConnectConst.FHIR_RESOURCE_FC)) {
-                followedByMapping.getWith().setFhir(fhirPath + "." + followedByMapping.getWith().getFhir());
+                followedByMapping.getWith().setFhir(combineFhirPath(fhirPath, followedByMapping.getWith().getFhir()));
             }
 
             final Condition parentFhirCondition = parentMapping.getFhirCondition();
@@ -303,7 +305,7 @@ public class OpenFhirMapperUtils {
                 final String condTargetRoot = followedByMapping.getFhirCondition().getTargetRoot()
                         .replace(FhirConnectConst.FHIR_ROOT_FC, "");
                 followedByMapping.getFhirCondition()
-                        .setTargetRoot(fhirPath + (StringUtils.isEmpty(condTargetRoot) ? "" : ("." + condTargetRoot)));
+                        .setTargetRoot(combineFhirPath(fhirPath, condTargetRoot));
             }
 
             // now conditions
@@ -431,6 +433,10 @@ public class OpenFhirMapperUtils {
             if (fhir == null) {
                 continue;
             }
+            if (fhir.startsWith("..")) {
+                slotArchetypeMappersMapping.getWith().setFhir(
+                        openFhirStringUtils.resolveRelativeFhirPath(fhirPath, fhir));
+            }
             if (FhirConnectConst.FHIR_ROOT_FC.equals(fhir) || FhirConnectConst.FHIR_RESOURCE_FC.equals(fhir)) {
                 if (!fhirPrefixing) {
                     slotArchetypeMappersMapping.getWith().setFhir("");
@@ -458,6 +464,22 @@ public class OpenFhirMapperUtils {
                         .setFhir(slotArchetypeMappersMapping.getWith().getFhir().substring(1));
             }
         }
+    }
+
+    private String combineFhirPath(final String parent, final String child) {
+        if (StringUtils.isBlank(child)) {
+            return parent;
+        }
+        if (child.startsWith("..")) {
+            return openFhirStringUtils.resolveRelativeFhirPath(parent, child);
+        }
+        if (StringUtils.isBlank(parent)) {
+            return child;
+        }
+        if (child.startsWith(".")) {
+            return parent + child;
+        }
+        return parent + "." + child;
     }
 
     private void fixOpenEhrForwardingPaths(final List<Mapping> forwardMappers,
@@ -540,6 +562,9 @@ public class OpenFhirMapperUtils {
             }
 
             final String targetRoot = fhirCondition.getTargetRoot();
+            if (targetRoot != null && targetRoot.startsWith("..")) {
+                fhirCondition.setTargetRoot(openFhirStringUtils.resolveRelativeFhirPath(fhirPath, targetRoot));
+            }
             if (FhirConnectConst.FHIR_ROOT_FC.equals(targetRoot) || FhirConnectConst.FHIR_RESOURCE_FC.equals(
                     targetRoot)) {
                 if (!fhirPrefixing) {

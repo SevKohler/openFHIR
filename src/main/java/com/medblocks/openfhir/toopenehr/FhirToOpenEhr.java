@@ -555,10 +555,35 @@ public class FhirToOpenEhr {
                         final String newOne = copy.getOpenEhrPath().replace(helper.getOpenEhrPath(), thePath);
 
                         fixAllChildrenRecurringElements(copy, newOne);
-
-                        evaluated = addDataPoints(copy, flatComposition, result);
+                        final String childFhirPath = copy.getFhirPath();
+                        if (childFhirPath != null && childFhirPath.startsWith("..")) {
+                            String parentForRelative = helper.getFhirPath();
+                            if (parentForRelative != null) {
+                                parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
+                                                                              ".")
+                                                                     .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                            }
+                            copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
+                                                                                         childFhirPath));
+                            evaluated = addDataPoints(copy, flatComposition, toResolveOn);
+                        } else {
+                            evaluated = addDataPoints(copy, flatComposition, result);
+                        }
                     } else {
-                        evaluated = addDataPoints(copy, flatComposition, result);
+                        final String childFhirPath = copy.getFhirPath();
+                        if (childFhirPath != null && childFhirPath.startsWith("..")) {
+                            String parentForRelative = helper.getFhirPath();
+                            if (parentForRelative != null) {
+                                parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
+                                                                              ".")
+                                                                     .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                            }
+                            copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
+                                                                                         childFhirPath));
+                            evaluated = addDataPoints(copy, flatComposition, toResolveOn);
+                        } else {
+                            evaluated = addDataPoints(copy, flatComposition, result);
+                        }
                     }
                 }
             }
