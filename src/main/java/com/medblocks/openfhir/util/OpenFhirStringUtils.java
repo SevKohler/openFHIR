@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -318,93 +317,9 @@ public class OpenFhirStringUtils {
     }
 
     public String fixFhirPath(final String fhirPath) {
-        return normalizeFhirPath(fhirPath
-                                         .replace("." + FHIR_ROOT_FC, "")
-                                         .replace(FHIR_ROOT_FC, ""));
-    }
-
-    public String resolveRelativeFhirPath(final String parentPath, final String childPath) {
-        if (StringUtils.isBlank(childPath)) {
-            return childPath;
-        }
-        if (StringUtils.isBlank(parentPath)) {
-            return normalizeFhirPath(childPath);
-        }
-        if (childPath.startsWith(FhirConnectConst.FHIR_RESOURCE_FC)
-                || childPath.startsWith(FhirConnectConst.FHIR_ROOT_FC)) {
-            return normalizeFhirPath(childPath);
-        }
-
-        final String combined;
-        if (childPath.startsWith(".")) {
-            combined = parentPath + childPath;
-        } else {
-            combined = parentPath + "." + childPath;
-        }
-
-        return normalizeFhirPath(combined);
-    }
-
-    public String normalizeFhirPath(final String fhirPath) {
-        if (StringUtils.isBlank(fhirPath)) {
-            return fhirPath;
-        }
-        final List<String> parts = splitFhirPathParts(fhirPath);
-        final List<String> normalized = new ArrayList<>();
-        for (final String part : parts) {
-            if (StringUtils.isBlank(part) || ".".equals(part)) {
-                continue;
-            }
-            if ("..".equals(part)) {
-                if (!normalized.isEmpty()) {
-                    normalized.remove(normalized.size() - 1);
-                }
-                continue;
-            }
-            normalized.add(part);
-        }
-        return String.join(".", normalized);
-    }
-
-    private List<String> splitFhirPathParts(final String fhirPath) {
-        final List<String> parts = new ArrayList<>();
-        final StringBuilder current = new StringBuilder();
-        int parenDepth = 0;
-        boolean inString = false;
-
-        for (int i = 0; i < fhirPath.length(); i++) {
-            final char ch = fhirPath.charAt(i);
-            if (ch == '\'') {
-                inString = !inString;
-                current.append(ch);
-                continue;
-            }
-            if (!inString) {
-                if (ch == '(') {
-                    parenDepth++;
-                } else if (ch == ')') {
-                    if (parenDepth > 0) {
-                        parenDepth--;
-                    }
-                } else if (ch == '.' && parenDepth == 0) {
-                    if (i + 1 < fhirPath.length() && fhirPath.charAt(i + 1) == '.') {
-                        if (current.length() > 0) {
-                            parts.add(current.toString());
-                            current.setLength(0);
-                        }
-                        parts.add("..");
-                        i++;
-                        continue;
-                    }
-                    parts.add(current.toString());
-                    current.setLength(0);
-                    continue;
-                }
-            }
-            current.append(ch);
-        }
-        parts.add(current.toString());
-        return parts;
+        return fhirPath
+                .replace("." + FHIR_ROOT_FC, "")
+                .replace(FHIR_ROOT_FC, "");
     }
 
     /**
@@ -670,19 +585,14 @@ public class OpenFhirStringUtils {
         String targetAttr = condition.getTargetAttribute();
         List<String> codes = getCodesFromCriteria(condition.getCriteria());
 
-        final String lastTargetSegment = targetAttr.contains(".")
-                ? targetAttr.substring(targetAttr.lastIndexOf('.') + 1)
-                : targetAttr;
         String joinedConditions = codes.stream()
                 .map(code -> {
-                    if (targetAttr.contains("coding")) {
-                        return targetAttr.replace(".code", ".where") + "(code='" + code + "').exists()";
-                    } else if ("url".equalsIgnoreCase(lastTargetSegment)) {
-                        return targetAttr + ".toString().lower().contains('" + code.toLowerCase(Locale.ROOT) + "')";
-                    } else if ("system".equalsIgnoreCase(lastTargetSegment)) {
-                        return targetAttr + ".toString().lower() = '" + code.toLowerCase(Locale.ROOT) + "'";
+                    if(targetAttr.contains("coding")){
+                        return targetAttr.replace(".code",".where")+ "(code='" + code + "').exists()";
+                    } else if (targetAttr.contains("url")) {
+                        return targetAttr +".toString().contains('"+code+"')";
                     } else {
-                        return targetAttr + ".toString() = '" + code + "'";
+                        return targetAttr+".toString() = '"+code +"'";
                     }
                 })
                 .collect(Collectors.joining(" or "));
@@ -775,9 +685,9 @@ public class OpenFhirStringUtils {
                 if (string.startsWith(WHERE)) {
                     // a where follows
                     final String substringForRelevantWhere = parent.substring(Arrays.stream(parents)
-                                                                                      .limit(parentIndex)
-                                                                                      .mapToInt(String::length)
-                                                                                      .sum());
+                            .limit(parentIndex)
+                            .mapToInt(String::length)
+                            .sum());
                     final String firstWhereCondition = extractWhereCondition(substringForRelevantWhere);
                     childPathJoiner.add(firstWhereCondition);
                     childPathJoiner.add(childPath);
@@ -836,7 +746,7 @@ public class OpenFhirStringUtils {
             return null;
         }
         final String[] criterias = criteria.replace("[",
-                                                    "") // todo: crazy stuff in the FHIR Connect spec...... criteria is a string array, $loinc, ...
+                        "") // todo: crazy stuff in the FHIR Connect spec...... criteria is a string array, $loinc, ...
                 .replace("]", "").split(",");
         // todo: should be an OR inbetween these separate criterias.. right now it just takes the first
         final String codingCode = criterias[0]
@@ -849,7 +759,7 @@ public class OpenFhirStringUtils {
             system = "http://snomed.info/sct";
         } else {
             system = criteria.replace("[",
-                                      "") // // todo: crazy stuff in the FHIR Connect spec...... criteria is a string array, $loinc, ...
+                            "") // // todo: crazy stuff in the FHIR Connect spec...... criteria is a string array, $loinc, ...
                     .replace("]", "").split("\\.")[0];
         }
         return new Coding(system, codingCode, null);
@@ -927,7 +837,7 @@ public class OpenFhirStringUtils {
         return switch (val) {
             case "QUANTITY" -> new HashSet<>(
                     Arrays.asList(FhirConnectConst.DV_QUANTITY, FhirConnectConst.DV_COUNT, FhirConnectConst.DV_ORDINAL,
-                                  FhirConnectConst.DV_PROPORTION));
+                            FhirConnectConst.DV_PROPORTION));
             case "DATETIME" -> Collections.singleton(FhirConnectConst.DV_DATE_TIME);
             case "TIME" -> Collections.singleton(FhirConnectConst.DV_TIME);
             case "DATE" -> Collections.singleton(FhirConnectConst.DV_DATE);
@@ -977,8 +887,8 @@ public class OpenFhirStringUtils {
             } else if (i < replacementParts.length) {
                 // Use the original part
                 final String orig = originalParts[i].contains(RECURRING_SYNTAX) ? replaceLastIndexOf(originalParts[i],
-                                                                                                     RECURRING_SYNTAX,
-                                                                                                     "")
+                        RECURRING_SYNTAX,
+                        "")
                         : originalParts[i];
                 final String repl = replacementParts[i].contains(":") ? replacementParts[i].replace(":", "")
                         .replace(String.valueOf(getLastIndex(replacementParts[i])), "") : replacementParts[i];

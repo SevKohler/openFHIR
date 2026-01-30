@@ -176,13 +176,7 @@ mappings:
             fhir: "condition"
             openehr: "$openehrRoot" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
           slotArchetype: "EVALUATION.problem_diagnosis.v1"
-    followedBy:
-      mappings:
-        - name: "diagnoseTyp"
-          with:
-            fhir: "..use"
-            openehr: "data[at0001]/items[openEHR-EHR-CLUSTER.diagnosetyp.v0]"
-          slotArchetype: "CLUSTER.diagnosetyp.v0"
+
 
 #  - name: "problemDiagnoseParent"
 #    extension: "add"
