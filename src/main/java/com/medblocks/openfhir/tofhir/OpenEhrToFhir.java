@@ -723,6 +723,10 @@ public class OpenEhrToFhir {
                     existing.getLastObject().getClass(),
                     existing.getRemovedPath(),
                     null);
+            if (hardcodedReturn == null) {
+                log.warn("Could not instantiate element for condition mapping, path: {}", existing.getRemovedPath());
+                return;
+            }
 
             hardcodedReturn.setPath(
                     openFhirStringUtils.getFhirPathWithConditions(condition.getTargetRoot(), condition, targetResource,
@@ -748,6 +752,10 @@ public class OpenEhrToFhir {
                     instance.getClass(),
                     fhirPathWithoutConditions,
                     null);
+            if (hardcodedReturn == null) {
+                log.warn("Could not instantiate element for condition mapping, path: {}", fhirPathWithoutConditions);
+                return;
+            }
             // find the one that needs criteria
 //            hardcodedReturn.setPath(
 //                    openFhirStringUtils.getFhirPathWithConditions(condition.getTargetRoot(), condition, targetResource,

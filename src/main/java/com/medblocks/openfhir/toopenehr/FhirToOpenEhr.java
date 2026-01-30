@@ -440,6 +440,8 @@ public class FhirToOpenEhr {
     boolean addDataPoints(final FhirToOpenEhrHelper helper, final JsonObject flatComposition, final Base toResolveOn) {
         List<Base> results;
         final String fhirPath = helper.getFhirPath();
+        final List<Base> resolveContainers;
+        final String resolveContainerPath;
 
         // Regular processing for non-mappingCode cases
         if (StringUtils.isEmpty(fhirPath) || FHIR_ROOT_FC.equals(fhirPath)) {
@@ -464,6 +466,20 @@ public class FhirToOpenEhr {
                             .collect(Collectors.toList());
                 }
             }
+        }
+        if (fhirPath != null && fhirPath.contains(RESOLVE)) {
+            final String withoutResolve = fhirPath.replace("." + RESOLVE, "");
+            final List<String> parts = openFhirStringUtils.splitFhirPathTopLevel(withoutResolve);
+            if (parts.size() > 1) {
+                resolveContainerPath = String.join(".", parts.subList(0, parts.size() - 1));
+                resolveContainers = fhirPathR4.evaluate(toResolveOn, resolveContainerPath, Base.class);
+            } else {
+                resolveContainerPath = null;
+                resolveContainers = null;
+            }
+        } else {
+            resolveContainerPath = null;
+            resolveContainers = null;
         }
         if (results == null || results.isEmpty()) {
             final boolean handledNullFlavour = handleDataAbsentReasonWhenNoResult(helper, flatComposition,
@@ -557,30 +573,48 @@ public class FhirToOpenEhr {
                         fixAllChildrenRecurringElements(copy, newOne);
                         final String childFhirPath = copy.getFhirPath();
                         if (childFhirPath != null && childFhirPath.startsWith("..")) {
-                            String parentForRelative = helper.getFhirPath();
-                            if (parentForRelative != null) {
-                                parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
-                                                                              ".")
-                                                                     .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                            if (resolveContainers != null && i < resolveContainers.size()) {
+                                String relative = childFhirPath.substring(2);
+                                if (relative.startsWith(".")) {
+                                    relative = relative.substring(1);
+                                }
+                                copy.setFhirPath(relative);
+                                evaluated = addDataPoints(copy, flatComposition, resolveContainers.get(i));
+                            } else {
+                                String parentForRelative = helper.getFhirPath();
+                                if (parentForRelative != null) {
+                                    parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
+                                                                                  ".")
+                                                                         .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                                }
+                                copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
+                                                                                             childFhirPath));
+                                evaluated = addDataPoints(copy, flatComposition, toResolveOn);
                             }
-                            copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
-                                                                                         childFhirPath));
-                            evaluated = addDataPoints(copy, flatComposition, toResolveOn);
                         } else {
                             evaluated = addDataPoints(copy, flatComposition, result);
                         }
                     } else {
                         final String childFhirPath = copy.getFhirPath();
                         if (childFhirPath != null && childFhirPath.startsWith("..")) {
-                            String parentForRelative = helper.getFhirPath();
-                            if (parentForRelative != null) {
-                                parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
-                                                                              ".")
-                                                                     .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                            if (resolveContainers != null && i < resolveContainers.size()) {
+                                String relative = childFhirPath.substring(2);
+                                if (relative.startsWith(".")) {
+                                    relative = relative.substring(1);
+                                }
+                                copy.setFhirPath(relative);
+                                evaluated = addDataPoints(copy, flatComposition, resolveContainers.get(i));
+                            } else {
+                                String parentForRelative = helper.getFhirPath();
+                                if (parentForRelative != null) {
+                                    parentForRelative = parentForRelative.replace("." + OpenFhirStringUtils.RESOLVE + ".",
+                                                                                  ".")
+                                                                         .replace("." + OpenFhirStringUtils.RESOLVE, "");
+                                }
+                                copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
+                                                                                             childFhirPath));
+                                evaluated = addDataPoints(copy, flatComposition, toResolveOn);
                             }
-                            copy.setFhirPath(openFhirStringUtils.resolveRelativeFhirPath(parentForRelative,
-                                                                                         childFhirPath));
-                            evaluated = addDataPoints(copy, flatComposition, toResolveOn);
                         } else {
                             evaluated = addDataPoints(copy, flatComposition, result);
                         }
