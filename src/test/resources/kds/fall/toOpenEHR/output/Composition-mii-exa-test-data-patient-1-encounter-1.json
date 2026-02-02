@@ -404,6 +404,26 @@
                   }
                 },
                 "archetype_node_id": "at0029"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Status"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "active",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://hl7.org/fhir/ValueSet/encounter-location-status"
+                    },
+                    "code_string": "active"
+                  }
+                },
+                "archetype_node_id": "at0046"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
@@ -440,6 +460,26 @@
                   }
                 },
                 "archetype_node_id": "at0034"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Status"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "active",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://hl7.org/fhir/ValueSet/encounter-location-status"
+                    },
+                    "code_string": "active"
+                  }
+                },
+                "archetype_node_id": "at0046"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
@@ -476,6 +516,26 @@
                   }
                 },
                 "archetype_node_id": "at0027"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Status"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "active",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://hl7.org/fhir/ValueSet/encounter-location-status"
+                    },
+                    "code_string": "active"
+                  }
+                },
+                "archetype_node_id": "at0046"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
