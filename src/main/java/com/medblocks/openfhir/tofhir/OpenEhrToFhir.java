@@ -1465,8 +1465,19 @@ public class OpenEhrToFhir {
             // }
 
             else {
-                values = joinedEntries.values().stream()
-                        .map(strings -> valueToFHIRParser.parse(strings, rmType, flatJsonObject, true, resourceType, fhirPath))
+                values = joinedEntries.entrySet().stream()
+                        .map((entry) -> {
+                            final List<String> strings = entry.getValue();
+                            final String key = entry.getKey();
+
+                            if(!evaluateOpenehrEmptyNotEmptyCondition(mapping,
+                                                                      key,
+                                                                      flatJsonObject)) {
+                                return null;
+                            }
+
+                            return valueToFHIRParser.parse(strings, rmType, flatJsonObject, true, resourceType, fhirPath);
+                        })
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
             }
@@ -1483,6 +1494,49 @@ public class OpenEhrToFhir {
         }
 
         return values;
+    }
+
+    private boolean evaluateOpenehrEmptyNotEmptyCondition(final Mapping mapping,
+                                                          final String openEhrKey,
+                                                          final JsonObject flatJsonObject) {
+        final Condition openehrCondition = mapping.getOpenehrCondition();
+        if (openehrCondition == null) {
+            return true;
+        }
+        final boolean notEmpty = CONDITION_OPERATOR_NOT_EMPTY.equals(
+                openehrCondition.getOperator());
+        final boolean empty = CONDITION_OPERATOR_EMPTY.equals(
+                openehrCondition.getOperator());
+        if (!notEmpty && !empty) {
+            return true;
+        }
+        // verify this condition first if it passes
+        final String root = openehrCondition.getTargetRoot();
+        final String actualRoot;
+        if (openEhrKey.contains(root)) {
+            // is subpath of the iteration so we need to conditionally evaluate this specifically
+            final String suffix = openEhrKey.replace(openehrCondition.getTargetRoot(), "");
+            final String missingSuffixFromRoot = suffix.substring(0, suffix.indexOf("/"));
+            actualRoot = root + missingSuffixFromRoot;
+        } else {
+            // generally
+            actualRoot = root;
+        }
+        for (final String targetAttribute : openehrCondition
+                .getTargetAttributes()) {
+            final String openehrPath = String.format("%s/%s", actualRoot, targetAttribute);
+            final String openehrPathWithRegex = openFhirStringUtils.addRegexPatternToSimplifiedFlatFormat(
+                    openehrPath);
+            final List<String> matchingEntries = openFhirStringUtils.getAllEntriesThatMatch(
+                    openehrPathWithRegex, flatJsonObject);
+            if (matchingEntries.isEmpty() && notEmpty) {
+                return false;
+            }
+            if (!matchingEntries.isEmpty() && empty) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private int getHardcodedIndex(final Mapping mapping, final JsonObject flatJsonObject) {
