@@ -56,6 +56,16 @@ public class FhirToOpenEhrHelper {
 
     private Condition typeCondition;
 
+    /**
+     * Additional openEHR condition that gates whether this mapping should be executed.
+     */
+    private Condition openEhrCondition;
+
+    /**
+     * Root openEHR path for this helper (used to resolve $archetype/$composition in conditions).
+     */
+    private String mainOpenEhrPath;
+
      /**
       * if a mapping contains an external program name
       */
@@ -76,6 +86,8 @@ public class FhirToOpenEhrHelper {
                 .openEhrPath(this.openEhrPath)
                 .openEhrType(this.openEhrType)
                 .typeCondition(this.typeCondition)
+                .openEhrCondition(this.openEhrCondition)
+                .mainOpenEhrPath(this.mainOpenEhrPath)
                 .mappingCode(this.mappingCode)
                 .build();
                 if (this.fhirToOpenEhrHelpers != null) {

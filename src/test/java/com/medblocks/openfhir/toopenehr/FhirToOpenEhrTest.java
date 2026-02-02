@@ -8,6 +8,7 @@ import com.medblocks.openfhir.TestOpenFhirMappingContext;
 import com.medblocks.openfhir.fc.FhirConnectConst;
 import com.medblocks.openfhir.util.FhirConnectModelMerger;
 import com.medblocks.openfhir.util.OpenEhrCachedUtils;
+import com.medblocks.openfhir.util.OpenEhrConditionEvaluator;
 import com.medblocks.openfhir.util.OpenEhrPopulator;
 import com.medblocks.openfhir.util.OpenFhirMapperUtils;
 import com.medblocks.openfhir.util.OpenFhirStringUtils;
@@ -45,7 +46,8 @@ public class FhirToOpenEhrTest {
                                           repo,
                                           new OpenEhrCachedUtils(null),
                                           new OpenFhirMapperUtils(),
-                                          new OpenEhrPopulator(new OpenFhirMapperUtils()));
+                                          new OpenEhrPopulator(new OpenFhirMapperUtils()),
+                                          new OpenEhrConditionEvaluator(openFhirStringUtils));
     }
 
 

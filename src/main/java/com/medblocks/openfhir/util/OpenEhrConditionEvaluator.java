@@ -47,6 +47,21 @@ public class OpenEhrConditionEvaluator {
         return true;
     }
 
+    public boolean checkOpenEhrCondition(final Condition condition,
+                                         final JsonObject jsonObject,
+                                         final String mainOpenEhrPath) {
+        if (condition == null) {
+            return true;
+        }
+        final String operator = condition.getOperator();
+        switch (operator) {
+            case FhirConnectConst.CONDITION_OPERATOR_EMPTY -> {
+                return checkEmptyCondition(condition, jsonObject, mainOpenEhrPath);
+            }
+        }
+        return true;
+    }
+
     public boolean checkEmptyCondition(final Condition openEhrCondition,
                                        final JsonObject jsonObject,
                                        final String mainOpenEhrPath) {
@@ -56,10 +71,14 @@ public class OpenEhrConditionEvaluator {
         for (final String targetAttribute : targetAttributes) {
             // if array, then OR is implied between them. So as long as one of these fits the operator, return true
             final String fullOpenEhrPath = String.format("%s/%s", openEhrPath, targetAttribute);
-            final String withRegex = openFhirStringUtils.addRegexPatternToSimplifiedFlatFormat(fullOpenEhrPath);
-
+            final List<String> matchingEntries = openFhirStringUtils.getAllEntriesThatMatchIgnoringPipe(
+                    fullOpenEhrPath,
+                    jsonObject);
+            if (!matchingEntries.isEmpty()) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     private JsonObject handleOneOfOperatorSplit(final Condition openEhrCondition,

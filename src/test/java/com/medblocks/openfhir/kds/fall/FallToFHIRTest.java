@@ -99,10 +99,6 @@ public class FallToFHIRTest extends KdsTest {
     public void assertToFHIR1(){
         Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_1), Composition.class);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
-//        final String dumpPath = System.getProperty("dumpBundle");
-//        if (dumpPath != null && !dumpPath.isBlank()) {
-//            java.nio.file.Files.writeString(java.nio.file.Path.of(dumpPath), jsonParser.encodeResourceToString(bundle));
-//        }
         standardsAsserter.assertBundle(bundle, FHIR_ENCOUNTER_1);
     }
 

@@ -88,7 +88,8 @@ public abstract class GenericTest {
                                           repo,
                                           new OpenEhrCachedUtils(null),
                                           new OpenFhirMapperUtils(),
-                                          new OpenEhrPopulator(new OpenFhirMapperUtils()));
+                                          new OpenEhrPopulator(new OpenFhirMapperUtils()),
+                                          new OpenEhrConditionEvaluator(openFhirStringUtils));
 
         prepareState();
     }

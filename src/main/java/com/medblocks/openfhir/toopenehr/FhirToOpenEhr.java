@@ -18,6 +18,7 @@ import com.medblocks.openfhir.fc.schema.model.Condition;
 import com.medblocks.openfhir.fc.schema.model.Mapping;
 import com.medblocks.openfhir.fc.schema.model.With;
 import com.medblocks.openfhir.util.OpenEhrCachedUtils;
+import com.medblocks.openfhir.util.OpenEhrConditionEvaluator;
 import com.medblocks.openfhir.util.OpenEhrPopulator;
 import com.medblocks.openfhir.util.OpenFhirMapperUtils;
 import com.medblocks.openfhir.util.OpenFhirStringUtils;
@@ -68,6 +69,7 @@ public class FhirToOpenEhr {
     final private OpenEhrCachedUtils openEhrApplicationScopedUtils;
     final private OpenFhirMapperUtils openFhirMapperUtils;
     final private OpenEhrPopulator openEhrPopulator;
+    final private OpenEhrConditionEvaluator openEhrConditionEvaluator;
 
     @Autowired
     public FhirToOpenEhr(final FhirPathR4 fhirPathR4,
@@ -79,7 +81,8 @@ public class FhirToOpenEhr {
                          final OpenFhirMappingContext openFhirTemplateRepo,
                          final OpenEhrCachedUtils openEhrApplicationScopedUtils,
                          final OpenFhirMapperUtils openFhirMapperUtils,
-                         final OpenEhrPopulator openEhrPopulator) {
+                         final OpenEhrPopulator openEhrPopulator,
+                         final OpenEhrConditionEvaluator openEhrConditionEvaluator) {
         this.fhirPathR4 = fhirPathR4;
         this.stringUtils = stringUtils;
         this.flatJsonUnmarshaller = flatJsonUnmarshaller;
@@ -90,6 +93,7 @@ public class FhirToOpenEhr {
         this.openEhrApplicationScopedUtils = openEhrApplicationScopedUtils;
         this.openFhirMapperUtils = openFhirMapperUtils;
         this.openEhrPopulator = openEhrPopulator;
+        this.openEhrConditionEvaluator = openEhrConditionEvaluator;
     }
 
     /**
@@ -513,6 +517,12 @@ public class FhirToOpenEhr {
             log.debug("Setting value taken with fhirPath {} from object type {}", fhirPath,
                       toResolveOn.getClass());
 
+            if (!openEhrConditionEvaluator.checkOpenEhrCondition(helper.getOpenEhrCondition(),
+                                                                 flatComposition,
+                                                                 helper.getMainOpenEhrPath())) {
+                continue;
+            }
+
               // Now check the conditions explicitly as separate steps to see which one's evaluating true
               boolean isHardcodingCondition = StringUtils.isNotEmpty(helper.getHardcodingValue());
               boolean isMappingCodeCondition = helper.getMappingCode() != null;
@@ -765,6 +775,8 @@ public class FhirToOpenEhr {
             if (mapping.getOpenehrCondition() != null
                     && FhirConnectConst.CONDITION_OPERATOR_TYPE.equals(mapping.getOpenehrCondition().getOperator())) {
                 initialHelper.setTypeCondition(mapping.getOpenehrCondition());
+            } else if (mapping.getOpenehrCondition() != null) {
+                initialHelper.setOpenEhrCondition(mapping.getOpenehrCondition());
             }
 
             hardcodingToOpenEhr(mapping, fhirConnectMapper, initialHelper);
@@ -984,6 +996,7 @@ public class FhirToOpenEhr {
                     openehr.replace(FhirConnectConst.OPENEHR_ARCHETYPE_FC + "/", mainOpenEhrPath + "/"));
             initialHelper.setOpenEhrPath(
                     openehr.replace(FhirConnectConst.OPENEHR_COMPOSITION_FC, templateId));
+            initialHelper.setMainOpenEhrPath(mainOpenEhrPath);
             final String replacedFhirRoot = fhirPath.replace("." + FHIR_ROOT_FC, "")
                     .replace(FHIR_ROOT_FC, "");
             initialHelper.setFhirPath(replacedFhirRoot);

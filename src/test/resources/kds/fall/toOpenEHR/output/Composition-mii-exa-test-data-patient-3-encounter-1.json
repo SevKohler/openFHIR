@@ -104,7 +104,7 @@
             "_type" : "CODE_PHRASE",
             "terminology_id" : {
               "_type" : "TERMINOLOGY_ID",
-              "value" : "http://fhir.de/ValueSet/EncounterStatusDe"
+              "value" : "http://fhir.de/CodeSystem/EncounterStatusDe"
             },
             "code_string" : "finished"
           }

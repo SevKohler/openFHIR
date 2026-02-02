@@ -14,9 +14,9 @@
         <other_details id="original_namespace"></other_details>
         <other_details id="original_publisher"></other_details>
         <other_details id="custodian_namespace"></other_details>
-        <other_details id="sem_ver">36.0.0</other_details>
+        <other_details id="sem_ver">42.2.0</other_details>
         <other_details id="build_uid"></other_details>
-        <other_details id="MD5-CAM-1.0.1">9211f1fc39b4c14552bdf5252de7adf7</other_details>
+        <other_details id="MD5-CAM-1.0.1">2bcb7350487aef10b562f545b6bd75a7</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">1fa06d56b4746d975400302192a97609</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
         <details>
@@ -284,6 +284,31 @@
                                             <upper>1</upper>
                                         </occurrences>
                                         <node_id></node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>defining_code</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>1</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_CODE_REFERENCE">
+                                                <rm_type_name>CODE_PHRASE</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>0</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                                <referenceSetUri>terminology:http://fhir.de/ValueSet/EncounterStatusDe</referenceSetUri>
+                                            </children>
+                                        </attributes>
                                     </children>
                                 </attributes>
                             </children>
@@ -2160,215 +2185,6 @@
                                 </includes>
                             </children>
                             <children xsi:type="C_COMPLEX_OBJECT">
-                                <rm_type_name>CLUSTER</rm_type_name>
-                                <occurrences>
-                                    <lower_included>true</lower_included>
-                                    <upper_included>false</upper_included>
-                                    <lower_unbounded>false</lower_unbounded>
-                                    <upper_unbounded>true</upper_unbounded>
-                                    <lower>0</lower>
-                                </occurrences>
-                                <node_id>at0018</node_id>
-                                <attributes xsi:type="C_MULTIPLE_ATTRIBUTE">
-                                    <rm_attribute_name>items</rm_attribute_name>
-                                    <existence>
-                                        <lower_included>true</lower_included>
-                                        <upper_included>true</upper_included>
-                                        <lower_unbounded>false</lower_unbounded>
-                                        <upper_unbounded>false</upper_unbounded>
-                                        <lower>1</lower>
-                                        <upper>1</upper>
-                                    </existence>
-                                    <match_negated>false</match_negated>
-                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>ELEMENT</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>true</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
-                                            <upper>1</upper>
-                                        </occurrences>
-                                        <node_id>at0025</node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>value</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>0</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                            </children>
-                                        </attributes>
-                                    </children>
-                                    <children xsi:type="ARCHETYPE_SLOT">
-                                        <rm_type_name>CLUSTER</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>false</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>true</upper_unbounded>
-                                            <lower>0</lower>
-                                        </occurrences>
-                                        <node_id>at0017</node_id>
-                                        <includes>
-                                            <string_expression>archetype_id/value matches {/openEHR-EHR-CLUSTER\.organisation(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.address(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.address(-[a-zA-Z0-9_]+)*\.v1|openEHR-EHR-CLUSTER\.organisation(-[a-zA-Z0-9_]+)*\.v1|openEHR-EHR-CLUSTER\.structured_address(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.structured_address(-[a-zA-Z0-9_]+)*\.v1/}</string_expression>
-                                            <expression xsi:type="EXPR_BINARY_OPERATOR">
-                                                <type>Boolean</type>
-                                                <operator>2007</operator>
-                                                <precedence_overridden>false</precedence_overridden>
-                                                <left_operand xsi:type="EXPR_LEAF">
-                                                    <type>String</type>
-                                                    <item xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema">archetype_id/value</item>
-                                                    <reference_type>attribute</reference_type>
-                                                </left_operand>
-                                                <right_operand xsi:type="EXPR_LEAF">
-                                                    <type>String</type>
-                                                    <item xsi:type="C_STRING">
-                                                        <pattern>openEHR-EHR-CLUSTER\.organisation(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.address(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.address(-[a-zA-Z0-9_]+)*\.v1|openEHR-EHR-CLUSTER\.organisation(-[a-zA-Z0-9_]+)*\.v1|openEHR-EHR-CLUSTER\.structured_address(-[a-zA-Z0-9_]+)*\.v0|openEHR-EHR-CLUSTER\.structured_address(-[a-zA-Z0-9_]+)*\.v1</pattern>
-                                                    </item>
-                                                    <reference_type>constraint</reference_type>
-                                                </right_operand>
-                                            </expression>
-                                        </includes>
-                                    </children>
-                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>ELEMENT</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>true</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
-                                            <upper>1</upper>
-                                        </occurrences>
-                                        <node_id>at0022</node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>value</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>0</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                            </children>
-                                        </attributes>
-                                    </children>
-                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>ELEMENT</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>true</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
-                                            <upper>1</upper>
-                                        </occurrences>
-                                        <node_id>at0023</node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>value</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>0</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                            </children>
-                                        </attributes>
-                                    </children>
-                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>ELEMENT</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>true</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
-                                            <upper>1</upper>
-                                        </occurrences>
-                                        <node_id>at0024</node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>value</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>0</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                            </children>
-                                        </attributes>
-                                    </children>
-                                    <cardinality>
-                                        <is_ordered>false</is_ordered>
-                                        <is_unique>false</is_unique>
-                                        <interval>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>false</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>true</upper_unbounded>
-                                            <lower>1</lower>
-                                        </interval>
-                                    </cardinality>
-                                </attributes>
-                            </children>
-                            <children xsi:type="C_COMPLEX_OBJECT">
                                 <rm_type_name>ELEMENT</rm_type_name>
                                 <occurrences>
                                     <lower_included>true</lower_included>
@@ -2613,6 +2429,368 @@
                                     </children>
                                 </attributes>
                             </children>
+                            <children xsi:type="C_ARCHETYPE_ROOT">
+                                <rm_type_name>CLUSTER</rm_type_name>
+                                <occurrences>
+                                    <lower_included>true</lower_included>
+                                    <upper_included>false</upper_included>
+                                    <lower_unbounded>false</lower_unbounded>
+                                    <upper_unbounded>true</upper_unbounded>
+                                    <lower>0</lower>
+                                </occurrences>
+                                <node_id>at0000</node_id>
+                                <attributes xsi:type="C_MULTIPLE_ATTRIBUTE">
+                                    <rm_attribute_name>items</rm_attribute_name>
+                                    <existence>
+                                        <lower_included>true</lower_included>
+                                        <upper_included>true</upper_included>
+                                        <lower_unbounded>false</lower_unbounded>
+                                        <upper_unbounded>false</upper_unbounded>
+                                        <lower>1</lower>
+                                        <upper>1</upper>
+                                    </existence>
+                                    <match_negated>false</match_negated>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0027</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0029</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0034</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0046</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                    <rm_attribute_name>defining_code</rm_attribute_name>
+                                                    <existence>
+                                                        <lower_included>true</lower_included>
+                                                        <upper_included>true</upper_included>
+                                                        <lower_unbounded>false</lower_unbounded>
+                                                        <upper_unbounded>false</upper_unbounded>
+                                                        <lower>1</lower>
+                                                        <upper>1</upper>
+                                                    </existence>
+                                                    <match_negated>false</match_negated>
+                                                    <children xsi:type="C_CODE_REFERENCE">
+                                                        <rm_type_name>CODE_PHRASE</rm_type_name>
+                                                        <occurrences>
+                                                            <lower_included>true</lower_included>
+                                                            <upper_included>true</upper_included>
+                                                            <lower_unbounded>false</lower_unbounded>
+                                                            <upper_unbounded>false</upper_unbounded>
+                                                            <lower>0</lower>
+                                                            <upper>1</upper>
+                                                        </occurrences>
+                                                        <node_id></node_id>
+                                                        <referenceSetUri>terminology:http://hl7.org/fhir/ValueSet/encounter-location-status</referenceSetUri>
+                                                    </children>
+                                                </attributes>
+                                            </children>
+                                        </attributes>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>name</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>1</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_TEXT</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                    <rm_attribute_name>value</rm_attribute_name>
+                                                    <existence>
+                                                        <lower_included>true</lower_included>
+                                                        <upper_included>true</upper_included>
+                                                        <lower_unbounded>false</lower_unbounded>
+                                                        <upper_unbounded>false</upper_unbounded>
+                                                        <lower>1</lower>
+                                                        <upper>1</upper>
+                                                    </existence>
+                                                    <match_negated>false</match_negated>
+                                                    <children xsi:type="C_PRIMITIVE_OBJECT">
+                                                        <rm_type_name>STRING</rm_type_name>
+                                                        <occurrences>
+                                                            <lower_included>true</lower_included>
+                                                            <upper_included>true</upper_included>
+                                                            <lower_unbounded>false</lower_unbounded>
+                                                            <upper_unbounded>false</upper_unbounded>
+                                                            <lower>1</lower>
+                                                            <upper>1</upper>
+                                                        </occurrences>
+                                                        <node_id></node_id>
+                                                        <item xsi:type="C_STRING">
+                                                            <list>Status</list>
+                                                        </item>
+                                                    </children>
+                                                </attributes>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <children xsi:type="ARCHETYPE_SLOT">
+                                        <rm_type_name>CLUSTER</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>false</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>true</upper_unbounded>
+                                            <lower>0</lower>
+                                        </occurrences>
+                                        <node_id>at0047</node_id>
+                                        <includes>
+                                            <string_expression>archetype_id/value matches {/.*/}</string_expression>
+                                            <expression xsi:type="EXPR_BINARY_OPERATOR">
+                                                <type>Boolean</type>
+                                                <operator>2007</operator>
+                                                <precedence_overridden>false</precedence_overridden>
+                                                <left_operand xsi:type="EXPR_LEAF">
+                                                    <type>String</type>
+                                                    <item xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema">archetype_id/value</item>
+                                                    <reference_type>attribute</reference_type>
+                                                </left_operand>
+                                                <right_operand xsi:type="EXPR_LEAF">
+                                                    <type>String</type>
+                                                    <item xsi:type="C_STRING">
+                                                        <pattern>.*</pattern>
+                                                    </item>
+                                                    <reference_type>constraint</reference_type>
+                                                </right_operand>
+                                            </expression>
+                                        </includes>
+                                    </children>
+                                    <children xsi:type="ARCHETYPE_SLOT">
+                                        <rm_type_name>CLUSTER</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>false</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>true</upper_unbounded>
+                                            <lower>0</lower>
+                                        </occurrences>
+                                        <node_id>at0049</node_id>
+                                        <includes>
+                                            <string_expression>archetype_id/value matches {/.*/}</string_expression>
+                                            <expression xsi:type="EXPR_BINARY_OPERATOR">
+                                                <type>Boolean</type>
+                                                <operator>2007</operator>
+                                                <precedence_overridden>false</precedence_overridden>
+                                                <left_operand xsi:type="EXPR_LEAF">
+                                                    <type>String</type>
+                                                    <item xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema">archetype_id/value</item>
+                                                    <reference_type>attribute</reference_type>
+                                                </left_operand>
+                                                <right_operand xsi:type="EXPR_LEAF">
+                                                    <type>String</type>
+                                                    <item xsi:type="C_STRING">
+                                                        <pattern>.*</pattern>
+                                                    </item>
+                                                    <reference_type>constraint</reference_type>
+                                                </right_operand>
+                                            </expression>
+                                        </includes>
+                                    </children>
+                                    <cardinality>
+                                        <is_ordered>false</is_ordered>
+                                        <is_unique>false</is_unique>
+                                        <interval>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>false</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>true</upper_unbounded>
+                                            <lower>1</lower>
+                                        </interval>
+                                    </cardinality>
+                                </attributes>
+                                <archetype_id>
+                                    <value>openEHR-EHR-CLUSTER.location.v1</value>
+                                </archetype_id>
+                                <term_definitions code="at0024">
+                                    <items id="text">Campus</items>
+                                    <items id="description">Eine Gruppe von Gebäuden an anderen Orten, wie ein örtlich entfernter Campus, der außerhalb der Einrichtung liegt, aber zur Institution gehört.</items>
+                                </term_definitions>
+                                <term_definitions code="at0025">
+                                    <items id="text">Gebäudegruppe</items>
+                                    <items id="description">Ein Gebäude oder Bauwerk. Dazu können Räume, Flure, Flügel, etc. gehören. Es hat möglicherweise keine Wände oder ein Dach, wird aber dennoch als definierter/zugeordneter Raum angesehen.</items>
+                                </term_definitions>
+                                <term_definitions code="at0027">
+                                    <items id="text">Station</items>
+                                    <items id="description">Eine Station ist Teil einer medizinischen Einrichtung, die Räume und andere Arten von Orten enthalten kann.</items>
+                                </term_definitions>
+                                <term_definitions code="at0028">
+                                    <items id="text">Ebene</items>
+                                    <items id="description">Die Ebene in einem mehrstöckigen Gebäude/Bauwerk.</items>
+                                </term_definitions>
+                                <term_definitions code="at0029">
+                                    <items id="text">Zimmer</items>
+                                    <items id="description">Ein Ort, der als Zimmer deklariert wurde. Bei einigen Standorten kann das Zimmer im Flur liegen zB: Station XYZ Flur 2. Hierbei liegt der Bettstellplatz 2 auf dem Flur der jeweiligen Station. </items>
+                                </term_definitions>
+                                <term_definitions code="at0034">
+                                    <items id="text">Bettstellplatz</items>
+                                    <items id="description">Beschreibung des Bettstellplatzes z.B. Bett stand neben dem Fenster oder neben der Tür.</items>
+                                </term_definitions>
+                                <term_definitions code="at0046">
+                                    <items id="text">Status</items>
+                                    <items id="description">Das Feld enthält die Freitextbeschreibung des Standorts, z.B. Throax-, Herz- und Gefäßchirurgie.</items>
+                                </term_definitions>
+                                <term_definitions code="at0047">
+                                    <items id="text">Details</items>
+                                    <items id="description">Für die Erfassung weiterer Angaben über das Bett oder der Adresse. Verwenden Sie dazu den Archetyp CLUSTER.device oder CLUSTER.address.</items>
+                                </term_definitions>
+                                <term_definitions code="at0049">
+                                    <items id="text">Leitende Organisationseinheit</items>
+                                    <items id="description">Organisation, die für die Bereitstellung und Instandhaltung verantwortlich ist&#13;
+&#13;
+Die Organisation, die für die Bereitstellung und den Unterhalt des Standorts verantwortlich ist.&#13;
+</items>
+                                </term_definitions>
+                                <term_definitions code="at0000">
+                                    <items id="text">Standort</items>
+                                    <items id="description">Standort umfasst sowohl beiläufige Orte (ein Ort, der für die medizinische Versorgung ohne vorherige Benennung oder Genehmigung genutzt wird) als auch spezielle, offiziell benannte Orte. Die Standorte können privat, öffentlich, mobil oder stationär sein.</items>
+                                </term_definitions>
+                            </children>
                             <cardinality>
                                 <is_ordered>false</is_ordered>
                                 <is_unique>false</is_unique>
@@ -2703,45 +2881,10 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                     <items id="text">Nummer der Krankenakte</items>
                     <items id="description">Identifizierende Nummer der Krankenakte.</items>
                 </term_definitions>
-                <term_definitions code="at0017">
-                    <items id="text">Standort</items>
-                    <items id="description">Eine Organisation, physische Adresse oder strukturierte Adresse, welche den Standort des Aufenthaltes beschreibt.</items>
-                    <items id="comment">Zum Beispiel: 2. Etage, Haus I, Städtisches Krankenhaus</items>
-                </term_definitions>
-                <term_definitions code="at0018">
-                    <items id="text">Standort</items>
-                    <items id="description">Der physische Standort der Person innerhalb der Institution während des Aufenthaltes.</items>
-                </term_definitions>
-                <term_definitions code="at0019">
-                    <items id="text">Aufnahme am Standort</items>
-                    <items id="description">Das Datum, an dem die Person an einen anderen Standort innerhalb der Institution verlegt wurde.</items>
-                    <items id="comment">Zum Beispiel: Das Datum einer Stations- oder Bettenverlegung.</items>
-                </term_definitions>
-                <term_definitions code="at0020">
-                    <items id="text">Standortentlassung</items>
-                    <items id="description">Das Datum der Entlassung von dem institutionsinternen Standort.</items>
-                </term_definitions>
                 <term_definitions code="at0021">
                     <items id="text">Behandelnde Organisationseinheit</items>
                     <items id="description">Die für die Behandlung verantwortliche Organisationseinheit.</items>
                     <items id="comment">Zum Beispiel: Orthopädie</items>
-                </term_definitions>
-                <term_definitions code="at0022">
-                    <items id="text">Station</items>
-                    <items id="description">Der Name der Station innerhalb der Institution, auf der sich die Person befand.</items>
-                </term_definitions>
-                <term_definitions code="at0023">
-                    <items id="text">Zimmer</items>
-                    <items id="description">Der Name des Zimmers innerhalb der Institution, in dem sich die Person befand.</items>
-                </term_definitions>
-                <term_definitions code="at0024">
-                    <items id="text">Bett</items>
-                    <items id="description">Die Bezeichnung des Bettes innerhalb der Institution, welches der Person zugewiesen war.</items>
-                </term_definitions>
-                <term_definitions code="at0025">
-                    <items id="text">Standortkategorie</items>
-                    <items id="description">Die Art des Standortes.</items>
-                    <items id="comment">Zum Beispiel: Intensivstation, Intermediate Care Unit</items>
                 </term_definitions>
                 <term_definitions code="at0026">
                     <items id="text">Krankenversicherungskategorie</items>
@@ -2750,6 +2893,10 @@ Bei Bedarf sollten Diagnosen per EVAL.problem_diagnosis und dem verschachteltem 
                 <term_definitions code="at0027">
                     <items id="text">Überweisender Mediziner</items>
                     <items id="description">Details zu den Mediziner*innen, die für die Überweisung der Person aus dem Zuweiser verantwortlich sind.</items>
+                </term_definitions>
+                <term_definitions code="at0032">
+                    <items id="text">Standort</items>
+                    <items id="description"></items>
                 </term_definitions>
             </children>
             <children xsi:type="C_ARCHETYPE_ROOT">
@@ -3668,11 +3815,10 @@ In den meisten Fällen wird es sich um eine einzige spezifische Stelle handeln. 
                                 <rm_type_name>CLUSTER</rm_type_name>
                                 <occurrences>
                                     <lower_included>true</lower_included>
-                                    <upper_included>true</upper_included>
+                                    <upper_included>false</upper_included>
                                     <lower_unbounded>false</lower_unbounded>
-                                    <upper_unbounded>false</upper_unbounded>
+                                    <upper_unbounded>true</upper_unbounded>
                                     <lower>0</lower>
-                                    <upper>1</upper>
                                 </occurrences>
                                 <node_id>at0000</node_id>
                                 <attributes xsi:type="C_MULTIPLE_ATTRIBUTE">

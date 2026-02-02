@@ -20,6 +20,7 @@ context:
     - "CLUSTER.kontakttyp.v0"
     - "CLUSTER.diagnosetyp.v0"
     - "CLUSTER.organization.v0"
+    - "CLUSTER.location.v1"
     # need to reference also all those from problem diagnose?
     - "CLUSTER.anatomical_location.v1"
   extensions:

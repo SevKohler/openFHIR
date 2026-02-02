@@ -110,7 +110,8 @@ public abstract class KdsTest {
                         repo,
                         new OpenEhrCachedUtils(null),
                         new OpenFhirMapperUtils(),
-                        new OpenEhrPopulator(new OpenFhirMapperUtils()));
+                        new OpenEhrPopulator(new OpenFhirMapperUtils()),
+                        new OpenEhrConditionEvaluator(openFhirStringUtils));
 
         prepareState();
     }

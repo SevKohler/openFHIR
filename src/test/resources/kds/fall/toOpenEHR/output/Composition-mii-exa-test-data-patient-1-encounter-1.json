@@ -106,7 +106,7 @@
               "_type": "CODE_PHRASE",
               "terminology_id": {
                 "_type": "TERMINOLOGY_ID",
-                "value": "//ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/EncounterStatusDe"
+                "value": "http://fhir.de/ValueSet/EncounterStatusDe"
               },
               "code_string": "finished"
             }
@@ -341,52 +341,6 @@
             "archetype_node_id": "at0009"
           },
           {
-            "_type": "CLUSTER",
-            "name": {
-              "_type": "DV_TEXT",
-              "value": "Standort"
-            },
-            "items": [
-              {
-                "_type": "ELEMENT",
-                "name": {
-                  "_type": "DV_TEXT",
-                  "value": "Station"
-                },
-                "value": {
-                  "_type": "DV_TEXT",
-                  "value": "RHC-06"
-                },
-                "archetype_node_id": "at0022"
-              },
-              {
-                "_type": "ELEMENT",
-                "name": {
-                  "_type": "DV_TEXT",
-                  "value": "Zimmer"
-                },
-                "value": {
-                  "_type": "DV_TEXT",
-                  "value": "RHC-06-210b"
-                },
-                "archetype_node_id": "at0023"
-              },
-              {
-                "_type": "ELEMENT",
-                "name": {
-                  "_type": "DV_TEXT",
-                  "value": "Bett"
-                },
-                "value": {
-                  "_type": "DV_TEXT",
-                  "value": "RHC-06-210b-02"
-                },
-                "archetype_node_id": "at0024"
-              }
-            ],
-            "archetype_node_id": "at0018"
-          },
-          {
             "_type": "ELEMENT",
             "name": {
               "_type": "DV_TEXT",
@@ -417,6 +371,114 @@
               }
             },
             "archetype_node_id": "at0006"
+          },
+          {
+            "_type": "CLUSTER",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Standort"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.location.v1"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Zimmer"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "RHC-06-210b",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "https://www.charite.de/fhir/sid/Zimmernummern"
+                    },
+                    "code_string": "RHC-06-210b"
+                  }
+                },
+                "archetype_node_id": "at0029"
+              }
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
+          },
+          {
+            "_type": "CLUSTER",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Standort"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.location.v1"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Bettstellplatz"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "RHC-06-210b-02",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "https://www.charite.de/fhir/sid/Bettennummern"
+                    },
+                    "code_string": "RHC-06-210b-02"
+                  }
+                },
+                "archetype_node_id": "at0034"
+              }
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
+          },
+          {
+            "_type": "CLUSTER",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Standort"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.location.v1"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Station"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "RHC-06",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "https://www.charite.de/fhir/sid/Stationsnummern"
+                    },
+                    "code_string": "RHC-06"
+                  }
+                },
+                "archetype_node_id": "at0027"
+              }
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.location.v1"
           }
         ],
         "archetype_node_id": "at0001"

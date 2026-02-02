@@ -17,7 +17,7 @@ mappings:
       openehr: "$composition/context/other_context[at0001]/items[at0004]"
 
 
-  - name: "fallart"
+  - name: "fallstatus"
     extension: "add"
     with:
       fhir: "$resource.status"
@@ -184,108 +184,3 @@ mappings:
                   openehr: "data[at0001]/items[openEHR-EHR-CLUSTER.diagnosetyp.v0]"
                 slotArchetype: "CLUSTER.diagnosetyp.v0"
 
-#  - name: "problemDiagnoseParent"
-#    extension: "add"
-#    with:
-#      fhir: "$resource.diagnosis"
-#      openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
-#    slotArchetype: "EVALUATION.problem_diagnosis.v1"
-
-#  - name: "problemDiagnoseParent"
-#    extension: "add"
-#    with:
-#      fhir: "$resource.diagnosis"
-#      openehr: "$reference" #create one reference instead of two
-##      type: "NONE"
-##   #   openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #1 needs to be here since for each diagnosis archetype do one condition and vice versa
-##    followedBy:
-##      mappings:
-##        - name: "use"
-##          with:
-##            fhir: "$fhirRoot"
-##            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
-#    reference:
-#      resourceType: "Condition" # this creates an extra encounter with a condition inside
-#      mappings:
-#        - name: "condition"
-#          with:
-#            fhir: "condition"
-#            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
-#           # openehr: "$openehrRoot"  #1 corect mapping for n-to-n
-#          slotArchetype: "EVALUATION.problem_diagnosis.v1"
-##          followedBy:
-##            mappings:
-##              - name: "use"
-##                with:
-##                  fhir: "$fhirRoot"
-##                  openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]" #CREATE ONE ENCOUNTER WITH DIAGNOSIS
-#    followedBy:
-#      mappings:
-#        - name: "reference"
-#          with:
-#            fhir: "$fhirRoot"
-#            openehr: "$openehrRoot"
-#          reference:
-#            resourceType: "Condition"
-#            mappings:
-#              - name: "condition"
-#                with:
-#                  fhir: "condition"
-#                  openehr: "$openehrRoot"
-#                slotArchetype: "EVALUATION.problem_diagnosis.v1"
-#        - name: "problemDiagnoseUse"
-#          with:
-#            fhir: "use"
-#            openehr: "$openehrRoot"
-#            type: "NONE"
-#          followedBy:
-#            mappings:
-#              - name: "diagnoseTyp"
-#                with:
-#                  fhir: "coding"
-#                  openehr: "data[at0001]/items[at0009]"
-#
-#                fhirCondition:
-#                  targetRoot: "coding"
-#                  targetAttribute: "code"
-#                  operator: "one of"
-#                  criterias:
-#                    - "referral-diagnosis"
-#                    - "treatment-diagnosis"
-#                followedBy:
-#                  mappings:
-#                    - name: "system"
-#                      with:
-#                        fhir: "$fhirRoot"
-#                      manual:
-#                        - name: "system"
-#                          fhir:
-#                            - path: "system"
-#                              value: "http://fhir.de/CodeSystem/dki-diagnosetyp"
-#
-#              - name: "diagnoseSubtyp"
-#                with:
-#                  fhir: "coding"
-#                  openehr: "data[at0001]/items[at0079]"
-#
-#                fhirCondition:
-#                  targetRoot: "coding"
-#                  targetAttribute: "code"
-#                  operator: "one of"
-#                  criterias:
-#                    - "surgery-diagnosis"
-#                    - "department-main-diagnosis"
-#                    - "cause-of-death"
-#                    - "infection-control-diagnosis"
-#                    - "AD"
-#                    - "DD"
-#                followedBy:
-#                  mappings:
-#                    - name: "system"
-#                      with:
-#                        fhir: "$fhirRoot"
-#                      manual:
-#                        - name: "system"
-#                          fhir:
-#                            - path: "system"
-#                              value: "http://fhir.de/CodeSystem/dki-diagnosesubtyp"
