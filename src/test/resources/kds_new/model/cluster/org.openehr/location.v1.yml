@@ -44,6 +44,10 @@ mappings:
           with:
             fhir: "status"
             openehr: "items[at0046]"
+          openehrCondition:
+            targetRoot: "$openehrRoot"
+            targetAttribute: "items[at0027]"
+            operator: "not empty"
 
   - name: "roomRoot"
     with:
@@ -76,7 +80,10 @@ mappings:
           with:
             fhir: "status"
             openehr: "items[at0046]"
-
+          openehrCondition:
+            targetRoot: "$openehrRoot"
+            targetAttribute: "items[at0029]"
+            operator: "not empty"
 
   - name: "bedRoot"
     with:
@@ -109,3 +116,7 @@ mappings:
           with:
             fhir: "status"
             openehr: "items[at0046]"
+          openehrCondition:
+            targetRoot: "$openehrRoot"
+            targetAttribute: "items[at0034]"
+            operator: "not empty"
