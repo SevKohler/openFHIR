@@ -111,6 +111,25 @@
         },
         "archetype_node_id" : "at0010"
       }, {
+        "_type" : "ELEMENT",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Fall-ID"
+        },
+        "value" : {
+          "_type" : "DV_CODED_TEXT",
+          "value" : "MII_0000008",
+          "defining_code" : {
+            "_type" : "CODE_PHRASE",
+            "terminology_id" : {
+              "_type" : "TERMINOLOGY_ID",
+              "value" : "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern"
+            },
+            "code_string" : "MII_0000008"
+          }
+        },
+        "archetype_node_id" : "at0003"
+      }, {
         "_type" : "CLUSTER",
         "name" : {
           "_type" : "DV_TEXT",

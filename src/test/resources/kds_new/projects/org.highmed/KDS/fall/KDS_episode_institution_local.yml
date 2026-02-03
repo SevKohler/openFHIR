@@ -33,7 +33,7 @@ mappings:
       targetAttribute: "type.coding.code"
       operator: "one of"
       criteria: "VN"
-    followedBy:
+    followedBy: #TODO @Gasper this causes the toOPneEHR output to be not generated
       mappings:
         - name: "vncodingcode"
           with:
