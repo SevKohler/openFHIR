@@ -39,7 +39,7 @@
             "assigner": {
               "identifier": {
                 "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-                "value": "Charit\u00e9"
+                "value": "Charité"
               }
             },
             "type": {
@@ -263,7 +263,7 @@
                 {
                   "code": "referral-diagnosis",
                   "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
-                  "display": "\u00dcberweisungsdiagnose"
+                  "display": "Überweisungsdiagnose"
                 },
                 {
                   "code": "AD",
@@ -288,7 +288,7 @@
                     "valueCoding": {
                       "code": "02",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundErsteUndZweiteStelle",
-                      "display": "Behandlung regul\u00e4r beendet, nachstation\u00e4re Behandlung vorgesehen"
+                      "display": "Behandlung regulär beendet, nachstationäre Behandlung vorgesehen"
                     }
                   },
                   {
@@ -296,7 +296,7 @@
                     "valueCoding": {
                       "code": "2",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundDritteStelle",
-                      "display": "arbeitsunf\u00e4hig entlassen"
+                      "display": "arbeitsunfähig entlassen"
                     }
                   }
                 ],
@@ -317,10 +317,10 @@
         "serviceProvider": {
           "identifier": {
             "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-            "value": "Charit\u00e9"
+            "value": "Charité"
           },
           "reference": "Organization/mii-exa-test-data-organization-charite",
-          "display": "Charit\u00e9 - Universit\u00e4tsmedizin Berlin"
+          "display": "Charité - Universitätsmedizin Berlin"
         },
         "status": "finished",
         "class": {

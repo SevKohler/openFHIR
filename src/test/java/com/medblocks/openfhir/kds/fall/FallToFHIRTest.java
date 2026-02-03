@@ -112,7 +112,6 @@ public class FallToFHIRTest extends KdsTest {
 
     @SneakyThrows
     @Test
-    @Ignore // TODO since diagnosis bug
     public void assertToFHIR3(){
         Composition composition = JacksonUtil.getObjectMapper()
                 .readValue(getFile(OPENEHR_COMPOSITION_3), Composition.class);
@@ -158,7 +157,6 @@ public class FallToFHIRTest extends KdsTest {
 
     @SneakyThrows
     @Test
-    @Ignore // TODO since diagnosis bug
     public void assertToFHIR8(){
         Composition composition = JacksonUtil.getObjectMapper()
                 .readValue(getFile(OPENEHR_COMPOSITION_8), Composition.class);

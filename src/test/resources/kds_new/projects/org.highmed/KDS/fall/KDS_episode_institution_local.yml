@@ -124,6 +124,10 @@ mappings:
       fhir: "$resource.hospitalization"
       openehr: "$archetype"
       type: "NONE"
+    openehrCondition:
+      targetRoot: "$archetype"
+      targetAttribute: "data[at0001]/items[at0009]"
+      operator: "not empty" # to prevent empty "hospitalization": {} "dischargeDisposition": {} using at0009 since in fhir this is must
     followedBy:
       mappings:
         - name: "aufnahmekategorie"

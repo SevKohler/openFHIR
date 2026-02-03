@@ -305,47 +305,6 @@
         },
         "archetype_node_id" : "at0009"
       }, {
-        "_type" : "CLUSTER",
-        "name" : {
-          "_type" : "DV_TEXT",
-          "value" : "Standort"
-        },
-        "items" : [ {
-          "_type" : "ELEMENT",
-          "name" : {
-            "_type" : "DV_TEXT",
-            "value" : "Station"
-          },
-          "value" : {
-            "_type" : "DV_TEXT",
-            "value" : "station-1-identifier"
-          },
-          "archetype_node_id" : "at0022"
-        }, {
-          "_type" : "ELEMENT",
-          "name" : {
-            "_type" : "DV_TEXT",
-            "value" : "Zimmer"
-          },
-          "value" : {
-            "_type" : "DV_TEXT",
-            "value" : "zimmer-1-identifier"
-          },
-          "archetype_node_id" : "at0023"
-        }, {
-          "_type" : "ELEMENT",
-          "name" : {
-            "_type" : "DV_TEXT",
-            "value" : "Bett"
-          },
-          "value" : {
-            "_type" : "DV_TEXT",
-            "value" : "bett-1-identifier"
-          },
-          "archetype_node_id" : "at0024"
-        } ],
-        "archetype_node_id" : "at0018"
-      }, {
         "_type" : "ELEMENT",
         "name" : {
           "_type" : "DV_TEXT",
@@ -356,6 +315,159 @@
           "value" : "2022-04-03T06:05:06"
         },
         "archetype_node_id" : "at0002"
+      }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Standort"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.location.v1"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Zimmer"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "zimmer-1-identifier",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID"
+              },
+              "code_string" : "zimmer-1-identifier"
+            }
+          },
+          "archetype_node_id" : "at0029"
+        }, {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Status"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "active",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://hl7.org/fhir/ValueSet/encounter-location-status"
+              },
+              "code_string" : "active"
+            }
+          },
+          "archetype_node_id" : "at0046"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.location.v1"
+      }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Standort"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.location.v1"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Bettstellplatz"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "bett-1-identifier",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID"
+              },
+              "code_string" : "bett-1-identifier"
+            }
+          },
+          "archetype_node_id" : "at0034"
+        }, {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Status"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "active",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://hl7.org/fhir/ValueSet/encounter-location-status"
+              },
+              "code_string" : "active"
+            }
+          },
+          "archetype_node_id" : "at0046"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.location.v1"
+      }, {
+        "_type" : "CLUSTER",
+        "name" : {
+          "_type" : "DV_TEXT",
+          "value" : "Standort"
+        },
+        "archetype_details" : {
+          "archetype_id" : {
+            "value" : "openEHR-EHR-CLUSTER.location.v1"
+          },
+          "rm_version" : "1.0.4"
+        },
+        "items" : [ {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Station"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "station-1-identifier",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID"
+              },
+              "code_string" : "station-1-identifier"
+            }
+          },
+          "archetype_node_id" : "at0027"
+        }, {
+          "_type" : "ELEMENT",
+          "name" : {
+            "_type" : "DV_TEXT",
+            "value" : "Status"
+          },
+          "value" : {
+            "_type" : "DV_CODED_TEXT",
+            "value" : "active",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://hl7.org/fhir/ValueSet/encounter-location-status"
+              },
+              "code_string" : "active"
+            }
+          },
+          "archetype_node_id" : "at0046"
+        } ],
+        "archetype_node_id" : "openEHR-EHR-CLUSTER.location.v1"
       } ],
       "archetype_node_id" : "at0001"
     },
