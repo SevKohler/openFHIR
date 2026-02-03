@@ -1,30 +1,26 @@
 package com.medblocks.openfhir.kds.laborauftrag;
 
-import static org.junit.Assert.assertEquals;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.kds.KdsBidirectionalTest;
 import com.nedap.archie.rm.composition.Composition;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.ehrbase.openehr.sdk.serialisation.flatencoding.std.umarshal.FlatJsonUnmarshaller;
 import org.ehrbase.openehr.sdk.webtemplate.parser.OPTParser;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Organization;
-import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.Resource;
-import org.hl7.fhir.r4.model.ServiceRequest;
-import org.hl7.fhir.r4.model.Specimen;
+import org.hl7.fhir.r4.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LaborauftragTest extends KdsBidirectionalTest {
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+
+public class LaborauftragToOpenEHRTest extends KdsBidirectionalTest {
 
     final String MODEL_MAPPINGS = "/kds_new/";
     final String CONTEXT = "/kds_new/projects/org.highmed/KDS/laborauftrag/KDS_laborauftrag.context.yaml";
