@@ -127,7 +127,7 @@ mappings:
     openehrCondition:
       targetRoot: "$archetype"
       targetAttribute: "data[at0001]/items[at0009]"
-      operator: "not empty" #TODO @Gasper to prevent empty "hospitalization": {} "dischargeDisposition": {} using at0009 since in fhir this is must. is ignored 
+      operator: "not empty" #TODO @Gasper to prevent empty "hospitalization": {} "dischargeDisposition": {} using at0009 since in fhir this is must. is ignored
     followedBy:
       mappings:
         - name: "aufnahmekategorie"
