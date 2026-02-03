@@ -5,47 +5,192 @@
     {
       "resource": {
         "resourceType": "Condition",
-        "id": "reference-condition",
-        "contained": {
-          "resourceType": "Encounter",
-          "id": "2",
-          "identifier": [
-            {
-              "type": {
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose"
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Condition",
+            "id": "1",
+            "meta": {
+              "profile": [
+                "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose"
+              ]
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+                "valueDateTime": "2125-02-03T05:05:06+01:00"
+              }
+            ],
+            "clinicalStatus": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                  "code": "active",
+                  "display": "active"
+                }
+              ],
+              "text": "active"
+            },
+            "verificationStatus": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                  "code": "confirmed",
+                  "display": "Confirmed"
+                }
+              ]
+            },
+            "severity": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "24484000",
+                  "display": "Severe"
+                }
+              ],
+              "text": "Severe"
+            },
+            "code": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                  "code": "C34.1",
+                  "display": "Malignant neoplasm of upper lobe, bronchus or lung",
+                  "extension": [
+                    {
+                      "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
+                      "valueCoding": {
+                        "system": "http://fhir.de/CodeSystem/dimdi/diagnosesicherheit",
+                        "code": "V",
+                        "display": "Verdacht auf Diagnose"
+                      }
+                    },
+                    {
+                      "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                      "valueCoding": {
+                        "system": "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                        "code": "!",
+                        "display": "!"
+                      }
+                    },
+                    {
+                      "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
+                      "valueCoding": {
+                        "system": "http://fhir.de/CodeSystem/dimdi/seitenlokalisation",
+                        "code": "B",
+                        "display": "Beiderseits"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/icd-o-3",
+                  "code": "C34.1",
+                  "display": "Malignant neoplasm of upper lobe, bronchus or lung"
+                },
+                {
+                  "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+                  "code": "098H5",
+                  "display": "Malignant neoplasm of upper lobe, bronchus or lung, unspecified"
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "254626006",
+                  "display": "Malignant neoplasm of the upper lobe of lung"
+                },
+                {
+                  "system": "http://www.orpha.net",
+                  "code": "830",
+                  "display": "Malignant neoplasm of upper lobe, bronchus or lung"
+                }
+
+              ],
+              "text": "Malignant neoplasm of upper lobe, bronchus or lung"
+            },
+            "bodySite": [
+              {
                 "coding": [
                   {
-                    "code": "VN"
+                    "system": "http://snomed.info/sct",
+                    "code": "368209003",
+                    "display": "Entire cardiovascular system"
+                  },
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/icd-o-3",
+                    "code": "C34.1",
+                    "display": "Upper lobe, bronchus or lung"
+                  }
+                ],
+                "text": "Entire cardiovascular system"
+              }
+            ],
+            "onsetPeriod": {
+              "_start": {
+                "extension": [
+                  {
+                    "url": "http://fhir.de/StructureDefinition/lebensphase",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "system": "http://snomed.info/sct",
+                          "code": "424144002",
+                          "display": "Adulthood"
+                        }
+                      ],
+                      "text": "Adulthood"
+                    }
                   }
                 ]
               },
-              "value": "encounter-id-1245"
-            }
-          ]
-        },
-        "identifier": [
-          {
-            "system": "http://localhost:8888/fhir-bridge/fhir/identifiers/conditions",
-            "value": "COND-123456",
-            "use": "official",
-            "type": {
-              "coding": [
-                {
-                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-                  "code": "MR",
-                  "display": "Medical record number"
-                }
-              ],
-              "text": "Medical Record Number"
+              "_end": {
+                "extension": [
+                  {
+                    "url": "http://fhir.de/StructureDefinition/lebensphase",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "system": "http://snomed.info/sct",
+                          "code": "367640001",
+                          "display": "End of middle age phase"
+                        }
+                      ],
+                      "text": "End of middle age phase"
+                    }
+                  }
+                ]
+              }
             },
-            "assigner": {
-              "display": "Example Hospital"
-            }
+            "note": [
+              {
+                "text": "The patient has a history of high blood pressure, now presenting with severe hypertension."
+              }
+            ]
+          },
+          {
+            "resourceType": "Encounter",
+            "id": "2",
+            "identifier": [
+              {
+                "system": "http://hospital.smarthealthit.org",
+                "value": "encounter-id-1245"
+              }
+            ]
           }
         ],
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
             "valueDateTime": "2125-02-03T05:05:06+01:00"
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/condition-related",
+            "valueReference": {
+              "reference": "#1"
+            }
           }
         ],
         "clinicalStatus": {
@@ -53,7 +198,7 @@
             {
               "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
               "code": "active",
-              "display": "Active"
+              "display": "active"
             }
           ],
           "text": "active"
@@ -65,8 +210,7 @@
               "code": "confirmed",
               "display": "Confirmed"
             }
-          ],
-          "text": "confirmed"
+          ]
         },
         "severity": {
           "coding": [
@@ -86,27 +230,27 @@
               "display": "Malignant neoplasm of upper lobe, bronchus or lung",
               "extension": [
                 {
+                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
+                  "valueCoding": {
+                    "system": "http://fhir.de/CodeSystem/dimdi/diagnosesicherheit",
+                    "code": "V",
+                    "display": "Verdacht auf Diagnose"
+                  }
+                },
+                {
                   "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen",
                   "valueCoding": {
-                    "system": "local",
-                    "code": "*",
-                    "display": "Primary code in multiple coding"
+                    "system": "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                    "code": "!",
+                    "display": "!"
                   }
                 },
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
                   "valueCoding": {
                     "system": "http://fhir.de/CodeSystem/dimdi/seitenlokalisation",
-                    "code": "B",
-                    "display": "Beiderseits"
-                  }
-                },
-                {
-                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
-                  "valueCoding": {
-                    "system": "http://fhir.de/CodeSystem/dimdi/diagnosesicherheit",
-                    "code": "V",
-                    "display": "Verdacht auf Diagnose"
+                    "code": "L",
+                    "display": "Left side"
                   }
                 }
               ]
@@ -139,6 +283,7 @@
             "coding": [
               {
                 "system": "http://snomed.info/sct",
+                "version": "20230131",
                 "code": "321667001",
                 "display": "Respiratory tract, Upper lobe, bronchus or lung"
               },
@@ -155,7 +300,7 @@
           "reference": "#2"
         },
         "onsetPeriod": {
-          "start": {
+          "_start": {
             "extension": [
               {
                 "url": "http://fhir.de/StructureDefinition/lebensphase",
@@ -172,7 +317,7 @@
               }
             ]
           },
-          "end": {
+          "_end": {
             "extension": [
               {
                 "url": "http://fhir.de/StructureDefinition/lebensphase",
@@ -181,7 +326,7 @@
                     {
                       "system": "http://snomed.info/sct",
                       "code": "367640001",
-                      "display": "Middle age"
+                      "display": "End of middle age phase"
                     }
                   ],
                   "text": "End of middle age phase"
@@ -190,37 +335,7 @@
             ]
           }
         },
-        "recordedDate": "2027-05-02T00:00:00Z",
-        "stage": [
-          {
-            "summary": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "258219007",
-                  "display": "Stage 2"
-                }
-              ],
-              "text": "Stage 2"
-            }
-          }
-        ],
-        "evidence": [
-          {
-            "code": [
-              {
-                "coding": [
-                  {
-                    "system": "http://snomed.info/sct",
-                    "code": "164729004",
-                    "display": "Blood pressure measurement"
-                  }
-                ],
-                "text": "Blood pressure measurement"
-              }
-            ]
-          }
-        ],
+        "recordedDate": "2022-02-03T01:00:00+01:00",
         "note": [
           {
             "text": "The patient has a history of high blood pressure, now presenting with severe hypertension."
@@ -236,40 +351,22 @@
             "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose"
           ]
         },
-        "extension": [
+        "contained": [
           {
-            "url": "http://hl7.org/fhir/StructureDefinition/condition-related",
-            "valueReference": {
-              "reference": "#1"
-            }
-          },
-          {
-            "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
-            "valueDateTime": "2025-02-03T04:05:06Z"
+            "resourceType": "Encounter",
+            "id": "1",
+            "identifier": [
+              {
+                "system": "http://hospital.smarthealthit.org",
+                "value": "encounter-id-1245"
+              }
+            ]
           }
         ],
-        "identifier": [
+        "extension": [
           {
-            "system": "http://localhost:8888/fhir-bridge/fhir/identifiers/conditions",
-            "value": "1234567890",
-            "use": "official",
-            "type": {
-              "coding": [
-                {
-                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-                  "code": "MR",
-                  "display": "Medical record number"
-                }
-              ],
-              "text": "Medical Record Number"
-            },
-            "assigner": {
-              "display": "Example Hospital"
-            },
-            "period": {
-              "start": "2023-01-01",
-              "end": "2024-01-01"
-            }
+            "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+            "valueDateTime": "2125-02-03T05:05:06+01:00"
           }
         ],
         "clinicalStatus": {
@@ -277,7 +374,7 @@
             {
               "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
               "code": "active",
-              "display": "Active"
+              "display": "active"
             }
           ],
           "text": "active"
@@ -289,25 +386,12 @@
               "code": "confirmed",
               "display": "Confirmed"
             }
-          ],
-          "text": "Confirmed"
+          ]
         },
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
-                "code": "problem-list-item",
-                "display": "Problem List Item"
-              }
-            ],
-            "text": "Problem List Item"
-          }
-        ],
         "severity": {
           "coding": [
             {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-severity",
+              "system": "http://snomed.info/sct",
               "code": "24484000",
               "display": "Severe"
             }
@@ -317,66 +401,26 @@
         "code": {
           "coding": [
             {
-              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
-              "code": "C34.1",
-              "display": "Malignant neoplasm of the upper lobe of the lung",
               "extension": [
                 {
-                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                  "url": null,
                   "valueCoding": {
-                    "system": "local",
-                    "code": "†",
-                    "display": "Primary code in multiple coding"
-                  }
-                },
-                {
-                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCoding": {
-                    "system": "http://fhir.de/CodeSystem/dimdi/seitenlokalisation",
-                    "code": "L",
-                    "display": "Left side"
-                  }
-                },
-                {
-                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
-                  "valueCoding": {
-                    "system": "http://fhir.de/CodeSystem/dimdi/diagnosesicherheit",
-                    "code": "G",
-                    "display": "Confirmed diagnosis"
+                    "system": "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                    "code": "!",
+                    "display": "!"
                   }
                 }
               ]
-            },
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/icd-o-3",
-              "code": "C77.0",
-              "display": "Malignant neoplasm of lymph nodes"
-            },
-            {
-              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
-              "code": "057E3",
-              "display": "secondary malignant neoplasm of lymph nodes"
-            },
-            {
-              "system": "http://www.orpha.net",
-              "code": "1777",
-              "display": "lung cancer associated with hereditary syndromes"
-            },
-            {
-              "system": "http://snomed.info/sct",
-              "code": "128462008",
-              "display": "Secondary malignant neoplasm of lymph node"
             }
-          ],
-          "text": "Secondary malignant neoplasm of lymph node"
+          ]
         },
         "bodySite": [
           {
             "coding": [
               {
                 "system": "http://snomed.info/sct",
-                "code": "321667001",
-                "display": "Respiratory tract"
+                "code": "368209003",
+                "display": "Entire cardiovascular system"
               },
               {
                 "system": "http://terminology.hl7.org/CodeSystem/icd-o-3",
@@ -384,45 +428,14 @@
                 "display": "Upper lobe, bronchus or lung"
               }
             ],
-            "text": "Respiratory tract, Upper lobe, bronchus or lung"
+            "text": "Entire cardiovascular system"
           }
         ],
         "encounter": {
-          "reference": "Encounter/encounter-12345",
-          "display": "Inpatient Encounter for Asthma",
-          "type": "Encounter",
-          "identifier": {
-            "system": "http://hospital.smarthealthit.org/encounters",
-            "value": "ENC123456",
-            "use": "official",
-            "type": {
-              "coding": [
-                {
-                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-                  "code": "VN",
-                  "display": "Visit Number"
-                }
-              ],
-              "text": "Visit Number"
-            },
-            "assigner": {
-              "display": "Example Hospital"
-            },
-            "period": {
-              "start": "2024-01-01T08:00:00Z",
-              "end": "2024-01-01T10:00:00Z"
-            }
-          }
-        },
-        "subject": {
-          "reference": "/Patient?identifier=urn:ietf:rfc:4122|07f602e0-579e-4fe3-95af-381728bf0d49",
-          "identifier": {
-            "system": "urn:ietf:rfc:4122",
-            "value": "4c7d0173-7378-42b2-a9fa-64cd2664674f"
-          }
+          "reference": "#1"
         },
         "onsetPeriod": {
-          "start": {
+          "_start": {
             "extension": [
               {
                 "url": "http://fhir.de/StructureDefinition/lebensphase",
@@ -439,7 +452,7 @@
               }
             ]
           },
-          "end": {
+          "_end": {
             "extension": [
               {
                 "url": "http://fhir.de/StructureDefinition/lebensphase",
@@ -448,7 +461,7 @@
                     {
                       "system": "http://snomed.info/sct",
                       "code": "367640001",
-                      "display": "Middle age"
+                      "display": "End of middle age phase"
                     }
                   ],
                   "text": "End of middle age phase"
@@ -457,16 +470,13 @@
             ]
           }
         },
-        "onsetDateTime": "2024-02-08T00:00:00Z",
-        "recordedDate": "2022-02-03T00:00:00Z",
+        "recordedDate": "2022-02-03T01:00:00+01:00",
         "note": [
           {
-            "text": "Patient confirmed for secondary malignant neoplasm of lymph node.",
-            "time": "2024-02-09T12:00:00Z"
+            "text": "The patient has a history of high blood pressure, now presenting with severe hypertension."
           }
         ]
       }
     }
-
   ]
 }

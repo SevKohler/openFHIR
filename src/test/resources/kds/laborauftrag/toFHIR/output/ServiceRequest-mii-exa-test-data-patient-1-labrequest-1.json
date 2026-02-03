@@ -11,6 +11,7 @@
             "id": "1",
             "identifier": [
               {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
                 "value": "MII_0000001"
               }
             ]
@@ -20,16 +21,19 @@
             "id": "2",
             "identifier": [
               {
+                "system": "https://www.charite.de/fhir/sid/Bioproben",
                 "value": "BP_000001"
               }
             ],
             "accessionIdentifier": {
+              "system": "https://www.charite.de/fhir/sid/Bioproben",
               "value": "BP_000001"
             }
           }
         ],
         "identifier": [
           {
+            "system": "https://www.charite.de/fhir/sid/Laboranforderungen",
             "value": "LA_000001"
           }
         ],

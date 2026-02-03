@@ -4,7 +4,7 @@
   "diagnose/category|code": "433",
   "diagnose/context/bericht_id": "Lorem ipsum",
   "diagnose/context/status": "registriert",
-  "diagnose/context/fallidentifikation/fall-kennung": "Encounter/123",
+  "diagnose/context/fallidentifikation/fall-kennung|code": "Encounter/123",
   "diagnose/context/start_time": "2022-02-03T04:05:06",
   "diagnose/context/setting|code": "225",
   "diagnose/context/setting|terminology": "openehr",

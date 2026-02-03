@@ -11,35 +11,48 @@
             "id": "1",
             "identifier": [
               {
-                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
-                "value": "MII_0000003"
+                "system": "http://hospital.smarthealthit.org",
+                "value": "encounter-id-1245"
               }
             ]
           },
           {
             "resourceType": "Organization",
             "id": "2",
-            "name": "Rahel Hirsch"
+            "identifier": [
+              {
+                "system": "http://hospital.org/organizations",
+                "value": "ORG-001"
+              }
+            ],
+            "name": "Example Hospital"
           },
           {
             "resourceType": "Specimen",
             "id": "3",
             "identifier": [
               {
-                "system": "https://www.charite.de/fhir/sid/Bioproben",
-                "value": "BP_000004"
+                "system": "http://hospital.org/specimens",
+                "value": "SP-987654"
               }
             ],
             "accessionIdentifier": {
-              "system": "https://www.charite.de/fhir/sid/Bioproben",
-              "value": "BP_000004"
+              "system": "http://hospital.org/specimens",
+              "value": "SP-987654"
+            },
+            "collection": {
+              "collector": {
+                "identifier": {
+                  "value": "example-practitioner"
+                }
+              }
             }
           }
         ],
         "identifier": [
           {
-            "system": "https://www.charite.de/fhir/sid/lab-requests",
-            "value": "LAB_000003"
+            "system": "https://fhir.acme.org/identifiers/patient",
+            "value": "123456-0_KH"
           }
         ],
         "status": "completed",
@@ -58,22 +71,27 @@
           "coding": [
             {
               "system": "http://loinc.org",
-              "code": "58410-2",
-              "display": "58410-2"
+              "code": "2345-7",
+              "display": "Blood Glucose Test"
             }
           ],
-          "text": "58410-2"
+          "text": "Blood Glucose Test"
         },
         "encounter": {
           "reference": "#1"
         },
-        "authoredOn": "2022-04-05T07:30:00+02:00",
+        "authoredOn": "2024-08-24T00:00:00+02:00",
         "requester": {
           "reference": "#2"
         },
         "specimen": [
           {
             "reference": "#3"
+          }
+        ],
+        "note": [
+          {
+            "text": "Sample collected in the morning."
           }
         ]
       }

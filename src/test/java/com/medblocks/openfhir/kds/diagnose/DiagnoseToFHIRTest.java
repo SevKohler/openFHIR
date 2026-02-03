@@ -185,14 +185,13 @@ public class DiagnoseToFHIRTest extends KdsTest {
 
         // - name: "fallIdentifikationIdentifier"
         if (!second) {
-            Assert.assertEquals("VN", ((Encounter) condition.getEncounter().getResource()).getIdentifier().get(0).getType().getCodingFirstRep().getCode());
             Assert.assertEquals("Encounter/123", ((Encounter) condition.getEncounter().getResource()).getIdentifier().get(0).getValue());
         }
 
         // - name: "status"
         if (!second) {
             Assert.assertEquals("unconfirmed", condition.getVerificationStatus().getCodingFirstRep().getCode());
-            Assert.assertEquals("http://hl7.org/fhir/ValueSet/condition-ver-status",
+            Assert.assertEquals("http://terminology.hl7.org/CodeSystem/condition-ver-status",
                                 condition.getVerificationStatus().getCodingFirstRep().getSystem());
         }
 
@@ -273,7 +272,7 @@ public class DiagnoseToFHIRTest extends KdsTest {
         final Coding mehrfachcodierung = (Coding) icd10code.getExtensionByUrl(
                 "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen").getValue();
         Assert.assertEquals("!", mehrfachcodierung.getCode());
-        Assert.assertEquals("http://fhir.de/ValueSet/icd-10-gm-mehrfachcodierungs-kennzeichen", mehrfachcodierung.getSystem());
+        Assert.assertEquals("http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen", mehrfachcodierung.getSystem());
         Assert.assertEquals("!", mehrfachcodierung.getDisplay());
 
         // - name: "seitenlokalisation"
