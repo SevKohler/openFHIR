@@ -87,8 +87,16 @@
             "value" : "Fall-Kennung"
           },
           "value" : {
-            "_type" : "DV_TEXT",
-            "value" : "MII_0000011"
+            "_type" : "DV_CODED_TEXT",
+            "value" : "MII_0000011",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern"
+              },
+              "code_string" : "MII_0000011"
+            }
           },
           "archetype_node_id" : "at0001"
         } ],
@@ -142,6 +150,7 @@
         },
         "value" : {
           "_type" : "DV_IDENTIFIER",
+          "issuer" : "https://www.charite.de/fhir/sid/lab-requests",
           "id" : "LAB_000010"
         },
         "archetype_node_id" : "at0010"
@@ -285,6 +294,7 @@
             },
             "value" : {
               "_type" : "DV_IDENTIFIER",
+              "issuer" : "https://www.charite.de/fhir/sid/Bioproben",
               "id" : "BP_000019"
             },
             "archetype_node_id" : "at0001"

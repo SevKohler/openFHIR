@@ -18,24 +18,9 @@ mappings:
       fhir: "$fhirRoot"
       openehr: "$archetype"
       type: "NONE"
-    fhirCondition:
-      targetRoot: "$fhirRoot"
-      targetAttribute: "type.coding.code"
-      operator: "one of"
-      criteria: "VN"
     followedBy:
       mappings:
         - name: "identifierCase"
           with:
-            fhir: "value"
+            fhir: "$fhirRoot"
             openehr: "items[at0001]"
-            
-        - name: "vncodingcode"
-          with:
-            fhir: "type.coding"
-          manual:
-            - name: "extension"
-              fhir:
-                - path: "code"
-                  value: "VN"
-

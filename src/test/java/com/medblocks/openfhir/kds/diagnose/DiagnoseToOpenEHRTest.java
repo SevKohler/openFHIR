@@ -303,7 +303,7 @@ public class DiagnoseToOpenEHRTest extends KdsTest {
                             jsonObject.get("diagnose/diagnose:0/schweregrad|terminology").getAsString());
         Assert.assertEquals("Severe", jsonObject.get("diagnose/diagnose:0/schweregrad|value").getAsString());
         Assert.assertEquals("encounter-id-1245",
-                            jsonObject.get("diagnose/context/fallidentifikation/fall-kennung").getAsString());
+                            jsonObject.get("diagnose/context/fallidentifikation/fall-kennung|code").getAsString());
         Assert.assertEquals("2025-02-03T05:05:06",
                             jsonObject.get("diagnose/diagnose:0/feststellungsdatum").getAsString());
         Assert.assertEquals("active", jsonObject.get("diagnose/diagnose:0/klinischer_status/klinischer_status|code")

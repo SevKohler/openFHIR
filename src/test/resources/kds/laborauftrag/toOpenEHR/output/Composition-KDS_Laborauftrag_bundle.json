@@ -87,8 +87,16 @@
             "value" : "Fall-Kennung"
           },
           "value" : {
-            "_type" : "DV_TEXT",
-            "value" : "encounter-id-1245"
+            "_type" : "DV_CODED_TEXT",
+            "value" : "encounter-id-1245",
+            "defining_code" : {
+              "_type" : "CODE_PHRASE",
+              "terminology_id" : {
+                "_type" : "TERMINOLOGY_ID",
+                "value" : "http://hospital.smarthealthit.org"
+              },
+              "code_string" : "encounter-id-1245"
+            }
           },
           "archetype_node_id" : "at0001"
         } ],
@@ -142,6 +150,7 @@
         },
         "value" : {
           "_type" : "DV_IDENTIFIER",
+          "issuer" : "https://fhir.acme.org/identifiers/patient",
           "id" : "123456-0_KH"
         },
         "archetype_node_id" : "at0010"
@@ -176,6 +185,7 @@
           },
           "value" : {
             "_type" : "DV_IDENTIFIER",
+            "issuer" : "http://hospital.org/organizations",
             "id" : "ORG-001"
           },
           "archetype_node_id" : "at0003"
@@ -296,6 +306,7 @@
             },
             "value" : {
               "_type" : "DV_IDENTIFIER",
+              "issuer" : "http://hospital.org/specimens",
               "id" : "SP-987654"
             },
             "archetype_node_id" : "at0001"

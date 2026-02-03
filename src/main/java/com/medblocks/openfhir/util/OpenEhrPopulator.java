@@ -575,6 +575,7 @@ public class OpenEhrPopulator {
     private boolean handleIdentifier(final String path, final Base value, final JsonObject flat) {
         if (value instanceof Identifier identifier) {
             addToConstructingFlat(path + "|id", identifier.getValue(), flat);
+            addToConstructingFlat(path + "|issuer", normalizeIdentifierSystem(identifier.getSystem()), flat);
             return true;
         } else if (value instanceof StringType identifier) {
             addToConstructingFlat(path + "|id", identifier.getValue(), flat);
@@ -583,6 +584,21 @@ public class OpenEhrPopulator {
             log.warn("openEhrType is IDENTIFIER but extracted value is not Identifier; is {}", value.getClass());
         }
         return false;
+    }
+
+    private String normalizeIdentifierSystem(final String system) {
+        if (StringUtils.isBlank(system)) {
+            return system;
+        }
+        final String prefix = "http://openehr.org/identifier";
+        if (system.startsWith(prefix)) {
+            String trimmed = system.substring(prefix.length());
+            while (trimmed.startsWith("/") || trimmed.startsWith("#")) {
+                trimmed = trimmed.substring(1);
+            }
+            return trimmed;
+        }
+        return system;
     }
 
     private boolean handlePartyIdentifier(final String path, final Base value, final JsonObject flat) {
