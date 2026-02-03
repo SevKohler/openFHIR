@@ -1,6 +1,6 @@
 {
   "resourceType": "Bundle",
-  "id": "mii-exa-test-data-bundle-pat-6",
+  "id": "mii-exa-test-data-bundle-pat-2",
   "meta": {
     "security": [
       {
@@ -11,17 +11,17 @@
     ]
   },
   "type": "transaction",
-  "timestamp": "2025-06-18T13:56:00+02:00",
+  "timestamp": "2025-06-18T13:53:00+02:00",
   "entry": [
     {
       "request": {
         "method": "POST",
         "url": "ServiceRequest"
       },
-      "fullUrl": "https://www.medizininformatik-initiative.de/ServiceRequest/mii-exa-test-data-patient-6-labrequest-1",
+      "fullUrl": "https://www.medizininformatik-initiative.de/ServiceRequest/mii-exa-test-data-patient-2-labrequest-1",
       "resource": {
         "resourceType": "ServiceRequest",
-        "id": "mii-exa-test-data-patient-6-labrequest-1",
+        "id": "mii-exa-test-data-patient-2-labrequest-1",
         "meta": {
           "security": [
             {
@@ -39,7 +39,7 @@
             "assigner": {
               "identifier": {
                 "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-                "value": "Charité"
+                "value": "Charit\u00e9"
               }
             },
             "type": {
@@ -51,7 +51,7 @@
               ]
             },
             "system": "https://www.charite.de/fhir/sid/lab-requests",
-            "value": "LAB_000006"
+            "value": "LAB_000002"
           }
         ],
         "category": [
@@ -68,17 +68,17 @@
           {
             "coding": [
               {
-                "code": "4556007",
+                "code": "254637007",
                 "system": "http://snomed.info/sct",
                 "version": "http://snomed.info/sct/900000000000207008/version/20230731",
-                "display": "Gastritis"
+                "display": "Non-small cell lung cancer (disorder)"
               }
             ]
           }
         ],
         "specimen": [
           {
-            "reference": "Specimen/mii-exa-test-data-patient-6-specimen-2"
+            "reference": "Specimen/mii-exa-test-data-patient-2-specimen-1"
           }
         ],
         "status": "completed",
@@ -86,18 +86,19 @@
         "code": {
           "coding": [
             {
-              "code": "24360-0",
-              "system": "http://loinc.org"
+              "code": "58410-2",
+              "system": "http://loinc.org",
+              "display": "CBC panel - Blood by Automated count"
             }
           ]
         },
         "subject": {
-          "reference": "Patient/mii-exa-test-data-patient-6"
+          "reference": "Patient/mii-exa-test-data-patient-2"
         },
         "encounter": {
-          "reference": "Encounter/mii-exa-test-data-patient-6-encounter-1"
+          "reference": "Encounter/mii-exa-test-data-patient-2-encounter-1"
         },
-        "authoredOn": "2022-03-14T06:30:00+01:00",
+        "authoredOn": "2024-03-04T07:00:00+01:00",
         "requester": {
           "reference": "Practitioner/mii-exa-test-data-practitioner-physician-1"
         }
@@ -108,10 +109,10 @@
         "method": "POST",
         "url": "Specimen"
       },
-      "fullUrl": "https://www.medizininformatik-initiative.de/Specimen/mii-exa-test-data-patient-6-specimen-2",
+      "fullUrl": "https://www.medizininformatik-initiative.de/Specimen/mii-exa-test-data-patient-2-specimen-1",
       "resource": {
         "resourceType": "Specimen",
-        "id": "mii-exa-test-data-patient-6-specimen-2",
+        "id": "mii-exa-test-data-patient-2-specimen-1",
         "meta": {
           "security": [
             {
@@ -131,23 +132,23 @@
           {
             "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/StructureDefinition/Diagnose",
             "valueReference": {
-              "reference": "Condition/mii-exa-test-data-patient-6-diagnose-1"
+              "reference": "Condition/mii-exa-test-data-patient-2-diagnose-1"
             }
           }
         ],
         "identifier": [
           {
             "system": "https://www.charite.de/fhir/sid/Bioproben",
-            "value": "BP_000011"
+            "value": "BP_000003"
           }
         ],
         "type": {
           "coding": [
             {
-              "code": "119364003",
+              "code": "445295009",
               "system": "http://snomed.info/sct",
               "version": "http://snomed.info/sct/900000000000207008/version/20230731",
-              "display": "Serum specimen (specimen)"
+              "display": "Blood specimen with edetic acid (specimen)"
             }
           ]
         },
@@ -155,14 +156,14 @@
           "bodySite": {
             "coding": [
               {
-                "code": "368209003",
+                "code": "368208006",
                 "system": "http://snomed.info/sct",
                 "version": "http://snomed.info/sct/900000000000207008/version/20230731",
-                "display": "Right upper arm structure (body structure)"
+                "display": "Left upper arm structure (body structure)"
               }
             ]
           },
-          "collectedDateTime": "2022-03-14T06:15:00+01:00"
+          "collectedDateTime": "2024-03-04T06:45:00+01:00"
         },
         "container": [
           {
@@ -177,12 +178,12 @@
               ]
             },
             "capacity": {
-              "value": 7,
+              "value": 5,
               "code": "ml",
               "system": "http://unitsofmeasure.org"
             },
             "specimenQuantity": {
-              "value": 7,
+              "value": 5,
               "code": "ml",
               "system": "http://unitsofmeasure.org"
             }
@@ -190,7 +191,7 @@
         ],
         "status": "available",
         "subject": {
-          "reference": "Patient/mii-exa-test-data-patient-6"
+          "reference": "Patient/mii-exa-test-data-patient-2"
         }
       }
     },
@@ -199,10 +200,10 @@
         "method": "POST",
         "url": "Encounter"
       },
-      "fullUrl": "https://www.medizininformatik-initiative.de/Encounter/mii-exa-test-data-patient-6-encounter-1",
+      "fullUrl": "https://www.medizininformatik-initiative.de/Encounter/mii-exa-test-data-patient-2-encounter-1",
       "resource": {
         "resourceType": "Encounter",
-        "id": "mii-exa-test-data-patient-6-encounter-1",
+        "id": "mii-exa-test-data-patient-2-encounter-1",
         "meta": {
           "security": [
             {
@@ -223,7 +224,7 @@
               ]
             },
             "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
-            "value": "MII_0000007"
+            "value": "MII_0000004"
           }
         ],
         "type": [
@@ -248,13 +249,13 @@
           "coding": [
             {
               "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
-              "code": "0100"
+              "code": "0500"
             }
           ]
         },
         "period": {
-          "start": "2022-03-12",
-          "end": "2022-03-20"
+          "start": "2024-03-02",
+          "end": "2024-03-13"
         },
         "hospitalization": {
           "dischargeDisposition": {
@@ -264,17 +265,17 @@
                   {
                     "url": "ErsteUndZweiteStelle",
                     "valueCoding": {
-                      "code": "01",
+                      "code": "07",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundErsteUndZweiteStelle",
-                      "display": "Behandlung regulär beendet"
+                      "display": "Tod"
                     }
                   },
                   {
                     "url": "DritteStelle",
                     "valueCoding": {
-                      "code": "1",
+                      "code": "9",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundDritteStelle",
-                      "display": "arbeitsfähig entlassen"
+                      "display": "keine Angabe"
                     }
                   }
                 ],
@@ -295,10 +296,10 @@
         "serviceProvider": {
           "identifier": {
             "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-            "value": "Charité"
+            "value": "Charit\u00e9"
           },
           "reference": "Organization/mii-exa-test-data-organization-charite",
-          "display": "Charité - Universitätsmedizin Berlin"
+          "display": "Charit\u00e9 - Universit\u00e4tsmedizin Berlin"
         },
         "status": "finished",
         "class": {
@@ -306,7 +307,7 @@
           "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode"
         },
         "subject": {
-          "reference": "Patient/mii-exa-test-data-patient-6"
+          "reference": "Patient/mii-exa-test-data-patient-2"
         }
       }
     },

@@ -39,7 +39,7 @@
             "assigner": {
               "identifier": {
                 "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-                "value": "Charit\u00e9"
+                "value": "Charité"
               }
             },
             "type": {
@@ -268,7 +268,7 @@
                 "valueCoding": {
                   "code": "01",
                   "system": "http://fhir.de/CodeSystem/dkgev/AufnahmegrundErsteUndZweiteStelle",
-                  "display": "Krankenhausbehandlung, vollstation\u00e4r"
+                  "display": "Krankenhausbehandlung, vollstationär"
                 }
               },
               {
@@ -422,10 +422,10 @@
         "serviceProvider": {
           "identifier": {
             "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-            "value": "Charit\u00e9"
+            "value": "Charité"
           },
           "reference": "Organization/mii-exa-test-data-organization-charite",
-          "display": "Charit\u00e9 - Universit\u00e4tsmedizin Berlin"
+          "display": "Charité - Universitätsmedizin Berlin"
         },
         "status": "finished",
         "class": {
