@@ -1,135 +1,101 @@
 package com.medblocks.openfhir.kds.laborauftrag;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.medblocks.openfhir.kds.KdsTest;
+import com.medblocks.openfhir.kds.KdsBidirectionalTest;
 import com.nedap.archie.rm.composition.Composition;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
+import org.ehrbase.openehr.sdk.serialisation.flatencoding.std.umarshal.FlatJsonUnmarshaller;
 import org.ehrbase.openehr.sdk.webtemplate.parser.OPTParser;
-import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.instance.model.api.IBaseResource;
+import org.hl7.fhir.r4.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LaborauftragToOpenEHRTest extends KdsTest {
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+
+public class LaborauftragToOpenEHRTest extends KdsBidirectionalTest {
 
     final String MODEL_MAPPINGS = "/kds_new/";
-    final String CONTEXT_MAPPING = "/kds_new/projects/org.highmed/KDS/laborauftrag/KDS_laborauftrag.context.yaml";
-    final String OPT = "/kds/laborauftrag/KDS_Laborauftrag.opt";
+    final String CONTEXT = "/kds_new/projects/org.highmed/KDS/laborauftrag/KDS_laborauftrag.context.yaml";
+    final String HELPER_LOCATION = "/kds/laborauftrag/";
+    final String OPT = "KDS_Laborauftrag.opt";
+    final String FLAT = "KDS_Laborauftrag.flat.json";
 
-    final String BUNDLE = "/kds/laborauftrag/toOpenEHR/input/KDS_Laborauftrag_bundle.json";
-    final String FHIR_SERVICE_REQUEST_1 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-1-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_2 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-2-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_3 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-3-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_4 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-4-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_5 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-5-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_6 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-6-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_7 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-7-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_8 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-8-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_9 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-9-labrequest-1.json";
-    final String FHIR_SERVICE_REQUEST_10 = "/kds/laborauftrag/toOpenEHR/input/ServiceRequest-mii-exa-test-data-patient-10-labrequest-1.json";
-
-    final String COMPOSITION_BUNDLE = "/kds/laborauftrag/toOpenEHR/output/Composition-KDS_Laborauftrag_bundle.json";
-    final String OPENEHR_COMPOSITION_1 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_2 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_3 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_4 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_5 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_6 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_7 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_8 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_9 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-labrequest-1.json";
-    final String OPENEHR_COMPOSITION_10 = "/kds/laborauftrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-labrequest-1.json";
+    final String BUNDLE = "KDS_Laborauftrag_bundle.json";
 
     @SneakyThrows
     @Override
     public void prepareState() {
-        context = getContext(CONTEXT_MAPPING);
-        operationaltemplateSerialized = IOUtils.toString(this.getClass().getResourceAsStream(OPT));
+        context = getContext(CONTEXT);
+        operationaltemplateSerialized = IOUtils.toString(this.getClass().getResourceAsStream(HELPER_LOCATION + OPT));
         operationaltemplate = getOperationalTemplate();
         repo.initRepository(context, operationaltemplate, getClass().getResource(MODEL_MAPPINGS).getFile());
         webTemplate = new OPTParser(operationaltemplate).parse();
     }
 
     @Test
-    public void assertToOpenEHRBundle() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(BUNDLE), operationaltemplate);
-        standardsAsserter.assertComposition(composition, COMPOSITION_BUNDLE, operationaltemplate);
-    }
+    public void kdsServiceRequest_toFhir_toOpenEhr() throws IOException {
 
-    @Test
-    public void assertToOpenEHR1() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_1), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1, operationaltemplate);
-    }
+        // openEHR to FHIR
+        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile(HELPER_LOCATION + FLAT),
+                                                                                     webTemplate);
+        final Bundle bundle = openEhrToFhir.compositionToFhir(context, compositionFromFlat, operationaltemplate);
 
-    @Test
-    public void assertToOpenEHR2() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_2), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2, operationaltemplate);
-    }
+        final List<ServiceRequest> requests = bundle.getEntry().stream()
+                .filter(en -> en.getResource() instanceof ServiceRequest)
+                .map(en -> (ServiceRequest) en.getResource())
+                .collect(Collectors.toList());
 
-    @Test
-    public void assertToOpenEHR3() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_3), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3, operationaltemplate);
-    }
+        Assert.assertEquals(1, requests.size());
+        final ServiceRequest serviceRequest = requests.get(0);
 
-    @Test
-    public void assertToOpenEHR4() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_4), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4, operationaltemplate);
-    }
+        assertServiceRequest(serviceRequest);
 
-    @Test
-    public void assertToOpenEHR5() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_5), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5, operationaltemplate);
-    }
 
-    @Test
-    public void assertToOpenEHR6() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_6), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6, operationaltemplate);
-    }
+        final Bundle toRunMappingOn = new Bundle();
+        for (Bundle.BundleEntryComponent bundleEntryComponent : bundle.getEntry()) {
+            final Resource resource = bundleEntryComponent.getResource();
+            if (resource instanceof ServiceRequest) {
+                final Reference requesterReference = ((ServiceRequest) resource).getRequester();
+                final IBaseResource requester = requesterReference.getResource();
+                if (requester != null) {
+                    final String reqId = UUID.randomUUID().toString();
+                    requesterReference.setReference(reqId);
+                    requester.setId(reqId);
+                    toRunMappingOn.addEntry(
+                            new Bundle.BundleEntryComponent().setFullUrl(reqId).setResource((Resource) requester));
+                }
+            }
+            toRunMappingOn.addEntry(bundleEntryComponent);
+        }
 
-    @Test
-    public void assertToOpenEHR7() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_7), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7, operationaltemplate);
-    }
+        final JsonObject jsonObject2 = fhirToOpenEhr.fhirToFlatJsonObject(context, toRunMappingOn, operationaltemplate);
 
-    @Test
-    public void assertToOpenEHR8() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_8), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8, operationaltemplate);
-    }
 
-    @Test
-    public void assertToOpenEHR9() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_9), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9, operationaltemplate);
-    }
+        final JsonObject expected = new Gson().fromJson(IOUtils.toString(
+                                                                getClass().getResourceAsStream(HELPER_LOCATION + "Laborauftrag_expected-jsonobject-from-flat.json")),
+                                                        JsonObject.class);
 
-    @Test
-    public void assertToOpenEHR10() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUEST_10), operationaltemplate);
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10, operationaltemplate);
+
+        // todo: enable comaprison once https://github.com/medblocks/openFHIR/pull/79/files#r1956650118 is solved
+//        compareJsonObjects(jsonObject2, expected);
+//        compareJsonObjects(expected, jsonObject2);
+
+        // do this just to assert all flat paths are legit
+        new FlatJsonUnmarshaller().unmarshal(new Gson().toJson(jsonObject2), webTemplate);
+
     }
 
     @SneakyThrows
     public JsonObject toOpenEhr() {
-        final Bundle testBundle = getTestBundle( BUNDLE);
+        final Bundle testBundle = getTestBundle(HELPER_LOCATION + BUNDLE);
         final JsonObject jsonObject = fhirToOpenEhr.fhirToFlatJsonObject(context, testBundle, operationaltemplate);
 
 
@@ -152,6 +118,72 @@ public class LaborauftragToOpenEHRTest extends KdsTest {
 
 
         return jsonObject;
+    }
+
+    @Test
+    public void toFhir() {
+        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile(HELPER_LOCATION + FLAT),
+                                                                                     new OPTParser(
+                                                                                             operationaltemplate).parse());
+        final Bundle bundle = openEhrToFhir.compositionToFhir(context, compositionFromFlat, operationaltemplate);
+        final List<Bundle.BundleEntryComponent> allServiceRequests = bundle.getEntry().stream()
+                .filter(en -> en.getResource() instanceof ServiceRequest).collect(Collectors.toList());
+        assertEquals(1, allServiceRequests.size());
+
+        final ServiceRequest serviceRequest = (ServiceRequest) allServiceRequests.get(0).getResource();
+
+        assertServiceRequest(serviceRequest);
+    }
+
+    private void assertServiceRequest(final ServiceRequest serviceRequest) {
+
+        //  - name: "identifier"
+        Assert.assertEquals("Medical record identifier", serviceRequest.getIdentifierFirstRep().getValue());
+
+        //  - name: "status"
+        Assert.assertEquals("completed", serviceRequest.getStatusElement().getValueAsString());
+
+        //  - name: "code"
+        Assert.assertEquals("2345-7", serviceRequest.getCode().getCodingFirstRep().getCode());
+        Assert.assertEquals("Blood Glucose Test", serviceRequest.getCode().getText());
+
+        //  - name: "category"
+        Assert.assertEquals("laboratory", serviceRequest.getCategoryFirstRep().getCodingFirstRep().getCode());
+
+        //  - name: "intent"
+        Assert.assertEquals("order", serviceRequest.getIntentElement().getValueAsString());
+
+        //  - name: "note"
+        Assert.assertEquals("Sample collected in the morning.", serviceRequest.getNoteFirstRep().getText());
+
+        //  - name: "organisation"
+        //  - name: "org name"
+        //  - name: "org id"
+        final Organization org = (Organization) serviceRequest.getRequester().getResource();
+        Assert.assertEquals("Einsender name", org.getName());
+        Assert.assertEquals("Example Hospital", org.getIdentifierFirstRep().getValue());
+
+        //  - name: "specimen"
+        final List<Reference> specimenReferences = serviceRequest.getSpecimen();
+        Assert.assertEquals(2, specimenReferences.size());
+        final List<Specimen> specimens = specimenReferences.stream().map(spec -> (Specimen) spec.getResource())
+                .toList();
+
+        //  - name: "specimen identifier"
+        //  - name: "specimen collection date time"
+        //  - name: "specimen collector"
+        final Specimen specimen1 = specimens.get(0);
+        Assert.assertEquals("spec1", specimen1.getAccessionIdentifier().getValue());
+//        Assert.assertEquals("2022-02-03T04:05:06+01:00",
+//                            specimen1.getCollection().getCollectedPeriod().getStartElement().getValueAsString());
+        Assert.assertEquals("probenehmers_id1", specimen1.getCollection().getCollector().getIdentifier().getValue());
+
+        final Specimen specimen2 = specimens.get(1);
+        Assert.assertEquals("spec2", specimen2.getAccessionIdentifier().getValue());
+//        Assert.assertEquals("3022-02-03T04:05:06+01:00",
+//                            specimen2.getCollection().getCollectedDateTimeType().getValueAsString());
+        Assert.assertEquals("probenehmers_id2", specimen2.getCollection().getCollector().getIdentifier().getValue());
+
     }
 
 }

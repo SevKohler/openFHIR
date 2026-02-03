@@ -39,7 +39,7 @@
             "assigner": {
               "identifier": {
                 "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-                "value": "Charité"
+                "value": "Charit\u00e9"
               }
             },
             "type": {
@@ -119,9 +119,6 @@
               "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
               "display": "test health data"
             }
-          ],
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/StructureDefinition/Specimen"
           ]
         },
         "extension": [
@@ -213,9 +210,6 @@
               "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
               "display": "test health data"
             }
-          ],
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/core/modul-fall/StructureDefinition/KontaktGesundheitseinrichtung"
           ]
         },
         "identifier": [
@@ -272,7 +266,7 @@
                     "valueCoding": {
                       "code": "01",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundErsteUndZweiteStelle",
-                      "display": "Behandlung regulär beendet"
+                      "display": "Behandlung regul\u00e4r beendet"
                     }
                   },
                   {
@@ -280,7 +274,7 @@
                     "valueCoding": {
                       "code": "1",
                       "system": "http://fhir.de/CodeSystem/dkgev/EntlassungsgrundDritteStelle",
-                      "display": "arbeitsfähig entlassen"
+                      "display": "arbeitsf\u00e4hig entlassen"
                     }
                   }
                 ],
@@ -301,10 +295,10 @@
         "serviceProvider": {
           "identifier": {
             "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-            "value": "Charité"
+            "value": "Charit\u00e9"
           },
           "reference": "Organization/mii-exa-test-data-organization-charite",
-          "display": "Charité - Universitätsmedizin Berlin"
+          "display": "Charit\u00e9 - Universit\u00e4tsmedizin Berlin"
         },
         "status": "finished",
         "class": {
