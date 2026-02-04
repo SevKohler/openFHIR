@@ -5,6 +5,11 @@
     {
       "resource": {
         "resourceType": "DiagnosticReport",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/DiagnosticReportLab"
+          ]
+        },
         "contained": [
           {
             "resourceType": "Specimen",
@@ -271,8 +276,7 @@
             "coding": [
               {
                 "system": "http://loinc.org",
-                "code": "26436-6",
-                "display": "laboratory"
+                "code": "26436-6"
               },
               {
                 "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
@@ -282,6 +286,16 @@
             "text": "laboratory"
           }
         ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11502-2",
+              "display": "Laboratory report"
+            }
+          ],
+          "text": "Laboratory report"
+        },
         "effectiveDateTime": "2023-07-12T06:45:00+02:00",
         "issued": "2023-07-12T10:15:00.000+02:00",
         "specimen": [

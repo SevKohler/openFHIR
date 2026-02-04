@@ -27,8 +27,9 @@ public class LaborberichtToFHIRTest extends KdsTest {
     final String HELPER_LOCATION = "/kds/laborbericht/";
     final String OPT = "/kds/laborbericht/KDS_Laborbericht.opt";
     final String FLAT = "/kds/laborbericht/toOpenEHR/output/KDS_Laborbericht.flat.json";
-
+    final String OPENEHR_COMPOSITION_BUNDLE = "/kds/laborbericht/toOpenEHR/output/Composition_Laborbericht_bundle.json";
     final String OPENEHR_COMP = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
+
     final String OPENEHR_COMPOSITION_1 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
     final String OPENEHR_COMPOSITION_2 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labreport-1.json";
     final String OPENEHR_COMPOSITION_3 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-labreport-1.json";
@@ -50,6 +51,7 @@ public class LaborberichtToFHIRTest extends KdsTest {
     final String FHIR_BUNDLE_8 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-8-labreport-1.json";
     final String FHIR_BUNDLE_9 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-9-labreport-1.json";
     final String FHIR_BUNDLE_10 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-10-labreport-1.json";
+    final String FHIR_BUNDLE_BUNDLE = "/kds/laborbericht/toFHIR/output/KDS_Laborbericht_bundle.json";
 
     @SneakyThrows
     @Override
@@ -59,6 +61,15 @@ public class LaborberichtToFHIRTest extends KdsTest {
         operationaltemplate = getOperationalTemplate();
         repo.initRepository(context, operationaltemplate, getClass().getResource(MODEL_MAPPINGS).getFile());
         webTemplate = new OPTParser(operationaltemplate).parse();
+    }
+
+    @SneakyThrows
+    @Test
+    public void assertToFHIRBundle() {
+        final Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITION_BUNDLE),
+                Composition.class);
+        final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
+        standardsAsserter.assertBundle(bundle, FHIR_BUNDLE_BUNDLE);
     }
 
     @SneakyThrows

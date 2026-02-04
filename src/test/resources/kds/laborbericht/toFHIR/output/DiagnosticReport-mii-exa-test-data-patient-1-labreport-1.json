@@ -409,6 +409,16 @@
             "text": "laboratory"
           }
         ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11502-2",
+              "display": "Laboratory report"
+            }
+          ],
+          "text": "Laboratory report"
+        },
         "effectiveDateTime": "2024-02-15T12:00:00+01:00",
         "issued": "2024-02-15T12:00:00.000+01:00",
         "specimen": [

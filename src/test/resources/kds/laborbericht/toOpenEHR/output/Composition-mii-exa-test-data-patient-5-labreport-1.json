@@ -162,30 +162,18 @@
             "_type" : "ELEMENT",
             "name" : {
               "_type" : "DV_TEXT",
-              "value" : "labortest-bezeichnung"
+              "value" : "Labortest-Bezeichnung"
             },
             "value" : {
               "_type" : "DV_CODED_TEXT",
-              "value" : "laboratory",
-              "mappings" : [ {
-                "_type" : "TERM_MAPPING",
-                "match" : "?",
-                "target" : {
-                  "_type" : "CODE_PHRASE",
-                  "terminology_id" : {
-                    "_type" : "TERMINOLOGY_ID",
-                    "value" : "http://terminology.hl7.org/CodeSystem/v2-0074"
-                  },
-                  "code_string" : "LAB"
-                }
-              } ],
+              "value" : "Laboratory report",
               "defining_code" : {
                 "_type" : "CODE_PHRASE",
                 "terminology_id" : {
                   "_type" : "TERMINOLOGY_ID",
                   "value" : "http://loinc.org"
                 },
-                "code_string" : "26436-6"
+                "code_string" : "11502-2"
               }
             },
             "archetype_node_id" : "at0005"
