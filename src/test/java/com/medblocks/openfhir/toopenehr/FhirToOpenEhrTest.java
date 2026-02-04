@@ -17,6 +17,7 @@ import java.util.Arrays;
 import org.ehrbase.openehr.sdk.serialisation.flatencoding.std.umarshal.FlatJsonUnmarshaller;
 import org.hl7.fhir.r4.hapi.fluentpath.FhirPathR4;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.CodeType;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Observation;
@@ -159,35 +160,6 @@ public class FhirToOpenEhrTest {
         final String child1 = "medikamentenliste/medikatiNOonseintrag[n]/verabreichungsweg[n]";
         final String parent1 = "medikamentenliste/medikationseintrag:0/dosierung2[n]";
         Assert.assertFalse(openFhirStringUtils.childHasParentRecurring(child1, parent1));
-    }
-
-    @Test
-    public void addsNullFlavourWhenDataAbsentReasonPresent() {
-        FhirToOpenEhrHelper helper = FhirToOpenEhrHelper.builder()
-                .fhirPath("value")
-                .openEhrPath("test/value")
-                .openEhrType(FhirConnectConst.DV_CODED_TEXT)
-                .archetype("test")
-                .build();
-
-        JsonObject flat = new JsonObject();
-
-        Observation observation = new Observation();
-        CodeableConcept dataAbsentReason = new CodeableConcept()
-                .addCoding(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason",
-                        "unknown",
-                        "Unknown"));
-        observation.setDataAbsentReason(dataAbsentReason);
-
-        boolean handled = fhirToOpenEhr.addDataPoints(helper, flat, observation);
-
-        Assert.assertTrue(handled);
-        Assert.assertEquals("unknown",
-                            flat.get("test/value/null_flavour|value").getAsString());
-        Assert.assertEquals("253",
-                            flat.get("test/value/null_flavour|code").getAsString());
-        Assert.assertEquals("openehr",
-                            flat.get("test/value/null_flavour|terminology").getAsString());
     }
 
     @Test

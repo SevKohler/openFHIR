@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -54,7 +55,10 @@ import org.hl7.fhir.r4.hapi.fluentpath.FhirPathR4;
 import org.hl7.fhir.r4.model.Base;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
+import org.hl7.fhir.r4.model.CodeType;
+import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
@@ -1226,6 +1230,67 @@ public class OpenEhrToFhir {
                     .openehrCondition(mapping.getOpenehrCondition())
                     .build();
             helpers.add(openEhrToFhirHelper);
+
+            final String dataAbsentReasonPath = deriveDataAbsentReasonFhirPath(fhirPath);
+            final List<DataAbsentReasonWithIndex> dataAbsentReasonEntries = extractDataAbsentReasonValues(openehr,
+                                                                                                           flatJsonObject);
+            if (StringUtils.isNotBlank(dataAbsentReasonPath) && !dataAbsentReasonEntries.isEmpty()) {
+                final List<OpenEhrToFhirHelper.DataWithIndex> dataAbsentReasonValues = dataAbsentReasonEntries.stream()
+                        .map(entry -> new OpenEhrToFhirHelper.DataWithIndex(
+                                new CodeableConcept().addCoding(new Coding(
+                                        "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+                                        entry.getDarCode(),
+                                        null)),
+                                entry.getIndex(),
+                                entry.getFullOpenEhrPath()))
+                        .collect(Collectors.toList());
+                helpers.add(OpenEhrToFhirHelper.builder()
+                                    .mainArchetype(theMapper.getOpenEhrConfig().getArchetype())
+                                    .targetResource(resourceType)
+                                    .openEhrPath(openEhrPath)
+                                    .fhirPath(dataAbsentReasonPath)
+                                    .data(dataAbsentReasonValues)
+                                    .isFollowedBy(isFollowedBy)
+                                    .typeConditions(mapping.getTypeConditions())
+                                    .parentFollowedByFhirPath(parentFollowedByFhir == null ? null
+                                                                      : parentFollowedByFhir.replace(
+                                                                              FhirConnectConst.FHIR_RESOURCE_FC,
+                                                                              resourceType))
+                                    .parentFollowedByOpenEhr(parentFollowedByOpenEhr == null ? null
+                                            : parentFollowedByOpenEhr.replace(FhirConnectConst.OPENEHR_ARCHETYPE_FC,
+                                                                              firstFlatPath))
+                                    .condition(mapping.getFhirCondition())
+                                    .openehrCondition(mapping.getOpenehrCondition())
+                                    .build());
+            } else if (!dataAbsentReasonEntries.isEmpty() && StringUtils.isNotBlank(fhirPath)) {
+                final String extensionPath = fhirPath + ".extension";
+                final List<OpenEhrToFhirHelper.DataWithIndex> extensionValues = dataAbsentReasonEntries.stream()
+                        .map(entry -> new OpenEhrToFhirHelper.DataWithIndex(
+                                new Extension(
+                                        "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                                        new CodeType(entry.getDarCode())),
+                                entry.getIndex(),
+                                entry.getFullOpenEhrPath()))
+                        .collect(Collectors.toList());
+                helpers.add(OpenEhrToFhirHelper.builder()
+                                    .mainArchetype(theMapper.getOpenEhrConfig().getArchetype())
+                                    .targetResource(resourceType)
+                                    .openEhrPath(openEhrPath)
+                                    .fhirPath(extensionPath)
+                                    .data(extensionValues)
+                                    .isFollowedBy(isFollowedBy)
+                                    .typeConditions(mapping.getTypeConditions())
+                                    .parentFollowedByFhirPath(parentFollowedByFhir == null ? null
+                                                                      : parentFollowedByFhir.replace(
+                                                                              FhirConnectConst.FHIR_RESOURCE_FC,
+                                                                              resourceType))
+                                    .parentFollowedByOpenEhr(parentFollowedByOpenEhr == null ? null
+                                            : parentFollowedByOpenEhr.replace(FhirConnectConst.OPENEHR_ARCHETYPE_FC,
+                                                                              firstFlatPath))
+                                    .condition(mapping.getFhirCondition())
+                                    .openehrCondition(mapping.getOpenehrCondition())
+                                    .build());
+            }
         }
 
         if (mapping.getFollowedBy() != null) {
@@ -1254,6 +1319,125 @@ public class OpenEhrToFhir {
                                         possibleRecursion,
                                         false);
         }
+    }
+
+    private String deriveDataAbsentReasonFhirPath(final String originalFhirPath) {
+        if (StringUtils.isBlank(originalFhirPath)) {
+            return null;
+        }
+        final String fhirPath = originalFhirPath.startsWith(".")
+                ? originalFhirPath.substring(1)
+                : originalFhirPath;
+        final List<String> parts = openFhirStringUtils.splitFhirPathTopLevel(fhirPath);
+        if (parts.isEmpty()) {
+            return null;
+        }
+        final String last = parts.get(parts.size() - 1);
+        if (last == null || !last.startsWith("value")) {
+            return null;
+        }
+        if (parts.size() == 1) {
+            return "dataAbsentReason";
+        }
+        return String.join(".", parts.subList(0, parts.size() - 1)) + ".dataAbsentReason";
+    }
+
+    private List<DataAbsentReasonWithIndex> extractDataAbsentReasonValues(final String openEhrPath,
+                                                                          final JsonObject flatJsonObject) {
+        if (StringUtils.isBlank(openEhrPath) || flatJsonObject == null) {
+            return Collections.emptyList();
+        }
+        final String lookupPath = normalizeNullFlavourLookupPath(openEhrPath);
+        final String withRegex = openFhirStringUtils.addRegexPatternToSimplifiedFlatFormat(lookupPath);
+        final List<String> matchingEntries = openFhirStringUtils.getAllEntriesThatMatch(withRegex, flatJsonObject);
+        if (matchingEntries == null || matchingEntries.isEmpty()) {
+            return Collections.emptyList();
+        }
+        final Map<String, List<String>> joined = openFhirStringUtils.joinValuesThatAreOne(matchingEntries);
+        final List<DataAbsentReasonWithIndex> values = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : joined.entrySet()) {
+            final String darCode = toDataAbsentReasonCode(entry.getValue(), flatJsonObject);
+            if (StringUtils.isBlank(darCode)) {
+                continue;
+            }
+            values.add(new DataAbsentReasonWithIndex(darCode,
+                                                     openFhirStringUtils.getLastIndex(entry.getKey()),
+                                                     entry.getKey()));
+        }
+        return values;
+    }
+
+    private String normalizeNullFlavourLookupPath(final String openEhrPath) {
+        String path = openEhrPath;
+        final int pipeIndex = path.indexOf('|');
+        if (pipeIndex >= 0) {
+            path = path.substring(0, pipeIndex);
+        }
+        final int lastSlash = path.lastIndexOf('/');
+        if (lastSlash > 0) {
+            final String tail = path.substring(lastSlash + 1);
+            if (tail.endsWith("_value")) {
+                path = path.substring(0, lastSlash);
+            }
+        }
+        if (path.endsWith("/_null_flavour")) {
+            return path;
+        }
+        return path + "/_null_flavour";
+    }
+
+    private String toDataAbsentReasonCode(final List<String> keys, final JsonObject flatJsonObject) {
+        if (keys == null || keys.isEmpty()) {
+            return null;
+        }
+        String code = null;
+        String value = null;
+        for (String key : keys) {
+            if (!flatJsonObject.has(key)) {
+                continue;
+            }
+            if (key.endsWith("|code")) {
+                code = flatJsonObject.get(key).getAsString();
+            } else if (key.endsWith("|value")) {
+                value = flatJsonObject.get(key).getAsString();
+            }
+        }
+        final String darCode = mapNullFlavourToDataAbsentReasonCode(code, value);
+        if (StringUtils.isBlank(darCode)) {
+            return null;
+        }
+        return darCode;
+    }
+
+    private String mapNullFlavourToDataAbsentReasonCode(final String nullFlavourCode, final String nullFlavourValue) {
+        if ("272".equals(nullFlavourCode)) {
+            return "masked";
+        }
+        if ("273".equals(nullFlavourCode)) {
+            return "not-applicable";
+        }
+        if ("253".equals(nullFlavourCode) || "271".equals(nullFlavourCode)) {
+            return "unknown";
+        }
+        if (StringUtils.isBlank(nullFlavourValue)) {
+            return null;
+        }
+        final String normalized = nullFlavourValue.trim().toLowerCase(Locale.ROOT);
+        if (normalized.contains("masked")) {
+            return "masked";
+        }
+        if (normalized.contains("not applicable")) {
+            return "not-applicable";
+        }
+        return "unknown";
+    }
+
+    @Data
+    @AllArgsConstructor
+    private static class DataAbsentReasonWithIndex {
+        private String darCode;
+        private int index;
+        private String fullOpenEhrPath;
     }
 
     /**

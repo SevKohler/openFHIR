@@ -55,6 +55,11 @@ public class FhirInstancePopulator {
     }
 
     public void populateElement(Object toPopulate, final Base data) {
+        if (toPopulate instanceof Extension extension && data instanceof Extension extensionData) {
+            extension.setUrl(extensionData.getUrl());
+            extension.setValue(extensionData.getValue());
+            return;
+        }
         if (toPopulate instanceof Extension && data instanceof IBaseDatatype) {
             setExtensionValue((Extension) toPopulate, (IBaseDatatype) data);
             return;

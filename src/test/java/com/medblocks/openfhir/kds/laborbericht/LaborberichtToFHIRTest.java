@@ -2,6 +2,8 @@ package com.medblocks.openfhir.kds.laborbericht;
 
 import static org.junit.Assert.assertEquals;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.medblocks.openfhir.kds.KdsTest;
 import com.nedap.archie.json.JacksonUtil;
 import com.nedap.archie.rm.composition.Composition;
@@ -396,6 +398,5 @@ public class LaborberichtToFHIRTest extends KdsTest {
         // - name: "interpretation"
         assertEquals("1_142", observation1.getInterpretationFirstRep().getCodingFirstRep().getCode());
     }
-
 
 }

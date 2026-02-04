@@ -225,4 +225,5 @@ public class LaborauftragToFHIRTest extends KdsTest {
         Assert.assertEquals("probenehmers_id2", specimen2.getCollection().getCollector().getIdentifier().getValue());
 
     }
+
 }
