@@ -1196,6 +1196,14 @@ public class OpenEhrToFhir {
 //        if(values != null && openehr.equals(parentFollowedByOpenEhr) && rmType!=null  ){
 //           values.clear();
 //        }
+
+        if(OPENEHR_TYPE_NONE.equals(mapping.getWith().getType())
+        && !evaluateOpenehrEmptyNotEmptyCondition(mapping, mapping.getWith().getOpenehr(), flatJsonObject)) {
+            mapping.setFollowedBy(null);
+            mapping.setSlotArchetype(null);
+            // meaning whole tree needs to be ignored
+        }
+
         if (!OPENEHR_TYPE_NONE.equals(mapping.getWith().getType())) {
             openEhrPath = openehr;
         } else if (mapping.getFhirCondition() != null) {
