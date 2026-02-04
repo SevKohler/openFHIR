@@ -37,7 +37,7 @@ mappings:
             criteria: "DV_DATE_TIME"
 
 
-        - name: "collected"
+        - name: "collectedPeriod"
           with:
             fhir: "collected.as(Period)" # single openEHR date/time can only represent Period.start
             openehr: "items[at0015]"

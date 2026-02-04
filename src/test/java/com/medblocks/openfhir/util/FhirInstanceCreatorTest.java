@@ -86,10 +86,10 @@ public class FhirInstanceCreatorTest {
         final MedicationRequest resource = new MedicationRequest();
 
         final CodeType code = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding.code", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[0].code", null)).getReturning();
         code.setValue("LAB");
         final UriType system = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding.system", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[0].system", null)).getReturning();
         system.setValue("http://terminology.hl7.org/CodeSystem/v2-0074");
 
         Assert.assertEquals(1, resource.getCategory().size());
@@ -104,17 +104,17 @@ public class FhirInstanceCreatorTest {
         final MedicationRequest resource = new MedicationRequest();
 
         final UriType system0 = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding[0].system", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[0].system", null)).getReturning();
         system0.setValue("http://loinc.org");
         final CodeType code0 = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding[0].code", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[0].code", null)).getReturning();
         code0.setValue("26436-6");
 
         final UriType system1 = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding[1].system", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[1].system", null)).getReturning();
         system1.setValue("http://terminology.hl7.org/CodeSystem/v2-0074");
         final CodeType code1 = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
-                resource, MedicationRequest.class, "MedicationRequest.category.coding[1].code", null)).getReturning();
+                resource, MedicationRequest.class, "MedicationRequest.category[0].coding[1].code", null)).getReturning();
         code1.setValue("LAB");
 
         Assert.assertEquals(1, resource.getCategory().size());
