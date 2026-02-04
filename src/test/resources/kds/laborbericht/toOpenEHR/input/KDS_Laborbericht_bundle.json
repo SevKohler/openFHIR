@@ -142,11 +142,6 @@
       "resource": {
         "resourceType": "Observation",
         "id": "987",
-        "meta": {
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab"
-          ]
-        },
         "status": "final",
         "category": [
           {
@@ -246,11 +241,6 @@
       "resource": {
         "resourceType": "Specimen",
         "id": "example-blood",
-        "meta": {
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab"
-          ]
-        },
         "status": "available",
         "type": {
           "coding": [

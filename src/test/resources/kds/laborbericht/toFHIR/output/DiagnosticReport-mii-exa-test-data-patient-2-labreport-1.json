@@ -12,8 +12,18 @@
         },
         "contained": [
           {
-            "resourceType": "Specimen",
+            "resourceType": "Encounter",
             "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000004"
+              }
+            ]
+          },
+          {
+            "resourceType": "Specimen",
+            "id": "2",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -48,7 +58,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "2",
+            "id": "3",
             "status": "entered-in-error",
             "code": {
               "coding": [
@@ -77,6 +87,11 @@
                 "text": "Low"
               }
             ],
+            "note": [
+              {
+                "text": "Leukopenie bei Tumorpatient"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -89,12 +104,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#3"
+              "reference": "#4"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "3",
+            "id": "4",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -104,7 +119,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "4",
+            "id": "5",
             "code": {
               "coding": [
                 {
@@ -144,12 +159,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#5"
+              "reference": "#6"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "5",
+            "id": "6",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -159,7 +174,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "6",
+            "id": "7",
             "code": {
               "coding": [
                 {
@@ -199,12 +214,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#7"
+              "reference": "#8"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "7",
+            "id": "8",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -214,7 +229,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "8",
+            "id": "9",
             "code": {
               "coding": [
                 {
@@ -254,12 +269,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#9"
+              "reference": "#10"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "9",
+            "id": "10",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -307,25 +322,28 @@
           ],
           "text": "Laboratory report"
         },
+        "encounter": {
+          "reference": "#1"
+        },
         "effectiveDateTime": "2024-03-04T07:30:00+01:00",
         "issued": "2024-03-04T11:30:00.000+01:00",
         "specimen": [
           {
-            "reference": "#1"
+            "reference": "#2"
           }
         ],
         "result": [
           {
-            "reference": "#2"
+            "reference": "#3"
           },
           {
-            "reference": "#4"
+            "reference": "#5"
           },
           {
-            "reference": "#6"
+            "reference": "#7"
           },
           {
-            "reference": "#8"
+            "reference": "#9"
           }
         ],
         "conclusion": "Panzytopenie bei Tumorpatient: Leukopenie (3,2/nL), Anämie (Hb 9,2 g/dL), Thrombozytopenie (120/nL). Chemotherapie-assoziierte Knochenmarkssuppression."

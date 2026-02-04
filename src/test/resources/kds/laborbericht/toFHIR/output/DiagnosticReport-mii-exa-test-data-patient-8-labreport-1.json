@@ -12,8 +12,18 @@
         },
         "contained": [
           {
-            "resourceType": "Specimen",
+            "resourceType": "Encounter",
             "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000009"
+              }
+            ]
+          },
+          {
+            "resourceType": "Specimen",
+            "id": "2",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -48,7 +58,7 @@
           },
           {
             "resourceType": "Specimen",
-            "id": "2",
+            "id": "3",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -82,7 +92,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "3",
+            "id": "4",
             "status": "entered-in-error",
             "code": {
               "coding": [
@@ -123,12 +133,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#4"
+              "reference": "#5"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "4",
+            "id": "5",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -138,7 +148,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "5",
+            "id": "6",
             "code": {
               "coding": [
                 {
@@ -166,6 +176,11 @@
                 "text": "Critical high"
               }
             ],
+            "note": [
+              {
+                "text": "Stark erhöhtes Troponin T bei Myokardinfarkt"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -178,12 +193,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#6"
+              "reference": "#7"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "6",
+            "id": "7",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -193,7 +208,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "7",
+            "id": "8",
             "code": {
               "coding": [
                 {
@@ -233,12 +248,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#8"
+              "reference": "#9"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "8",
+            "id": "9",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -286,25 +301,28 @@
           ],
           "text": "Laboratory report"
         },
+        "encounter": {
+          "reference": "#1"
+        },
         "effectiveDateTime": "2023-11-12T06:30:00+01:00",
         "issued": "2023-11-12T10:45:00.000+01:00",
         "specimen": [
           {
-            "reference": "#1"
+            "reference": "#2"
           },
           {
-            "reference": "#2"
+            "reference": "#3"
           }
         ],
         "result": [
           {
-            "reference": "#3"
+            "reference": "#4"
           },
           {
-            "reference": "#5"
+            "reference": "#6"
           },
           {
-            "reference": "#7"
+            "reference": "#8"
           }
         ],
         "conclusion": "ST-Hebungsinfarkt (STEMI): Kritisch erhöhtes Troponin T (2,8 ng/mL) und CK-MB (85 U/L) bestätigen akuten Myokardinfarkt. Sofortige Reperfusionstherapie erforderlich."

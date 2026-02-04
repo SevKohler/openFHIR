@@ -12,8 +12,18 @@
         },
         "contained": [
           {
-            "resourceType": "Specimen",
+            "resourceType": "Encounter",
             "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000001"
+              }
+            ]
+          },
+          {
+            "resourceType": "Specimen",
+            "id": "2",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -69,7 +79,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "2",
+            "id": "3",
             "status": "entered-in-error",
             "code": {
               "coding": [
@@ -98,6 +108,11 @@
                 "text": "High"
               }
             ],
+            "note": [
+              {
+                "text": "Leukozyten EDTA-Blut Impedanzmessung"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -110,12 +125,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#3"
+              "reference": "#4"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "3",
+            "id": "4",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -125,7 +140,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "4",
+            "id": "5",
             "code": {
               "coding": [
                 {
@@ -153,6 +168,11 @@
                 "text": "Normal"
               }
             ],
+            "note": [
+              {
+                "text": "Erythrozyten EDTA-Blut Impedanzmessung"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -165,12 +185,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#5"
+              "reference": "#6"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "5",
+            "id": "6",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -180,7 +200,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "6",
+            "id": "7",
             "code": {
               "coding": [
                 {
@@ -208,6 +228,11 @@
                 "text": "Normal"
               }
             ],
+            "note": [
+              {
+                "text": "Hämatokrit EDTA-Blut Impedanzmessung"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -220,12 +245,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#7"
+              "reference": "#8"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "7",
+            "id": "8",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -235,7 +260,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "8",
+            "id": "9",
             "code": {
               "coding": [
                 {
@@ -263,6 +288,11 @@
                 "text": "Normal"
               }
             ],
+            "note": [
+              {
+                "text": "Hämoglobin EDTA-Blut Photometrie"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -275,12 +305,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#9"
+              "reference": "#10"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "9",
+            "id": "10",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -290,7 +320,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "10",
+            "id": "11",
             "code": {
               "coding": [
                 {
@@ -318,6 +348,11 @@
                 "text": "Normal"
               }
             ],
+            "note": [
+              {
+                "text": "Thrombozyten EDTA-Blut Impedanzmessung"
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -330,12 +365,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#11"
+              "reference": "#12"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "11",
+            "id": "12",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -345,7 +380,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "12",
+            "id": "13",
             "code": {
               "coding": [
                 {
@@ -366,12 +401,12 @@
               ]
             },
             "specimen": {
-              "reference": "#13"
+              "reference": "#14"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "13",
+            "id": "14",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -419,31 +454,34 @@
           ],
           "text": "Laboratory report"
         },
+        "encounter": {
+          "reference": "#1"
+        },
         "effectiveDateTime": "2024-02-15T12:00:00+01:00",
         "issued": "2024-02-15T12:00:00.000+01:00",
         "specimen": [
           {
-            "reference": "#1"
+            "reference": "#2"
           }
         ],
         "result": [
           {
-            "reference": "#2"
+            "reference": "#3"
           },
           {
-            "reference": "#4"
+            "reference": "#5"
           },
           {
-            "reference": "#6"
+            "reference": "#7"
           },
           {
-            "reference": "#8"
+            "reference": "#9"
           },
           {
-            "reference": "#10"
+            "reference": "#11"
           },
           {
-            "reference": "#12"
+            "reference": "#13"
           }
         ],
         "conclusion": "Leukozyten hoch"

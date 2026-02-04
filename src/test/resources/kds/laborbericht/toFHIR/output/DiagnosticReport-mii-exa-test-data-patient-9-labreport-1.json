@@ -12,8 +12,18 @@
         },
         "contained": [
           {
-            "resourceType": "Specimen",
+            "resourceType": "Encounter",
             "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000010"
+              }
+            ]
+          },
+          {
+            "resourceType": "Specimen",
+            "id": "2",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -48,7 +58,7 @@
           },
           {
             "resourceType": "Specimen",
-            "id": "2",
+            "id": "3",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -82,7 +92,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "3",
+            "id": "4",
             "status": "entered-in-error",
             "code": {
               "coding": [
@@ -123,12 +133,12 @@
               "text": "Electrical impedance technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#4"
+              "reference": "#5"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "4",
+            "id": "5",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -138,7 +148,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "5",
+            "id": "6",
             "code": {
               "coding": [
                 {
@@ -178,12 +188,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#6"
+              "reference": "#7"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "6",
+            "id": "7",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -193,7 +203,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "7",
+            "id": "8",
             "code": {
               "coding": [
                 {
@@ -233,12 +243,12 @@
               "text": "Photometry technique (qualifier value)"
             },
             "specimen": {
-              "reference": "#8"
+              "reference": "#9"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "8",
+            "id": "9",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/Bioproben",
@@ -286,25 +296,28 @@
           ],
           "text": "Laboratory report"
         },
+        "encounter": {
+          "reference": "#1"
+        },
         "effectiveDateTime": "2024-02-22T07:15:00+01:00",
         "issued": "2024-02-22T11:00:00.000+01:00",
         "specimen": [
           {
-            "reference": "#1"
+            "reference": "#2"
           },
           {
-            "reference": "#2"
+            "reference": "#3"
           }
         ],
         "result": [
           {
-            "reference": "#3"
+            "reference": "#4"
           },
           {
-            "reference": "#5"
+            "reference": "#6"
           },
           {
-            "reference": "#7"
+            "reference": "#8"
           }
         ],
         "conclusion": "Normale Blutbild-Parameter bei prämenopausaler Frau. Estradiol-Spiegel (285 pmol/L) im Normbereich für reproduktive Phase. Ovarialzyste ohne Hormonaktivität."
