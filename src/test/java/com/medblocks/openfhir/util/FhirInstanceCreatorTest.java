@@ -82,6 +82,72 @@ public class FhirInstanceCreatorTest {
     }
 
     @Test
+    public void testInstantiationAndSetting_chainedFhirPath_singleCodingPaths() {
+        final MedicationRequest resource = new MedicationRequest();
+
+        final CodeType code = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding.code", null)).getReturning();
+        code.setValue("LAB");
+        final UriType system = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding.system", null)).getReturning();
+        system.setValue("http://terminology.hl7.org/CodeSystem/v2-0074");
+
+        Assert.assertEquals(1, resource.getCategory().size());
+        Assert.assertEquals(1, resource.getCategoryFirstRep().getCoding().size());
+        Assert.assertEquals("LAB", resource.getCategoryFirstRep().getCodingFirstRep().getCode());
+        Assert.assertEquals("http://terminology.hl7.org/CodeSystem/v2-0074",
+                            resource.getCategoryFirstRep().getCodingFirstRep().getSystem());
+    }
+
+    @Test
+    public void testInstantiationAndSetting_chainedFhirPath_indexedCodingPaths() {
+        final MedicationRequest resource = new MedicationRequest();
+
+        final UriType system0 = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding[0].system", null)).getReturning();
+        system0.setValue("http://loinc.org");
+        final CodeType code0 = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding[0].code", null)).getReturning();
+        code0.setValue("26436-6");
+
+        final UriType system1 = (UriType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding[1].system", null)).getReturning();
+        system1.setValue("http://terminology.hl7.org/CodeSystem/v2-0074");
+        final CodeType code1 = (CodeType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.coding[1].code", null)).getReturning();
+        code1.setValue("LAB");
+
+        Assert.assertEquals(1, resource.getCategory().size());
+        Assert.assertEquals(2, resource.getCategoryFirstRep().getCoding().size());
+        Assert.assertEquals("26436-6", resource.getCategoryFirstRep().getCoding().get(0).getCode());
+        Assert.assertEquals("http://loinc.org", resource.getCategoryFirstRep().getCoding().get(0).getSystem());
+        Assert.assertEquals("LAB", resource.getCategoryFirstRep().getCoding().get(1).getCode());
+        Assert.assertEquals("http://terminology.hl7.org/CodeSystem/v2-0074",
+                            resource.getCategoryFirstRep().getCoding().get(1).getSystem());
+    }
+
+    @Test
+    public void testInstantiationAndSetting_indexedAndNonIndexedNonCodingPaths() {
+        final MedicationRequest resource = new MedicationRequest();
+
+        final StringType categoryText = (StringType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.category.text", null)).getReturning();
+        categoryText.setValue("laboratory");
+
+        final StringType note0 = (StringType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.note[0].text", null)).getReturning();
+        note0.setValue("first note");
+        final StringType note1 = (StringType) getLastReturn(fhirInstanceCreator.instantiateAndSetElement(
+                resource, MedicationRequest.class, "MedicationRequest.note[1].text", null)).getReturning();
+        note1.setValue("second note");
+
+        Assert.assertEquals("laboratory", resource.getCategoryFirstRep().getText());
+        Assert.assertEquals(2, resource.getNote().size());
+        Assert.assertEquals("first note", resource.getNote().get(0).getText());
+        Assert.assertEquals("second note", resource.getNote().get(1).getText());
+    }
+
+    @Test
     public void testInstantiationAndSetting_chainedFhirPath_resolve() {
 
         final MedicationRequest resource = new MedicationRequest();

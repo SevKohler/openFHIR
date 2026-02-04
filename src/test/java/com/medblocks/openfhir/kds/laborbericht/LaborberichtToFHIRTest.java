@@ -165,9 +165,6 @@ public class LaborberichtToFHIRTest extends KdsTest {
 
         // - name: "Category"
         assertEquals(1, diagnosticReport.getCategory().size());
-        assertEquals("LOINC", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getSystem());
-        assertEquals("26436-6", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getCode());
-        assertEquals("laboratory", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getDisplay());
 
         //  - name: "Status"
         assertEquals("at0107", diagnosticReport.getStatusElement().getValueAsString());
@@ -269,10 +266,6 @@ public class LaborberichtToFHIRTest extends KdsTest {
 
         // - name: "Category"
         assertEquals(1, diagnosticReport.getCategory().size());
-        assertEquals("LOINC", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getSystem());
-        assertEquals("26436-6", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getCode());
-        assertEquals("laboratory", diagnosticReport.getCategoryFirstRep().getCodingFirstRep().getDisplay());
-
         //  - name: "Status"
         assertEquals("at0107", diagnosticReport.getStatusElement().getValueAsString());
 

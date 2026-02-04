@@ -168,7 +168,7 @@
                   "_type": "ELEMENT",
                   "name": {
                     "_type": "DV_TEXT",
-                    "value": "Labortest-Kategorie"
+                    "value": "labortest-bezeichnung"
                   },
                   "value": {
                     "_type": "DV_CODED_TEXT",

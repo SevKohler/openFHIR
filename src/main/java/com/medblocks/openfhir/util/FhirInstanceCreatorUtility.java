@@ -124,6 +124,11 @@ public class FhirInstanceCreatorUtility {
     }
 
     public Object setFieldObject(final Field theField, final Object resource, final Object settingObject) {
+        return setFieldObject(theField, resource, settingObject, null);
+    }
+
+    public Object setFieldObject(final Field theField, final Object resource, final Object settingObject,
+                                 final Integer desiredIndex) {
         if (theField == null) {
             return null;
         }
@@ -131,16 +136,26 @@ public class FhirInstanceCreatorUtility {
         try {
             theField.setAccessible(true);
             if (theField.getType() == List.class) {
-                final List<Object> list = new ArrayList<>();
                 if (theField.get(resource) == null) {
-                    theField.set(resource, list);
-                    list.add(value);
-                    return list;
-                } else {
-                    final List<Object> existingList = (List<Object>) theField.get(resource);
+                    theField.set(resource, new ArrayList<>());
+                }
+
+                final List<Object> existingList = (List<Object>) theField.get(resource);
+                if (desiredIndex == null) {
                     existingList.add(value);
                     return existingList;
                 }
+
+                if (desiredIndex < existingList.size()) {
+                    final Object existing = existingList.get(desiredIndex);
+                    return existing == null ? value : existing;
+                }
+
+                while (existingList.size() < desiredIndex) {
+                    existingList.add(newInstance(value.getClass()));
+                }
+                existingList.add(value);
+                return value;
             } else {
                 theField.set(resource, value);
             }
@@ -148,6 +163,23 @@ public class FhirInstanceCreatorUtility {
             log.error("Error trying to set field object.", e);
         }
         return value;
+    }
+
+    public Object getListElementAtIndex(final Field theField, final Object resource, final Integer desiredIndex) {
+        if (theField == null || resource == null || desiredIndex == null || theField.getType() != List.class) {
+            return null;
+        }
+        try {
+            theField.setAccessible(true);
+            final Object fieldValue = theField.get(resource);
+            if (!(fieldValue instanceof List<?> list) || desiredIndex < 0 || desiredIndex >= list.size()) {
+                return null;
+            }
+            return list.get(desiredIndex);
+        } catch (IllegalAccessException e) {
+            log.error("Error trying to get indexed list field object.", e);
+            return null;
+        }
     }
 
     public Object wrapInReferenceIfNeeded(final Object settingObject) {

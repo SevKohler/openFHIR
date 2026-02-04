@@ -55,7 +55,6 @@ public class NullFlavourToFHIRTest extends KdsTest {
         flat.addProperty("laborbericht/laborbefund/any_event:0/pro_laboranalyt:0/messwert:0/_null_flavour|code", "253");
         flat.addProperty("laborbericht/laborbefund/any_event:0/pro_laboranalyt:0/messwert:0/_null_flavour|value", "unknown");
         flat.addProperty("laborbericht/laborbefund/any_event:0/pro_laboranalyt:0/messwert:0/_null_flavour|terminology", "openehr");
-
         final org.openehr.schemas.v1.OPERATIONALTEMPLATE template = operationaltemplate;
         final Bundle bundle = openEhrToFhir.compositionToFhir(
                 context,

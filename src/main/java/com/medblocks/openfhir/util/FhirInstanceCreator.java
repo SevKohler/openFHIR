@@ -29,6 +29,7 @@ import static com.medblocks.openfhir.util.OpenFhirStringUtils.RESOLVE;
 public class FhirInstanceCreator {
 
     private final String R4_HAPI_PACKAGE = "org.hl7.fhir.r4.model.";
+    private static final String INDEXED_PATH_REGEX = "(.+)\\[(\\d+)]";
 
     private final OpenFhirStringUtils openFhirStringUtils;
     private final FhirInstanceCreatorUtility fhirInstanceCreatorUtility;
@@ -170,9 +171,21 @@ public class FhirInstanceCreator {
                                                      final Object originalResource, final String followingWhereCondition) {
         for (int i = 0; i < splitFhirPaths.length; i++) {
             String splitPath = splitFhirPaths[i].equals("class") ? "class_" : splitFhirPaths[i];
+            Integer desiredIndex = null;
+            final java.util.regex.Matcher indexedPathMatcher = java.util.regex.Pattern
+                    .compile(INDEXED_PATH_REGEX)
+                    .matcher(splitPath);
+            if (indexedPathMatcher.matches()) {
+                splitPath = indexedPathMatcher.group(1);
+                desiredIndex = Integer.parseInt(indexedPathMatcher.group(2));
+            }
 
+            final String splitPathForLookup = splitPath;
             final Field[] childElements = FieldUtils.getFieldsWithAnnotation(clazz, Child.class);
-            final Field theField = Arrays.stream(childElements).filter(child -> splitPath.equals(child.getName())).findFirst().orElse(null);
+            final Field theField = Arrays.stream(childElements)
+                    .filter(child -> splitPathForLookup.equals(child.getName()))
+                    .findFirst()
+                    .orElse(null);
             boolean specialThisHandling = THIS.equals(splitPath); // means we really just one this same element, nothing else
             if (!specialThisHandling && theField == null) {
                 continue;
@@ -191,14 +204,21 @@ public class FhirInstanceCreator {
 
             final String castingTo = castFollows ? openFhirStringUtils.getCastType(preparedFhirPath) : null;
             final Class nextClass = castFollows ? fhirInstanceCreatorUtility.getClassForName(R4_HAPI_PACKAGE + castingTo) : fhirInstanceCreatorUtility.findClass(theField, resolveFollows ? resolveResourceType : null);
-            final Object nextClassInstance = fhirInstanceCreatorUtility.newInstance(nextClass);
+            Object nextClassInstance = null;
+            if (desiredIndex != null && theField != null && theField.getType() == List.class) {
+                nextClassInstance = fhirInstanceCreatorUtility.getListElementAtIndex(theField, resource, desiredIndex);
+            }
+            if (nextClassInstance == null) {
+                nextClassInstance = fhirInstanceCreatorUtility.newInstance(nextClass);
+            }
 
             final InstantiateAndSetReturn returning = instantiateAndSetElement(nextClassInstance, nextClass,
                     String.join(".", list.subList(1, list.size())),
                     forcingClass,
                     resolveResourceType);
 
-            final Object obj = fhirInstanceCreatorUtility.setFieldObject(theField, resource, nextClassInstance);
+            final Object obj = fhirInstanceCreatorUtility.setFieldObject(theField, resource, nextClassInstance,
+                                                                         desiredIndex);
             final String path = splitPath + (castFollows ? ("." + splitFhirPaths[i + 1]) : "") + (StringUtils.isBlank(followingWhereCondition) ? "" : ("." + followingWhereCondition));
             return InstantiateAndSetReturn.builder()
                     .returning(obj)

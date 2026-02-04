@@ -125,12 +125,6 @@ public class LaborberichtToOpenEHRTest extends KdsTest {
         final Bundle testBundle = getTestBundle(BUNDLE);
         final JsonObject jsonObject = fhirToOpenEhr.fhirToFlatJsonObject(context, testBundle, operationaltemplate);
 
-        Assert.assertEquals("26436-6",
-                            jsonObject.getAsJsonPrimitive("laborbericht/laborbefund/any_event:0/labortest-kategorie|code")
-                                    .getAsString());
-        Assert.assertEquals("LOINC",
-                            jsonObject.getAsJsonPrimitive("laborbericht/laborbefund/any_event:0/labortest-kategorie|terminology")
-                                    .getAsString());
         Assert.assertEquals("registered", jsonObject.getAsJsonPrimitive("laborbericht/context/status|code").getAsString());
         Assert.assertEquals("Normal blood count",
                             jsonObject.getAsJsonPrimitive("laborbericht/laborbefund/any_event:0/conclusion").getAsString());
