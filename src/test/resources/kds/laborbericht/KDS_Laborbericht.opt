@@ -584,34 +584,6 @@ A status of aborted means the patient was associated with the case number in err
                             <upper>1</upper>
                         </occurrences>
                         <node_id></node_id>
-                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                            <rm_attribute_name>defining_code</rm_attribute_name>
-                            <existence>
-<lower_included>true</lower_included>
-<upper_included>true</upper_included>
-<lower_unbounded>false</lower_unbounded>
-<upper_unbounded>false</upper_unbounded>
-<lower>1</lower>
-<upper>1</upper>
-                            </existence>
-                            <match_negated>false</match_negated>
-                            <children xsi:type="C_CODE_PHRASE">
-<rm_type_name>CODE_PHRASE</rm_type_name>
-<occurrences>
-    <lower_included>true</lower_included>
-    <upper_included>true</upper_included>
-    <lower_unbounded>false</lower_unbounded>
-    <upper_unbounded>false</upper_unbounded>
-    <lower>1</lower>
-    <upper>1</upper>
-</occurrences>
-<node_id></node_id>
-<terminology_id>
-    <value>LOINC</value>
-</terminology_id>
-<code_list>26436-6</code_list>
-                            </children>
-                        </attributes>
                     </children>
                 </attributes>
                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
@@ -659,7 +631,7 @@ A status of aborted means the patient was associated with the case number in err
 </occurrences>
 <node_id></node_id>
 <item xsi:type="C_STRING">
-    <list>Labortest-Kategorie</list>
+    <list>Labortest-Bezeichnung</list>
 </item>
                             </children>
                         </attributes>
@@ -4178,7 +4150,7 @@ This element allows multiple occurrences to support use cases where more than on
                     <items id="description">@ internal @</items>
                 </term_definitions>
                 <term_definitions code="at0005">
-                    <items id="text">Labortest-Kategorie</items>
+                    <items id="text">Labortest-Bezeichnung</items>
                     <items id="description">Name of the laboratory investigation performed on the specimen(s).</items>
                     <items id="comment">A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that 'Test name' be coded with a terminology, for example LOINC or SNOMED CT. For example: 'Glucose', 'Urea and Electrolytes', 'Swab', 'Cortisol (am)', 'Potassium in perspiration' or 'Melanoma histopathology'. The name may sometimes include specimen type and patient state, for example 'Fasting blood glucose' or include other information, as 'Potassium (PNA blood gas)'.</items>
                 </term_definitions>
@@ -4357,9 +4329,6 @@ Coding with a terminology is desirable, where possible.</items>
                     <items id="text">Structured test diagnosis</items>
                     <items id="description">A structured or complex diagnosis for the laboratory test.</items>
                     <items id="comment">For example: Anatomical pathology diagnoses consisting of several different axes such as morphology, etiology and function.</items>
-                </term_definitions>
-                <term_definitions code="LOINC::26436-6">
-                    <items id="text">laboratory</items>
                 </term_definitions>
             </children>
             <cardinality>
@@ -4549,7 +4518,7 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                 <items id="description">@ internal @</items>
             </items>
             <items code="at0005">
-                <items id="text">Labortest-Kategorie</items>
+                <items id="text">Labortest</items>
                 <items id="description">Navn på laboratorieundersøkelsen som er utført på prøvematerialet.</items>
                 <items id="comment">Undersøkelsesnavnet kan dekke ett enkelt resultat eller en gruppe av resultater. Undersøkelsesnavnet kan kodes med medisinsk kodeverk som for eksempel NLK (Norsk laboratoriekodeverk), LOINC, SNOMED CT eller lokale laboratoriekodeverk. Eksempler kan være "Glukose", "Elektrolytter", "Blodgass", "Differensialtelling", "Dyrkning", "Kortisol (morgen)" eller "histologi melanom". Navnet kan noen ganger inneholde typen prøvemateriale og/eller pasientstatus, for eksempel "fastende blodglukose" "Kalium i svette", eller inneholde annen informasjon, som "Kalium (PNA blodgass)".</items>
             </items>
@@ -4757,7 +4726,7 @@ Koding med en terminologi er ønskelig, der det er mulig.</items>
                 <items id="description">@ internal @</items>
             </items>
             <items code="at0005">
-                <items id="text">Labortest-Kategorie</items>
+                <items id="text">Labortest</items>
                 <items id="description">Name der Laboruntersuchung, die an der/den Probe(n) durchgeführt wurde.</items>
                 <items id="comment">Ein Laborergebnis kann sich auf ein einzelnes Analyt oder eine Analytgruppe beziehen. Dazu zählen auch komplette Panel an Parametern. &#13;
 Es wird dringend empfohlen, die "Labortest-Bezeichnung" anhand einer Terminologie zu kodiereren, wie zum Beispiel LOINC oder SNOMED CT. Beispiel: "Glukose", "Harnstoff", "Abstrich", "Cortisol", "Leberbiopsie". Der Name kann u.U. auch das Probenmaterial oder den Patientenstatus (z.B. "Blutzuckerspiegel nüchtern") oder andere Informationen beinhalten wie "Kalium (Blutgas)".</items>
@@ -5749,7 +5718,7 @@ zur Angleichung an andere Referenzmodelle/Formalismen erforderlich sind.</items>
     <annotations path="[openEHR-EHR-COMPOSITION.report-result.v1]/context/other_context[at0001]/items[at0005]">
         <items id="fhir_mapping">DiagnosticReport.status</items>
     </annotations>
-    <annotations path="[openEHR-EHR-COMPOSITION.report-result.v1]/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1 and name/value='Laborbefund']/data[at0001]/events[at0002]/data[at0003]/items[at0005, 'Labortest-Kategorie']">
+    <annotations path="[openEHR-EHR-COMPOSITION.report-result.v1]/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1 and name/value='Laborbefund']/data[at0001]/events[at0002]/data[at0003]/items[at0005, 'Labortest']">
         <items id="fhir_mapping">DiagnosticReport.category</items>
     </annotations>
     <annotations path="[openEHR-EHR-COMPOSITION.report-result.v1]/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1 and name/value='Laborbefund']/protocol[at0004]/items[at0094]/items[at0063, 'Auftrags-ID des empfangenden Systems']">

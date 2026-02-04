@@ -27,6 +27,8 @@ public class LaborberichtToFHIRTest extends KdsTest {
     final String HELPER_LOCATION = "/kds/laborbericht/";
     final String OPT = "/kds/laborbericht/KDS_Laborbericht.opt";
     final String FLAT = "/kds/laborbericht/toOpenEHR/output/KDS_Laborbericht.flat.json";
+
+    final String OPENEHR_COMP = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
     final String OPENEHR_COMPOSITION_1 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
     final String OPENEHR_COMPOSITION_2 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labreport-1.json";
     final String OPENEHR_COMPOSITION_3 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-labreport-1.json";
@@ -38,16 +40,16 @@ public class LaborberichtToFHIRTest extends KdsTest {
     final String OPENEHR_COMPOSITION_9 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-labreport-1.json";
     final String OPENEHR_COMPOSITION_10 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-labreport-1.json";
 
-    final String FHIR_BUNDLE_1 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-1-labreport-1.json";
-    final String FHIR_BUNDLE_2 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-2-labreport-1.json";
-    final String FHIR_BUNDLE_3 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-3-labreport-1.json";
-    final String FHIR_BUNDLE_4 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-4-labreport-1.json";
-    final String FHIR_BUNDLE_5 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-5-labreport-1.json";
-    final String FHIR_BUNDLE_6 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-6-labreport-1.json";
-    final String FHIR_BUNDLE_7 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-7-labreport-1.json";
-    final String FHIR_BUNDLE_8 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-8-labreport-1.json";
-    final String FHIR_BUNDLE_9 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-9-labreport-1.json";
-    final String FHIR_BUNDLE_10 = "/kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-10-labreport-1.json";
+    final String FHIR_BUNDLE_1 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-1-labreport-1.json";
+    final String FHIR_BUNDLE_2 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-2-labreport-1.json";
+    final String FHIR_BUNDLE_3 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-3-labreport-1.json";
+    final String FHIR_BUNDLE_4 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-4-labreport-1.json";
+    final String FHIR_BUNDLE_5 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-5-labreport-1.json";
+    final String FHIR_BUNDLE_6 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-6-labreport-1.json";
+    final String FHIR_BUNDLE_7 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-7-labreport-1.json";
+    final String FHIR_BUNDLE_8 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-8-labreport-1.json";
+    final String FHIR_BUNDLE_9 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-9-labreport-1.json";
+    final String FHIR_BUNDLE_10 = "/kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-10-labreport-1.json";
 
     @SneakyThrows
     @Override

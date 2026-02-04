@@ -110,9 +110,25 @@ mappings:
         - name: "category"
           with:
             fhir: "category"
-            openehr: "data[at0003]/items[at0005]" # if there are several events add it to all of them
+          manual:
+            - name: "laboratoryCategory"
+              fhir:
+                - path: "coding[0].system"
+                  value: "http://loinc.org"
+                - path: "coding[0].code"
+                  value: "26436-6"
+                - path: "coding[1].system"
+                  value: "http://terminology.hl7.org/CodeSystem/v2-0074"
+                - path: "coding[1].code"
+                  value: "LAB"
+                - path: "text"
+                  value: "laboratory"
             
             # Backwards map all the values back, if they overlap ?!?!?!?
+        - name: "code"
+          with:
+            fhir: "code"
+            openehr: "data[at0003]/items[at0005]"
 
         - name: "status"
           with:
