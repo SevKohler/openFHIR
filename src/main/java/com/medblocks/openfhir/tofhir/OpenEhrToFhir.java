@@ -1032,6 +1032,11 @@ public class OpenEhrToFhir {
                 // this is unidirectional mapping to openEHR only, ignore
                 continue;
             }
+
+            if (!isSupportedFhirConditionForToFhir(mapping.getFhirCondition(), mapping)
+                    || !isSupportedOpenEhrConditionForToFhir(mapping.getOpenehrCondition(), mapping)) {
+                continue;
+            }
             final String definedMappingWithOpenEhr = with.getOpenehr();
             // Add null check here to prevent NullPointerException
             if (definedMappingWithOpenEhr == null) {
@@ -1165,6 +1170,39 @@ public class OpenEhrToFhir {
         }
         openEhrCondition.setTargetAttributes(newAttributes);
         openEhrCondition.setTargetAttribute(null); // nullify the one
+    }
+
+    private boolean isSupportedFhirConditionForToFhir(final Condition condition, final Mapping mapping) {
+        if (condition == null || condition.getOperator() == null) {
+            return true;
+        }
+        final String operator = condition.getOperator();
+        final boolean supported = FhirConnectConst.CONDITION_OPERATOR_ONE_OF.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_NOT_OF.equals(operator)
+                || CONDITION_OPERATOR_EMPTY.equals(operator)
+                || CONDITION_OPERATOR_NOT_EMPTY.equals(operator)
+                || CONDITION_OPERATOR_TYPE.equals(operator);
+        if (!supported) {
+            log.warn("Unsupported FHIR condition operator '{}' for mapping '{}', skipping mapping.",
+                    operator, mapping == null ? null : mapping.getName());
+        }
+        return supported;
+    }
+
+    private boolean isSupportedOpenEhrConditionForToFhir(final Condition condition, final Mapping mapping) {
+        if (condition == null || condition.getOperator() == null) {
+            return true;
+        }
+        final String operator = condition.getOperator();
+        final boolean supported = FhirConnectConst.CONDITION_OPERATOR_ONE_OF.equals(operator)
+                || CONDITION_OPERATOR_EMPTY.equals(operator)
+                || CONDITION_OPERATOR_NOT_EMPTY.equals(operator)
+                || CONDITION_OPERATOR_TYPE.equals(operator);
+        if (!supported) {
+            log.warn("Unsupported openEHR condition operator '{}' for mapping '{}', skipping mapping.",
+                    operator, mapping == null ? null : mapping.getName());
+        }
+        return supported;
     }
 
     public String getPathFromAqlPath(String openEhrPath, WebTemplate webTemplate, String rmType) {
@@ -1625,6 +1663,9 @@ public class OpenEhrToFhir {
                                                                   final String hardcodedValue, String resourceType, String fhirPath) {
         ValueToFHIRParser valueToFHIRParser = new ValueToFHIRParser(openFhirStringUtils, openFhirMapperUtils);
         List<OpenEhrToFhirHelper.DataWithIndex> values = new ArrayList<>();
+        if (!passesOpenEhrTypeCondition(mapping, rmType)) {
+            return values;
+        }
         if (!OPENEHR_TYPE_NONE.equals(mapping.getWith().getType())) {
             if (StringUtils.isNotEmpty(hardcodedValue) && !joinedEntries.isEmpty()) {
                 values = new ArrayList<>();
@@ -1686,6 +1727,21 @@ public class OpenEhrToFhir {
         }
 
         return values;
+    }
+
+    private boolean passesOpenEhrTypeCondition(final Mapping mapping, final String rmType) {
+        if (mapping == null || rmType == null) {
+            return true;
+        }
+        final Condition condition = mapping.getOpenehrCondition();
+        if (condition == null || !CONDITION_OPERATOR_TYPE.equals(condition.getOperator())) {
+            return true;
+        }
+        final List<String> criterias = condition.getCriterias();
+        if (criterias == null || criterias.isEmpty()) {
+            return rmType.equals(condition.getCriteria());
+        }
+        return criterias.stream().anyMatch(criteria -> rmType.equals(criteria));
     }
 
     private boolean evaluateOpenehrEmptyNotEmptyCondition(final Mapping mapping,

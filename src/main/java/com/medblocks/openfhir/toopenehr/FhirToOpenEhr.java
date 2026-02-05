@@ -903,6 +903,11 @@ public class FhirToOpenEhr {
                 continue;
             }
 
+            if (!isSupportedFhirConditionForToOpenEhr(mapping.getFhirCondition(), mapping)
+                    || !isSupportedOpenEhrConditionForToOpenEhr(mapping.getOpenehrCondition(), mapping)) {
+                continue;
+            }
+
             // Add null check for with.getOpenehr()
             if (with.getOpenehr() == null) {
                 log.warn("Skipping mapping with null openEHR path for FHIR path: {}", with.getFhir());
@@ -1171,6 +1176,38 @@ public class FhirToOpenEhr {
         // recursively call createHelpers after reference mappings have been prepared
         createHelpers(mainArtifact, fhirConnectMapper, templateId, mainOpenEhrPath, referencedMapping, parentCondition,
                 helpers, coverHelpers, bundle, multiple, possibleRecursion);
+    }
+
+    private boolean isSupportedFhirConditionForToOpenEhr(final Condition condition, final Mapping mapping) {
+        if (condition == null || condition.getOperator() == null) {
+            return true;
+        }
+        final String operator = condition.getOperator();
+        final boolean supported = FhirConnectConst.CONDITION_OPERATOR_ONE_OF.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_NOT_OF.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_EMPTY.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_NOT_EMPTY.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_TYPE.equals(operator);
+        if (!supported) {
+            log.warn("Unsupported FHIR condition operator '{}' for mapping '{}', skipping mapping.",
+                    operator, mapping == null ? null : mapping.getName());
+        }
+        return supported;
+    }
+
+    private boolean isSupportedOpenEhrConditionForToOpenEhr(final Condition condition, final Mapping mapping) {
+        if (condition == null || condition.getOperator() == null) {
+            return true;
+        }
+        final String operator = condition.getOperator();
+        final boolean supported = FhirConnectConst.CONDITION_OPERATOR_EMPTY.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_NOT_EMPTY.equals(operator)
+                || FhirConnectConst.CONDITION_OPERATOR_TYPE.equals(operator);
+        if (!supported) {
+            log.warn("Unsupported openEHR condition operator '{}' for mapping '{}', skipping mapping.",
+                    operator, mapping == null ? null : mapping.getName());
+        }
+        return supported;
     }
 
     /**

@@ -33,6 +33,7 @@ public class FhirConnectConst {
     public static final String DV_DATE_TIME = "DV_DATE_TIME";
     public static final String DV_TIME = "DV_TIME";
     public static final String DV_DATE = "DV_DATE";
+    public static final String DV_INTERVAL = "DV_INTERVAL";
     public static final String DV_CODED_TEXT = "DV_CODED_TEXT";
     public static final String DV_ELEMENT = "ELEMENT";
     public static final String CODE_PHRASE = "CODE_PHRASE";

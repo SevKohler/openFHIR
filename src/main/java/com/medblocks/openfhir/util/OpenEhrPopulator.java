@@ -29,6 +29,7 @@ import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.InstantType;
 import org.hl7.fhir.r4.model.IntegerType;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
 import org.hl7.fhir.r4.model.StringType;
@@ -151,6 +152,11 @@ public class OpenEhrPopulator {
             case FhirConnectConst.DV_DATE_TIME:
                 final boolean addedDateTime = handleDvDateTime(openEhrPath, extractedValue, constructingFlat);
                 if (addedDateTime) {
+                    return;
+                }
+            case FhirConnectConst.DV_INTERVAL:
+                final boolean addedInterval = handleDvInterval(openEhrPath, extractedValue, constructingFlat);
+                if (addedInterval) {
                     return;
                 }
             case FhirConnectConst.DV_DATE:
@@ -356,6 +362,28 @@ public class OpenEhrPopulator {
             if (date.getValue() != null) {
                 final String formattedDate = openFhirMapperUtils.dateToString(date.getValue());
                 addToConstructingFlat(path, formattedDate, flat);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean handleDvInterval(final String path, final Base value, final JsonObject flat) {
+        if (value instanceof Period period) {
+            if (period.getStart() != null) {
+                addToConstructingFlat(path + "/lower|value",
+                        openFhirMapperUtils.dateTimeToString(period.getStart()), flat);
+                addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_DATE_TIME, flat);
+                addToConstructingFlat(path + "/lower_included", "true", flat);
+            }
+            if (period.getEnd() != null) {
+                addToConstructingFlat(path + "/upper|value",
+                        openFhirMapperUtils.dateTimeToString(period.getEnd()), flat);
+                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_DATE_TIME, flat);
+                addToConstructingFlat(path + "/upper_included", "true", flat);
+            }
+            if (period.getStart() != null || period.getEnd() != null) {
+                addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
             }
             return true;
         }
