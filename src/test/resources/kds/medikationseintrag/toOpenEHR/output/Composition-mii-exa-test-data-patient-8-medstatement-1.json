@@ -61,6 +61,52 @@
         },
         "code_string": "238"
       }
+    },
+    "other_context": {
+      "_type": "ITEM_TREE",
+      "name": {
+        "_type": "DV_TEXT",
+        "value": "Tree"
+      },
+      "items": [
+        {
+          "_type": "CLUSTER",
+          "name": {
+            "_type": "DV_TEXT",
+            "value": "Fallidentifikation"
+          },
+          "archetype_details": {
+            "archetype_id": {
+              "value": "openEHR-EHR-CLUSTER.case_identification.v0"
+            },
+            "rm_version": "1.0.4"
+          },
+          "items": [
+            {
+              "_type": "ELEMENT",
+              "name": {
+                "_type": "DV_TEXT",
+                "value": "Fall-Kennung"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "MII_0000009",
+                "defining_code": {
+                  "_type": "CODE_PHRASE",
+                  "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern"
+                  },
+                  "code_string": "MII_0000009"
+                }
+              },
+              "archetype_node_id": "at0001"
+            }
+          ],
+          "archetype_node_id": "openEHR-EHR-CLUSTER.case_identification.v0"
+        }
+      ],
+      "archetype_node_id": "at0005"
     }
   },
   "content": [
@@ -148,7 +194,7 @@
         },
         "origin": {
           "_type": "DV_DATE_TIME",
-          "value": "2026-02-05T14:35:17.687540148+01:00"
+          "value": "2026-02-05T16:08:52.210392958+01:00"
         },
         "events": [
           {
@@ -159,7 +205,7 @@
             },
             "time": {
               "_type": "DV_DATE_TIME",
-              "value": "2026-02-05T14:35:17.687540148+01:00"
+              "value": "2026-02-05T16:08:52.210392958+01:00"
             },
             "data": {
               "_type": "ITEM_TREE",

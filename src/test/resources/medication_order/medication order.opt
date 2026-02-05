@@ -1232,7 +1232,7 @@
         </occurrences>
         <node_id></node_id>
         <item xsi:type="C_DURATION">
-            <pattern>PDTHMS</pattern>
+            <pattern>P0DT0H0M0S</pattern>
             <range>
                 <lower_included>true</lower_included>
                 <upper_included>false</upper_included>
@@ -3128,7 +3128,7 @@ Where multiple dosage directions are expressed, the 'Direction sequence' makes t
 </occurrences>
 <node_id></node_id>
 <item xsi:type="C_DURATION">
-    <pattern>PWDTH</pattern>
+    <pattern>P0W0DT0H0M0S</pattern>
     <range>
         <lower_included>true</lower_included>
         <upper_included>false</upper_included>

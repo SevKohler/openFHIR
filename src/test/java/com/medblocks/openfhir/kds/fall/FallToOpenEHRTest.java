@@ -28,55 +28,37 @@ public class FallToOpenEHRTest extends KdsTest {
     final String FALL_EINFACH =
             "/kds/fall/toOpenEHR/input/KDS_Fall_einfach.Bundle.json";
 
-    final String FHIR_ENCOUNTER_1 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-1.json";
-    final String FHIR_ENCOUNTER_2 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-2.json";
-    final String FHIR_ENCOUNTER_3 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-2-encounter-1.json";
-    final String FHIR_ENCOUNTER_4 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-3-encounter-1.json";
-    final String FHIR_ENCOUNTER_5 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-4-encounter-1.json";
-    final String FHIR_ENCOUNTER_6 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-5-encounter-1.json";
-    final String FHIR_ENCOUNTER_7 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-6-encounter-1.json";
-    final String FHIR_ENCOUNTER_8 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-7-encounter-1.json";
-    final String FHIR_ENCOUNTER_9 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-8-encounter-1.json";
-    final String FHIR_ENCOUNTER_10 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-9-encounter-1.json";
-    final String FHIR_ENCOUNTER_11 =
-            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-10-encounter-1.json";
+    final String[] FHIR_ENCOUNTERS = {
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-2.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-2-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-3-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-4-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-5-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-6-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-7-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-8-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-9-encounter-1.json",
+            "/kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-10-encounter-1.json"
+    };
 
     // ===== OUTPUT =====
     final String FALL_EINFACH_COMPOSITION =
             "/kds/fall/toOpenEHR/output/KDS_fall_flat.json";
 
-    final String OPENEHR_COMPOSITION_1 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-1.json";
-    final String OPENEHR_COMPOSITION_2 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-2.json";
-    final String OPENEHR_COMPOSITION_3 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-encounter-1.json";
-    final String OPENEHR_COMPOSITION_4 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-encounter-1.json";
-    final String OPENEHR_COMPOSITION_5 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-encounter-1.json";
-    final String OPENEHR_COMPOSITION_6 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-encounter-1.json";
-    final String OPENEHR_COMPOSITION_7 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-encounter-1.json";
-    final String OPENEHR_COMPOSITION_8 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-encounter-1.json";
-    final String OPENEHR_COMPOSITION_9 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-encounter-1.json";
-    final String OPENEHR_COMPOSITION_10 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-encounter-1.json";
-    final String OPENEHR_COMPOSITION_11 =
-            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-encounter-1.json";
+    final String[] OPENEHR_COMPOSITIONS = {
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-2.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-encounter-1.json",
+            "/kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-encounter-1.json"
+    };
 
 
 
@@ -90,114 +72,69 @@ public class FallToOpenEHRTest extends KdsTest {
         webTemplate = new OPTParser(operationaltemplate).parse();
     }
 
-    @Test
-    public void assertToOpenEHR1() {
+    private void assertToOpenEHR(int index) {
         final Composition composition =
                 fhirToOpenEhr.fhirToCompositionRm(
                         context,
-                        getTestBundle(FHIR_ENCOUNTER_1),
+                        getTestBundle(FHIR_ENCOUNTERS[index]),
                         operationaltemplate
                 );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_1, operationaltemplate);
+        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
+    }
+
+    @Test
+    public void assertToOpenEHR1() {
+        assertToOpenEHR(0);
     }
 
     @Test
     public void assertToOpenEHR2() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_2),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_2, operationaltemplate);
+        assertToOpenEHR(1);
     }
 
     @Test
     public void assertToOpenEHR3() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_3),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_3, operationaltemplate);
+        assertToOpenEHR(2);
     }
 
     @Test
     public void assertToOpenEHR4() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_4),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_4, operationaltemplate);
+        assertToOpenEHR(3);
     }
 
     @Test
     public void assertToOpenEHR5() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_5),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_5, operationaltemplate);
+        assertToOpenEHR(4);
     }
 
     @Test
     public void assertToOpenEHR6() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_6),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_6, operationaltemplate);
+        assertToOpenEHR(5);
     }
 
     @Test
     public void assertToOpenEHR7() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_7),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_7, operationaltemplate);
+        assertToOpenEHR(6);
     }
 
     @Test
     public void assertToOpenEHR8() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_8),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_8, operationaltemplate);
+        assertToOpenEHR(7);
     }
 
     @Test
     public void assertToOpenEHR9() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_9),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_9, operationaltemplate);
+        assertToOpenEHR(8);
     }
 
     @Test
     public void assertToOpenEHR10() {
-        final Composition composition =
-                fhirToOpenEhr.fhirToCompositionRm(
-                        context,
-                        getTestBundle(FHIR_ENCOUNTER_10),
-                        operationaltemplate
-                );
-        standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITION_10, operationaltemplate);
+        assertToOpenEHR(9);
+    }
+
+    @Test
+    public void assertToOpenEHR11() {
+        assertToOpenEHR(10);
     }
 
     public JsonObject toOpenEhr() {

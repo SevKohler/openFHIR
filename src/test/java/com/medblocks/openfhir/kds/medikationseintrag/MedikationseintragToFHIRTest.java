@@ -1,9 +1,9 @@
 package com.medblocks.openfhir.kds.medikationseintrag;
 
-import ca.uhn.fhir.context.FhirContext;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.medblocks.openfhir.kds.KdsBidirectionalTest;
+import com.medblocks.openfhir.kds.KdsTest;
+import com.nedap.archie.json.JacksonUtil;
 import com.nedap.archie.rm.composition.Composition;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -17,31 +17,239 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MedikationseintragTest extends KdsBidirectionalTest {
-
+public class MedikationseintragToFHIRTest extends KdsTest {
 
     final String MODEL_MAPPINGS = "/kds_new/";
     final String CONTEXT = "/kds_new/projects/org.highmed/KDS/medikationseintrag/KDS_medikationseintrag.context.yaml";
     final String HELPER_LOCATION = "/kds/medikationseintrag/";
-    final String OPT = "KDS_Medikationseintrag.opt";
-    final String FLAT = "KDS_Medikationseintrag.flat.json";
+    final String OPT = "/kds/medikationseintrag/KDS_Medikationseintrag.opt";
+    final String FLAT = "/kds/medikationseintrag/toOpenEHR/output/KDS_Medikationseintrag.flat.json";
 
-    final String BUNDLE = "KDS_Medikationseintrag_v1-Fhir-Bundle-input.json";
+    final String[] OPENEHR_COMPOSITIONS = {
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-3.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-3.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-4.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-5.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-3.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-4.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-3.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-3.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json"
+    };
+
+    final String[] FHIR_BUNDLES = {
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-1-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-1-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-1-medstatement-3.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-10-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-10-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-2-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-2-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-2-medstatement-3.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-2-medstatement-4.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-2-medstatement-5.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-3-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-3-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-3-medstatement-3.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-3-medstatement-4.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-4-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-4-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-5-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-5-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-6-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-6-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-6-medstatement-3.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-7-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-7-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-8-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-8-medstatement-2.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-8-medstatement-3.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-9-medstatement-1.json",
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json"
+    };
 
     @SneakyThrows
     @Override
     public void prepareState() {
         context = getContext(CONTEXT);
-        operationaltemplateSerialized = IOUtils.toString(this.getClass().getResourceAsStream(HELPER_LOCATION + OPT));
+        operationaltemplateSerialized = IOUtils.toString(this.getClass().getResourceAsStream(OPT));
         operationaltemplate = getOperationalTemplate();
         repo.initRepository(context, operationaltemplate, getClass().getResource(MODEL_MAPPINGS).getFile());
         webTemplate = new OPTParser(operationaltemplate).parse();
     }
 
+    @SneakyThrows
+    private void assertToFHIR(int index) {
+        final Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITIONS[index]),
+                Composition.class);
+        final Bundle bundle = openEhrToFhir.compositionToFhir(context, composition, operationaltemplate);
+        standardsAsserter.assertBundle(bundle, FHIR_BUNDLES[index]);
+    }
+
+    @Test
+    public void assertToFHIR_1() {
+        assertToFHIR(0);
+    }
+
+    @Test
+    public void assertToFHIR_2() {
+        assertToFHIR(1);
+    }
+
+    @Test
+    public void assertToFHIR_3() {
+        assertToFHIR(2);
+    }
+
+    @Test
+    public void assertToFHIR_4() {
+        assertToFHIR(3);
+    }
+
+    @Test
+    public void assertToFHIR_5() {
+        assertToFHIR(4);
+    }
+
+    @Test
+    public void assertToFHIR_6() {
+        assertToFHIR(5);
+    }
+
+    @Test
+    public void assertToFHIR_7() {
+        assertToFHIR(6);
+    }
+
+    @Test
+    public void assertToFHIR_8() {
+        assertToFHIR(7);
+    }
+
+    @Test
+    public void assertToFHIR_9() {
+        assertToFHIR(8);
+    }
+
+    @Test
+    public void assertToFHIR_10() {
+        assertToFHIR(9);
+    }
+
+    @Test
+    public void assertToFHIR_11() {
+        assertToFHIR(10);
+    }
+
+    @Test
+    public void assertToFHIR_12() {
+        assertToFHIR(11);
+    }
+
+    @Test
+    public void assertToFHIR_13() {
+        assertToFHIR(12);
+    }
+
+    @Test
+    public void assertToFHIR_14() {
+        assertToFHIR(13);
+    }
+
+    @Test
+    public void assertToFHIR_15() {
+        assertToFHIR(14);
+    }
+
+    @Test
+    public void assertToFHIR_16() {
+        assertToFHIR(15);
+    }
+
+    @Test
+    public void assertToFHIR_17() {
+        assertToFHIR(16);
+    }
+
+    @Test
+    public void assertToFHIR_18() {
+        assertToFHIR(17);
+    }
+
+    @Test
+    public void assertToFHIR_19() {
+        assertToFHIR(18);
+    }
+
+    @Test
+    public void assertToFHIR_20() {
+        assertToFHIR(19);
+    }
+
+    @Test
+    public void assertToFHIR_21() {
+        assertToFHIR(20);
+    }
+
+    @Test
+    public void assertToFHIR_22() {
+        assertToFHIR(21);
+    }
+
+    @Test
+    public void assertToFHIR_23() {
+        assertToFHIR(22);
+    }
+
+    @Test
+    public void assertToFHIR_24() {
+        assertToFHIR(23);
+    }
+
+    @Test
+    public void assertToFHIR_25() {
+        assertToFHIR(24);
+    }
+
+    @Test
+    public void assertToFHIR_26() {
+        assertToFHIR(25);
+    }
+
+    @Test
+    public void assertToFHIR_27() {
+        assertToFHIR(26);
+    }
+
+    @Test
+    public void assertToFHIR_28() {
+        assertToFHIR(27);
+    }
+
+
     @Test
     public void kdsMedicationList_toFhir() throws IOException {
         // openEHR to FHIR
-        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile(HELPER_LOCATION + FLAT), webTemplate);
+        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile(FLAT), webTemplate);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, compositionFromFlat, operationaltemplate);
 
         final List<MedicationStatement> requests = bundle.getEntry().stream()
@@ -93,7 +301,7 @@ public class MedikationseintragTest extends KdsBidirectionalTest {
         Assert.assertEquals(3, med2.getIngredient().size());
         Assert.assertEquals(2, med1.getIngredient().size());
         Assert.assertEquals("ingridient item 0, 0",
-                            ((Medication) med2.getIngredient().get(0).getItemReference().getResource()).getCode().getCodingFirstRep().getCode());
+                ((Medication) med2.getIngredient().get(0).getItemReference().getResource()).getCode().getCodingFirstRep().getCode());
         Assert.assertEquals("ingridient item 0, 1", ((Medication) med2.getIngredient().get(1).getItemReference().getResource()).getCode().getCodingFirstRep().getCode());
 
         Assert.assertEquals("ingridient item 1, 0", ((Medication) med1.getIngredient().get(0).getItemReference().getResource()).getCode().getCodingFirstRep().getCode());
@@ -151,7 +359,7 @@ public class MedikationseintragTest extends KdsBidirectionalTest {
     @Test
     public void kdsMedicationList_toFhir_testOpenEhrCondition() throws IOException {
         // openEHR to FHIR
-        final String flat = getFile(HELPER_LOCATION + FLAT);
+        final String flat = getFile(FLAT);
         final Gson gson = new Gson();
         final JsonObject flatJsonObject = gson.fromJson(flat, JsonObject.class);
 
@@ -191,44 +399,4 @@ public class MedikationseintragTest extends KdsBidirectionalTest {
     }
 
 
-    public JsonObject toOpenEhr() {
-        final Bundle testBundle = FhirContext.forR4().newJsonParser().parseResource(Bundle.class, getClass().getResourceAsStream(HELPER_LOCATION + BUNDLE));
-
-        final JsonObject jsonObject = fhirToOpenEhr.fhirToFlatJsonObject(context, testBundle, operationaltemplate);
-
-        Assert.assertEquals("Take 1 tablet every 6 hours as needed for pain", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/dosierung_freitext").getAsString());
-        Assert.assertEquals("500.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/dosis/quantity_value|magnitude").getAsString());
-        Assert.assertEquals("mg", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/dosis/quantity_value|unit").getAsString());
-        Assert.assertEquals("at0143", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/arzneimittel-name|code").getAsString());
-        Assert.assertEquals("local", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/arzneimittel-name|terminology").getAsString());
-        Assert.assertEquals("Paracetamol 500mg tablet", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/arzneimittel-name|value").getAsString());
-        Assert.assertEquals("385055001", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/darreichungsform|code").getAsString());
-        Assert.assertEquals("http://snomed.info/sct", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/darreichungsform|terminology").getAsString());
-        Assert.assertEquals("Paracetamol", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/bestandteil").getAsString());
-        Assert.assertEquals("at0143", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/wirkstofftyp|code").getAsString());
-        Assert.assertEquals("local", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/wirkstofftyp|terminology").getAsString());
-        Assert.assertEquals("500.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/bestandteil-menge/zähler|magnitude").getAsString());
-        Assert.assertEquals("mg", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/bestandteil-menge/zähler|unit").getAsString());
-        Assert.assertEquals("1.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/bestandteil-menge/nenner|magnitude").getAsString());
-        Assert.assertEquals("tablet", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:0/bestandteil-menge/nenner|unit").getAsString());
-        Assert.assertEquals("11Paracetamol", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/bestandteil").getAsString());
-        Assert.assertEquals("at0143", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/wirkstofftyp|code").getAsString());
-        Assert.assertEquals("local", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/wirkstofftyp|terminology").getAsString());
-        Assert.assertEquals("1500.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/bestandteil-menge/zähler|magnitude").getAsString());
-        Assert.assertEquals("mg", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/bestandteil-menge/zähler|unit").getAsString());
-        Assert.assertEquals("11.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/bestandteil-menge/nenner|magnitude").getAsString());
-        Assert.assertEquals("tablet", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:1/bestandteil-menge/nenner|unit").getAsString());
-        Assert.assertEquals("at0143", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:2/wirkstofftyp|code").getAsString());
-        Assert.assertEquals("local", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/arzneimittel/bestandteil:2/wirkstofftyp|terminology").getAsString());
-        Assert.assertEquals("Take 1 capsule daily", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/dosierung:0/dosierung_freitext").getAsString());
-        Assert.assertEquals("5.0", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/dosierung:0/dosis/quantity_value|magnitude").getAsString());
-        Assert.assertEquals("mg", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/dosierung:0/dosis/quantity_value|unit").getAsString());
-        Assert.assertEquals("local", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/arzneimittel/arzneimittel-name|terminology").getAsString());
-        Assert.assertEquals("C09AA05", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/arzneimittel/arzneimittel-name|code").getAsString());
-        Assert.assertEquals("Ramipril 5mg capsule", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:1/arzneimittel/arzneimittel-name|value").getAsString());
-
-        Assert.assertEquals("High cholesterol", jsonObject.getAsJsonPrimitive("medikamentenliste/aussage_zur_medikamenteneinnahme:0/behandlungsgrund:0").getAsString());
-
-        return jsonObject;
-    }
 }

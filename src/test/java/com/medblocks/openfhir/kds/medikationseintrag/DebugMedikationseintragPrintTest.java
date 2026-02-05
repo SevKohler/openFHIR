@@ -15,7 +15,7 @@ public class DebugMedikationseintragPrintTest extends KdsBidirectionalTest {
     final String MODEL_MAPPINGS = "/kds_new/";
     final String CONTEXT = "/kds_new/projects/org.highmed/KDS/medikationseintrag/KDS_medikationseintrag.context.yaml";
     final String HELPER_LOCATION = "/kds/medikationseintrag/";
-    final String BUNDLE = "KDS_Medikationseintrag_v1-Fhir-Bundle-input.json";
+    final String BUNDLE = "/kds/medikationseintrag/toOpenEHR/input/KDS_Medikationseintrag_v1-Fhir-Bundle-input.json";
 
     @Override
     public void prepareState() {
@@ -33,18 +33,24 @@ public class DebugMedikationseintragPrintTest extends KdsBidirectionalTest {
 
     @Test
     public void printFlatForDebug() {
-        InputStream is = getClass().getResourceAsStream(HELPER_LOCATION + BUNDLE);
-        Bundle bundle = FhirContext.forR4().newJsonParser().parseResource(Bundle.class, is);
+        try (InputStream is = getClass().getResourceAsStream(BUNDLE)) {
+            if (is == null) {
+                throw new IllegalStateException("Missing test bundle resource: " + BUNDLE);
+            }
+            Bundle bundle = FhirContext.forR4().newJsonParser().parseResource(Bundle.class, is);
 
-        JsonObject flat = fhirToOpenEhr.fhirToFlatJsonObject(context, bundle, operationaltemplate);
+            JsonObject flat = fhirToOpenEhr.fhirToFlatJsonObject(context, bundle, operationaltemplate);
 
-        SortedSet<String> keys = new TreeSet<>();
-        flat.entrySet().forEach(e -> keys.add(e.getKey() + " = " + e.getValue().toString()));
+            SortedSet<String> keys = new TreeSet<>();
+            flat.entrySet().forEach(e -> keys.add(e.getKey() + " = " + e.getValue().toString()));
 
-        // Print only medication-related paths for brevity
-        keys.stream()
-            .filter(k -> k.contains("/arzneimittel/"))
-            .forEach(System.out::println);
+            // Print only medication-related paths for brevity
+            keys.stream()
+                    .filter(k -> k.contains("/arzneimittel/"))
+                    .forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
