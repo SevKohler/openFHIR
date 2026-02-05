@@ -1,7 +1,6 @@
 {
   "resourceType": "Bundle",
   "id": "b15bb2cd-b8b7-4a69-a7d3-bb659003594e",
-  "meta": {"profile": ["KDS_Medikationseintrag_v1"]},
   "type": "transaction",
   "entry": [
     {
@@ -13,12 +12,6 @@
       "resource": {
         "resourceType": "List",
         "id": "example-medication-list",
-        "meta": {
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/medikationsliste"
-          ],
-          "source": "urn:uuid:example-source"
-        },
         "identifier": [
           {
             "use": "official",
@@ -95,7 +88,10 @@
             "text": "Recommendation to restart drug treatment"
           }
         ],
-        "effectiveDateTime": "2023-08-23T10:30:00Z",
+        "effectivePeriod": {
+          "start": "2024-07-15",
+          "end": "2024-08-01"
+        },
         "reasonCode": [
           {
             "coding": [
@@ -186,7 +182,7 @@
         "medicationCodeableConcept": {
           "coding": [
             {
-              "system": "http://www.whocc.no/atc",
+              "system": "local",
               "code": "C09AA05",
               "display": "Ramipril"
             }
@@ -196,7 +192,7 @@
         "subject": {
           "reference": "Patient/example"
         },
-        "effectiveDateTime": {
+        "effectivePeriod": {
           "start": "2024-07-15",
           "end": "2024-08-01"
         },
@@ -215,7 +211,7 @@
               "coding": [
                 {
                   "system": "http://snomed.info/sct",
-                  "code": "26643006",
+                  "code": "26643007",
                   "display": "Oral route"
                 }
               ]
@@ -243,16 +239,11 @@
       "resource": {
         "resourceType": "Medication",
         "id": "urn:uuid:69f8e214-b4e6-11ec-b909-0242ac120002",
-        "meta": {
-          "profile": [
-            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/Medication"
-          ]
-        },
         "code": {
           "coding": [
             {
-              "system": "http://www.whocc.no/atc",
-              "code": "N02BE01",
+              "system": "local",
+              "code": "at0143",
               "display": "Paracetamol"
             }
           ],
@@ -273,8 +264,8 @@
             "itemCodeableConcept": {
               "coding": [
                 {
-                  "system": "http://www.whocc.no/atc",
-                  "code": "N02BE01",
+                  "system": "local",
+                  "code": "at0143",
                   "display": "Paracetamol"
                 }
               ],
@@ -299,8 +290,8 @@
             "itemCodeableConcept": {
               "coding": [
                 {
-                  "system": "http://www.whocc.no/atc",
-                  "code": "1_N02BE01",
+                  "system": "local",
+                  "code": "at0143",
                   "display": "Paracetamol"
                 }
               ],
@@ -325,8 +316,8 @@
             "itemCodeableConcept": {
               "coding": [
                 {
-                  "system": "http://www.whocc.no/atc",
-                  "code": "2_N02BE01",
+                  "system": "local",
+                  "code": "at0143",
                   "display": "Paracetamol"
                 }
               ]
