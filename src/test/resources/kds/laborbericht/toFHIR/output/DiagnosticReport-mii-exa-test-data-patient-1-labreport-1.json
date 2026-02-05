@@ -43,6 +43,7 @@
               "text": "Venous blood specimen (specimen)"
             },
             "collection": {
+              "collectedDateTime": "2024-02-15T11:05:00+01:00",
               "method": {
                 "coding": [
                   {
