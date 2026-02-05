@@ -2,6 +2,7 @@ package com.medblocks.openfhir.tofhir.parser;
 
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
+import java.util.List;
 import org.hl7.fhir.r4.model.*;
 
 public class TemporalParser {
@@ -34,5 +35,34 @@ public class TemporalParser {
         DateType d = new DateType();
         d.setValue(fhirValueReaders.date(fhirValueReaders.get(valueHolder, path)));
         return new OpenEhrToFhirHelper.DataWithIndex(d, lastIndex, path);
+    }
+
+    public OpenEhrToFhirHelper.DataWithIndex interval(List<String> joinedValues,
+                                                      JsonObject valueHolder,
+                                                      Integer lastIndex,
+                                                      String path) {
+        String lowerPath = find(joinedValues, "lower|value");
+        String upperPath = find(joinedValues, "upper|value");
+        Period period = new Period();
+        boolean populated = false;
+        if (lowerPath != null) {
+            period.setStart(fhirValueReaders.date(fhirValueReaders.get(valueHolder, lowerPath)));
+            populated = period.getStart() != null;
+        }
+        if (upperPath != null) {
+            period.setEnd(fhirValueReaders.date(fhirValueReaders.get(valueHolder, upperPath)));
+            populated = populated || period.getEnd() != null;
+        }
+        if (!populated) {
+            return null;
+        }
+        return new OpenEhrToFhirHelper.DataWithIndex(period, lastIndex, path);
+    }
+
+    private String find(final List<String> joinedValues, final String suffix) {
+        if (joinedValues == null) {
+            return null;
+        }
+        return joinedValues.stream().filter(s -> s.endsWith(suffix)).findFirst().orElse(null);
     }
 }

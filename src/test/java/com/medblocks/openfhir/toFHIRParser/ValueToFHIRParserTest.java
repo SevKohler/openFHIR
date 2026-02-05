@@ -74,6 +74,30 @@ class ValueToFHIRParserTest {
         assertEquals("2020-01-02", dt.getValueAsString());
     }
 
+    // ---------- DV_INTERVAL ----------
+
+    @Test
+    void parse_interval_createsPeriod() {
+        JsonObject json = new JsonObject();
+        json.addProperty("iv/lower|value", "2024-02-15T08:00:00+01:00");
+        json.addProperty("iv/upper|value", "2024-02-20T17:30:00+01:00");
+
+        var out = parser.parse(
+                List.of("iv/lower|value", "iv/upper|value"),
+                DV_INTERVAL,
+                json,
+                false,
+                "Observation",
+                "Observation.effectivePeriod"
+        );
+
+        assertNotNull(out);
+        assertTrue(out.getData() instanceof Period);
+        Period period = (Period) out.getData();
+        assertEquals("2024-02-15T08:00:00+01:00", period.getStartElement().getValueAsString());
+        assertEquals("2024-02-20T17:30:00+01:00", period.getEndElement().getValueAsString());
+    }
+
     // ---------- DV_TIME ----------
 
     @Test
