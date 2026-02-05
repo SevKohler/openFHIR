@@ -43,6 +43,7 @@
               "text": "Blood specimen with edetic acid (specimen)"
             },
             "collection": {
+              "collectedDateTime": "2024-03-04T06:45:00+01:00",
               "bodySite": {
                 "coding": [
                   {

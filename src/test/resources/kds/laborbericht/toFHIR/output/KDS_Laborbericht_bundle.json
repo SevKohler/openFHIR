@@ -39,6 +39,7 @@
                   "value": "1234567"
                 }
               },
+              "collectedDateTime": "2024-08-24T11:00:00+02:00",
               "method": {
                 "coding": [
                   {

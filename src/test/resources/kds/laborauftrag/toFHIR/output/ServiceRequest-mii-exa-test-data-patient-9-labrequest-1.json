@@ -33,6 +33,9 @@
             "accessionIdentifier": {
               "system": "https://www.charite.de/fhir/sid/Bioproben",
               "value": "BP_000017"
+            },
+            "collection": {
+              "collectedDateTime": "2024-02-22T06:30:00+01:00"
             }
           }
         ],

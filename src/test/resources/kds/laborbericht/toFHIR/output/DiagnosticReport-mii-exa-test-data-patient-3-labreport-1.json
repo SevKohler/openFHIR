@@ -43,6 +43,7 @@
               "text": "Serum specimen (specimen)"
             },
             "collection": {
+              "collectedDateTime": "2022-04-05T07:15:00+02:00",
               "bodySite": {
                 "coding": [
                   {
@@ -77,6 +78,7 @@
               "text": "Blood specimen with edetic acid (specimen)"
             },
             "collection": {
+              "collectedDateTime": "2022-04-05T07:15:00+02:00",
               "bodySite": {
                 "coding": [
                   {

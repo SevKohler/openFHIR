@@ -28,7 +28,6 @@ public class LaborberichtToFHIRTest extends KdsTest {
     final String OPT = "/kds/laborbericht/KDS_Laborbericht.opt";
     final String FLAT = "/kds/laborbericht/toOpenEHR/output/KDS_Laborbericht.flat.json";
     final String OPENEHR_COMPOSITION_BUNDLE = "/kds/laborbericht/toOpenEHR/output/Composition_Laborbericht_bundle.json";
-    final String OPENEHR_COMP = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
 
     final String OPENEHR_COMPOSITION_1 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json";
     final String OPENEHR_COMPOSITION_2 = "/kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labreport-1.json";
