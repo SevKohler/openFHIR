@@ -61,6 +61,11 @@ mappings:
       type: "NONE"
     followedBy:
       mappings:
+        - name: "eventTime"
+          with:
+            fhir: "effective"
+            openehr: "time"
+
         - name: "reasonCode"
           with:
             fhir: "reasonCode"
@@ -128,11 +133,24 @@ mappings:
             targetAttribute: "items[at0132]"
             operator: "empty"
 
+      # Workaround since links are not supported yet. Optimally this should be a link wiht the coding and the link is resolvable also for backwards transformation.
         - name: "reasonReference"
+          unidirectional: "fhir->openehr"
           with:
-            fhir: "reasonReference.as(Reference).identifier"
+            fhir: "reasonReference.resolve().as(Condition).code"
             openehr: "data[at0003]/items[at0023]"
-            
+
+        - name: "reasonReference"
+          unidirectional: "fhir->openehr"
+          with:
+            fhir: "reasonReference.resolve().as(DiagnosticReport).code"
+            openehr: "data[at0003]/items[at0023]"
+
+        - name: "reasonReferenceObservation"
+          unidirectional: "fhir->openehr"
+          with:
+            fhir: "reasonReference.resolve().as(Observation).code"
+            openehr: "data[at0003]/items[at0023]"
 
 
 
@@ -180,4 +198,3 @@ mappings:
 #            openehrLink:
 #              meaning: "what the medication is derived from"
 #              type: "derivedFrom"
-
