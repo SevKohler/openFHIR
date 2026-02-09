@@ -235,24 +235,6 @@
                       "_type": "ELEMENT",
                       "name": {
                         "_type": "DV_TEXT",
-                        "value": "Arzneimittel-Name"
-                      },
-                      "value": {
-                        "_type": "DV_CODED_TEXT",
-                        "value": "Infusion bestehend aus 85mg Doxorubicin aufgeloest zur Verabreichung in 250ml 5-%iger (50 mg/ml) Glucose-Infusionsloesung",
-                        "defining_code": {
-                          "_type": "CODE_PHRASE",
-                          "terminology_id": {
-                            "_type": "TERMINOLOGY_ID"
-                          }
-                        }
-                      },
-                      "archetype_node_id": "at0132"
-                    },
-                    {
-                      "_type": "ELEMENT",
-                      "name": {
-                        "_type": "DV_TEXT",
                         "value": "Darreichungsform"
                       },
                       "value": {

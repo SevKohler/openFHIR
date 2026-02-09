@@ -471,7 +471,9 @@ public class OpenEhrPopulator {
 
     private boolean handleDvCodedText(final String path, final Base value, final JsonObject flat) {
         if (value instanceof CodeableConcept codeableConcept) {
-            List<Coding> codings = codeableConcept.getCoding();
+            List<Coding> codings = codeableConcept.getCoding().stream()
+                    .filter(coding -> StringUtils.isNotBlank(coding.getCode()))
+                    .toList();
             if (!codings.isEmpty()) {
                 // Handle the first coding as the primary coded text
                 Coding primaryCoding = codings.get(0);
@@ -485,10 +487,16 @@ public class OpenEhrPopulator {
 
                 // Handle additional codings as mappings
                 addAdditionalCodingsAsMappings(path, codings, flat);
+                addToConstructingFlat(path + "|value", codeableConcept.getText(), flat);
+            } else {
+                // No codings with code: skip mapping entirely
+                return true;
             }
-            addToConstructingFlat(path + "|value", codeableConcept.getText(), flat);
             return true;
         } else if (value instanceof Coding coding) {
+            if (StringUtils.isBlank(coding.getCode())) {
+                return true;
+            }
             addToConstructingFlat(path + "|code", coding.getCode(), flat);
             setTerminology(path +"|terminology", coding, flat);
             setDisplay(path, coding, flat);
@@ -540,9 +548,13 @@ public class OpenEhrPopulator {
      * @param flat The JSON object to add the mappings to
      */
     private void addAdditionalCodingsAsMappings(String path, List<Coding> codings, JsonObject flat) {
+        int mappingIndex = 0;
         for (int i = 1; i < codings.size(); i++) {
             Coding coding = codings.get(i);
-            String mappingPath = path + "/_mapping:" + (i-1);
+            if (StringUtils.isBlank(coding.getCode())) {
+                continue;
+            }
+            String mappingPath = path + "/_mapping:" + mappingIndex++;
             
             addToConstructingFlat(mappingPath + "/match", "=", flat);
             addToConstructingFlat(mappingPath + "/target|preferred_term", coding.getDisplay(), flat);
