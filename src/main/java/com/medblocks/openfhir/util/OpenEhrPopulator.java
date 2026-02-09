@@ -739,7 +739,7 @@ public class OpenEhrPopulator {
         } else if (fhirValue instanceof Coding extractedCoding) {
             handleCodePhrase(openEhrPath, extractedCoding, constructingFlat, openehrType);
         } else if (fhirValue instanceof CodeableConcept codeableConcept) {
-            handleCodePhrase(openEhrPath, codeableConcept.getCodingFirstRep(), constructingFlat, openehrType);
+            handleDvCodedText(openEhrPath, codeableConcept.getCodingFirstRep(), constructingFlat);
         } else if (fhirValue instanceof DateTimeType extractedQuantity) {
             addToConstructingFlat(openEhrPath, extractedQuantity.getValueAsString(), constructingFlat);
         } else if (fhirValue instanceof Annotation extracted) {

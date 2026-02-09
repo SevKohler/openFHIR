@@ -420,7 +420,7 @@
           },
           "value" : {
             "_type" : "DV_CODED_TEXT",
-            "value" : "281088000",
+            "value" : "Structure of anus and/or rectum (body structure)",
             "defining_code" : {
               "_type" : "CODE_PHRASE",
               "terminology_id" : {

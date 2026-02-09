@@ -130,7 +130,7 @@ mappings:
 
         - name: "reasonReference"
           with:
-            fhir: "reasonReference.as(Reference).identifier.value"
+            fhir: "reasonReference.as(Reference).identifier"
             openehr: "data[at0003]/items[at0023]"
             
 

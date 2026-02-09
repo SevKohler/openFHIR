@@ -633,7 +633,7 @@
           },
           "value" : {
             "_type" : "DV_CODED_TEXT",
-            "value" : "25342003",
+            "value" : "Middle ear structure (body structure)",
             "defining_code" : {
               "_type" : "CODE_PHRASE",
               "terminology_id" : {
