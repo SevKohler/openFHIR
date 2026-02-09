@@ -63,7 +63,7 @@ mappings:
       mappings:
         - name: "reasonCode"
           with:
-            fhir: "reasonCode.text"
+            fhir: "reasonCode"
             openehr: "data[at0003]/items[at0023]"
             
 

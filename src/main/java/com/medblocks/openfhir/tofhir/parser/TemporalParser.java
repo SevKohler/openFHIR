@@ -3,6 +3,7 @@ package com.medblocks.openfhir.tofhir.parser;
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.*;
 
 public class TemporalParser {
@@ -57,6 +58,72 @@ public class TemporalParser {
             return null;
         }
         return new OpenEhrToFhirHelper.DataWithIndex(period, lastIndex, path);
+    }
+
+    public OpenEhrToFhirHelper.DataWithIndex range(List<String> joinedValues,
+                                                   JsonObject valueHolder,
+                                                   Integer lastIndex,
+                                                   String path) {
+        Quantity low = parseIntervalQuantity(joinedValues, valueHolder, "lower");
+        Quantity high = parseIntervalQuantity(joinedValues, valueHolder, "upper");
+
+        if (low == null && high == null) {
+            return null;
+        }
+
+        Range range = new Range();
+        if (low != null) {
+            range.setLow(low);
+        }
+        if (high != null) {
+            range.setHigh(high);
+        }
+        return new OpenEhrToFhirHelper.DataWithIndex(range, lastIndex, path);
+    }
+
+    private Quantity parseIntervalQuantity(List<String> joinedValues, JsonObject valueHolder, String side) {
+        String magnitudePath = find(joinedValues, side + "|magnitude");
+        String unitPath = find(joinedValues, side + "|unit");
+        String codePath = find(joinedValues, side + "|code");
+        String valuePath = find(joinedValues, side + "|value");
+
+        Quantity q = new Quantity();
+        boolean populated = false;
+
+        if (magnitudePath != null) {
+            Object n = fhirValueReaders.number(fhirValueReaders.get(valueHolder, magnitudePath));
+            if (n instanceof Long l) {
+                q.setValue(l);
+                populated = true;
+            }
+            if (n instanceof Double d) {
+                q.setValue(d);
+                populated = true;
+            }
+        }
+        if (unitPath != null) {
+            String unit = fhirValueReaders.get(valueHolder, unitPath);
+            if (StringUtils.isNotBlank(unit)) {
+                q.setUnit(unit);
+                populated = true;
+            }
+        }
+        if (valuePath != null) {
+            String unit = fhirValueReaders.get(valueHolder, valuePath);
+            if (StringUtils.isNotBlank(unit)) {
+                q.setUnit(unit);
+                populated = true;
+            }
+        }
+        if (codePath != null) {
+            String code = fhirValueReaders.get(valueHolder, codePath);
+            if (StringUtils.isNotBlank(code)) {
+                q.setCode(code);
+                populated = true;
+            }
+        }
+
+        return populated ? q : null;
     }
 
     private String find(final List<String> joinedValues, final String suffix) {

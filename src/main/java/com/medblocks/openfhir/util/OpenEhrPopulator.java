@@ -31,6 +31,7 @@ import org.hl7.fhir.r4.model.InstantType;
 import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.Range;
 import org.hl7.fhir.r4.model.Ratio;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.TimeType;
@@ -386,8 +387,41 @@ public class OpenEhrPopulator {
                 addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
             }
             return true;
+        } else if (value instanceof Range range) {
+            boolean lowerPopulated = false;
+            boolean upperPopulated = false;
+
+            Quantity low = range.getLow();
+            if (hasQuantityContent(low)) {
+                handleDvQuantity(path + "/lower", low, flat);
+                addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_QUANTITY, flat);
+                addToConstructingFlat(path + "/lower_included", "true", flat);
+                lowerPopulated = true;
+            }
+
+            Quantity high = range.getHigh();
+            if (hasQuantityContent(high)) {
+                handleDvQuantity(path + "/upper", high, flat);
+                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_QUANTITY, flat);
+                addToConstructingFlat(path + "/upper_included", "true", flat);
+                upperPopulated = true;
+            }
+
+            if (lowerPopulated || upperPopulated) {
+                addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
+                return true;
+            }
         }
         return false;
+    }
+
+    private boolean hasQuantityContent(final Quantity quantity) {
+        if (quantity == null) {
+            return false;
+        }
+        return quantity.getValue() != null
+                || StringUtils.isNotBlank(quantity.getUnit())
+                || StringUtils.isNotBlank(quantity.getCode());
     }
 
     private boolean handleDvTime(final String path, final Base value, final JsonObject flat) {

@@ -57,7 +57,15 @@ public class ValueToFHIRParser {
             case DV_TIME, "TIME" -> temporalParser.time(valueHolder, lastIndex, path);
             case DV_BOOL, "BOOL" -> temporalParser.bool(valueHolder, lastIndex, path);
             case DV_DATE, "DATE" -> temporalParser.date(valueHolder, lastIndex, path);
-            case DV_INTERVAL -> temporalParser.interval(joinedValues, valueHolder, lastIndex, path);
+            case DV_INTERVAL -> {
+                boolean wantsRange = fhirPath != null && fhirPath.contains("as(Range)");
+                if (!wantsRange && fhirAttrType.isPresent()) {
+                    wantsRange = org.hl7.fhir.r4.model.Range.class.isAssignableFrom(fhirAttrType.get());
+                }
+                yield wantsRange
+                        ? temporalParser.range(joinedValues, valueHolder, lastIndex, path)
+                        : temporalParser.interval(joinedValues, valueHolder, lastIndex, path);
+            }
 
             case DV_PROPORTION, "PROPORTION" -> quantityParser.proportion(joinedValues, valueHolder, lastIndex, path);
             case DV_QUANTITY, "QUANTITY" -> quantityParser.quantity(joinedValues, valueHolder, lastIndex, path);

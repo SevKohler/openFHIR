@@ -98,6 +98,35 @@ class ValueToFHIRParserTest {
         assertEquals("2024-02-20T17:30:00+01:00", period.getEndElement().getValueAsString());
     }
 
+    @Test
+    void parse_interval_createsRange_whenFhirPathCastsToRange() {
+        JsonObject json = new JsonObject();
+        json.addProperty("iv/lower|magnitude", "1.5");
+        json.addProperty("iv/lower|unit", "mg");
+        json.addProperty("iv/upper|magnitude", "3.0");
+        json.addProperty("iv/upper|unit", "mg");
+
+        var out = parser.parse(
+                List.of("iv/lower|magnitude", "iv/lower|unit", "iv/upper|magnitude", "iv/upper|unit"),
+                DV_INTERVAL,
+                json,
+                false,
+                "Observation",
+                "Observation.value.as(Range)"
+        );
+
+        assertNotNull(out);
+        assertTrue(out.getData() instanceof Range);
+
+        Range range = (Range) out.getData();
+        assertNotNull(range.getLow());
+        assertNotNull(range.getHigh());
+        assertEquals(1.5, range.getLow().getValue().doubleValue(), 0.0001);
+        assertEquals("mg", range.getLow().getUnit());
+        assertEquals(3.0, range.getHigh().getValue().doubleValue(), 0.0001);
+        assertEquals("mg", range.getHigh().getUnit());
+    }
+
     // ---------- DV_TIME ----------
 
     @Test
