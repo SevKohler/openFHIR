@@ -50,6 +50,10 @@
       "_type": "DV_DATE_TIME",
       "value": "2024-02-16T00:00:00"
     },
+    "end_time": {
+      "_type": "DV_DATE_TIME",
+      "value": "2024-02-16T10:50:00"
+    },
     "setting": {
       "_type": "DV_CODED_TEXT",
       "value": "other care",

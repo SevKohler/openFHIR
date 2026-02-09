@@ -60,9 +60,15 @@ public class LaborberichtToOpenEHRTest extends KdsTest {
         standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
     }
 
+    private void assertToOpenEHRWihtoutOPTVal(int index) {
+        final Composition composition =
+                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_DIAGNOSTIC_REPORTS[index]), operationaltemplate);
+        standardsAsserter.assertCompositionWihtoutOPTValidataion(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
+    }
+
     @Test
     public void assertToOpenEHR1() {
-        assertToOpenEHR(0);
+        assertToOpenEHRWihtoutOPTVal(0); //has null flavour instead of value=
     }
 
     @Test

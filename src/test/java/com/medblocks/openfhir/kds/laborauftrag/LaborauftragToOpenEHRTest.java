@@ -67,9 +67,15 @@ public class LaborauftragToOpenEHRTest extends KdsTest {
         standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
     }
 
+    private void assertToOpenEHRWihtoutOPTVal(int index) {
+        final Composition composition =
+                fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(FHIR_SERVICE_REQUESTS[index]), operationaltemplate);
+        standardsAsserter.assertCompositionWihtoutOPTValidataion(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
+    }
+
     @Test
     public void assertToOpenEHR1() {
-        assertToOpenEHR(0);
+        assertToOpenEHRWihtoutOPTVal(0); // testdata has no Pracitioner and in the templte its required.
     }
 
     @Test

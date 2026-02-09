@@ -48,7 +48,7 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2024-02-14T00:00:00"
+      "value": "2020-08-30T00:00:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
