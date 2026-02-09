@@ -194,18 +194,18 @@
         },
         "origin": {
           "_type": "DV_DATE_TIME",
-          "value": "2026-02-05T16:08:54.31116364+01:00"
+          "value": "2019-05-15T14:00:00"
         },
         "events": [
           {
-            "_type": "POINT_EVENT",
+            "_type": "INTERVAL_EVENT",
             "name": {
               "_type": "DV_TEXT",
               "value": "Beliebiges Ereignis"
             },
             "time": {
               "_type": "DV_DATE_TIME",
-              "value": "2026-02-05T16:08:54.31116364+01:00"
+              "value": "2019-05-15T14:00:00"
             },
             "data": {
               "_type": "ITEM_TREE",
@@ -385,6 +385,22 @@
                 }
               ],
               "archetype_node_id": "at0003"
+            },
+            "width": {
+              "_type": "DV_DURATION",
+              "value": "PT164H"
+            },
+            "math_function": {
+              "_type": "DV_CODED_TEXT",
+              "value": "actual",
+              "defining_code": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                  "_type": "TERMINOLOGY_ID",
+                  "value": "openehr"
+                },
+                "code_string": "640"
+              }
             },
             "archetype_node_id": "at0002"
           }

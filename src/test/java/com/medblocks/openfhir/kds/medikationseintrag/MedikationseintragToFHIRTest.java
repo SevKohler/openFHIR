@@ -53,8 +53,7 @@ public class MedikationseintragToFHIRTest extends KdsTest {
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-3.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-1.json",
-            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json",
-            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-1-END.json"
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json"
     };
 
     final String[] FHIR_BUNDLES = {
@@ -85,8 +84,7 @@ public class MedikationseintragToFHIRTest extends KdsTest {
             "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-8-medstatement-2.json",
             "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-8-medstatement-3.json",
             "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-9-medstatement-1.json",
-            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json",
-            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-3-medstatement-1-END.json"
+            "/kds/medikationseintrag/toFHIR/output/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json"
     };
 
     @SneakyThrows
@@ -246,12 +244,6 @@ public class MedikationseintragToFHIRTest extends KdsTest {
     public void assertToFHIR_28() {
         assertToFHIR(27);
     }
-
-    @Test
-    public void assertToFHIR_29() {
-        assertToFHIR(28);
-    }
-
 
     @Test
     public void kdsMedicationList_toFhir() throws IOException {

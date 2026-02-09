@@ -59,6 +59,7 @@ import org.hl7.fhir.r4.model.CodeType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
@@ -1953,8 +1954,9 @@ public class OpenEhrToFhir {
                                                                                             helper.getCondition(),
                                                                                             helper.getTargetResource(),
                                                                                             helper.getParentFollowedByFhirPath());
+        final String resolvedFhirPathWithConditions = maybeCastTemporalChoice(fhirPathWithConditions, data.getData());
         log.debug("Processing data point from openEhr {}, value : {}, fhirPath: {}", data.getFullOpenEhrPath(),
-                  data.getData().getClass(), fhirPathWithConditions);
+                  data.getData().getClass(), resolvedFhirPathWithConditions);
 
         // set openEHRType if it's null based on implicit typing
         if (helper.getOpenEhrType() == null) {
@@ -1966,7 +1968,7 @@ public class OpenEhrToFhir {
         // element we've created just now
         final FindingOuterMost findingOuterMost = getOrInstantiateIntermediateItem(instantiatedIntermediateElements,
                                                                                    instance,
-                                                                                   fhirPathWithConditions,
+                                                                                   resolvedFhirPathWithConditions,
                                                                                    helper.getOpenEhrType() == null
                                                                                            ? data.getData().getClass()
                                                                                            .getSimpleName()
@@ -1982,7 +1984,7 @@ public class OpenEhrToFhir {
         // in the intermediary cache
         if (StringUtils.isNotEmpty(findingOuterMost.getRemovedPath())) {
             handleRemovedPath(data, instance, generatingResource, helper, instantiatedIntermediateElements,
-                              findingOuterMost, fhirPathWithConditions);
+                              findingOuterMost, resolvedFhirPathWithConditions);
         } else {
             fhirInstancePopulator.populateElement(findingOuterMost.getLastObject(), data);
         }
@@ -2003,6 +2005,28 @@ public class OpenEhrToFhir {
         if (createdPerIndex != null) {
             createdPerIndex.put(mapKey, instance);
         }
+    }
+
+    private String maybeCastTemporalChoice(final String fhirPathWithConditions, final Base data) {
+        if (StringUtils.isBlank(fhirPathWithConditions) || data == null) {
+            return fhirPathWithConditions;
+        }
+        if (fhirPathWithConditions.contains(".as(")) {
+            return fhirPathWithConditions;
+        }
+        if (!(data instanceof Period)) {
+            return fhirPathWithConditions;
+        }
+
+        String trimmed = fhirPathWithConditions.startsWith(".")
+                ? fhirPathWithConditions.substring(1)
+                : fhirPathWithConditions;
+        final int lastDot = trimmed.lastIndexOf('.');
+        final String lastSegment = lastDot == -1 ? trimmed : trimmed.substring(lastDot + 1);
+        if ("effective".equals(lastSegment)) {
+            return fhirPathWithConditions + ".as(Period)";
+        }
+        return fhirPathWithConditions;
     }
 
     private void handleRemovedPath(final OpenEhrToFhirHelper.DataWithIndex data,

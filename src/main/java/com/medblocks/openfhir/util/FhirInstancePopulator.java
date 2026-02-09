@@ -22,6 +22,7 @@ import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.InstantType;
 import org.hl7.fhir.r4.model.IntegerType;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.PrimitiveType;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
@@ -99,6 +100,8 @@ public class FhirInstancePopulator {
             populateIdentifier(toPopulate, (Identifier) data);
         } else if (data instanceof DateType) {
             populateDateType(toPopulate, (DateType) data);
+        } else if (data instanceof Period) {
+            populatePeriod(toPopulate, (Period) data);
         } else if (data instanceof CodeableConcept) {
             populateCodeableConcept(toPopulate, (CodeableConcept) data);
         } else if (data instanceof Coding) {
@@ -160,6 +163,12 @@ public class FhirInstancePopulator {
     private void populateDateType(Object toPopulate, DateType data) {
         if (toPopulate instanceof DateType) {
             ((DateType) toPopulate).setValue(data.getValue());
+        }
+    }
+
+    private void populatePeriod(Object toPopulate, Period data) {
+        if (toPopulate instanceof Period) {
+            data.copyValues((Period) toPopulate);
         }
     }
 
