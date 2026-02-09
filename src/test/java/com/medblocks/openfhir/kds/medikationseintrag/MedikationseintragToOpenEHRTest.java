@@ -116,7 +116,7 @@ public class MedikationseintragToOpenEHRTest extends KdsTest {
 
     @Test
     public void assertToOpenEHR_3() {
-        assertToOpenEHR(2);
+        assertToOpenEHRWihtoutOPTVal(2);// since flat path parser does not accept emtpy width which is the spec definition for void
     }
 
     @Test

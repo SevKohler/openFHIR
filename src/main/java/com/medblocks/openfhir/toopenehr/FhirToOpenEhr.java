@@ -856,7 +856,7 @@ public class FhirToOpenEhr {
                 }
             } else if (start != null && end == null) {
                 // Represent missing end as empty width for interval events
-                openEhrPopulator.setFhirPathValue(openEhrPath + "/width|value",
+                openEhrPopulator.setFhirPathValue(openEhrPath + "/width",
                         new StringType(""), FhirConnectConst.DV_DURATION, flatComposition);
             }
             return true;

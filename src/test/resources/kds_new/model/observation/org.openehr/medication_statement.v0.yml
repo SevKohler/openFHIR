@@ -96,7 +96,6 @@ mappings:
           with:
             fhir: "note.text"
             openehr: "data[at0003]/items[at0029]"
-            
 
         - name: "dosage"
           with:
@@ -108,8 +107,8 @@ mappings:
               - name: "route"
                 with:
                   fhir: "route"
-                  openehr: "data[at0003]/items[at0030]"
-                  
+                  openehr: "../items[at0030]"
+
 
         - name: "unstructuredDosage"
           with:
