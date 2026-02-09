@@ -75,6 +75,42 @@ mappings:
   #            fhir: "$fhirRoot"
   #            openehr: "$openEHRRoot" # reference to party_identified NOT SUPPORTED since 1..1 whole mapping is commented out
 
+  - name: "effectivePeriod"
+    unidirectional: "fhir->openehr"
+    with:
+      fhir: "$resource.effective.as(Period)"
+      openehr: "$composition"
+    followedBy:
+      mappings:
+        - name: "effectiveEnd"
+          with:
+            fhir: "end"
+            openehr: "context/end_time"
+
+
+        - name: "effectiveStart"
+          with:
+            fhir: "start"
+            openehr: "context/start_time"
+
+
+  - name: "effectiveDateTime"
+    unidirectional: "fhir->openehr"
+    with:
+      fhir: "$resource.effective.as(DateTimeType)"
+      openehr: "$composition/context/start_time"
+
+#  - name: "issued"
+#    with:
+#      fhir: "$resource.issued"
+#      openehr: "$archetype/data[at0001]/origin" # TODO cant be back transformed due to still using flat paths, also the flatPath just populates this field with the event time.
+
+
+  - name: "issued"
+    unidirectional: "openehr->fhir"
+    with:
+      fhir: "$resource.issued"
+      openehr: "$composition/context/start_time" # TODO incorrect mapping but its required in FHIR and actual mapping isnt working due to flatPath parsing
 
   - name: "eventParent"
     with:
@@ -83,29 +119,10 @@ mappings:
       type: "NONE"
     followedBy:
       mappings:
-        - name: "effective"
+        - name: "eventTime"
           with:
-            fhir: "effective.as(Period)"
-            openehr: "$composition"
-          followedBy:
-            mappings:
-              - name: "effectiveEnd"
-                with:
-                  fhir: "end"
-                  openehr: "context/end_time"
-                  
-
-              - name: "effectiveStart"
-                with:
-                  fhir: "start"
-                  openehr: "context/start_time"
-                  
-
-        - name: "effective"
-          with:
-            fhir: "effective.as(DateTimeType)"
-            openehr: "$composition/context/start_time"
-            
+            fhir: "effective"
+            openehr: "$openehrRoot"
 
         - name: "category"
           with:
@@ -356,13 +373,13 @@ mappings:
           with:
             fhir: "conclusion"
             openehr: "data[at0003]/items[at0057]"
-            
 
-        - name: "issued"
-          with:
-            fhir: "issued"
-            openehr: "time"
-            
+
+#        - name: "issued"
+#          with:
+#            fhir: "issued"
+#            openehr: "time"
+
 
         - name: "specimen"
           with:

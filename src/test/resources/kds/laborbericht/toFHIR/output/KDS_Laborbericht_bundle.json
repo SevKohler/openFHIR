@@ -12,8 +12,18 @@
         },
         "contained": [
           {
-            "resourceType": "Specimen",
+            "resourceType": "Encounter",
             "id": "1",
+            "identifier": [
+              {
+                "system": "http://hospital.smarthealthit.org",
+                "value": "encounter-id-1245"
+              }
+            ]
+          },
+          {
+            "resourceType": "Specimen",
+            "id": "2",
             "identifier": [
               {
                 "system": "http://hospital.org/specimens",
@@ -69,7 +79,7 @@
           },
           {
             "resourceType": "Observation",
-            "id": "2",
+            "id": "3",
             "status": "entered-in-error",
             "code": {
               "coding": [
@@ -98,6 +108,11 @@
                 "text": "Interpretation description"
               }
             ],
+            "note": [
+              {
+                "text": "The observation result is within normal range, but further review may be needed."
+              }
+            ],
             "method": {
               "coding": [
                 {
@@ -109,12 +124,12 @@
               "text": "Blood test using standard laboratory methods"
             },
             "specimen": {
-              "reference": "#3"
+              "reference": "#4"
             }
           },
           {
             "resourceType": "Specimen",
-            "id": "3",
+            "id": "4",
             "identifier": [
               {
                 "system": "http://hospital.org/specimens",
@@ -152,16 +167,29 @@
             "text": "laboratory"
           }
         ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11502-2",
+              "display": "Complete Blood Count"
+            }
+          ],
+          "text": "Complete Blood Count"
+        },
+        "encounter": {
+          "reference": "#1"
+        },
         "effectiveDateTime": "2024-08-22T10:30:00+02:00",
         "issued": "2022-02-03T05:05:06.000+01:00",
         "specimen": [
           {
-            "reference": "#1"
+            "reference": "#2"
           }
         ],
         "result": [
           {
-            "reference": "#2"
+            "reference": "#3"
           }
         ],
         "conclusion": "Normal blood count"

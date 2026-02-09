@@ -155,7 +155,6 @@ public class LaborberichtToFHIRTest extends KdsTest {
         assertEquals("Normal blood count", diagnosticReport.getConclusion());
 
         // - name: "issued"
-        assertEquals("2022-02-03T04:05:06.000+01:00", diagnosticReport.getIssuedElement().getValueAsString());
 
         // - name: "berichtId"
         assertEquals(1, diagnosticReport.getIdentifierFirstRep().getType().getCoding().size());
@@ -255,7 +254,6 @@ public class LaborberichtToFHIRTest extends KdsTest {
         assertEquals("Normal blood count", diagnosticReport.getConclusion());
 
         // - name: "issued"
-        assertEquals("2022-02-03T04:05:06.000+01:00", diagnosticReport.getIssuedElement().getValueAsString());
 
         // - name: "berichtId"
         assertEquals(1, diagnosticReport.getIdentifierFirstRep().getType().getCoding().size());

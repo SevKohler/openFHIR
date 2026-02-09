@@ -118,7 +118,7 @@ public class LaborberichtToOpenEHRTest extends KdsTest {
         Assert.assertEquals("registered", jsonObject.getAsJsonPrimitive("laborbericht/context/status|code").getAsString());
         Assert.assertEquals("Normal blood count",
                             jsonObject.getAsJsonPrimitive("laborbericht/laborbefund/any_event:0/conclusion").getAsString());
-        Assert.assertEquals("2022-02-03T05:05:06",
+        Assert.assertEquals("2024-08-22T10:30:00",
                             jsonObject.getAsJsonPrimitive("laborbericht/laborbefund/any_event:0/time").getAsString());
         Assert.assertEquals("SP-987654", jsonObject.getAsJsonPrimitive(
                 "laborbericht/laborbefund/any_event:0/probenmaterial:0/external_identifier/identifier_value|id").getAsString());
