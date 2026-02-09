@@ -17,6 +17,8 @@ import com.medblocks.openfhir.fc.schema.context.FhirConnectContext;
 import com.medblocks.openfhir.fc.schema.model.Condition;
 import com.medblocks.openfhir.fc.schema.model.Mapping;
 import com.medblocks.openfhir.fc.schema.model.With;
+import com.medblocks.openfhir.customMappings.CustomMapping;
+import com.medblocks.openfhir.customMappings.CustomMappingRegistry;
 import com.medblocks.openfhir.util.OpenEhrCachedUtils;
 import com.medblocks.openfhir.util.OpenEhrConditionEvaluator;
 import com.medblocks.openfhir.util.OpenEhrPopulator;
@@ -78,6 +80,7 @@ public class FhirToOpenEhr {
     final private OpenFhirMapperUtils openFhirMapperUtils;
     final private OpenEhrPopulator openEhrPopulator;
     final private OpenEhrConditionEvaluator openEhrConditionEvaluator;
+    final private CustomMappingRegistry customMappingRegistry;
 
     @Autowired
     public FhirToOpenEhr(final FhirPathR4 fhirPathR4,
@@ -90,7 +93,8 @@ public class FhirToOpenEhr {
                          final OpenEhrCachedUtils openEhrApplicationScopedUtils,
                          final OpenFhirMapperUtils openFhirMapperUtils,
                          final OpenEhrPopulator openEhrPopulator,
-                         final OpenEhrConditionEvaluator openEhrConditionEvaluator) {
+                         final OpenEhrConditionEvaluator openEhrConditionEvaluator,
+                         final CustomMappingRegistry customMappingRegistry) {
         this.fhirPathR4 = fhirPathR4;
         this.stringUtils = stringUtils;
         this.flatJsonUnmarshaller = flatJsonUnmarshaller;
@@ -102,6 +106,7 @@ public class FhirToOpenEhr {
         this.openFhirMapperUtils = openFhirMapperUtils;
         this.openEhrPopulator = openEhrPopulator;
         this.openEhrConditionEvaluator = openEhrConditionEvaluator;
+        this.customMappingRegistry = customMappingRegistry;
     }
 
     /**
@@ -677,30 +682,40 @@ public class FhirToOpenEhr {
                 log.info("Using mapping code: {}", helper.getMappingCode());
 
                 try {
-                    // Get the plugin manager
-                    PluginManager pluginManager = SpringContext.getBean(PluginManager.class);
-
-                    // Get all FormatConverter extensions
-                    List<FormatConverter> converters = pluginManager.getExtensions(FormatConverter.class);
-
-                    if (converters.isEmpty()) {
-                        log.warn("No FormatConverter extensions found for mapping code: {}", helper.getMappingCode());
-                    } else {
-                        // Use the first converter for now
-                        FormatConverter converter = converters.get(0);
-
-                        // Apply the mapping
-                        boolean success = converter.applyFhirToOpenEhrMapping(
+                    boolean success = false;
+                    CustomMapping customMapping = customMappingRegistry.find(helper.getMappingCode()).orElse(null);
+                    if (customMapping != null) {
+                        success = customMapping.applyFhirToOpenEhrMapping(
                                 helper.getMappingCode(),
                                 thePath,
                                 result,
                                 helper.getOpenEhrType(),
-                                flatComposition
+                                flatComposition,
+                                openEhrPopulator,
+                                openFhirMapperUtils,
+                                openFhirStringUtils
                         );
-
-                        if (!success) {
-                            log.warn("Mapping failed for code: {}", helper.getMappingCode());
+                    } else {
+                        // fallback to plugin extensions if present
+                        PluginManager pluginManager = SpringContext.getBean(PluginManager.class);
+                        List<FormatConverter> converters = pluginManager.getExtensions(FormatConverter.class);
+                        if (converters.isEmpty()) {
+                            log.warn("No CustomMapping or FormatConverter found for mapping code: {}",
+                                     helper.getMappingCode());
+                        } else {
+                            FormatConverter converter = converters.get(0);
+                            success = converter.applyFhirToOpenEhrMapping(
+                                    helper.getMappingCode(),
+                                    thePath,
+                                    result,
+                                    helper.getOpenEhrType(),
+                                    flatComposition
+                            );
                         }
+                    }
+
+                    if (!success) {
+                        log.warn("Mapping failed for code: {}", helper.getMappingCode());
                     }
                 } catch (Exception e) {
                     log.error("Error applying mapping: {}", e.getMessage(), e);

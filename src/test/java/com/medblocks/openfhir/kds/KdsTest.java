@@ -13,6 +13,7 @@ import com.medblocks.openfhir.kds.ehrbase.EhrBaseTestClient;
 import com.medblocks.openfhir.tofhir.IntermediateCacheProcessing;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhir;
 import com.medblocks.openfhir.toopenehr.FhirToOpenEhr;
+import com.medblocks.openfhir.customMappings.CustomMappingRegistry;
 import com.medblocks.openfhir.util.*;
 import com.nedap.archie.rm.composition.Composition;
 import jakarta.annotation.Nonnull;
@@ -97,7 +98,8 @@ public abstract class KdsTest {
                         fhirInstanceCreatorUtility,
                         fhirPath,
                         new IntermediateCacheProcessing(openFhirStringUtils),
-                        new OpenEhrConditionEvaluator(openFhirStringUtils));
+                        new OpenEhrConditionEvaluator(openFhirStringUtils),
+                        new CustomMappingRegistry());
 
         fhirToOpenEhr =
                 new FhirToOpenEhr(
@@ -111,7 +113,8 @@ public abstract class KdsTest {
                         new OpenEhrCachedUtils(null),
                         new OpenFhirMapperUtils(),
                         new OpenEhrPopulator(new OpenFhirMapperUtils()),
-                        new OpenEhrConditionEvaluator(openFhirStringUtils));
+                        new OpenEhrConditionEvaluator(openFhirStringUtils),
+                        new CustomMappingRegistry());
 
         prepareState();
     }

@@ -267,7 +267,11 @@ public class OpenEhrPopulator {
             if (quantity.getValue() != null) {
                 addToConstructingFlatDouble(path + "|magnitude", quantity.getValue().doubleValue(), flat);
             }
-            addToConstructingFlat(path + "|unit", quantity.getUnit(), flat);
+            String unit = quantity.getUnit();
+            if (StringUtils.isBlank(unit)) {
+                unit = quantity.getCode();
+            }
+            addToConstructingFlat(path + "|unit", unit, flat);
             return true;
         } else if (value instanceof Ratio ratio) {
             setFhirPathValue(path, ratio.getNumerator(), FhirConnectConst.DV_QUANTITY, flat);

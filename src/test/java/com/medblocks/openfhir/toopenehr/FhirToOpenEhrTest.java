@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.medblocks.openfhir.OpenEhrRmWorker;
 import com.medblocks.openfhir.TestOpenFhirMappingContext;
 import com.medblocks.openfhir.fc.FhirConnectConst;
+import com.medblocks.openfhir.customMappings.CustomMappingRegistry;
 import com.medblocks.openfhir.util.FhirConnectModelMerger;
 import com.medblocks.openfhir.util.OpenEhrCachedUtils;
 import com.medblocks.openfhir.util.OpenEhrConditionEvaluator;
@@ -48,7 +49,8 @@ public class FhirToOpenEhrTest {
                                           new OpenEhrCachedUtils(null),
                                           new OpenFhirMapperUtils(),
                                           new OpenEhrPopulator(new OpenFhirMapperUtils()),
-                                          new OpenEhrConditionEvaluator(openFhirStringUtils));
+                                          new OpenEhrConditionEvaluator(openFhirStringUtils),
+                                          new CustomMappingRegistry());
     }
 
 

@@ -151,7 +151,7 @@ mappings:
 
               - name: "wirkstofftyp"
                 with:
-                  fhir: "coding"
+                  fhir: "$fhirRoot"
                   openehr: "items[at0142]"
 
         # openEHR -> FHIR: emit nested Medication reference for ingredient.item

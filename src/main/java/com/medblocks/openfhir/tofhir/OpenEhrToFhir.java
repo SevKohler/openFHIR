@@ -26,6 +26,8 @@ import com.medblocks.openfhir.fc.schema.context.FhirConnectContext;
 import com.medblocks.openfhir.fc.schema.model.Condition;
 import com.medblocks.openfhir.fc.schema.model.Mapping;
 import com.medblocks.openfhir.fc.schema.model.With;
+import com.medblocks.openfhir.customMappings.CustomMapping;
+import com.medblocks.openfhir.customMappings.CustomMappingRegistry;
 import com.medblocks.openfhir.tofhir.parser.ValueToFHIRParser;
 import com.medblocks.openfhir.toopenehr.FhirToOpenEhrHelper;
 import com.medblocks.openfhir.util.*;
@@ -88,6 +90,7 @@ public class OpenEhrToFhir {
     final private FhirPathR4 fhirPathR4;
     final private IntermediateCacheProcessing intermediateCacheProcessing;
     final private OpenEhrConditionEvaluator openEhrConditionEvaluator;
+    final private CustomMappingRegistry customMappingRegistry;
 
 
     @Autowired
@@ -102,7 +105,8 @@ public class OpenEhrToFhir {
                          final FhirInstanceCreatorUtility fhirInstanceCreatorUtility,
                          final FhirPathR4 fhirPathR4,
                          final IntermediateCacheProcessing intermediateCacheProcessing,
-                         final OpenEhrConditionEvaluator openEhrConditionEvaluator) {
+                         final OpenEhrConditionEvaluator openEhrConditionEvaluator,
+                         final CustomMappingRegistry customMappingRegistry) {
         this.flatJsonMarshaller = flatJsonMarshaller;
         this.openFhirTemplateRepo = openFhirTemplateRepo;
         this.openEhrApplicationScopedUtils = openEhrApplicationScopedUtils;
@@ -116,6 +120,7 @@ public class OpenEhrToFhir {
         this.fhirPathR4 = fhirPathR4;
         this.intermediateCacheProcessing = intermediateCacheProcessing;
         this.openEhrConditionEvaluator = openEhrConditionEvaluator;
+        this.customMappingRegistry = customMappingRegistry;
     }
 
     /**
@@ -1267,6 +1272,7 @@ public class OpenEhrToFhir {
                     .openEhrType(mapping.getWith().getType())
                     .data(values)
                     .isFollowedBy(isFollowedBy)
+                    .mappingCode(mapping.getMappingCode())
                     .typeConditions(mapping.getTypeConditions())
                     .parentFollowedByFhirPath(parentFollowedByFhir == null ? null
                                                       : parentFollowedByFhir.replace(FhirConnectConst.FHIR_RESOURCE_FC,
@@ -1298,6 +1304,7 @@ public class OpenEhrToFhir {
                                     .fhirPath(dataAbsentReasonPath)
                                     .data(dataAbsentReasonValues)
                                     .isFollowedBy(isFollowedBy)
+                                    .mappingCode(mapping.getMappingCode())
                                     .typeConditions(mapping.getTypeConditions())
                                     .parentFollowedByFhirPath(parentFollowedByFhir == null ? null
                                                                       : parentFollowedByFhir.replace(
@@ -1326,6 +1333,7 @@ public class OpenEhrToFhir {
                                     .fhirPath(extensionPath)
                                     .data(extensionValues)
                                     .isFollowedBy(isFollowedBy)
+                                    .mappingCode(mapping.getMappingCode())
                                     .typeConditions(mapping.getTypeConditions())
                                     .parentFollowedByFhirPath(parentFollowedByFhir == null ? null
                                                                       : parentFollowedByFhir.replace(
@@ -1693,10 +1701,38 @@ public class OpenEhrToFhir {
                 values.add(new OpenEhrToFhirHelper.DataWithIndex(new StringType(hardcodedValue), index,
                                                                  fullOpenEhrPath));
             }
-            // TO DO : Program mapping from openEHR to FHIR
-            // else if(mapping.getMappingCode()!=null){
+            else if (mapping.getMappingCode() != null) {
+                CustomMapping customMapping = customMappingRegistry.find(mapping.getMappingCode()).orElse(null);
+                if (customMapping == null) {
+                    log.warn("No CustomMapping found for mapping code: {}", mapping.getMappingCode());
+                    values = new ArrayList<>();
+                } else {
+                    values = joinedEntries.entrySet().stream()
+                            .map(entry -> {
+                                final List<String> strings = entry.getValue();
+                                final String key = entry.getKey();
 
-            // }
+                                if (!evaluateOpenehrEmptyNotEmptyCondition(mapping, key, flatJsonObject)) {
+                                    return null;
+                                }
+
+                                final Integer lastIndex = openFhirStringUtils.getLastIndex(key);
+                                return customMapping.applyOpenEhrToFhirMapping(
+                                        mapping.getMappingCode(),
+                                        strings,
+                                        flatJsonObject,
+                                        lastIndex,
+                                        key,
+                                        resourceType,
+                                        fhirPath,
+                                        openFhirStringUtils,
+                                        openFhirMapperUtils
+                                );
+                            })
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList());
+                }
+            }
 
             else {
                 values = joinedEntries.entrySet().stream()

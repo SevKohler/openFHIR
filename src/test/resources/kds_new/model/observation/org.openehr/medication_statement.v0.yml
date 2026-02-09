@@ -97,17 +97,23 @@ mappings:
             fhir: "note.text"
             openehr: "data[at0003]/items[at0029]"
 
+
+        - name: "dosageX"
+          with:
+            fhir: "dosage.route"
+            openehr: "data[at0003]/items[at0030]"
+
         - name: "dosage"
           with:
             fhir: "dosage"
             openehr: "data[at0003]/items[openEHR-EHR-CLUSTER.dosage.v2]"
           slotArchetype: "CLUSTER.dosage.v2"
-          followedBy:
-            mappings:
-              - name: "route"
-                with:
-                  fhir: "route"
-                  openehr: "../items[at0030]"
+#          followedBy:
+#            mappings:
+#              - name: "route"
+#                with:
+#                  fhir: "route"
+#                  openehr: "../items[at0030]"
 
 
         - name: "unstructuredDosage"

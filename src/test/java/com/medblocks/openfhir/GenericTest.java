@@ -11,6 +11,7 @@ import com.medblocks.openfhir.fc.schema.context.FhirConnectContext;
 import com.medblocks.openfhir.tofhir.IntermediateCacheProcessing;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhir;
 import com.medblocks.openfhir.toopenehr.FhirToOpenEhr;
+import com.medblocks.openfhir.customMappings.CustomMappingRegistry;
 import com.medblocks.openfhir.util.FhirConnectModelMerger;
 import com.medblocks.openfhir.util.FhirInstanceCreator;
 import com.medblocks.openfhir.util.FhirInstanceCreatorUtility;
@@ -78,7 +79,8 @@ public abstract class GenericTest {
                                           fhirInstanceCreatorUtility,
                                           fhirPath,
                                           new IntermediateCacheProcessing(openFhirStringUtils),
-                                          new OpenEhrConditionEvaluator(openFhirStringUtils));
+                                          new OpenEhrConditionEvaluator(openFhirStringUtils),
+                                          new CustomMappingRegistry());
         fhirToOpenEhr = new FhirToOpenEhr(fhirPath,
                                           new OpenFhirStringUtils(),
                                           new FlatJsonUnmarshaller(),
@@ -89,7 +91,8 @@ public abstract class GenericTest {
                                           new OpenEhrCachedUtils(null),
                                           new OpenFhirMapperUtils(),
                                           new OpenEhrPopulator(new OpenFhirMapperUtils()),
-                                          new OpenEhrConditionEvaluator(openFhirStringUtils));
+                                          new OpenEhrConditionEvaluator(openFhirStringUtils),
+                                          new CustomMappingRegistry());
 
         prepareState();
     }

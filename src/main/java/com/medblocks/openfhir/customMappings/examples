@@ -1,0 +1,175 @@
+First of all this is a messy mapping and we will have to make some shortcuts.
+
+Fir FHIR examples check:
+https://nhsconnect.github.io/Dose-Syntax-Implementation/dosage-doseQuantity-freq-period.html
+================================================
+
+Example 1:
+
+  {
+  "timing": {
+    "repeat": {
+      "frequency": 3,
+       "period": 1,  //  must be 1 if unit is daily, since we map daily doses only here due to daily dosage mapping, important here is we state that also in the code, only daily is supported for now.
+      "periodUnit": "d",  // allow only day, minute, hour, second (and below no week or smt, since this has to go to !!!!non_dailyCluster)
+      "timeOfDay": [
+        "08:00:00"
+      ]
+    }
+  },
+  "doseQuantity": {
+    "value": 600,
+    "unit": "mg",
+    "system": "http://unitsofmeasure.org",
+    "code": "mg"
+  },
+  "rateRatio": {
+    "numerator": {
+      "value": 600,
+      "unit": "mg",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg"
+    },
+    "denominator": {// basically this means from 08:00:00 - 11:00:00 but we dont add that but for understanding
+      "value": 1,
+      "unit": "h",
+      "system": "http://unitsofmeasure.org",
+      "code": "h"
+    }
+  }
+}
+
+Dosage
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0144] = 600 mg // dosage quantity
+
+Administration rate
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0134] = 600mg/h  // numerator/denominator
+
+CLUSTER
+
+	Specific time
+	 at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0004] = 08:00:00 //timeDaily
+
+	Frequency
+	at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0003] = 3 times per day // frequency + periodUnit
+
+================================================
+
+Example 2:
+
+  {
+  "timing": {
+    "repeat": {
+      "frequency": 3,
+      "period": 1,  //  must be 1 if unit is daily, since we map daily doses only here.
+      "periodUnit": "d",  // allow only day, minute, hour, second (and below no week or smt, since this has to go to !!!!non_dailyCluster)
+      "timeOfDay": [
+        "08:00:00"
+      ]
+    }
+  },
+  "doseQuantity": {
+    "value": 600,
+    "unit": "mg",
+    "system": "http://unitsofmeasure.org",
+    "code": "mg"
+  },
+  "rateRatio": {
+    "numerator": {
+      "value": 200,
+      "unit": "mg",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg"
+    },
+    "denominator": {
+      "value": 3,
+      "unit": "h",
+      "system": "http://unitsofmeasure.org",
+      "code": "h"
+    }
+  }
+}
+
+
+
+Dosage
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0144] = 600 mg // dosage quantity
+
+Administration rate
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0134] = 200mg/h  // numerator/denominator
+
+CLUSTER
+
+	Specific time
+	 at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0004] = 08:00:00 //timeDaily
+
+	Frequency
+	at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0003] = 3 times per day // frequency + periodUnit
+
+
+
+================================================
+Maximum example:
+Example 3:
+  {
+  "timing": { //3-4 times every 2 to 3 hours
+    "repeat": {
+      "count": "1"
+      "duration": "1"
+      "durationMax": "3"
+      "durationUnit": "h" // admission over 1-3 hours
+      "frequency": 3,
+      "frequencyMax": 4, // 3-4 times
+      "period": 2,
+      "periodMax": 3,
+      "periodUnit": "h", //every 2 to 3 hours
+      "timeOfDay": [
+        "08:00:00"
+      ]
+    }
+  },
+  "doseRange": {
+	  low: 200 mg //shortcutted that
+	  high: 300 mg //shortcutted that
+  },
+  "rateRatio": {
+    "numerator": {
+      "value": 100,
+      "unit": "mg",
+      "system": "http://unitsofmeasure.org",
+      "code": "mg"
+    },
+    "denominator": {
+      "value": 1, // wont work since it collapses with hours of period above
+      "unit": "h",
+      "system": "http://unitsofmeasure.org",
+      "code": "h"
+    }
+  }
+}
+
+Dosage
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0144] = 200-300 mg // dosage quantity
+
+Administration rate
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0134] = 100mg/h  // numerator/denominator
+
+Dosage sequence
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0164] = 1 // count
+
+Administration duration
+ [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[at0102] =
+ 1-3 // combined duration and durationMax
+
+
+CLUSTER
+	Specific time
+	 at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0004] = 08:00:00 //timeDaily
+
+	Frequency
+	at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0003] = 3-4 times // frequency, unit as 1 if period if period is not 1
+
+	Interval
+	at [openEHR-EHR-COMPOSITION.report.v1]/content[openEHR-EHR-ACTION.medication.v1]/description[at0017]/items[openEHR-EHR-CLUSTER.dosage.v2]/items[openEHR-EHR-CLUSTER.timing_daily.v1]/items[at0014] = 3-4 times per hour // period + periodMax periodUnit
+
+

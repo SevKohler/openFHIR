@@ -9,9 +9,11 @@ import com.google.gson.JsonObject;
 import com.medblocks.openfhir.fc.FhirConnectConst;
 import com.medblocks.openfhir.fc.schema.model.Condition;
 import com.medblocks.openfhir.toopenehr.FhirToOpenEhrHelper;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -126,10 +128,34 @@ public class OpenFhirStringUtils {
                     // Replace `/` with `-`
                     return "[" + content.replace("/", "*") + "]";
                 });
-        return preparedOpenEhr
+        final String replaced = preparedOpenEhr
                 .replace("/" + FhirConnectConst.OPENEHR_ROOT_FC, "")
                 .replace(FhirConnectConst.OPENEHR_ROOT_FC, "")
                 .replace(FhirConnectConst.OPENEHR_ARCHETYPE_FC, openEhrArchetypeId);
+        return normalizeOpenEhrPath(replaced);
+    }
+
+    public String normalizeOpenEhrPath(final String path) {
+        if (path == null) {
+            return null;
+        }
+        final boolean leadingSlash = path.startsWith("/");
+        final String[] parts = path.split("/");
+        final Deque<String> stack = new ArrayDeque<>();
+        for (final String part : parts) {
+            if (StringUtils.isBlank(part) || ".".equals(part)) {
+                continue;
+            }
+            if ("..".equals(part)) {
+                if (!stack.isEmpty()) {
+                    stack.removeLast();
+                }
+                continue;
+            }
+            stack.addLast(part);
+        }
+        final String normalized = String.join("/", stack);
+        return leadingSlash ? "/" + normalized : normalized;
     }
 
     /**

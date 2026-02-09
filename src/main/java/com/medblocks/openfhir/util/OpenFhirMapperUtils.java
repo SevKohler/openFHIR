@@ -326,8 +326,12 @@ public class OpenFhirMapperUtils {
                             new OpenFhirStringUtils().prepareOpenEhrSyntax(conditionRoot,
                                     slotContext));
                 }
+                openehrCondition.setTargetRoot(
+                        new OpenFhirStringUtils().normalizeOpenEhrPath(openehrCondition.getTargetRoot()));
             }
 
+            followedByMapping.getWith()
+                    .setOpenehr(new OpenFhirStringUtils().normalizeOpenEhrPath(followedByMapping.getWith().getOpenehr()));
         }
     }
 
