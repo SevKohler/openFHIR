@@ -25,7 +25,7 @@ public final class OptCompositionValidator {
                     .collect(Collectors.joining("\n"));
 
             throw new AssertionError(
-                    "Composition is NOT valid against OPT:\n" + message
+                    "Composition is NOT valid against OPT:\n" +  message
             );
         }
     }

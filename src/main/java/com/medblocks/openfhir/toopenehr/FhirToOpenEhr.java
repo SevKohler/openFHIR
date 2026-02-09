@@ -854,6 +854,10 @@ public class FhirToOpenEhr {
                     openEhrPopulator.setFhirPathValue(openEhrPath + "/width",
                             new StringType(duration.toString()), FhirConnectConst.DV_DURATION, flatComposition);
                 }
+            } else if (start != null && end == null) {
+                // Represent missing end as empty width for interval events
+                openEhrPopulator.setFhirPathValue(openEhrPath + "/width|value",
+                        new StringType(""), FhirConnectConst.DV_DURATION, flatComposition);
             }
             return true;
         } else if (result instanceof DateTimeType
