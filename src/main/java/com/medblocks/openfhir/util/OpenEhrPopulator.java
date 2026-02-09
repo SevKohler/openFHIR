@@ -160,6 +160,11 @@ public class OpenEhrPopulator {
                 if (addedInterval) {
                     return;
                 }
+            case FhirConnectConst.DV_DURATION:
+                final boolean addedDuration = handleDvDuration(openEhrPath, extractedValue, constructingFlat);
+                if (addedDuration) {
+                    return;
+                }
             case FhirConnectConst.DV_DATE:
                 final boolean addedDate = handleDvDate(openEhrPath, extractedValue, constructingFlat);
                 if (addedDate) {
@@ -273,6 +278,24 @@ public class OpenEhrPopulator {
         } else {
             log.warn("openEhrType is DV_QUANTITY but extracted value is not Quantity and not Ratio; is {}",
                      value.getClass());
+        }
+        return false;
+    }
+
+    private boolean handleDvDuration(final String path, final Base value, final JsonObject flat) {
+        if (value instanceof StringType stringType) {
+            if (StringUtils.isNotBlank(stringType.getValue())) {
+                addToConstructingFlat(path, stringType.getValue(), flat);
+                return true;
+            }
+        } else if (value instanceof Quantity quantity) {
+            if (quantity.getValue() != null) {
+                addToConstructingFlat(path, quantity.getValue().toPlainString(), flat);
+                return true;
+            }
+        } else if (value != null && value.hasPrimitiveValue()) {
+            addToConstructingFlat(path, value.primitiveValue(), flat);
+            return true;
         }
         return false;
     }

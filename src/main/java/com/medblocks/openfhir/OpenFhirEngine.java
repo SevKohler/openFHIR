@@ -241,7 +241,7 @@ public class OpenFhirEngine {
             }
         }
 
-        final Bundle fhir = openEhrToFhir.compositionToFhir(fhirConnectContext.getFhirConnectContext(),
+            final Bundle fhir = openEhrToFhir.compositionToFhir(fhirConnectContext.getFhirConnectContext(),
                 composition,
                 operationalTemplate);
         return jsonParser.encodeResourceToString(fhir);

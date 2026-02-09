@@ -64,7 +64,7 @@ mappings:
         - name: "eventTime"
           with:
             fhir: "effective"
-            openehr: "time"
+            openehr: "$openehrRoot"
 
         - name: "reasonCode"
           with:

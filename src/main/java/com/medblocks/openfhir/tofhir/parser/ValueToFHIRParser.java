@@ -53,6 +53,9 @@ public class ValueToFHIRParser {
         Integer lastIndex = openFhirStringUtils.getLastIndex(path);
 
         return switch (targetType) {
+            case "INTERVAL_EVENT" -> temporalParser.eventInterval(joinedValues, valueHolder, lastIndex, path);
+            case "POINT_EVENT" -> temporalParser.eventPoint(joinedValues, valueHolder, lastIndex, path);
+            case "EVENT" -> temporalParser.eventByWidth(joinedValues, valueHolder, lastIndex, path);
             case DV_DATE_TIME, "DATETIME" -> temporalParser.dateTime(valueHolder, lastIndex, path);
             case DV_TIME, "TIME" -> temporalParser.time(valueHolder, lastIndex, path);
             case DV_BOOL, "BOOL" -> temporalParser.bool(valueHolder, lastIndex, path);

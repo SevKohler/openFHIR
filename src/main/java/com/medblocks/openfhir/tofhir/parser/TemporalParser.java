@@ -2,6 +2,8 @@ package com.medblocks.openfhir.tofhir.parser;
 
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.*;
@@ -126,10 +128,105 @@ public class TemporalParser {
         return populated ? q : null;
     }
 
+    public OpenEhrToFhirHelper.DataWithIndex eventInterval(List<String> joinedValues,
+                                                           JsonObject valueHolder,
+                                                           Integer lastIndex,
+                                                           String path) {
+        String timePath = resolveEventPartPath(joinedValues, valueHolder, path, "/time");
+        if (timePath == null) {
+            return null;
+        }
+        Date start = fhirValueReaders.date(fhirValueReaders.get(valueHolder, timePath));
+        if (start == null) {
+            return null;
+        }
+        Period period = new Period();
+        period.setStart(start);
+
+        String widthPath = resolveEventPartPath(joinedValues, valueHolder, path, "/width");
+        if (widthPath != null) {
+            String width = fhirValueReaders.get(valueHolder, widthPath);
+            if (StringUtils.isNotBlank(width)) {
+                try {
+                    Duration duration = Duration.parse(width);
+                    if (!duration.isNegative() && !duration.isZero()) {
+                        period.setEnd(Date.from(start.toInstant().plus(duration)));
+                    }
+                } catch (Exception ignored) {
+                    // invalid duration - leave end unset
+                }
+            }
+        }
+        return new OpenEhrToFhirHelper.DataWithIndex(period, lastIndex, path);
+    }
+
+    public OpenEhrToFhirHelper.DataWithIndex eventPoint(List<String> joinedValues,
+                                                        JsonObject valueHolder,
+                                                        Integer lastIndex,
+                                                        String path) {
+        String timePath = resolveEventPartPath(joinedValues, valueHolder, path, "/time");
+        if (timePath == null) {
+            return null;
+        }
+        Date time = fhirValueReaders.date(fhirValueReaders.get(valueHolder, timePath));
+        if (time == null) {
+            return null;
+        }
+        DateTimeType dt = new DateTimeType();
+        dt.setValue(time);
+        return new OpenEhrToFhirHelper.DataWithIndex(dt, lastIndex, path);
+    }
+
+    public OpenEhrToFhirHelper.DataWithIndex eventByWidth(List<String> joinedValues,
+                                                          JsonObject valueHolder,
+                                                          Integer lastIndex,
+                                                          String path) {
+        String widthPath = resolveEventPartPath(joinedValues, valueHolder, path, "/width");
+        boolean hasMathFunction = joinedValues != null && joinedValues.stream()
+                .anyMatch(s -> s.contains("/math_function"));
+        if (!hasMathFunction && valueHolder != null && path != null) {
+            String basePath = path.contains("|") ? path.substring(0, path.indexOf("|")) : path;
+            String eventRoot = basePath.replaceAll("/(math_function|width|time).*", "");
+            String mathFunctionPrefix = eventRoot + "/math_function";
+            hasMathFunction = valueHolder.keySet().stream().anyMatch(k -> k.startsWith(mathFunctionPrefix));
+        }
+        if (widthPath != null || hasMathFunction) {
+            return eventInterval(joinedValues, valueHolder, lastIndex, path);
+        }
+        return eventPoint(joinedValues, valueHolder, lastIndex, path);
+    }
+
     private String find(final List<String> joinedValues, final String suffix) {
         if (joinedValues == null) {
             return null;
         }
         return joinedValues.stream().filter(s -> s.endsWith(suffix)).findFirst().orElse(null);
+    }
+
+    private String findEventPart(final List<String> joinedValues, final String suffix) {
+        if (joinedValues == null) {
+            return null;
+        }
+        return joinedValues.stream()
+                .filter(s -> s.endsWith(suffix))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private String resolveEventPartPath(final List<String> joinedValues,
+                                        final JsonObject valueHolder,
+                                        final String path,
+                                        final String suffix) {
+        String direct = findEventPart(joinedValues, suffix);
+        if (direct != null) {
+            return direct;
+        }
+        if (valueHolder == null || path == null) {
+            return null;
+        }
+        String basePath = path.contains("|") ? path.substring(0, path.indexOf("|")) : path;
+        String eventRoot = basePath.replaceAll("/(math_function|width|time).*", "");
+        String candidate = eventRoot + suffix;
+        return valueHolder.has(candidate) ? candidate : null;
     }
 }

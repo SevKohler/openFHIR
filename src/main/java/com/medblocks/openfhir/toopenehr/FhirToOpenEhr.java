@@ -32,6 +32,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -43,10 +44,16 @@ import org.ehrbase.openehr.sdk.webtemplate.model.WebTemplate;
 import org.hl7.fhir.r4.hapi.fluentpath.FhirPathR4;
 import org.hl7.fhir.r4.model.Base;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.DateType;
+import org.hl7.fhir.r4.model.InstantType;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.PrimitiveType;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.TimeType;
 import org.openehr.schemas.v1.OPERATIONALTEMPLATE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -701,7 +708,11 @@ public class FhirToOpenEhr {
             }
 
             else {
-                openEhrPopulator.setFhirPathValue(thePath, result, helper.getOpenEhrType(), flatComposition);
+                final boolean handledEventTime = applyEventTypeMappingIfNeeded(helper, result, thePath,
+                                                                              flatComposition);
+                if (!handledEventTime) {
+                    openEhrPopulator.setFhirPathValue(thePath, result, helper.getOpenEhrType(), flatComposition);
+                }
             }
 
 
@@ -812,6 +823,55 @@ public class FhirToOpenEhr {
         for (FhirToOpenEhrHelper fhirToOpenEhrHelper : helper.getFhirToOpenEhrHelpers()) {
             fixAllChildrenRecurringElements(fhirToOpenEhrHelper, newOne);
         }
+    }
+
+    private boolean applyEventTypeMappingIfNeeded(final FhirToOpenEhrHelper helper, final Base result,
+                                                  final String openEhrPath,
+                                                  final JsonObject flatComposition) {
+        if (result == null || openEhrPath == null) {
+            return false;
+        }
+        final String openEhrType = helper == null ? null : helper.getOpenEhrType();
+        if (!isEventRmType(openEhrType)) {
+            return false;
+        }
+        if (result instanceof Period) {
+            final Period period = (Period) result;
+            final Date start = period.getStart();
+            final Date end = period.getEnd();
+            final Date time = start != null ? start : end;
+            if (time != null) {
+                openEhrPopulator.setFhirPathValue(openEhrPath + "/time", new DateTimeType(time),
+                        FhirConnectConst.DV_DATE_TIME, flatComposition);
+            }
+            openEhrPopulator.setFhirPathValue(openEhrPath + "/math_function",
+                    new Coding("openehr", "640", "actual"),
+                    FhirConnectConst.DV_CODED_TEXT, flatComposition);
+            if (start != null && end != null) {
+                final java.time.Duration duration = java.time.Duration.between(
+                        start.toInstant(), end.toInstant());
+                if (!duration.isNegative() && !duration.isZero()) {
+                    openEhrPopulator.setFhirPathValue(openEhrPath + "/width",
+                            new StringType(duration.toString()), FhirConnectConst.DV_DURATION, flatComposition);
+                }
+            }
+            return true;
+        } else if (result instanceof DateTimeType
+                || result instanceof InstantType
+                || result instanceof DateType) {
+            openEhrPopulator.setFhirPathValue(openEhrPath + "/time", result,
+                    FhirConnectConst.DV_DATE_TIME, flatComposition);
+            return true;
+        } else if (result instanceof TimeType) {
+            openEhrPopulator.setFhirPathValue(openEhrPath + "/time", result,
+                    FhirConnectConst.DV_TIME, flatComposition);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isEventRmType(final String rmType) {
+        return "EVENT".equals(rmType) || "POINT_EVENT".equals(rmType) || "INTERVAL_EVENT".equals(rmType);
     }
 
 
