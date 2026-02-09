@@ -383,9 +383,42 @@
                         "value": "Oxaliplatin 85mg/m² IV über 2 Stunden"
                       },
                       "archetype_node_id": "at0178"
+                    },
+                    {
+                      "_type": "ELEMENT",
+                      "name": {
+                        "_type": "DV_TEXT",
+                        "value": "Verabreichungsrate"
+                      },
+                      "value": {
+                        "_type": "DV_QUANTITY",
+                        "units": "mg/h",
+                        "magnitude": 85.0
+                      },
+                      "archetype_node_id": "at0134"
                     }
                   ],
                   "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"
+                },
+                {
+                  "_type": "ELEMENT",
+                  "name": {
+                    "_type": "DV_TEXT",
+                    "value": "Art der Verabreichung"
+                  },
+                  "value": {
+                    "_type": "DV_CODED_TEXT",
+                    "value": "Intravenous use",
+                    "defining_code": {
+                      "_type": "CODE_PHRASE",
+                      "terminology_id": {
+                        "_type": "TERMINOLOGY_ID",
+                        "value": "http://standardterms.edqm.eu"
+                      },
+                      "code_string": "20045000"
+                    }
+                  },
+                  "archetype_node_id": "at0030"
                 }
               ],
               "archetype_node_id": "at0003"

@@ -386,6 +386,26 @@
                     }
                   ],
                   "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"
+                },
+                {
+                  "_type": "ELEMENT",
+                  "name": {
+                    "_type": "DV_TEXT",
+                    "value": "Art der Verabreichung"
+                  },
+                  "value": {
+                    "_type": "DV_CODED_TEXT",
+                    "value": "Subcutaneous use",
+                    "defining_code": {
+                      "_type": "CODE_PHRASE",
+                      "terminology_id": {
+                        "_type": "TERMINOLOGY_ID",
+                        "value": "http://standardterms.edqm.eu"
+                      },
+                      "code_string": "20066000"
+                    }
+                  },
+                  "archetype_node_id": "at0030"
                 }
               ],
               "archetype_node_id": "at0003"
