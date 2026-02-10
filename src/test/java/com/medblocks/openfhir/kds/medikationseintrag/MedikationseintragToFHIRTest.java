@@ -253,7 +253,7 @@ public class MedikationseintragToFHIRTest extends KdsTest {
     @Test
     public void kdsMedicationList_toFhir() throws IOException {
         // openEHR to FHIR
-        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile(HELPER_LOCATION + FLAT), webTemplate);
+        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(getFile( FLAT), webTemplate);
         final Bundle bundle = openEhrToFhir.compositionToFhir(context, compositionFromFlat, operationaltemplate);
 
         final List<MedicationStatement> requests = bundle.getEntry().stream()

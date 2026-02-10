@@ -409,6 +409,40 @@
                             "magnitude": 1.0
                           },
                           "archetype_node_id": "at0003"
+                        },
+                        {
+                          "_type": "ELEMENT",
+                          "name": {
+                            "_type": "DV_TEXT",
+                            "value": "Periode"
+                          },
+                          "value": {
+                            "_type": "DV_DURATION",
+                            "value": "P1D"
+                          },
+                          "archetype_node_id": "at0014"
+                        },
+                        {
+                          "_type": "CLUSTER",
+                          "name": {
+                            "_type": "DV_TEXT",
+                            "value": "Bestimmtes Ereignis"
+                          },
+                          "items": [
+                            {
+                              "_type": "ELEMENT",
+                              "name": {
+                                "_type": "DV_TEXT",
+                                "value": "Ereignis"
+                              },
+                              "value": {
+                                "_type": "DV_TEXT",
+                                "value": "EVE"
+                              },
+                              "archetype_node_id": "at0026"
+                            }
+                          ],
+                          "archetype_node_id": "at0039"
                         }
                       ],
                       "archetype_node_id": "openEHR-EHR-CLUSTER.timing_daily.v1"
