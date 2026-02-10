@@ -149,6 +149,42 @@ final class TimingFlatMapper {
         set(flat, basePath + "|" + component, normalizeDurationComponentNumber(period));
     }
 
+    static void writeNonDailyPeriod(JsonObject flat,
+                                    String basePath,
+                                    Double period,
+                                    Double periodMax,
+                                    String unitCode) {
+        if (flat == null || StringUtils.isBlank(basePath) || period == null || StringUtils.isBlank(unitCode)) {
+            return;
+        }
+        String component = switch (unitCode) {
+            case "d" -> "day";
+            case "wk" -> "week";
+            case "mo" -> "month";
+            case "a" -> "year";
+            default -> null;
+        };
+        if (component == null) {
+            return;
+        }
+
+        // Ensure non-daily period does not collide with duration-value based representations.
+        flat.remove(basePath);
+        flat.remove(basePath + "|value");
+        flat.remove(basePath + "/duration_value|value");
+        flat.remove(basePath + "/duration_value/lower|value");
+        flat.remove(basePath + "/duration_value/upper|value");
+        flat.remove(basePath + "/lower|value");
+        flat.remove(basePath + "/upper|value");
+
+        if (periodMax != null && !periodMax.equals(period)) {
+            set(flat, basePath + "/lower|" + component, normalizeDurationComponentNumber(period));
+            set(flat, basePath + "/upper|" + component, normalizeDurationComponentNumber(periodMax));
+            return;
+        }
+        set(flat, basePath + "|" + component, normalizeDurationComponentNumber(period));
+    }
+
     static FrequencyValue readFrequency(JsonObject valueHolder, List<String> joinedValues, FhirValueReaders readers) {
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
@@ -221,6 +257,12 @@ final class TimingFlatMapper {
                                                             List<String> joinedValues,
                                                             FhirValueReaders readers) {
         DurationValue val = readDurationFromComponent(valueHolder, joinedValues, readers, "day", "P", "D");
+        if (val != null) return val;
+        val = readDurationFromComponent(valueHolder, joinedValues, readers, "week", "P", "W");
+        if (val != null) return val;
+        val = readDurationFromComponent(valueHolder, joinedValues, readers, "month", "P", "M");
+        if (val != null) return val;
+        val = readDurationFromComponent(valueHolder, joinedValues, readers, "year", "P", "Y");
         if (val != null) return val;
         val = readDurationFromComponent(valueHolder, joinedValues, readers, "hour", "PT", "H");
         if (val != null) return val;

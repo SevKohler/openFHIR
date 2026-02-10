@@ -118,14 +118,14 @@ public class DosageCustomMappingsTest {
         Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
         repeat.setPeriod(2);
         repeat.setPeriodMax(3);
-        repeat.setPeriodUnit(Timing.UnitsOfTime.H);
+        repeat.setPeriodUnit(Timing.UnitsOfTime.WK);
         timing.setRepeat(repeat);
 
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
                 "timingNonDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
 
-        Assert.assertEquals("PT2H", flat.get("timing/periode/duration_value/lower|value").getAsString());
-        Assert.assertEquals("PT3H", flat.get("timing/periode/duration_value/upper|value").getAsString());
+        Assert.assertEquals(2.0, flat.get("timing/periode/lower|week").getAsDouble(), 0.0001);
+        Assert.assertEquals(3.0, flat.get("timing/periode/upper|week").getAsDouble(), 0.0001);
         Assert.assertFalse("non-daily period should not use daily component format", flat.has("timing/periode|day"));
     }
 }

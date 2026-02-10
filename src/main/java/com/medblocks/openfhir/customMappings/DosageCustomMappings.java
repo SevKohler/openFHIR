@@ -217,7 +217,7 @@ public class DosageCustomMappings extends CustomMapping {
                                        final Base fhirValue,
                                        final JsonObject flat,
                                        final OpenEhrPopulator populator) {
-        TimingApplyContext ctx = buildTimingApplyContext(fhirValue);
+        TimingApplyContext ctx = buildTimingApplyContext(fhirValue, true);
         if (ctx == null) {
             return false;
         }
@@ -243,7 +243,7 @@ public class DosageCustomMappings extends CustomMapping {
                                           final Base fhirValue,
                                           final JsonObject flat,
                                           final OpenEhrPopulator populator) {
-        TimingApplyContext ctx = buildTimingApplyContext(fhirValue);
+        TimingApplyContext ctx = buildTimingApplyContext(fhirValue, false);
         if (ctx == null) {
             return false;
         }
@@ -268,7 +268,7 @@ public class DosageCustomMappings extends CustomMapping {
         }
     }
 
-    private TimingApplyContext buildTimingApplyContext(final Base fhirValue) {
+    private TimingApplyContext buildTimingApplyContext(final Base fhirValue, final boolean daily) {
         if (!(fhirValue instanceof Timing timing)) {
             return null;
         }
@@ -280,7 +280,11 @@ public class DosageCustomMappings extends CustomMapping {
         if (periodUnit == null) {
             return null;
         }
-        if (!isAllowedPeriodUnit(periodUnit.toCode())) {
+        String unitCode = periodUnit.toCode();
+        if (daily && !isDailyPeriodUnit(unitCode)) {
+            return null;
+        }
+        if (!daily && !isNonDailyPeriodUnit(unitCode)) {
             return null;
         }
         Double period = toDouble(repeat.getPeriod());
@@ -304,19 +308,20 @@ public class DosageCustomMappings extends CustomMapping {
 
         // Interval/period -> /periode (DV_DURATION)
         if (ctx.repeat.hasPeriod() && ctx.repeat.hasPeriodUnit()) {
-            String duration = durationString(ctx.period, ctx.periodUnit);
-            String durationMax = ctx.periodMax != null ? durationString(ctx.periodMax, ctx.periodUnit) : null;
-            if (StringUtils.isNotBlank(duration)) {
-                if (dailyPeriodFormat) {
-                    TimingFlatMapper.writeDailyPeriod(
-                            flat,
-                            openEhrPath + "/periode",
-                            ctx.period,
-                            ctx.periodMax,
-                            ctx.periodUnit.toCode());
-                } else {
-                    TimingFlatMapper.writePeriodDurationValue(flat, openEhrPath + "/periode", duration, durationMax);
-                }
+            if (dailyPeriodFormat) {
+                TimingFlatMapper.writeDailyPeriod(
+                        flat,
+                        openEhrPath + "/periode",
+                        ctx.period,
+                        ctx.periodMax,
+                        ctx.periodUnit.toCode());
+            } else {
+                TimingFlatMapper.writeNonDailyPeriod(
+                        flat,
+                        openEhrPath + "/periode",
+                        ctx.period,
+                        ctx.periodMax,
+                        ctx.periodUnit.toCode());
             }
         }
     }
@@ -769,16 +774,6 @@ public class DosageCustomMappings extends CustomMapping {
     }
 
 
-    private Timing.UnitsOfTime unitFromIso(char unit) {
-        return switch (unit) {
-            case 'D' -> Timing.UnitsOfTime.D;
-            case 'H' -> Timing.UnitsOfTime.H;
-            case 'M' -> Timing.UnitsOfTime.MIN;
-            case 'S' -> Timing.UnitsOfTime.S;
-            default -> null;
-        };
-    }
-
     private Timing.UnitsOfTime unitFromCode(String code) {
         if (code == null) return null;
         return switch (code) {
@@ -863,17 +858,52 @@ public class DosageCustomMappings extends CustomMapping {
         }
         String val;
         char unitChar = trimmed.charAt(trimmed.length() - 1);
+        boolean timeBased = trimmed.startsWith("PT");
         if (trimmed.startsWith("PT")) {
             val = trimmed.substring(2, trimmed.length() - 1);
         } else {
             val = trimmed.substring(1, trimmed.length() - 1);
         }
         Double value = parseDouble(val);
-        Timing.UnitsOfTime unit = unitFromIso(unitChar);
+        Timing.UnitsOfTime unit = unitFromIso(unitChar, timeBased);
         if (value == null || unit == null) {
             return null;
         }
         return new DurationParts(value, unit);
+    }
+
+    private Timing.UnitsOfTime unitFromIso(char unit, boolean timeBased) {
+        if (timeBased) {
+            return switch (unit) {
+                case 'H' -> Timing.UnitsOfTime.H;
+                case 'M' -> Timing.UnitsOfTime.MIN;
+                case 'S' -> Timing.UnitsOfTime.S;
+                default -> null;
+            };
+        }
+        return switch (unit) {
+            case 'D' -> Timing.UnitsOfTime.D;
+            case 'W' -> Timing.UnitsOfTime.WK;
+            case 'M' -> Timing.UnitsOfTime.MO;
+            case 'Y' -> Timing.UnitsOfTime.A;
+            default -> null;
+        };
+    }
+
+    private boolean isDailyPeriodUnit(String code) {
+        if (code == null) return false;
+        return switch (code) {
+            case "d", "h", "min", "s" -> true;
+            default -> false;
+        };
+    }
+
+    private boolean isNonDailyPeriodUnit(String code) {
+        if (code == null) return false;
+        return switch (code) {
+            case "d", "wk", "mo", "a" -> true;
+            default -> false;
+        };
     }
 
     private static final class DurationParts {
