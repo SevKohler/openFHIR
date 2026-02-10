@@ -27,6 +27,7 @@ public class DosageCustomMappings extends CustomMapping {
             "timingToDaily_NonDaily",
             "dosageQuantityToRange",
             "ratio_to_dv_quantity",
+            "ratio_to_dosage",
             "dosageDurationToAdministrationDuration"
     );
 
@@ -54,6 +55,7 @@ public class DosageCustomMappings extends CustomMapping {
         return switch (mappingCode) {
             case "dosageQuantityToRange" -> applyDosageQuantityToRange(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dv_quantity" -> applyRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
+            case "ratio_to_dosage" -> applyRatioToDosage(openEhrPath, fhirValue, flat, populator);
             case "timingToDaily_NonDaily" -> applyTimingToDaily(openEhrPath, fhirValue, flat, populator);
             case "dosageDurationToAdministrationDuration" -> applyDurationToAdministration(openEhrPath, fhirValue, flat, populator);
             default -> false;
@@ -76,6 +78,7 @@ public class DosageCustomMappings extends CustomMapping {
         return switch (mappingCode) {
             case "dosageQuantityToRange" -> toFhirDose(joinedValues, valueHolder, lastIndex, path, fhirPath, mapperUtils);
             case "ratio_to_dv_quantity" -> toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "ratio_to_dosage" -> toFhirRatioDosage(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "timingToDaily_NonDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "dosageDurationToAdministrationDuration" -> toFhirTimingRepeat(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             default -> null;
@@ -147,6 +150,62 @@ public class DosageCustomMappings extends CustomMapping {
 
         populator.setFhirPathValue(openEhrPath, q, FhirConnectConst.DV_QUANTITY, flat);
         return true;
+    }
+
+    private boolean applyRatioToDosage(final String openEhrPath,
+                                       final Base fhirValue,
+                                       final JsonObject flat,
+                                       final OpenEhrPopulator populator) {
+        if (!(fhirValue instanceof Ratio ratio)) {
+            return false;
+        }
+        Quantity numerator = ratio.getNumerator();
+        Quantity denominator = ratio.getDenominator();
+        if (numerator == null || denominator == null || numerator.getValue() == null || denominator.getValue() == null) {
+            return false;
+        }
+        Double denomValue = denominator.getValue().doubleValue();
+        if (denomValue == 0d) {
+            return false;
+        }
+        String duration = durationStringFromQuantity(denominator);
+        if (StringUtils.isBlank(duration)) {
+            return false;
+        }
+
+        double rate = numerator.getValue().doubleValue() / denomValue;
+        Quantity rateQuantity = new Quantity();
+        rateQuantity.setValue(rate);
+        if (StringUtils.isNotBlank(numerator.getUnit())) {
+            String unit = numerator.getUnit() + "/" + denominator.getUnit();
+            rateQuantity.setUnit(unit);
+        }
+        if (StringUtils.isNotBlank(numerator.getCode())) {
+            rateQuantity.setCode(numerator.getCode());
+        }
+        String ratePath = appendFlatChild(openEhrPath, "verabreichungsrate/quantity_value");
+        populator.setFhirPathValue(ratePath, rateQuantity, FhirConnectConst.DV_QUANTITY, flat);
+
+        String durationPath = appendFlatChild(openEhrPath, "verabreichungsdauer");
+        populator.setFhirPathValue(durationPath, new StringType(duration), FhirConnectConst.DV_DURATION, flat);
+        return true;
+    }
+
+    private String appendFlatChild(final String basePath, final String child) {
+        if (StringUtils.isBlank(basePath) || StringUtils.isBlank(child)) {
+            return basePath;
+        }
+        String base = basePath;
+        if (base.startsWith(FhirConnectConst.OPENEHR_ARCHETYPE_FC)) {
+            base = base.substring(FhirConnectConst.OPENEHR_ARCHETYPE_FC.length());
+            if (base.startsWith("/")) {
+                base = base.substring(1);
+            }
+        }
+        if (base.endsWith("/" + child) || base.contains("/" + child + "/") || base.endsWith(child)) {
+            return base;
+        }
+        return base + "/" + child;
     }
 
     private boolean applyTimingToDaily(final String openEhrPath,
@@ -296,6 +355,103 @@ public class DosageCustomMappings extends CustomMapping {
         ratio.setNumerator(numerator);
         ratio.setDenominator(denominator);
         return new OpenEhrToFhirHelper.DataWithIndex(ratio, lastIndex == null ? -1 : lastIndex, path);
+    }
+
+    private OpenEhrToFhirHelper.DataWithIndex toFhirRatioDosage(final List<String> joinedValues,
+                                                                final JsonObject valueHolder,
+                                                                final Integer lastIndex,
+                                                                final String path,
+                                                                final OpenFhirMapperUtils mapperUtils) {
+        FhirValueReaders readers = new FhirValueReaders(mapperUtils);
+        Quantity rateQuantity = readRateQuantity(readers, valueHolder, joinedValues);
+        if (rateQuantity == null || rateQuantity.getValue() == null) {
+            return null;
+        }
+
+        String durationPath = find(joinedValues, "verabreichungsdauer|value");
+        if (durationPath == null) durationPath = find(joinedValues, "verabreichungsdauer/duration_value|value");
+        if (durationPath == null) durationPath = find(joinedValues, "verabreichungsdauer");
+        String duration = durationPath != null ? readers.get(valueHolder, durationPath) : null;
+        if (StringUtils.isBlank(duration)) {
+            // fallback to existing ratio parsing if duration is missing
+            return toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+        }
+        DurationParts parts = parseIsoDuration(duration);
+        if (parts == null || parts.value == null || parts.unit == null) {
+            return toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+        }
+
+        Quantity numerator = new Quantity();
+        numerator.setValue(rateQuantity.getValue().doubleValue() * parts.value);
+        numerator.setUnit(rateQuantity.getUnit());
+        numerator.setCode(rateQuantity.getCode());
+
+        Quantity denominator = new Quantity();
+        String denomUnit = unitToCode(parts.unit);
+        denominator.setValue(parts.value);
+        denominator.setUnit(denomUnit);
+        denominator.setCode(denomUnit);
+
+        Ratio ratio = new Ratio();
+        ratio.setNumerator(numerator);
+        ratio.setDenominator(denominator);
+        return new OpenEhrToFhirHelper.DataWithIndex(ratio, lastIndex == null ? -1 : lastIndex, path);
+    }
+
+    private Quantity readRateQuantity(final FhirValueReaders readers,
+                                      final JsonObject valueHolder,
+                                      final List<String> joinedValues) {
+        String magPath = find(joinedValues, "verabreichungsrate/quantity_value|magnitude");
+        if (magPath == null) magPath = find(joinedValues, "verabreichungsrate|magnitude");
+        String unitPath = find(joinedValues, "verabreichungsrate/quantity_value|unit");
+        if (unitPath == null) unitPath = find(joinedValues, "verabreichungsrate|unit");
+        if (magPath != null) {
+            Object n = readers.number(readers.get(valueHolder, magPath));
+            if (n instanceof Number num) {
+                Quantity q = new Quantity();
+                q.setValue(num.doubleValue());
+                if (unitPath != null) {
+                    String unit = readers.get(valueHolder, unitPath);
+                    q.setUnit(unit);
+                    q.setCode(unit);
+                }
+                return q;
+            }
+        }
+        return readQuantityForSide(readers, valueHolder, joinedValues, "");
+    }
+
+    // resolveCanonicalPath now lives in CustomMapping
+
+    private String durationStringFromQuantity(final Quantity quantity) {
+        if (quantity == null || quantity.getValue() == null) {
+            return null;
+        }
+        String unit = StringUtils.isNotBlank(quantity.getCode()) ? quantity.getCode() : quantity.getUnit();
+        if (StringUtils.isBlank(unit)) {
+            return null;
+        }
+        Timing.UnitsOfTime u = unitFromString(unit);
+        if (u == null) {
+            return null;
+        }
+        return durationString(quantity.getValue().doubleValue(), u);
+    }
+
+    private String unitToCode(final Timing.UnitsOfTime unit) {
+        if (unit == null) {
+            return null;
+        }
+        return switch (unit) {
+            case S -> "s";
+            case MIN -> "min";
+            case H -> "h";
+            case D -> "d";
+            case WK -> "wk";
+            case MO -> "mo";
+            case A -> "a";
+            default -> null;
+        };
     }
 
     private OpenEhrToFhirHelper.DataWithIndex toFhirTiming(final List<String> joinedValues,
@@ -551,12 +707,21 @@ public class DosageCustomMappings extends CustomMapping {
             case "h" -> Timing.UnitsOfTime.H;
             case "min" -> Timing.UnitsOfTime.MIN;
             case "s" -> Timing.UnitsOfTime.S;
+            case "wk", "w", "week", "weeks" -> Timing.UnitsOfTime.WK;
+            case "mo", "mon", "month", "months" -> Timing.UnitsOfTime.MO;
+            case "a", "y", "yr", "year", "years" -> Timing.UnitsOfTime.A;
             case "day", "days" -> Timing.UnitsOfTime.D;
             case "hour", "hours" -> Timing.UnitsOfTime.H;
             case "minute", "minutes" -> Timing.UnitsOfTime.MIN;
             case "second", "seconds" -> Timing.UnitsOfTime.S;
             default -> null;
         };
+    }
+
+    private Timing.UnitsOfTime unitFromString(String unit) {
+        if (StringUtils.isBlank(unit)) return null;
+        String normalized = unit.toLowerCase(Locale.ROOT).trim();
+        return unitFromCode(normalized);
     }
 
     private Timing.UnitsOfTime periodUnitFromFrequency(String unit) {

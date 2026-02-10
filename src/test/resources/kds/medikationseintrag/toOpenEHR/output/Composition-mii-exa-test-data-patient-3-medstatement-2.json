@@ -393,9 +393,21 @@
                       "value": {
                         "_type": "DV_QUANTITY",
                         "units": "mg/h",
-                        "magnitude": 1000.0
+                        "magnitude": 21.73913043478261
                       },
                       "archetype_node_id": "at0134"
+                    },
+                    {
+                      "_type": "ELEMENT",
+                      "name": {
+                        "_type": "DV_TEXT",
+                        "value": "Verabreichungsdauer"
+                      },
+                      "value": {
+                        "_type": "DV_DURATION",
+                        "value": "PT46H"
+                      },
+                      "archetype_node_id": "at0102"
                     }
                   ],
                   "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"

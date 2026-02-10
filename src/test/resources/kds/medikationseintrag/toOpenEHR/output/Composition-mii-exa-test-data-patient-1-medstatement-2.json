@@ -411,9 +411,21 @@
                       "value": {
                         "_type": "DV_QUANTITY",
                         "units": "mg/Minuten",
-                        "magnitude": 1500.0
+                        "magnitude": 50.0
                       },
                       "archetype_node_id": "at0134"
+                    },
+                    {
+                      "_type": "ELEMENT",
+                      "name": {
+                        "_type": "DV_TEXT",
+                        "value": "Verabreichungsdauer"
+                      },
+                      "value": {
+                        "_type": "DV_DURATION",
+                        "value": "PT30M"
+                      },
+                      "archetype_node_id": "at0102"
                     }
                   ],
                   "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"

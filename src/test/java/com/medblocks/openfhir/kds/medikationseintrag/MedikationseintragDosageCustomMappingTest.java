@@ -40,7 +40,7 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
 
         Assert.assertTrue("rate magnitude missing", flat.has(rateMag));
         Assert.assertTrue("rate unit missing", flat.has(rateUnit));
-        Assert.assertEquals(1500.0, flat.get(rateMag).getAsDouble(), 0.0001);
+        Assert.assertEquals(50, flat.get(rateMag).getAsDouble(), 0.0001);
         Assert.assertEquals("mg/Minuten", flat.get(rateUnit).getAsString());
     }
 }

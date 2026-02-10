@@ -225,10 +225,22 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "mL/h",
+                        "units": "mL",
                         "magnitude": 150.0
                       },
                       "archetype_node_id": "at0134"
+                    },
+                    {
+                      "_type": "ELEMENT",
+                      "name": {
+                        "_type": "DV_TEXT",
+                        "value": "Verabreichungsdauer"
+                      },
+                      "value": {
+                        "_type": "DV_DURATION",
+                        "value": "PT1H"
+                      },
+                      "archetype_node_id": "at0102"
                     }
                   ],
                   "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"

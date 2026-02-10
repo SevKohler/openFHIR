@@ -76,6 +76,7 @@ public class OpenEhrRmWorker {
         }
     }
 
+
     /**
      * Walks through web template nodes and sets recurring indexes on simplified flat path; at the same time, it adds
      * openEHR type

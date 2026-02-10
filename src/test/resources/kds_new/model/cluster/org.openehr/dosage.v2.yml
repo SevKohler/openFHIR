@@ -54,8 +54,9 @@ mappings:
   - name: "rateRatio"
     with:
       fhir: "$fhirRoot.doseAndRate.rate.as(Ratio)"
-      openehr: "$archetype/items[at0134]"
-    mappingCode: "ratio_to_dv_quantity"
+      openehr: "$archetype" # maps at0134 and at0102
+    mappingCode: "ratio_to_dosage"
+
 
   - name: "duration"
     with:

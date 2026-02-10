@@ -52,4 +52,5 @@ public abstract class CustomMapping {
                                                                        final OpenFhirMapperUtils mapperUtils) {
         return null;
     }
+
 }
