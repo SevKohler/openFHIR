@@ -75,15 +75,19 @@
         "dateAsserted": "2024-02-22T16:00:00+01:00",
         "dosage": [
           {
-            "text": "Paracetamol 500mg bei Bedarf",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 500.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Paracetamol 500mg bei Bedarf"
           }
         ]
       }

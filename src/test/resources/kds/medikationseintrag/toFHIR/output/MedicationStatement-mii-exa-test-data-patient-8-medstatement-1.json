@@ -78,15 +78,19 @@
         "dateAsserted": "2023-11-12T00:00:00+01:00",
         "dosage": [
           {
-            "text": "Heparin 5000 IE s.c. alle 12 Stunden",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 5000.0,
-                  "unit": "IU"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20066000",
+                  "display": "Subcutaneous use"
                 }
-              }
-            ]
+              ],
+              "text": "Subcutaneous use"
+            }
+          },
+          {
+            "text": "Heparin 5000 IE s.c. alle 12 Stunden"
           }
         ]
       }

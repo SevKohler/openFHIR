@@ -78,15 +78,19 @@
         "dateAsserted": "2019-05-15T00:00:00+02:00",
         "dosage": [
           {
-            "text": "Sumatriptan 50mg bei Migräne-Attacke",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 50.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Sumatriptan 50mg bei Migräne-Attacke"
           }
         ]
       }

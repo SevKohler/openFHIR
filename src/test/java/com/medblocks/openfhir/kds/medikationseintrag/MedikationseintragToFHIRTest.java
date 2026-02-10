@@ -105,6 +105,11 @@ public class MedikationseintragToFHIRTest extends KdsTest {
         standardsAsserter.assertBundle(bundle, FHIR_BUNDLES[index]);
     }
 
+    @SneakyThrows
+    private JsonObject getJsonObject(String path) {
+        return new Gson().fromJson(getFile(path), JsonObject.class);
+    }
+
     @Test
     public void assertToFHIR_1() {
         assertToFHIR(0);
@@ -353,6 +358,37 @@ public class MedikationseintragToFHIRTest extends KdsTest {
 //
 //        Assert.assertEquals("at0243", ingridient10.getItemCodeableConcept().getCodingFirstRep().getCode());
 //        Assert.assertEquals("2Ad-hoc Mixtur", ingridient10.getItemCodeableConcept().getCodingFirstRep().getDisplay());
+    }
+
+    @Test
+    public void kdsMedicationList_toFhir_rateRatioFromRateAndDuration() throws IOException {
+        final Composition composition = JacksonUtil.getObjectMapper().readValue(getFile(OPENEHR_COMPOSITIONS[8]),
+                Composition.class);
+        final JsonObject flat = gson.fromJson(flatMarshaller.toFlatJson(composition, webTemplate), JsonObject.class);
+
+        String rateMag = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value|magnitude";
+        String rateUnit = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value|unit";
+        String duration = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsdauer";
+
+        flat.addProperty(rateMag, 50.0);
+        flat.addProperty(rateUnit, "mg");
+        flat.addProperty(duration, "PT3H");
+
+        final Composition compositionFromFlat = new FlatJsonUnmarshaller().unmarshal(flat.toString(), webTemplate);
+        final Bundle bundle = openEhrToFhir.compositionToFhir(context, compositionFromFlat, operationaltemplate);
+
+        final MedicationStatement stmt = bundle.getEntry().stream()
+                .filter(en -> en.getResource() instanceof MedicationStatement)
+                .map(en -> (MedicationStatement) en.getResource())
+                .findFirst()
+                .orElseThrow();
+
+        Dosage.DosageDoseAndRateComponent doseAndRate = stmt.getDosageFirstRep().getDoseAndRateFirstRep();
+        Assert.assertTrue(doseAndRate.hasRateRatio());
+        Assert.assertEquals("150.0", doseAndRate.getRateRatio().getNumerator().getValue().toPlainString());
+        Assert.assertEquals("mL", doseAndRate.getRateRatio().getNumerator().getUnit());
+        Assert.assertEquals("1.0", doseAndRate.getRateRatio().getDenominator().getValue().toPlainString());
+        Assert.assertEquals("h", doseAndRate.getRateRatio().getDenominator().getUnit());
     }
 
     @Test

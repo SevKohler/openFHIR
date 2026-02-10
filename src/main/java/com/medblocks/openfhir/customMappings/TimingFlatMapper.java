@@ -101,6 +101,54 @@ final class TimingFlatMapper {
         }
     }
 
+    static void writePeriodDurationValue(JsonObject flat, String basePath, String duration, String durationMax) {
+        if (flat == null || StringUtils.isBlank(basePath) || StringUtils.isBlank(duration)) {
+            return;
+        }
+        if (StringUtils.isNotBlank(durationMax) && !durationMax.equals(duration)) {
+            set(flat, basePath + "/duration_value/lower|value", duration);
+            set(flat, basePath + "/duration_value/upper|value", durationMax);
+            return;
+        }
+        set(flat, basePath + "/duration_value|value", duration);
+    }
+
+    static void writeDailyPeriod(JsonObject flat,
+                                 String basePath,
+                                 Double period,
+                                 Double periodMax,
+                                 String unitCode) {
+        if (flat == null || StringUtils.isBlank(basePath) || period == null || StringUtils.isBlank(unitCode)) {
+            return;
+        }
+        String component = switch (unitCode) {
+            case "d" -> "day";
+            case "h" -> "hour";
+            case "min" -> "minute";
+            case "s" -> "second";
+            default -> null;
+        };
+        if (component == null) {
+            return;
+        }
+
+        // Ensure daily period does not collide with duration-value based representations.
+        flat.remove(basePath);
+        flat.remove(basePath + "|value");
+        flat.remove(basePath + "/duration_value|value");
+        flat.remove(basePath + "/duration_value/lower|value");
+        flat.remove(basePath + "/duration_value/upper|value");
+        flat.remove(basePath + "/lower|value");
+        flat.remove(basePath + "/upper|value");
+
+        if (periodMax != null && !periodMax.equals(period)) {
+            set(flat, basePath + "/lower|" + component, normalizeDurationComponentNumber(period));
+            set(flat, basePath + "/upper|" + component, normalizeDurationComponentNumber(periodMax));
+            return;
+        }
+        set(flat, basePath + "|" + component, normalizeDurationComponentNumber(period));
+    }
+
     static FrequencyValue readFrequency(JsonObject valueHolder, List<String> joinedValues, FhirValueReaders readers) {
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
@@ -149,6 +197,11 @@ final class TimingFlatMapper {
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
         }
+        DurationValue componentDuration = readDurationFromComponents(valueHolder, joinedValues, readers);
+        if (componentDuration != null) {
+            return componentDuration;
+        }
+
         String lowerVal = find(joinedValues, "lower|value");
         String upperVal = find(joinedValues, "upper|value");
         String value = find(joinedValues, "value");
@@ -162,6 +215,65 @@ final class TimingFlatMapper {
         }
         String start = StringUtils.isNotBlank(single) ? single : lower;
         return new DurationValue(start, upper);
+    }
+
+    private static DurationValue readDurationFromComponents(JsonObject valueHolder,
+                                                            List<String> joinedValues,
+                                                            FhirValueReaders readers) {
+        DurationValue val = readDurationFromComponent(valueHolder, joinedValues, readers, "day", "P", "D");
+        if (val != null) return val;
+        val = readDurationFromComponent(valueHolder, joinedValues, readers, "hour", "PT", "H");
+        if (val != null) return val;
+        val = readDurationFromComponent(valueHolder, joinedValues, readers, "minute", "PT", "M");
+        if (val != null) return val;
+        return readDurationFromComponent(valueHolder, joinedValues, readers, "second", "PT", "S");
+    }
+
+    private static DurationValue readDurationFromComponent(JsonObject valueHolder,
+                                                           List<String> joinedValues,
+                                                           FhirValueReaders readers,
+                                                           String component,
+                                                           String isoPrefix,
+                                                           String isoSuffix) {
+        String lowerPath = find(joinedValues, "lower|" + component);
+        String upperPath = find(joinedValues, "upper|" + component);
+        String singlePath = find(joinedValues, component);
+
+        String lower = lowerPath != null ? toNumberString(readers.number(readers.get(valueHolder, lowerPath))) : null;
+        String upper = upperPath != null ? toNumberString(readers.number(readers.get(valueHolder, upperPath))) : null;
+        String single = singlePath != null ? toNumberString(readers.number(readers.get(valueHolder, singlePath))) : null;
+
+        if (StringUtils.isBlank(lower) && StringUtils.isBlank(upper) && StringUtils.isBlank(single)) {
+            return null;
+        }
+        String start = StringUtils.isNotBlank(single) ? single : lower;
+        String startIso = StringUtils.isNotBlank(start) ? isoPrefix + start + isoSuffix : null;
+        String upperIso = StringUtils.isNotBlank(upper) ? isoPrefix + upper + isoSuffix : null;
+        if (StringUtils.isBlank(startIso)) {
+            return null;
+        }
+        return new DurationValue(startIso, upperIso);
+    }
+
+    private static String toNumberString(Object value) {
+        if (!(value instanceof Number n)) {
+            return null;
+        }
+        double d = n.doubleValue();
+        if (d == Math.rint(d)) {
+            return Long.toString((long) d);
+        }
+        return Double.toString(d);
+    }
+
+    private static Number normalizeDurationComponentNumber(Double value) {
+        if (value == null) {
+            return null;
+        }
+        if (value == Math.rint(value)) {
+            return Long.valueOf(value.longValue());
+        }
+        return value;
     }
 
     private static String find(List<String> joinedValues, String suffix) {

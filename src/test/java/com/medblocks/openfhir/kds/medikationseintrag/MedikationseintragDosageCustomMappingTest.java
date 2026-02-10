@@ -32,6 +32,8 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
         String doseUnit = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/dosis/quantity_value|unit";
         String rateMag = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value|magnitude";
         String rateUnit = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value|unit";
+        String durationValue = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsdauer|value";
+        String duration = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsdauer";
 
         Assert.assertTrue("dose magnitude missing", flat.has(doseMag));
         Assert.assertTrue("dose unit missing", flat.has(doseUnit));
@@ -42,5 +44,11 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
         Assert.assertTrue("rate unit missing", flat.has(rateUnit));
         Assert.assertEquals(50, flat.get(rateMag).getAsDouble(), 0.0001);
         Assert.assertEquals("mg/Minuten", flat.get(rateUnit).getAsString());
+
+        Assert.assertTrue("duration missing", flat.has(durationValue) || flat.has(duration));
+        String actualDuration = flat.has(durationValue)
+                ? flat.get(durationValue).getAsString()
+                : flat.get(duration).getAsString();
+        Assert.assertEquals("PT30M", actualDuration);
     }
 }

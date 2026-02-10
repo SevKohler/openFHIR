@@ -25,6 +25,7 @@ context:
     - "RESOURCE.list.min"
     - "RESOURCE.medication.min"
     - "CLUSTER.case_identification.v0"
+    - "CLUSTER.timing_daily.v1"
   extensions:
     - "KDS_medication.v3"
     - "KDS_medikamentenstatement"

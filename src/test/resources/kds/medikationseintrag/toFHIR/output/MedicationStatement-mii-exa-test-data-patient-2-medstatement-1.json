@@ -78,15 +78,19 @@
         "dateAsserted": "2024-03-06T00:00:00+01:00",
         "dosage": [
           {
-            "text": "Morphin 10mg alle 6 Stunden bei Bedarf",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 10.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Morphin 10mg alle 6 Stunden bei Bedarf"
           }
         ]
       }

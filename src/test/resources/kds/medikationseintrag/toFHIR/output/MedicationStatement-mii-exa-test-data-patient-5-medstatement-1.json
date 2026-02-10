@@ -78,15 +78,19 @@
         "dateAsserted": "2023-07-11T00:00:00+02:00",
         "dosage": [
           {
-            "text": "Leuprorelin 3,75mg s.c. alle 4 Wochen",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 3.75,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20066000",
+                  "display": "Subcutaneous use"
                 }
-              }
-            ]
+              ],
+              "text": "Subcutaneous use"
+            }
+          },
+          {
+            "text": "Leuprorelin 3,75mg s.c. alle 4 Wochen"
           }
         ]
       }

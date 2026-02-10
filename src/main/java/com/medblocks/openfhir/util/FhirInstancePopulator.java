@@ -108,6 +108,8 @@ public class FhirInstancePopulator {
             populateCoding(toPopulate, (Coding) data);
         } else if (data instanceof Attachment) {
             populateAttachment(toPopulate, (Attachment) data);
+        } else if (data instanceof Ratio) {
+            populateRatio(toPopulate, (Ratio) data);
         } else if (data instanceof StringType) {
             populateStringType(toPopulate, (StringType) data);
         } else if (data instanceof BooleanType) {
@@ -198,6 +200,17 @@ public class FhirInstancePopulator {
     private void populateAttachment(Object toPopulate, Attachment data) {
         if (toPopulate instanceof Attachment) {
             data.copyValues((Attachment) toPopulate);
+        }
+    }
+
+    private void populateRatio(Object toPopulate, Ratio data) {
+        if (toPopulate instanceof Ratio) {
+            data.copyValues((Ratio) toPopulate);
+        } else if (toPopulate instanceof Quantity quantity) {
+            // If a Ratio is mapped onto a Quantity target, keep the numerator as the value
+            if (data.getNumerator() != null) {
+                data.getNumerator().copyValues(quantity);
+            }
         }
     }
 

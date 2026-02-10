@@ -22,9 +22,10 @@ import org.hl7.fhir.r4.model.Timing;
 
 @Slf4j
 public class DosageCustomMappings extends CustomMapping {
-
+    // TODO operates currently on the Flat paths this makes the mappers only usable for the KDS mappigns, there need to be some resolving to canonicalpaths back and forth implemented
     private static final Set<String> CODES = Set.of(
-            "timingToDaily_NonDaily",
+            "timingToDaily",
+            "timingNonDaily",
             "dosageQuantityToRange",
             "ratio_to_dv_quantity",
             "ratio_to_dosage",
@@ -56,7 +57,8 @@ public class DosageCustomMappings extends CustomMapping {
             case "dosageQuantityToRange" -> applyDosageQuantityToRange(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dv_quantity" -> applyRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dosage" -> applyRatioToDosage(openEhrPath, fhirValue, flat, populator);
-            case "timingToDaily_NonDaily" -> applyTimingToDaily(openEhrPath, fhirValue, flat, populator);
+            case "timingToDaily" -> applyTimingToDaily(openEhrPath, fhirValue, flat, populator);
+            case "timingNonDaily" -> applyTimingToNonDaily(openEhrPath, fhirValue, flat, populator);
             case "dosageDurationToAdministrationDuration" -> applyDurationToAdministration(openEhrPath, fhirValue, flat, populator);
             default -> false;
         };
@@ -79,7 +81,8 @@ public class DosageCustomMappings extends CustomMapping {
             case "dosageQuantityToRange" -> toFhirDose(joinedValues, valueHolder, lastIndex, path, fhirPath, mapperUtils);
             case "ratio_to_dv_quantity" -> toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dosage" -> toFhirRatioDosage(joinedValues, valueHolder, lastIndex, path, mapperUtils);
-            case "timingToDaily_NonDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "timingToDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "timingNonDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "dosageDurationToAdministrationDuration" -> toFhirTimingRepeat(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             default -> null;
         };
@@ -147,6 +150,7 @@ public class DosageCustomMappings extends CustomMapping {
         if (StringUtils.isNotBlank(code)) {
             q.setCode(code);
         }
+        setUcumSystemIfPresent(q);
 
         populator.setFhirPathValue(openEhrPath, q, FhirConnectConst.DV_QUANTITY, flat);
         return true;
@@ -183,6 +187,7 @@ public class DosageCustomMappings extends CustomMapping {
         if (StringUtils.isNotBlank(numerator.getCode())) {
             rateQuantity.setCode(numerator.getCode());
         }
+        setUcumSystemIfPresent(rateQuantity);
         String ratePath = appendFlatChild(openEhrPath, "verabreichungsrate/quantity_value");
         populator.setFhirPathValue(ratePath, rateQuantity, FhirConnectConst.DV_QUANTITY, flat);
 
@@ -212,61 +217,108 @@ public class DosageCustomMappings extends CustomMapping {
                                        final Base fhirValue,
                                        final JsonObject flat,
                                        final OpenEhrPopulator populator) {
-        if (!(fhirValue instanceof Timing timing)) {
-            return false;
-        }
-        Timing.TimingRepeatComponent repeat = timing.getRepeat();
-        if (repeat == null) {
-            return false;
-        }
-        Timing.UnitsOfTime periodUnit = extractUnitsOfTime(repeat.getPeriodUnit());
-        if (periodUnit == null) {
-            return false;
-        }
-        if (!isAllowedPeriodUnit(periodUnit.toCode())) {
-            return false;
-        }
-        // For daily mapping, period must be 1 when periodUnit is day.
-        Double period = toDouble(repeat.getPeriod());
-        Double periodMax = toDouble(repeat.getPeriodMax());
-        if (periodUnit == Timing.UnitsOfTime.D && period != null && period != 1d) {
+        TimingApplyContext ctx = buildTimingApplyContext(fhirValue);
+        if (ctx == null) {
             return false;
         }
 
+        applyTimingShared(openEhrPath, ctx, flat, populator, true);
+
+        // Frequency -> /frequenz (DV_QUANTITY)
+        if (ctx.repeat.hasFrequency() || ctx.repeat.hasFrequencyMax()) {
+            Integer freq = ctx.repeat.getFrequency();
+            Integer freqMax = ctx.repeat.getFrequencyMax();
+            if (freq != null || freqMax != null) {
+                Double frequency = freq != null ? freq.doubleValue() : (freqMax != null ? freqMax.doubleValue() : null);
+                Double frequencyMax = (freqMax != null && !freqMax.equals(freq)) ? freqMax.doubleValue() : null;
+                String unit = toFrequencyUnit(ctx.periodUnit);
+                TimingFlatMapper.writeFrequency(flat, openEhrPath + "/frequenz", frequency, frequencyMax, unit);
+            }
+        }
+
+        return true;
+    }
+
+    private boolean applyTimingToNonDaily(final String openEhrPath,
+                                          final Base fhirValue,
+                                          final JsonObject flat,
+                                          final OpenEhrPopulator populator) {
+        TimingApplyContext ctx = buildTimingApplyContext(fhirValue);
+        if (ctx == null) {
+            return false;
+        }
+        applyTimingShared(openEhrPath, ctx, flat, populator, false);
+        return true;
+    }
+
+    private static final class TimingApplyContext {
+        private final Timing.TimingRepeatComponent repeat;
+        private final Timing.UnitsOfTime periodUnit;
+        private final Double period;
+        private final Double periodMax;
+
+        private TimingApplyContext(Timing.TimingRepeatComponent repeat,
+                                   Timing.UnitsOfTime periodUnit,
+                                   Double period,
+                                   Double periodMax) {
+            this.repeat = repeat;
+            this.periodUnit = periodUnit;
+            this.period = period;
+            this.periodMax = periodMax;
+        }
+    }
+
+    private TimingApplyContext buildTimingApplyContext(final Base fhirValue) {
+        if (!(fhirValue instanceof Timing timing)) {
+            return null;
+        }
+        Timing.TimingRepeatComponent repeat = timing.getRepeat();
+        if (repeat == null) {
+            return null;
+        }
+        Timing.UnitsOfTime periodUnit = extractUnitsOfTime(repeat.getPeriodUnit());
+        if (periodUnit == null) {
+            return null;
+        }
+        if (!isAllowedPeriodUnit(periodUnit.toCode())) {
+            return null;
+        }
+        Double period = toDouble(repeat.getPeriod());
+        Double periodMax = toDouble(repeat.getPeriodMax());
+        return new TimingApplyContext(repeat, periodUnit, period, periodMax);
+    }
+
+    private void applyTimingShared(final String openEhrPath,
+                                   final TimingApplyContext ctx,
+                                   final JsonObject flat,
+                                   final OpenEhrPopulator populator,
+                                   final boolean dailyPeriodFormat) {
         // Specific time (timeOfDay[0]) -> /zeitpunkt (DV_TIME)
-        if (repeat.hasTimeOfDay() && !repeat.getTimeOfDay().isEmpty()) {
-            TimeType time = repeat.getTimeOfDay().get(0);
+        if (ctx.repeat.hasTimeOfDay() && !ctx.repeat.getTimeOfDay().isEmpty()) {
+            TimeType time = ctx.repeat.getTimeOfDay().get(0);
             if (time != null && StringUtils.isNotBlank(time.getValueAsString())) {
                 populator.setFhirPathValue(openEhrPath + "/zeitpunkt", new TimeType(time.getValueAsString()),
                         FhirConnectConst.DV_TIME, flat);
             }
         }
 
-        // Frequency -> /frequenz (DV_QUANTITY)
-        if (repeat.hasFrequency() || repeat.hasFrequencyMax()) {
-            Integer freq = repeat.getFrequency();
-            Integer freqMax = repeat.getFrequencyMax();
-            if (freq != null || freqMax != null) {
-                Double frequency = freq != null ? freq.doubleValue() : (freqMax != null ? freqMax.doubleValue() : null);
-                Double frequencyMax = (freqMax != null && !freqMax.equals(freq)) ? freqMax.doubleValue() : null;
-                String unit = toFrequencyUnit(periodUnit);
-                TimingFlatMapper.writeFrequency(flat, openEhrPath + "/frequenz", frequency, frequencyMax, unit);
-            }
-        }
-
         // Interval/period -> /periode (DV_DURATION)
-        if (repeat.hasPeriod() && repeat.hasPeriodUnit()) {
-            // Skip interval when it's the daily default (period=1 day)
-            if (!(periodUnit == Timing.UnitsOfTime.D && period != null && period == 1d && (periodMax == null || periodMax == 1d))) {
-                String duration = durationString(period, periodUnit);
-                String durationMax = periodMax != null ? durationString(periodMax, periodUnit) : null;
-                if (StringUtils.isNotBlank(duration)) {
-                    TimingFlatMapper.writePeriodDuration(flat, openEhrPath + "/periode", duration, durationMax);
+        if (ctx.repeat.hasPeriod() && ctx.repeat.hasPeriodUnit()) {
+            String duration = durationString(ctx.period, ctx.periodUnit);
+            String durationMax = ctx.periodMax != null ? durationString(ctx.periodMax, ctx.periodUnit) : null;
+            if (StringUtils.isNotBlank(duration)) {
+                if (dailyPeriodFormat) {
+                    TimingFlatMapper.writeDailyPeriod(
+                            flat,
+                            openEhrPath + "/periode",
+                            ctx.period,
+                            ctx.periodMax,
+                            ctx.periodUnit.toCode());
+                } else {
+                    TimingFlatMapper.writePeriodDurationValue(flat, openEhrPath + "/periode", duration, durationMax);
                 }
             }
         }
-
-        return true;
     }
 
     private boolean applyDurationToAdministration(final String openEhrPath,
@@ -347,9 +399,11 @@ public class DosageCustomMappings extends CustomMapping {
         Quantity numerator = new Quantity();
         numerator.setValue(((Number) n).doubleValue());
         numerator.setUnit(parts[0]);
+        numerator.setSystem("http://unitsofmeasure.org");
         Quantity denominator = new Quantity();
         denominator.setValue(1);
         denominator.setUnit(parts.length > 1 ? parts[1] : null);
+        denominator.setSystem("http://unitsofmeasure.org");
 
         Ratio ratio = new Ratio();
         ratio.setNumerator(numerator);
@@ -363,14 +417,16 @@ public class DosageCustomMappings extends CustomMapping {
                                                                 final String path,
                                                                 final OpenFhirMapperUtils mapperUtils) {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
+
         Quantity rateQuantity = readRateQuantity(readers, valueHolder, joinedValues);
         if (rateQuantity == null || rateQuantity.getValue() == null) {
             return null;
         }
 
-        String durationPath = find(joinedValues, "verabreichungsdauer|value");
-        if (durationPath == null) durationPath = find(joinedValues, "verabreichungsdauer/duration_value|value");
-        if (durationPath == null) durationPath = find(joinedValues, "verabreichungsdauer");
+
+        String durationPath = findInValueHolder(valueHolder, "verabreichungsdauer|value");
+        if (durationPath == null) durationPath = findInValueHolder(valueHolder, "verabreichungsdauer/duration_value|value");
+        if (durationPath == null) durationPath = findInValueHolder(valueHolder, "verabreichungsdauer");
         String duration = durationPath != null ? readers.get(valueHolder, durationPath) : null;
         if (StringUtils.isBlank(duration)) {
             // fallback to existing ratio parsing if duration is missing
@@ -385,13 +441,14 @@ public class DosageCustomMappings extends CustomMapping {
         numerator.setValue(rateQuantity.getValue().doubleValue() * parts.value);
         numerator.setUnit(rateQuantity.getUnit());
         numerator.setCode(rateQuantity.getCode());
+        numerator.setSystem("http://unitsofmeasure.org");
 
         Quantity denominator = new Quantity();
         String denomUnit = unitToCode(parts.unit);
         denominator.setValue(parts.value);
         denominator.setUnit(denomUnit);
         denominator.setCode(denomUnit);
-
+        denominator.setSystem("http://unitsofmeasure.org");
         Ratio ratio = new Ratio();
         ratio.setNumerator(numerator);
         ratio.setDenominator(denominator);
@@ -401,24 +458,25 @@ public class DosageCustomMappings extends CustomMapping {
     private Quantity readRateQuantity(final FhirValueReaders readers,
                                       final JsonObject valueHolder,
                                       final List<String> joinedValues) {
-        String magPath = find(joinedValues, "verabreichungsrate/quantity_value|magnitude");
-        if (magPath == null) magPath = find(joinedValues, "verabreichungsrate|magnitude");
-        String unitPath = find(joinedValues, "verabreichungsrate/quantity_value|unit");
-        if (unitPath == null) unitPath = find(joinedValues, "verabreichungsrate|unit");
+        String magPath = findInValueHolder(valueHolder, "verabreichungsrate/quantity_value|magnitude");
+        if (magPath == null) magPath = findInValueHolder(valueHolder, "verabreichungsrate|magnitude");
+        String unitPath = findInValueHolder(valueHolder, "verabreichungsrate/quantity_value|unit");
+        if (unitPath == null) unitPath = findInValueHolder(valueHolder, "verabreichungsrate|unit");
         if (magPath != null) {
-            Object n = readers.number(readers.get(valueHolder, magPath));
-            if (n instanceof Number num) {
-                Quantity q = new Quantity();
-                q.setValue(num.doubleValue());
+            Object number = readers.number(readers.get(valueHolder, magPath));
+            if (number instanceof Number num) {
+                Quantity quantity = new Quantity();
+                quantity.setValue(num.doubleValue());
                 if (unitPath != null) {
                     String unit = readers.get(valueHolder, unitPath);
-                    q.setUnit(unit);
-                    q.setCode(unit);
+                    quantity.setUnit(unit);
+                    quantity.setCode(unit);
                 }
-                return q;
+                setUcumSystemIfPresent(quantity);
+                return quantity;
             }
         }
-        return readQuantityForSide(readers, valueHolder, joinedValues, "");
+        return null;
     }
 
     // resolveCanonicalPath now lives in CustomMapping
@@ -576,7 +634,23 @@ public class DosageCustomMappings extends CustomMapping {
             }
         }
 
-        return populated ? q : null;
+        if (populated) {
+            setUcumSystemIfPresent(q);
+            return q;
+        }
+        return null;
+    }
+
+    private void setUcumSystemIfPresent(Quantity quantity) {
+        if (quantity == null) {
+            return;
+        }
+        if (quantity.hasSystem()) {
+            return;
+        }
+        if (StringUtils.isNotBlank(quantity.getCode()) || StringUtils.isNotBlank(quantity.getUnit())) {
+            quantity.setSystem("http://unitsofmeasure.org");
+        }
     }
 
     private String buildUnit(String numeratorUnit, String denominatorUnit) {
@@ -656,6 +730,11 @@ public class DosageCustomMappings extends CustomMapping {
     private String find(List<String> joinedValues, String suffix) {
         if (joinedValues == null) return null;
         return joinedValues.stream().filter(s -> s.endsWith(suffix)).findFirst().orElse(null);
+    }
+
+    private String findInValueHolder(JsonObject valueHolder, String suffix) {
+        if (valueHolder == null || valueHolder.keySet() == null) return null;
+        return valueHolder.keySet().stream().filter(s -> s.endsWith(suffix)).findFirst().orElse(null);
     }
 
     private void setFrequency(Timing.TimingRepeatComponent repeat, Double frequency, Double frequencyMax) {

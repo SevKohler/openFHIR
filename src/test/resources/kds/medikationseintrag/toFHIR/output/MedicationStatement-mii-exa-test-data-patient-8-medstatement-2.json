@@ -78,15 +78,19 @@
         "dateAsserted": "2023-11-12T00:00:00+01:00",
         "dosage": [
           {
-            "text": "Metoprolol 50mg 2x täglich",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 50.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Metoprolol 50mg 2x täglich"
           }
         ]
       }

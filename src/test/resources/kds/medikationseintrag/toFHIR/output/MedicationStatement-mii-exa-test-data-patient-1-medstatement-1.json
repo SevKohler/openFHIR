@@ -81,6 +81,18 @@
         "dateAsserted": "2020-08-30T00:00:00+02:00",
         "dosage": [
           {
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
+                }
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
             "text": "ASS 100 mg 1x täglich mittags eine Tablette oral"
           }
         ]

@@ -78,15 +78,19 @@
         "dateAsserted": "2019-05-16T00:00:00+02:00",
         "dosage": [
           {
-            "text": "Topiramat 50mg 2x täglich zur Prophylaxe",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 50.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Topiramat 50mg 2x täglich zur Prophylaxe"
           }
         ]
       }

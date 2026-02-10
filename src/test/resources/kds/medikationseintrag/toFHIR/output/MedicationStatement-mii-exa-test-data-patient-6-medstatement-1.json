@@ -78,15 +78,19 @@
         "dateAsserted": "2022-03-13T00:00:00+01:00",
         "dosage": [
           {
-            "text": "Pantoprazol 40mg 1x täglich morgens",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 40.0,
-                  "unit": "mg"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
                 }
-              }
-            ]
+              ],
+              "text": "Oral use"
+            }
+          },
+          {
+            "text": "Pantoprazol 40mg 1x täglich morgens"
           }
         ]
       }

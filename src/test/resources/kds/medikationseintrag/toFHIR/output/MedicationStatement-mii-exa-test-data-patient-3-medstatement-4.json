@@ -9,9 +9,6 @@
           {
             "resourceType": "Medication",
             "id": "1",
-            "code": {
-              "text": "Infusion bestehend aus 85mg Doxorubicin aufgeloest zur Verabreichung in 250ml 5-%iger (50 mg/ml) Glucose-Infusionsloesung"
-            },
             "form": {
               "coding": [
                 {
@@ -70,15 +67,19 @@
         "dateAsserted": "2022-04-14T00:00:00+02:00",
         "dosage": [
           {
-            "text": "Doxorubicin (Caelyx) 50 mg je Quadratmeter Koerperoberflaeche alle vier Wochen per intravenoeser Tropfinfusion",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 50.0,
-                  "unit": "mg/kilogram"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20045000",
+                  "display": "Intravenous use"
                 }
-              }
-            ]
+              ],
+              "text": "Intravenous use"
+            }
+          },
+          {
+            "text": "Doxorubicin (Caelyx) 50 mg je Quadratmeter Koerperoberflaeche alle vier Wochen per intravenoeser Tropfinfusion"
           }
         ]
       }

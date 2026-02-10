@@ -90,15 +90,19 @@
         "dateAsserted": "2024-01-10T00:00:00+01:00",
         "dosage": [
           {
-            "text": "Amoxicillin/Clavulansäure 1,2g IV alle 8 Stunden",
-            "doseAndRate": [
-              {
-                "doseQuantity": {
-                  "value": 1.2,
-                  "unit": "g"
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20045000",
+                  "display": "Intravenous use"
                 }
-              }
-            ]
+              ],
+              "text": "Intravenous use"
+            }
+          },
+          {
+            "text": "Amoxicillin/Clavulansäure 1,2g IV alle 8 Stunden"
           }
         ]
       }

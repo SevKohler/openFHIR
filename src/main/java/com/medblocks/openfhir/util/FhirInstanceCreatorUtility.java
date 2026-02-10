@@ -196,6 +196,14 @@ public class FhirInstanceCreatorUtility {
         final Child childAnnotation = field.getAnnotation(Child.class);
 
         final Class<? extends IElement>[] types = childAnnotation.type();
+        // If this is a List<Enumeration<...>>, always instantiate Enumeration (not CodeType)
+        if (field.getType().equals(List.class) && field.getGenericType() instanceof ParameterizedType pt) {
+            final Type actualTypeArgument = pt.getActualTypeArguments()[0];
+            final String typeName = actualTypeArgument.getTypeName();
+            if (typeName.contains("Enumeration")) {
+                return Enumeration.class;
+            }
+        }
 
         if (types.length == 0) {
             // backboneelement
@@ -209,6 +217,19 @@ public class FhirInstanceCreatorUtility {
                 return getClassForName(field.getType().getName());
             }
         } else {
+            if (field.getGenericType() instanceof ParameterizedType) {
+                final Type actualTypeArgument = ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
+                if (actualTypeArgument instanceof ParameterizedType paramType) {
+                    final Type raw = paramType.getRawType();
+                    if (raw instanceof Class<?> rawClass && rawClass.equals(Enumeration.class)) {
+                        return Enumeration.class;
+                    }
+                } else if (actualTypeArgument instanceof Class<?> clazz && Enumeration.class.isAssignableFrom(clazz)) {
+                    return Enumeration.class;
+                } else if (Enumeration.class.getName().equals(actualTypeArgument.getTypeName())) {
+                    return Enumeration.class;
+                }
+            }
             if (forcingClass == null) {
                 if (field.getType().isAssignableFrom(Enumeration.class)) {
                     return field.getType();

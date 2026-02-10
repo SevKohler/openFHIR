@@ -42,7 +42,7 @@ public class DosageCustomMappingsTest {
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
                 "ratio_to_dv_quantity", "rate", rate, FhirConnectConst.DV_QUANTITY, flat, populator, mapperUtils, stringUtils));
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
-                "timingToDaily_NonDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
+                "timingToDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
 
         Assert.assertEquals(600.0, flat.get("dose|magnitude").getAsDouble(), 0.0001);
         Assert.assertEquals("mg", flat.get("dose|unit").getAsString());
@@ -53,7 +53,8 @@ public class DosageCustomMappingsTest {
         Assert.assertEquals("08:00:00", flat.get("timing/zeitpunkt").getAsString());
         Assert.assertEquals(3.0, flat.get("timing/frequenz|magnitude").getAsDouble(), 0.0001);
         Assert.assertEquals("1/d", flat.get("timing/frequenz|unit").getAsString());
-        Assert.assertFalse("periode should be omitted for daily timing", flat.has("timing/periode|value"));
+        Assert.assertEquals(1.0, flat.get("timing/periode|day").getAsDouble(), 0.0001);
+        Assert.assertFalse("daily period should not use duration value format", flat.has("timing/periode/duration_value|value"));
     }
 
     @Test
@@ -88,7 +89,7 @@ public class DosageCustomMappingsTest {
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
                 "ratio_to_dv_quantity", "rate", rate, FhirConnectConst.DV_QUANTITY, flat, populator, mapperUtils, stringUtils));
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
-                "timingToDaily_NonDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
+                "timingToDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
                 "dosageDurationToAdministrationDuration", "duration", durationRepeat, FhirConnectConst.DV_DURATION, flat, populator, mapperUtils, stringUtils));
 
@@ -103,9 +104,28 @@ public class DosageCustomMappingsTest {
         Assert.assertEquals("08:00:00", flat.get("timing/zeitpunkt").getAsString());
         Assert.assertEquals(3.0, flat.get("timing/frequenz|magnitude").getAsDouble(), 0.0001);
         Assert.assertEquals("1/h", flat.get("timing/frequenz|unit").getAsString());
-        Assert.assertEquals("PT2H", flat.get("timing/periode/lower|value").getAsString());
-        Assert.assertEquals("PT3H", flat.get("timing/periode/upper|value").getAsString());
+        Assert.assertEquals(2.0, flat.get("timing/periode/lower|hour").getAsDouble(), 0.0001);
+        Assert.assertEquals(3.0, flat.get("timing/periode/upper|hour").getAsDouble(), 0.0001);
 
         Assert.assertEquals("PT1H-PT3H", flat.get("duration").getAsString());
+    }
+
+    @Test
+    public void mapsTimingNonDailyPeriodAsDurationValue() {
+        JsonObject flat = new JsonObject();
+
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
+        repeat.setPeriod(2);
+        repeat.setPeriodMax(3);
+        repeat.setPeriodUnit(Timing.UnitsOfTime.H);
+        timing.setRepeat(repeat);
+
+        Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
+                "timingNonDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
+
+        Assert.assertEquals("PT2H", flat.get("timing/periode/duration_value/lower|value").getAsString());
+        Assert.assertEquals("PT3H", flat.get("timing/periode/duration_value/upper|value").getAsString());
+        Assert.assertFalse("non-daily period should not use daily component format", flat.has("timing/periode|day"));
     }
 }

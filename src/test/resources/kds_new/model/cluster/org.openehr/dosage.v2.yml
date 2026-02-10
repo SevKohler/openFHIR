@@ -33,11 +33,28 @@ mappings:
       fhir: "$fhirRoot.doseAndRate.rate.as(Quantity)"
       openehr: "$archetype/items[at0134]"
 
-  - name: "dosageTiming"
+  - name: "dosageDailyTiming"
     with:
-      fhir: "$fhirRoot.timing"
+      fhir: "$fhirRoot"
       openehr: "$archetype/items[openEHR-EHR-CLUSTER.timing_daily.v1]"
-    mappingCode: "timingToDaily_NonDaily"
+    slotArchetype: "CLUSTER.timing_daily.v1"
+    fhirCondition:
+      targetRoot: "$fhirRoot"
+      targetAttribute: "timing.repeat.periodUnit"
+      operator: "one of"
+      criteria: "[s, min, h, d]"
+
+
+  - name: "dosageTimingNonDaily"
+    with:
+      fhir: "$fhirRoot"
+      openehr: "$archetype/items[openEHR-EHR-CLUSTER.timing_nondaily.v1"
+    slotArchetype: "CLUSTER.timing_nondaily.v1"
+    fhirCondition:
+      targetRoot: "$fhirRoot"
+      targetAttribute: "timing.periodUnit"
+      operator: "not of"
+      criteria: "[s, min, h, d]"
 
 #  - name: "doseQuantityValue"
 #    with:
