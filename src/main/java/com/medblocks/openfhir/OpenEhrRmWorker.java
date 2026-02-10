@@ -108,9 +108,20 @@ public class OpenEhrRmWorker {
             webTemplateNodes.stream()
                     .filter(wn -> "date_time_value".equals(wn.getId())).findAny()
                     .ifPresent(identifierValue -> constructing.add("date_time_value"));
-            webTemplateNodes.stream()
-                    .filter(wn -> "quantity_value".equals(wn.getId())).findAny()
-                    .ifPresent(identifierValue -> constructing.add("quantity_value"));
+            boolean hasIntervalQuantity = webTemplateNodes.stream()
+                    .anyMatch(wn -> "interval_of_quantity_value".equals(wn.getId()));
+            boolean hasQuantity = webTemplateNodes.stream()
+                    .anyMatch(wn -> "quantity_value".equals(wn.getId()));
+            if (hasIntervalQuantity || hasQuantity) {
+                boolean wantsInterval = forcedTypes != null && forcedTypes.contains("DV_INTERVAL");
+                if (wantsInterval && hasIntervalQuantity) {
+                    constructing.add("interval_of_quantity_value");
+                } else if (hasQuantity) {
+                    constructing.add("quantity_value");
+                } else if (hasIntervalQuantity) {
+                    constructing.add("interval_of_quantity_value");
+                }
+            }
 
             fhirToOpenEhrHelper.setOpenEhrPath(constructing.toString());
             if (!webTemplateNodes.isEmpty()) {
@@ -120,7 +131,8 @@ public class OpenEhrRmWorker {
                                     || "identifier_value".equals(wn.getId())
                                     || "coded_text_value".equals(wn.getId())
                                     || "quantity_value".equals(wn.getId())
-                                    || "date_time_value".equals(wn.getId()))
+                                    || "date_time_value".equals(wn.getId())
+                                    || "interval_of_quantity_value".equals(wn.getId()))
                             .findAny().ifPresent(
                                     valueForActualType -> fhirToOpenEhrHelper.setOpenEhrType(valueForActualType.getRmType()));
                 }

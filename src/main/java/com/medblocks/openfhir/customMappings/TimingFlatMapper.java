@@ -11,7 +11,8 @@ final class TimingFlatMapper {
 
     enum FrequencyFormat {
         DIRECT,
-        QUANTITY_VALUE
+        QUANTITY_VALUE,
+        INTERVAL_QUANTITY_VALUE
     }
 
     enum DurationFormat {
@@ -22,6 +23,11 @@ final class TimingFlatMapper {
     static FrequencyFormat detectFrequencyFormat(JsonObject flat, String basePath) {
         if (flat == null || StringUtils.isBlank(basePath)) {
             return FrequencyFormat.DIRECT;
+        }
+        if (flat.has(basePath + "/interval<dv_quantity>_value|magnitude")
+                || flat.has(basePath + "/interval<dv_quantity>_value/lower|magnitude")
+                || flat.has(basePath + "/interval<dv_quantity>_value/upper|magnitude")) {
+            return FrequencyFormat.INTERVAL_QUANTITY_VALUE;
         }
         if (flat.has(basePath + "/quantity_value|magnitude")
                 || flat.has(basePath + "/quantity_value/lower|magnitude")
@@ -48,10 +54,22 @@ final class TimingFlatMapper {
             return;
         }
         FrequencyFormat format = detectFrequencyFormat(flat, basePath);
-        if (format == FrequencyFormat.QUANTITY_VALUE) {
-            set(flat, basePath + "/quantity_value|magnitude", frequency);
-            if (StringUtils.isNotBlank(unit)) {
-                set(flat, basePath + "/quantity_value|unit", unit);
+        if (format == FrequencyFormat.INTERVAL_QUANTITY_VALUE || format == FrequencyFormat.QUANTITY_VALUE) {
+            String prefix = format == FrequencyFormat.INTERVAL_QUANTITY_VALUE
+                    ? basePath + "/interval<dv_quantity>_value"
+                    : basePath + "/quantity_value";
+            if (frequencyMax != null && !frequencyMax.equals(frequency)) {
+                set(flat, prefix + "/lower|magnitude", frequency);
+                set(flat, prefix + "/upper|magnitude", frequencyMax);
+                if (StringUtils.isNotBlank(unit)) {
+                    set(flat, prefix + "/lower|unit", unit);
+                    set(flat, prefix + "/upper|unit", unit);
+                }
+            } else {
+                set(flat, prefix + "|magnitude", frequency);
+                if (StringUtils.isNotBlank(unit)) {
+                    set(flat, prefix + "|unit", unit);
+                }
             }
             return;
         }
@@ -87,10 +105,13 @@ final class TimingFlatMapper {
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
         }
-        String lowerMag = find(joinedValues, "lower|magnitude");
-        String upperMag = find(joinedValues, "upper|magnitude");
-        String mag = find(joinedValues, "magnitude");
-        String unit = find(joinedValues, "lower|unit");
+        String lowerMag = find(joinedValues, "interval<dv_quantity>_value/lower|magnitude");
+        if (lowerMag == null) lowerMag = find(joinedValues, "lower|magnitude");
+        String upperMag = find(joinedValues, "interval<dv_quantity>_value/upper|magnitude");
+        if (upperMag == null) upperMag = find(joinedValues, "upper|magnitude");
+        String mag = find(joinedValues, "interval<dv_quantity>_value|magnitude");
+        if (mag == null) mag = find(joinedValues, "magnitude");
+        String unit = find(joinedValues, "interval<dv_quantity>_value/lower|unit");
         if (unit == null) unit = find(joinedValues, "upper|unit");
         if (unit == null) unit = find(joinedValues, "unit");
 

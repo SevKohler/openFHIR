@@ -92,7 +92,8 @@ public class DosageCustomMappings extends CustomMapping {
             flat.remove(openEhrPath + "|unit");
             flat.remove(openEhrPath + "|code");
             flat.remove(openEhrPath + "|value");
-            populator.setFhirPathValue(openEhrPath, range, FhirConnectConst.DV_INTERVAL, flat);
+            String intervalPath = toIntervalOfQuantityPath(openEhrPath);
+            populator.setFhirPathValue(intervalPath, range, FhirConnectConst.DV_INTERVAL, flat);
             return true;
         }
         if (fhirValue instanceof Quantity quantity) {
@@ -104,6 +105,20 @@ public class DosageCustomMappings extends CustomMapping {
             return true;
         }
         return false;
+    }
+
+    private String toIntervalOfQuantityPath(final String path) {
+        if (path == null) {
+            return null;
+        }
+        if (path.endsWith("/interval<dv_quantity>_value")) {
+            return path;
+        }
+        if (path.endsWith("/quantity_value")) {
+            String base = path.substring(0, path.length() - "/quantity_value".length());
+            return base + "/interval<dv_quantity>_value";
+        }
+        return path;
     }
 
     private boolean applyRatioToDvQuantity(final String openEhrPath,

@@ -401,17 +401,17 @@ public class OpenEhrPopulator {
             if (period.getStart() != null) {
                 addToConstructingFlat(path + "/lower|value",
                         openFhirMapperUtils.dateTimeToString(period.getStart()), flat);
-                addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_DATE_TIME, flat);
-                addToConstructingFlat(path + "/lower_included", "true", flat);
+//                addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_DATE_TIME, flat);
+//                addToConstructingFlat(path + "/lower_included", "true", flat); unsupported in flat
             }
             if (period.getEnd() != null) {
                 addToConstructingFlat(path + "/upper|value",
                         openFhirMapperUtils.dateTimeToString(period.getEnd()), flat);
-                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_DATE_TIME, flat);
-                addToConstructingFlat(path + "/upper_included", "true", flat);
+//                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_DATE_TIME, flat);
+                //               addToConstructingFlat(path + "/upper_included", "true", flat); unsupported in flat
             }
             if (period.getStart() != null || period.getEnd() != null) {
-                addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
+//                addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
             }
             return true;
         } else if (value instanceof Range range) {
@@ -421,21 +421,21 @@ public class OpenEhrPopulator {
             Quantity low = range.getLow();
             if (hasQuantityContent(low)) {
                 handleDvQuantity(path + "/lower", low, flat);
-                addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_QUANTITY, flat);
-                addToConstructingFlat(path + "/lower_included", "true", flat);
+ //               addToConstructingFlat(path + "/lower|_type", FhirConnectConst.DV_QUANTITY, flat);
+ //               addToConstructingFlat(path + "/lower_included", "true", flat); unsupported in flat
                 lowerPopulated = true;
             }
 
             Quantity high = range.getHigh();
             if (hasQuantityContent(high)) {
                 handleDvQuantity(path + "/upper", high, flat);
-                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_QUANTITY, flat);
-                addToConstructingFlat(path + "/upper_included", "true", flat);
+//                addToConstructingFlat(path + "/upper|_type", FhirConnectConst.DV_QUANTITY, flat);
+//                addToConstructingFlat(path + "/upper_included", "true", flat); unsupported in flat
                 upperPopulated = true;
             }
 
             if (lowerPopulated || upperPopulated) {
-                addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
+ //               addToConstructingFlat(path + "|_type", FhirConnectConst.DV_INTERVAL, flat);
                 return true;
             }
         }

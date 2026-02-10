@@ -82,15 +82,10 @@ public class OpenEhrPopulatorTest {
 
         populator.setFhirPathValue("specimen/collection_time", period, FhirConnectConst.DV_INTERVAL, flat);
 
-        Assert.assertEquals("DV_INTERVAL", flat.get("specimen/collection_time|_type").getAsString());
-        Assert.assertEquals("DV_DATE_TIME", flat.get("specimen/collection_time/lower|_type").getAsString());
         Assert.assertTrue(flat.get("specimen/collection_time/lower|value").getAsString()
                 .startsWith("2024-02-15T08:00:00"));
-        Assert.assertEquals("DV_DATE_TIME", flat.get("specimen/collection_time/upper|_type").getAsString());
         Assert.assertTrue(flat.get("specimen/collection_time/upper|value").getAsString()
                 .startsWith("2024-02-20T17:30:00"));
-        Assert.assertEquals("true", flat.get("specimen/collection_time/lower_included").getAsString());
-        Assert.assertEquals("true", flat.get("specimen/collection_time/upper_included").getAsString());
     }
 
     @Test
@@ -107,14 +102,11 @@ public class OpenEhrPopulatorTest {
 
         populator.setFhirPathValue("dose/amount", range, FhirConnectConst.DV_INTERVAL, flat);
 
-        Assert.assertEquals("DV_INTERVAL", flat.get("dose/amount|_type").getAsString());
-        Assert.assertEquals("DV_QUANTITY", flat.get("dose/amount/lower|_type").getAsString());
+
         Assert.assertEquals(1.5, flat.get("dose/amount/lower|magnitude").getAsDouble(), 0.0001);
         Assert.assertEquals("mg", flat.get("dose/amount/lower|unit").getAsString());
-        Assert.assertEquals("DV_QUANTITY", flat.get("dose/amount/upper|_type").getAsString());
         Assert.assertEquals(3.0, flat.get("dose/amount/upper|magnitude").getAsDouble(), 0.0001);
         Assert.assertEquals("mg", flat.get("dose/amount/upper|unit").getAsString());
-        Assert.assertEquals("true", flat.get("dose/amount/lower_included").getAsString());
-        Assert.assertEquals("true", flat.get("dose/amount/upper_included").getAsString());
+
     }
 }
