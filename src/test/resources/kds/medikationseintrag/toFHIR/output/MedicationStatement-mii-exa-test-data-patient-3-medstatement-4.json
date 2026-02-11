@@ -5,10 +5,20 @@
     {
       "resource": {
         "resourceType": "MedicationStatement",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationStatement"
+          ]
+        },
         "contained": [
           {
             "resourceType": "Medication",
             "id": "1",
+            "meta": {
+              "profile": [
+                "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/Medication"
+              ]
+            },
             "form": {
               "coding": [
                 {
