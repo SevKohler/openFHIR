@@ -56,6 +56,13 @@
             ]
           }
         ],
+        "identifier": [
+          {
+            "system": "https://www.charite.de/fhir/sid/MedicationStatements",
+            "value": "MS_0000019"
+          }
+        ],
+        "status": "active",
         "category": {
           "coding": [
             {
@@ -75,6 +82,13 @@
         "dateAsserted": "2024-02-22T16:00:00+01:00",
         "dosage": [
           {
+            "timing": {
+              "repeat": {
+                "frequency": 4,
+                "period": 1.0,
+                "periodUnit": "d"
+              }
+            },
             "route": {
               "coding": [
                 {

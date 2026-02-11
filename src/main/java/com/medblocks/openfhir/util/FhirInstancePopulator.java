@@ -28,6 +28,7 @@ import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.TimeType;
+import org.hl7.fhir.r4.model.Timing;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 import org.springframework.stereotype.Component;
 
@@ -96,6 +97,8 @@ public class FhirInstancePopulator {
             populateDateTime(toPopulate, (DateTimeType) data);
         } else if (data instanceof TimeType) {
             populateTimeType(toPopulate, (TimeType) data);
+        } else if (data instanceof Timing) {
+            populateTiming(toPopulate, (Timing) data);
         } else if (data instanceof Identifier) {
             populateIdentifier(toPopulate, (Identifier) data);
         } else if (data instanceof DateType) {
@@ -151,6 +154,12 @@ public class FhirInstancePopulator {
                                                            LocalTime.of(data.getHour(), data.getMinute(),
                                                                         (int) data.getSecond()));
             ((DateTimeType) toPopulate).setValue(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        }
+    }
+
+    private void populateTiming(Object toPopulate, Timing data) {
+        if (toPopulate instanceof Timing timingToPopulate) {
+            data.copyValues(timingToPopulate);
         }
     }
 

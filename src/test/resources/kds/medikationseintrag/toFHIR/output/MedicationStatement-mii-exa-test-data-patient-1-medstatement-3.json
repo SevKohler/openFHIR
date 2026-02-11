@@ -42,6 +42,13 @@
             ]
           }
         ],
+        "identifier": [
+          {
+            "system": "https://www.charite.de/fhir/sid/MedicationStatements",
+            "value": "MS_0000003"
+          }
+        ],
+        "status": "entered-in-error",
         "category": {
           "coding": [
             {

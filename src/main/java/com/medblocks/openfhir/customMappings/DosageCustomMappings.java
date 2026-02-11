@@ -7,6 +7,7 @@ import com.medblocks.openfhir.tofhir.parser.FhirValueReaders;
 import com.medblocks.openfhir.util.OpenEhrPopulator;
 import com.medblocks.openfhir.util.OpenFhirMapperUtils;
 import com.medblocks.openfhir.util.OpenFhirStringUtils;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -117,7 +118,7 @@ public class DosageCustomMappings extends CustomMapping {
         if (path == null) {
             return null;
         }
-        if (path.endsWith("/interval<dv_quantity>_value")) {
+        if (path.endsWith("/interval<dv_quantity>_value")) { // interval_of_time interval_of_date_time
             return path;
         }
         if (path.endsWith("/quantity_value")) {
@@ -522,7 +523,7 @@ public class DosageCustomMappings extends CustomMapping {
                                                                 final Integer lastIndex,
                                                                 final String path,
                                                                 final OpenFhirMapperUtils mapperUtils) {
-        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, false);
+        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, true);
     }
 
     private OpenEhrToFhirHelper.DataWithIndex toFhirTimingNonDaily(final List<String> joinedValues,
@@ -530,7 +531,7 @@ public class DosageCustomMappings extends CustomMapping {
                                                                    final Integer lastIndex,
                                                                    final String path,
                                                                    final OpenFhirMapperUtils mapperUtils) {
-        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, false);
+        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, true);
     }
 
     private OpenEhrToFhirHelper.DataWithIndex toFhirTiming(final List<String> joinedValues,
@@ -541,11 +542,12 @@ public class DosageCustomMappings extends CustomMapping {
                                                            final boolean includeZeitpunkt,
                                                            final boolean inferPeriodFromFrequency) {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
+        List<String> timingValues = collectTimingValues(joinedValues, valueHolder, path);
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
 
         if (includeZeitpunkt) {
-            String timePath = find(joinedValues, "zeitpunkt");
+            String timePath = find(timingValues, "zeitpunkt");
             if (timePath != null) {
                 String time = readers.get(valueHolder, timePath);
                 if (StringUtils.isNotBlank(time)) {
@@ -553,8 +555,25 @@ public class DosageCustomMappings extends CustomMapping {
                 }
             }
         }
+        String eventPath = find(timingValues, "bestimmtes_ereignis:0/ereignis");
+        if (eventPath == null) {
+            eventPath = timingValues.stream()
+                    .filter(v -> v.contains("/bestimmtes_ereignis:") && v.endsWith("/ereignis"))
+                    .findFirst()
+                    .orElse(null);
+        }
+        if (eventPath != null) {
+            String eventCode = readers.get(valueHolder, eventPath);
+            if (StringUtils.isNotBlank(eventCode)) {
+                try {
+                    repeat.addWhen(Timing.EventTiming.fromCode(eventCode));
+                } catch (Exception ignored) {
+                    // Ignore non-FHIR event timing codes.
+                }
+            }
+        }
 
-        TimingFlatMapper.FrequencyValue freq = TimingFlatMapper.readFrequency(valueHolder, joinedValues, readers);
+        TimingFlatMapper.FrequencyValue freq = TimingFlatMapper.readFrequency(valueHolder, timingValues, readers);
         if (freq != null && freq.frequency != null) {
             setFrequency(repeat, freq.frequency, freq.frequencyMax);
             if (inferPeriodFromFrequency) {
@@ -570,7 +589,7 @@ public class DosageCustomMappings extends CustomMapping {
             }
         }
 
-        TimingFlatMapper.DurationValue duration = TimingFlatMapper.readDuration(valueHolder, joinedValues, readers);
+        TimingFlatMapper.DurationValue duration = TimingFlatMapper.readDuration(valueHolder, timingValues, readers);
         if (duration != null && StringUtils.isNotBlank(duration.value)) {
             DurationParts start = parseIsoDuration(duration.value);
             if (start != null) {
@@ -587,9 +606,54 @@ public class DosageCustomMappings extends CustomMapping {
 
         if (!repeat.isEmpty()) {
             timing.setRepeat(repeat);
-            return new OpenEhrToFhirHelper.DataWithIndex(timing, lastIndex == null ? -1 : lastIndex, path);
+            return new OpenEhrToFhirHelper.DataWithIndex(
+                    timing,
+                    -1,
+                    timingAnchorPath(path));
         }
         return null;
+    }
+
+    private List<String> collectTimingValues(final List<String> joinedValues,
+                                             final JsonObject valueHolder,
+                                             final String path) {
+        List<String> values = new ArrayList<>();
+        if (valueHolder != null && StringUtils.isNotBlank(path)) {
+            String prefix = path.endsWith("/") ? path : path + "/";
+            String normalizedPrefix = removeIndexes(prefix);
+            for (String key : valueHolder.keySet()) {
+                if (key.startsWith(prefix) || removeIndexes(key).startsWith(normalizedPrefix)) {
+                    values.add(key);
+                }
+            }
+        }
+        if (joinedValues != null) {
+            for (String joinedValue : joinedValues) {
+                if (!values.contains(joinedValue)) {
+                    values.add(joinedValue);
+                }
+            }
+        }
+        return values;
+    }
+
+    private String removeIndexes(final String path) {
+        if (path == null) {
+            return null;
+        }
+        return path.replaceAll(":\\d+", "");
+    }
+
+    private String timingAnchorPath(final String path) {
+        if (StringUtils.isBlank(path)) {
+            return path;
+        }
+        String anchored = path.replaceAll("/tägliche_dosierung:\\d+.*$", "/art_der_verabreichung");
+        if (!anchored.equals(path)) {
+            return anchored;
+        }
+        anchored = path.replaceAll("/nicht_tägliche_dosierung:\\d+.*$", "/art_der_verabreichung");
+        return anchored;
     }
 
     private OpenEhrToFhirHelper.DataWithIndex toFhirTimingRepeat(final List<String> joinedValues,

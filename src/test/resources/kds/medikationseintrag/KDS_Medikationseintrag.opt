@@ -24,7 +24,7 @@
         <other_details id="MD5-CAM-1.0.1">e9e18a32e78f2ad5568838e4484c7b1a</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">006E9F209FD9F3691A5B9EFF0BAC3B5B</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
-        <other_details id="sem_ver">36.0.0</other_details>
+        <other_details id="sem_ver">39.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <details>
             <language>
@@ -270,28 +270,18 @@ Nicht für die Darstellung der eigentlichen Medikamentenverabreichung, die auf v
                                                         <upper>1</upper>
                                                     </existence>
                                                     <match_negated>false</match_negated>
-                                                    <children xsi:type="C_CODE_PHRASE">
+                                                    <children xsi:type="C_CODE_REFERENCE">
                                                         <rm_type_name>CODE_PHRASE</rm_type_name>
                                                         <occurrences>
                                                             <lower_included>true</lower_included>
                                                             <upper_included>true</upper_included>
                                                             <lower_unbounded>false</lower_unbounded>
                                                             <upper_unbounded>false</upper_unbounded>
-                                                            <lower>1</lower>
+                                                            <lower>0</lower>
                                                             <upper>1</upper>
                                                         </occurrences>
                                                         <node_id></node_id>
-                                                        <terminology_id>
-                                                            <value>http://hl7.org/fhir/CodeSystem/medication-statement-status</value>
-                                                        </terminology_id>
-                                                        <code_list>Aktiv</code_list>
-                                                        <code_list>Abgeschlossen</code_list>
-                                                        <code_list>Fehlerhafte Anwendung</code_list>
-                                                        <code_list>Beabsichtigt</code_list>
-                                                        <code_list>Gestoppt</code_list>
-                                                        <code_list>Angehalten</code_list>
-                                                        <code_list>Unbekannt</code_list>
-                                                        <code_list>Nicht genommen</code_list>
+                                                        <referenceSetUri>terminology:http://hl7.org/fhir/CodeSystem/medication-statement-status</referenceSetUri>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -392,30 +382,6 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                 <term_definitions code="at0006">
                                     <items id="text">identifizierter Fall</items>
                                     <items id="description">Bezeichnung oder kodierter Text zur Bezeichnung des Falls.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Aktiv">
-                                    <items id="text">Das Medikament wird noch angewendet.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Abgeschlossen">
-                                    <items id="text">Das Medikament wird nicht mehr angewendet.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Fehlerhafte Anwendung">
-                                    <items id="text">Einige der Aktionen, die im Medikation Statement enthalten sind, können bereits stattgefunden haben. Beispielsweise kann der Patient einen Teil der Medikamente eingenommen haben.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Beabsichtigt">
-                                    <items id="text">Die Medikation kann irgendwann in der Zukunft angewendet werden.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Gestoppt">
-                                    <items id="text">Die im Medikation Statement implizierten Aktionen wurden dauerhaft gestoppt, bevor alle von ihnen eingetreten sind. Dies sollte nicht verwendet werden, wenn Medikation Statement versehentlich eingegeben wurde.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Angehalten">
-                                    <items id="text">Die im Medikation Statement implizierten Aktionen wurden vorübergehend gestoppt, werden aber voraussichtlich später fortgesetzt. Kann auch als "ausgesetzt" bezeichnet werden.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Unbekannt">
-                                    <items id="text">Der Status des Medikaments ist derzeit nicht bekannt.</items>
-                                </term_definitions>
-                                <term_definitions code="http://hl7.org/fhir/CodeSystem/medication-statement-status::Nicht genommen">
-                                    <items id="text">Das Medikament wurde vom Patienten nicht angewendet.</items>
                                 </term_definitions>
                             </children>
                             <cardinality>

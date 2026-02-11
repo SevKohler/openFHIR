@@ -182,12 +182,19 @@ final class TimingFlatMapper {
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
         }
-        String lowerMag = find(joinedValues, "frequency/interval<dv_quantity>_value/lower|magnitude");
-        String upperMag = find(joinedValues, "frequency/interval<dv_quantity>_value/upper|magnitude");
-        String mag = find(joinedValues, "frequency/quantity_value|magnitude");
-        String unit = find(joinedValues, "frequency/quantity_value|unit");
-        if (unit == null) unit = find(joinedValues, "frequency/interval<dv_quantity>_value/lower|unit");
-        if (unit == null) unit = find(joinedValues, "frequency/interval<dv_quantity>_value/upper|unit");
+        String lowerMag = find(joinedValues, "interval<dv_quantity>_value/lower|magnitude");
+        if (lowerMag == null) lowerMag = find(joinedValues, "quantity_value/lower|magnitude");
+        if (lowerMag == null) lowerMag = find(joinedValues, "lower|magnitude");
+        String upperMag = find(joinedValues, "interval<dv_quantity>_value/upper|magnitude");
+        if (upperMag == null) upperMag = find(joinedValues, "quantity_value/upper|magnitude");
+        if (upperMag == null) upperMag = find(joinedValues, "upper|magnitude");
+        String mag = find(joinedValues, "quantity_value|magnitude");
+        if (mag == null) mag = find(joinedValues, "interval<dv_quantity>_value|magnitude");
+        if (mag == null) mag = find(joinedValues, "magnitude");
+        String unit = find(joinedValues, "quantity_value|unit");
+        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/lower|unit");
+        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/upper|unit");
+        if (unit == null) unit = find(joinedValues, "unit");
 
         Double lower = null;
         Double upper = null;

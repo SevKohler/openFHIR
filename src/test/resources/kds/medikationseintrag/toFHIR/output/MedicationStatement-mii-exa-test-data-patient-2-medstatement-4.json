@@ -22,6 +22,13 @@
             }
           }
         ],
+        "identifier": [
+          {
+            "system": "https://www.charite.de/fhir/sid/MedicationStatements",
+            "value": "MS_0000004"
+          }
+        ],
+        "status": "completed",
         "category": {
           "coding": [
             {

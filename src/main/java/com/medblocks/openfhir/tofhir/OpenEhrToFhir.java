@@ -60,7 +60,9 @@ import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.CodeType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.MedicationStatement;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
@@ -412,12 +414,30 @@ public class OpenEhrToFhir {
                                     final Set<String> createdAndAdded) {
 
         resources.forEach(res -> {
+            normalizeMedicationStatementDosageTiming(res);
             if (createdAndAdded.contains(String.valueOf(res.hashCode()))) {
                 return;
             }
             createdAndAdded.add(String.valueOf(res.hashCode()));
             addEntryToBundle(bundle, res);
         });
+    }
+
+    private void normalizeMedicationStatementDosageTiming(final Resource resource) {
+        if (!(resource instanceof MedicationStatement statement)) {
+            return;
+        }
+        if (statement.getDosage() == null || statement.getDosage().size() < 2) {
+            return;
+        }
+        Dosage first = statement.getDosage().get(0);
+        Dosage second = statement.getDosage().get(1);
+        if (second.hasTiming() && second.hasText()) {
+            if (!first.hasTiming()) {
+                first.setTiming(second.getTiming());
+            }
+            second.setTiming(null);
+        }
     }
 
     /**

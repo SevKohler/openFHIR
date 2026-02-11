@@ -60,6 +60,13 @@
             ]
           }
         ],
+        "identifier": [
+          {
+            "system": "https://www.charite.de/fhir/sid/MedicationStatements",
+            "value": "MS_0000006"
+          }
+        ],
+        "status": "unknown",
         "category": {
           "coding": [
             {
