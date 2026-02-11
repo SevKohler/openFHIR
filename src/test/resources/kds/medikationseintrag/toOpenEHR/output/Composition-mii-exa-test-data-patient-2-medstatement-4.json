@@ -61,6 +61,52 @@
         },
         "code_string": "238"
       }
+    },
+    "other_context": {
+      "_type": "ITEM_TREE",
+      "name": {
+        "_type": "DV_TEXT",
+        "value": "Tree"
+      },
+      "items": [
+        {
+          "_type": "CLUSTER",
+          "name": {
+            "_type": "DV_TEXT",
+            "value": "Fallidentifikation"
+          },
+          "archetype_details": {
+            "archetype_id": {
+              "value": "openEHR-EHR-CLUSTER.case_identification.v0"
+            },
+            "rm_version": "1.0.4"
+          },
+          "items": [
+            {
+              "_type": "ELEMENT",
+              "name": {
+                "_type": "DV_TEXT",
+                "value": "Status"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "completed",
+                "defining_code": {
+                  "_type": "CODE_PHRASE",
+                  "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "http://hl7.org/fhir/CodeSystem/medication-statement-status"
+                  },
+                  "code_string": "completed"
+                }
+              },
+              "archetype_node_id": "at0003"
+            }
+          ],
+          "archetype_node_id": "openEHR-EHR-CLUSTER.case_identification.v0"
+        }
+      ],
+      "archetype_node_id": "at0005"
     }
   },
   "content": [
@@ -137,6 +183,35 @@
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.entry_category.v0"
+          },
+          {
+            "_type": "CLUSTER",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Identifier"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.identifier_fhir.v0"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Identifier"
+                },
+                "value": {
+                  "_type": "DV_IDENTIFIER",
+                  "issuer": "https://www.charite.de/fhir/sid/MedicationStatements",
+                  "id": "MS_0000004"
+                },
+                "archetype_node_id": "at0001"
+              }
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.identifier_fhir.v0"
           }
         ],
         "archetype_node_id": "at0004"

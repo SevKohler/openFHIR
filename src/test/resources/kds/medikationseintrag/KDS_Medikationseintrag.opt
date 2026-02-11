@@ -21,10 +21,10 @@
         <other_details id="Sign off"></other_details>
         <other_details id="Speciality"></other_details>
         <other_details id="User roles"></other_details>
-        <other_details id="MD5-CAM-1.0.1">69e9b0294f46ba1532dce730d6b73cd1</other_details>
+        <other_details id="MD5-CAM-1.0.1">e9e18a32e78f2ad5568838e4484c7b1a</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">006E9F209FD9F3691A5B9EFF0BAC3B5B</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
-        <other_details id="sem_ver">25.0.0</other_details>
+        <other_details id="sem_ver">30.1.0</other_details>
         <other_details id="build_uid"></other_details>
         <details>
             <language>
@@ -1046,6 +1046,38 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                             <upper>1</upper>
                                                                         </occurrences>
                                                                         <node_id></node_id>
+                                                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                                            <rm_attribute_name>defining_code</rm_attribute_name>
+                                                                            <existence>
+                                                                                <lower_included>true</lower_included>
+                                                                                <upper_included>true</upper_included>
+                                                                                <lower_unbounded>false</lower_unbounded>
+                                                                                <upper_unbounded>false</upper_unbounded>
+                                                                                <lower>1</lower>
+                                                                                <upper>1</upper>
+                                                                            </existence>
+                                                                            <match_negated>false</match_negated>
+                                                                            <children xsi:type="C_CODE_PHRASE">
+                                                                                <rm_type_name>CODE_PHRASE</rm_type_name>
+                                                                                <occurrences>
+                                                                                    <lower_included>true</lower_included>
+                                                                                    <upper_included>true</upper_included>
+                                                                                    <lower_unbounded>false</lower_unbounded>
+                                                                                    <upper_unbounded>false</upper_unbounded>
+                                                                                    <lower>1</lower>
+                                                                                    <upper>1</upper>
+                                                                                </occurrences>
+                                                                                <node_id></node_id>
+                                                                                <terminology_id>
+                                                                                    <value>local</value>
+                                                                                </terminology_id>
+                                                                                <code_list>at0143</code_list>
+                                                                                <code_list>at0146</code_list>
+                                                                                <code_list>at0144</code_list>
+                                                                                <code_list>at0145</code_list>
+                                                                                <code_list>at0001</code_list>
+                                                                            </children>
+                                                                        </attributes>
                                                                     </children>
                                                                 </attributes>
                                                                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
@@ -4672,7 +4704,7 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                         <upper_unbounded>true</upper_unbounded>
                                                                         <lower>0.0</lower>
                                                                     </magnitude>
-                                                                    <units>ml/min</units>
+                                                                    <units>ml/h</units>
                                                                 </list>
                                                                 <list>
                                                                     <magnitude>
@@ -4692,7 +4724,7 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                         <upper_unbounded>true</upper_unbounded>
                                                                         <lower>0.0</lower>
                                                                     </magnitude>
-                                                                    <units>ml/h</units>
+                                                                    <units>ml/min</units>
                                                                 </list>
                                                             </children>
                                                             <children xsi:type="C_COMPLEX_OBJECT">
@@ -5255,7 +5287,7 @@ Wenn mehrere Dosierungen angegeben werden, gibt die "Dosierungsreihenfolge" die 
                                                     <upper_included>true</upper_included>
                                                     <lower_unbounded>false</lower_unbounded>
                                                     <upper_unbounded>false</upper_unbounded>
-                                                    <lower>0</lower>
+                                                    <lower>1</lower>
                                                     <upper>1</upper>
                                                 </occurrences>
                                                 <node_id></node_id>
@@ -5401,6 +5433,88 @@ Wenn mehrere Dosierungen angegeben werden, gibt die "Dosierungsreihenfolge" die 
                                 <term_definitions code="at0003">
                                     <items id="text">Kommentar</items>
                                     <items id="description">Kommentar zu der Kategorie, oder Erläuterung.</items>
+                                </term_definitions>
+                            </children>
+                            <children xsi:type="C_ARCHETYPE_ROOT">
+                                <rm_type_name>CLUSTER</rm_type_name>
+                                <occurrences>
+                                    <lower_included>true</lower_included>
+                                    <upper_included>false</upper_included>
+                                    <lower_unbounded>false</lower_unbounded>
+                                    <upper_unbounded>true</upper_unbounded>
+                                    <lower>0</lower>
+                                </occurrences>
+                                <node_id>at0000</node_id>
+                                <attributes xsi:type="C_MULTIPLE_ATTRIBUTE">
+                                    <rm_attribute_name>items</rm_attribute_name>
+                                    <existence>
+                                        <lower_included>true</lower_included>
+                                        <upper_included>true</upper_included>
+                                        <lower_unbounded>false</lower_unbounded>
+                                        <upper_unbounded>false</upper_unbounded>
+                                        <lower>1</lower>
+                                        <upper>1</upper>
+                                    </existence>
+                                    <match_negated>false</match_negated>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>ELEMENT</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>0</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id>at0001</node_id>
+                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                            <rm_attribute_name>value</rm_attribute_name>
+                                            <existence>
+                                                <lower_included>true</lower_included>
+                                                <upper_included>true</upper_included>
+                                                <lower_unbounded>false</lower_unbounded>
+                                                <upper_unbounded>false</upper_unbounded>
+                                                <lower>0</lower>
+                                                <upper>1</upper>
+                                            </existence>
+                                            <match_negated>false</match_negated>
+                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                <rm_type_name>DV_IDENTIFIER</rm_type_name>
+                                                <occurrences>
+                                                    <lower_included>true</lower_included>
+                                                    <upper_included>true</upper_included>
+                                                    <lower_unbounded>false</lower_unbounded>
+                                                    <upper_unbounded>false</upper_unbounded>
+                                                    <lower>1</lower>
+                                                    <upper>1</upper>
+                                                </occurrences>
+                                                <node_id></node_id>
+                                            </children>
+                                        </attributes>
+                                    </children>
+                                    <cardinality>
+                                        <is_ordered>false</is_ordered>
+                                        <is_unique>false</is_unique>
+                                        <interval>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>false</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>true</upper_unbounded>
+                                            <lower>1</lower>
+                                        </interval>
+                                    </cardinality>
+                                </attributes>
+                                <archetype_id>
+                                    <value>openEHR-EHR-CLUSTER.identifier_fhir.v0</value>
+                                </archetype_id>
+                                <term_definitions code="at0001">
+                                    <items id="text">Identifier</items>
+                                    <items id="description">Identifikator</items>
+                                    <items id="comment">Identifizierungsdetails</items>
+                                </term_definitions>
+                                <term_definitions code="at0000">
+                                    <items id="text">Identifier</items>
+                                    <items id="description">Identifizierungsdetails, die auf FHIR-Ressourcen oder Datentypen abgestimmt sind. </items>
                                 </term_definitions>
                             </children>
                             <cardinality>

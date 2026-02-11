@@ -19,7 +19,6 @@ context:
     - "CLUSTER.medication.v2"
     - "CLUSTER.medication.v2.substance"
     - "CLUSTER.dosage.v2"
-    - "CLUSTER.medication_status_fhir.v0"
     - "CLUSTER.entry_category.v0"
     - "CLUSTER.identifier_fhir.v0"
     - "RESOURCE.list.min"

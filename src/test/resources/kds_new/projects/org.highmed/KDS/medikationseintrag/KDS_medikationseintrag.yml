@@ -38,6 +38,11 @@ mappings:
   #              meaning: "the case this composition relates to"
   #              type: "case"
 
+  - name: "status"
+    extension: "add"
+    with:
+      fhir: "$resource.status"
+      openehr: "$composition/context/other_context[at0005]/items[openEHR-EHR-CLUSTER.case_identification.v0]/items[at0003]"
 
   - name: "protocol0004Parent"
     extension: "add"
@@ -58,12 +63,6 @@ mappings:
             fhir: "category"
             openehr: "items[openEHR-EHR-CLUSTER.entry_category.v0]"
           slotArchetype: "CLUSTER.entry_category.v0"
-
-        - name: "status"
-          with:
-            fhir: "$fhirRoot"
-            openehr: "items[openEHR-EHR-CLUSTER.medication_status_fhir.v0]"
-          slotArchetype: "CLUSTER.medication_status_fhir.v0"
 
   # KDS override: prevent openEHR -> FHIR from setting medication[x] as CodeableConcept
   # Keep the CodeableConcept mapping only for FHIR -> openEHR direction
