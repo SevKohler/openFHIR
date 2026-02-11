@@ -178,15 +178,16 @@ final class TimingFlatMapper {
     }
 
     static FrequencyValue readFrequency(JsonObject valueHolder, List<String> joinedValues, FhirValueReaders readers) {
+
         if (valueHolder == null || joinedValues == null || readers == null) {
             return null;
         }
-        String lowerMag = find(joinedValues, "interval<dv_quantity>_value/lower|magnitude");
-        String upperMag = find(joinedValues, "interval<dv_quantity>_value/upper|magnitude");
-        String mag = find(joinedValues, "quantity_value|magnitude");
-        String unit = find(joinedValues, "quantity_value|unit");
-        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/lower|unit");
-        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/upper|unit");
+        String lowerMag = find(joinedValues, "frequency/interval<dv_quantity>_value/lower|magnitude");
+        String upperMag = find(joinedValues, "frequency/interval<dv_quantity>_value/upper|magnitude");
+        String mag = find(joinedValues, "frequency/quantity_value|magnitude");
+        String unit = find(joinedValues, "frequency/quantity_value|unit");
+        if (unit == null) unit = find(joinedValues, "frequency/interval<dv_quantity>_value/lower|unit");
+        if (unit == null) unit = find(joinedValues, "frequency/interval<dv_quantity>_value/upper|unit");
 
         Double lower = null;
         Double upper = null;
