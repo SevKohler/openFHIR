@@ -39,15 +39,15 @@ This should input and output to correspdiong data type
 This is how the conversion should be done:
 ## Mapping: FHIR to openEHR
 
-| openEHR Field (with Cluster Path) | FHIR Field(s) | Notes |
-|----------------------------------|---------------|-------|
+| openEHR Field (with Cluster Path) | FHIR Field(s) | Notes                                                                                                         |
+|----------------------------------|---------------|---------------------------------------------------------------------------------------------------------------|
 | `/items[at0144]` **Dosage quantity** | `doseQuantity.value`<br>`doseQuantity.unit`<br>**OR**<br>`doseRange.low`<br>`doseRange.high` | **Combined**: If `doseRange` exists, format as `low–high mg`, otherwise use `doseQuantity` as a single value. |
-| `/items[at0134]` **Administration rate** | `rateRatio.numerator.value`<br>`rateRatio.numerator.unit`<br>`rateRatio.denominator.value`<br>`rateRatio.denominator.unit` | **Combined** to form `600 mg/h` or similar. |
-| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0004]` **Specific time** | `timing.repeat.timeOfDay[0]` | Uses the first occurrence of `timeOfDay`. |
-| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0003]` **Frequency** | `timing.repeat.frequency`<br>`timing.repeat.frequencyMax` | **Combined**: If `frequencyMax` exists, format as `frequency–frequencyMax times per [periodUnit]`. |
-| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0014]` **Interval** | `timing.repeat.period`<br>`timing.repeat.periodMax`<br>`timing.repeat.periodUnit` | **Combined**: If `periodMax` exists, format as `every period–periodMax [unit]`. |
-| `/items[at0164]` **Dosage sequence** | `timing.repeat.count` | Direct mapping. |
-| `/items[at0102]` **Administration duration** | `timing.repeat.duration`<br>`timing.repeat.durationMax` | **Combined**: If `durationMax` exists, format as `duration–durationMax`. |
+| `/items[at0134]` **Administration rate** | `rateRatio.numerator.value`<br>`rateRatio.numerator.unit`<br>`rateRatio.denominator.value`<br>`rateRatio.denominator.unit` | **Combined** to form `600 mg/h` or similar.                                                                   |
+| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0004]` **Specific time** | `timing.repeat.timeOfDay[0]` | Uses the first occurrence of `timeOfDay`.                                                                     |
+| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0003]` **Frequency** | `timing.repeat.frequency`<br>`timing.repeat.frequencyMax` | **Combined**: If `frequencyMax` exists, format as `frequency to frequencyMax times per [periodUnit]`.         |
+| `[openEHR-EHR-CLUSTER.timing_daily.v1]`<br>`/items[at0014]` **Interval** | `timing.repeat.period`<br>`timing.repeat.periodMax`<br>`timing.repeat.periodUnit` | **Combined**: If `periodMax` exists, format as `every period–periodMax [unit]`.                               |
+| `/items[at0164]` **Dosage sequence** | `timing.repeat.count` | Direct mapping.                                                                                               |
+| `/items[at0102]` **Administration duration** | `timing.repeat.duration`<br>`timing.repeat.durationMax` | **Combined**: If `durationMax` exists, format as `duration–durationMax`.                                      |
 
 
 

@@ -24,7 +24,7 @@
         <other_details id="MD5-CAM-1.0.1">e9e18a32e78f2ad5568838e4484c7b1a</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">006E9F209FD9F3691A5B9EFF0BAC3B5B</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
-        <other_details id="sem_ver">30.1.0</other_details>
+        <other_details id="sem_ver">36.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <details>
             <language>
@@ -292,122 +292,6 @@ Nicht für die Darstellung der eigentlichen Medikamentenverabreichung, die auf v
                                                         <code_list>Angehalten</code_list>
                                                         <code_list>Unbekannt</code_list>
                                                         <code_list>Nicht genommen</code_list>
-                                                    </children>
-                                                </attributes>
-                                            </children>
-                                        </attributes>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>name</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>1</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                    <rm_attribute_name>value</rm_attribute_name>
-                                                    <existence>
-                                                        <lower_included>true</lower_included>
-                                                        <upper_included>true</upper_included>
-                                                        <lower_unbounded>false</lower_unbounded>
-                                                        <upper_unbounded>false</upper_unbounded>
-                                                        <lower>1</lower>
-                                                        <upper>1</upper>
-                                                    </existence>
-                                                    <match_negated>false</match_negated>
-                                                    <children xsi:type="C_PRIMITIVE_OBJECT">
-                                                        <rm_type_name>STRING</rm_type_name>
-                                                        <occurrences>
-                                                            <lower_included>true</lower_included>
-                                                            <upper_included>true</upper_included>
-                                                            <lower_unbounded>false</lower_unbounded>
-                                                            <upper_unbounded>false</upper_unbounded>
-                                                            <lower>1</lower>
-                                                            <upper>1</upper>
-                                                        </occurrences>
-                                                        <node_id></node_id>
-                                                        <item xsi:type="C_STRING">
-                                                            <list>Status</list>
-                                                        </item>
-                                                    </children>
-                                                </attributes>
-                                            </children>
-                                        </attributes>
-                                    </children>
-                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                        <rm_type_name>ELEMENT</rm_type_name>
-                                        <occurrences>
-                                            <lower_included>true</lower_included>
-                                            <upper_included>true</upper_included>
-                                            <lower_unbounded>false</lower_unbounded>
-                                            <upper_unbounded>false</upper_unbounded>
-                                            <lower>0</lower>
-                                            <upper>1</upper>
-                                        </occurrences>
-                                        <node_id>at0003</node_id>
-                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                            <rm_attribute_name>value</rm_attribute_name>
-                                            <existence>
-                                                <lower_included>true</lower_included>
-                                                <upper_included>true</upper_included>
-                                                <lower_unbounded>false</lower_unbounded>
-                                                <upper_unbounded>false</upper_unbounded>
-                                                <lower>0</lower>
-                                                <upper>1</upper>
-                                            </existence>
-                                            <match_negated>false</match_negated>
-                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                <rm_type_name>DV_CODED_TEXT</rm_type_name>
-                                                <occurrences>
-                                                    <lower_included>true</lower_included>
-                                                    <upper_included>true</upper_included>
-                                                    <lower_unbounded>false</lower_unbounded>
-                                                    <upper_unbounded>false</upper_unbounded>
-                                                    <lower>1</lower>
-                                                    <upper>1</upper>
-                                                </occurrences>
-                                                <node_id></node_id>
-                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                    <rm_attribute_name>defining_code</rm_attribute_name>
-                                                    <existence>
-                                                        <lower_included>true</lower_included>
-                                                        <upper_included>true</upper_included>
-                                                        <lower_unbounded>false</lower_unbounded>
-                                                        <upper_unbounded>false</upper_unbounded>
-                                                        <lower>1</lower>
-                                                        <upper>1</upper>
-                                                    </existence>
-                                                    <match_negated>false</match_negated>
-                                                    <children xsi:type="C_CODE_PHRASE">
-                                                        <rm_type_name>CODE_PHRASE</rm_type_name>
-                                                        <occurrences>
-                                                            <lower_included>true</lower_included>
-                                                            <upper_included>true</upper_included>
-                                                            <lower_unbounded>false</lower_unbounded>
-                                                            <upper_unbounded>false</upper_unbounded>
-                                                            <lower>1</lower>
-                                                            <upper>1</upper>
-                                                        </occurrences>
-                                                        <node_id></node_id>
-                                                        <terminology_id>
-                                                            <value>local</value>
-                                                        </terminology_id>
-                                                        <code_list>at0004</code_list>
-                                                        <code_list>at0005</code_list>
                                                     </children>
                                                 </attributes>
                                             </children>
@@ -1046,38 +930,6 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                             <upper>1</upper>
                                                                         </occurrences>
                                                                         <node_id></node_id>
-                                                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                                            <rm_attribute_name>defining_code</rm_attribute_name>
-                                                                            <existence>
-                                                                                <lower_included>true</lower_included>
-                                                                                <upper_included>true</upper_included>
-                                                                                <lower_unbounded>false</lower_unbounded>
-                                                                                <upper_unbounded>false</upper_unbounded>
-                                                                                <lower>1</lower>
-                                                                                <upper>1</upper>
-                                                                            </existence>
-                                                                            <match_negated>false</match_negated>
-                                                                            <children xsi:type="C_CODE_PHRASE">
-                                                                                <rm_type_name>CODE_PHRASE</rm_type_name>
-                                                                                <occurrences>
-                                                                                    <lower_included>true</lower_included>
-                                                                                    <upper_included>true</upper_included>
-                                                                                    <lower_unbounded>false</lower_unbounded>
-                                                                                    <upper_unbounded>false</upper_unbounded>
-                                                                                    <lower>1</lower>
-                                                                                    <upper>1</upper>
-                                                                                </occurrences>
-                                                                                <node_id></node_id>
-                                                                                <terminology_id>
-                                                                                    <value>local</value>
-                                                                                </terminology_id>
-                                                                                <code_list>at0143</code_list>
-                                                                                <code_list>at0146</code_list>
-                                                                                <code_list>at0144</code_list>
-                                                                                <code_list>at0145</code_list>
-                                                                                <code_list>at0001</code_list>
-                                                                            </children>
-                                                                        </attributes>
                                                                     </children>
                                                                 </attributes>
                                                                 <attributes xsi:type="C_SINGLE_ATTRIBUTE">
@@ -3244,12 +3096,6 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                             <upper>1</upper>
                                                                         </occurrences>
                                                                         <node_id></node_id>
-                                                                        <property>
-                                                                            <terminology_id>
-                                                                                <value>openehr</value>
-                                                                            </terminology_id>
-                                                                            <code_string>382</code_string>
-                                                                        </property>
                                                                         <list>
                                                                             <magnitude>
                                                                                 <lower_included>true</lower_included>
@@ -3291,32 +3137,8 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                             <units>1/min</units>
                                                                         </list>
                                                                     </children>
-                                                                </attributes>
-                                                            </children>
-                                                            <children xsi:type="C_COMPLEX_OBJECT">
-                                                                <rm_type_name>ELEMENT</rm_type_name>
-                                                                <occurrences>
-                                                                    <lower_included>true</lower_included>
-                                                                    <upper_included>true</upper_included>
-                                                                    <lower_unbounded>false</lower_unbounded>
-                                                                    <upper_unbounded>false</upper_unbounded>
-                                                                    <lower>0</lower>
-                                                                    <upper>1</upper>
-                                                                </occurrences>
-                                                                <node_id>at0014</node_id>
-                                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                                    <rm_attribute_name>value</rm_attribute_name>
-                                                                    <existence>
-                                                                        <lower_included>true</lower_included>
-                                                                        <upper_included>true</upper_included>
-                                                                        <lower_unbounded>false</lower_unbounded>
-                                                                        <upper_unbounded>false</upper_unbounded>
-                                                                        <lower>0</lower>
-                                                                        <upper>1</upper>
-                                                                    </existence>
-                                                                    <match_negated>false</match_negated>
                                                                     <children xsi:type="C_COMPLEX_OBJECT">
-                                                                        <rm_type_name>DV_DURATION</rm_type_name>
+                                                                        <rm_type_name>DV_INTERVAL&lt;DV_QUANTITY&gt;</rm_type_name>
                                                                         <occurrences>
                                                                             <lower_included>true</lower_included>
                                                                             <upper_included>true</upper_included>
@@ -3327,18 +3149,18 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                         </occurrences>
                                                                         <node_id></node_id>
                                                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                                            <rm_attribute_name>value</rm_attribute_name>
+                                                                            <rm_attribute_name>lower</rm_attribute_name>
                                                                             <existence>
                                                                                 <lower_included>true</lower_included>
                                                                                 <upper_included>true</upper_included>
                                                                                 <lower_unbounded>false</lower_unbounded>
                                                                                 <upper_unbounded>false</upper_unbounded>
-                                                                                <lower>1</lower>
+                                                                                <lower>0</lower>
                                                                                 <upper>1</upper>
                                                                             </existence>
                                                                             <match_negated>false</match_negated>
-                                                                            <children xsi:type="C_PRIMITIVE_OBJECT">
-                                                                                <rm_type_name>DURATION</rm_type_name>
+                                                                            <children xsi:type="C_DV_QUANTITY">
+                                                                                <rm_type_name>DV_QUANTITY</rm_type_name>
                                                                                 <occurrences>
                                                                                     <lower_included>true</lower_included>
                                                                                     <upper_included>true</upper_included>
@@ -3348,56 +3170,21 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                                     <upper>1</upper>
                                                                                 </occurrences>
                                                                                 <node_id></node_id>
-                                                                                <item xsi:type="C_DURATION">
-                                                                                    <pattern>PTHMS</pattern>
-                                                                                    <range>
-                                                                                        <lower_included>true</lower_included>
-                                                                                        <upper_included>true</upper_included>
-                                                                                        <lower_unbounded>false</lower_unbounded>
-                                                                                        <upper_unbounded>false</upper_unbounded>
-                                                                                        <lower>PT0H</lower>
-                                                                                        <upper>PT24H</upper>
-                                                                                    </range>
-                                                                                </item>
                                                                             </children>
                                                                         </attributes>
-                                                                    </children>
-                                                                </attributes>
-                                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                                    <rm_attribute_name>name</rm_attribute_name>
-                                                                    <existence>
-                                                                        <lower_included>true</lower_included>
-                                                                        <upper_included>true</upper_included>
-                                                                        <lower_unbounded>false</lower_unbounded>
-                                                                        <upper_unbounded>false</upper_unbounded>
-                                                                        <lower>1</lower>
-                                                                        <upper>1</upper>
-                                                                    </existence>
-                                                                    <match_negated>false</match_negated>
-                                                                    <children xsi:type="C_COMPLEX_OBJECT">
-                                                                        <rm_type_name>DV_TEXT</rm_type_name>
-                                                                        <occurrences>
-                                                                            <lower_included>true</lower_included>
-                                                                            <upper_included>true</upper_included>
-                                                                            <lower_unbounded>false</lower_unbounded>
-                                                                            <upper_unbounded>false</upper_unbounded>
-                                                                            <lower>1</lower>
-                                                                            <upper>1</upper>
-                                                                        </occurrences>
-                                                                        <node_id></node_id>
                                                                         <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                                            <rm_attribute_name>value</rm_attribute_name>
+                                                                            <rm_attribute_name>upper</rm_attribute_name>
                                                                             <existence>
                                                                                 <lower_included>true</lower_included>
                                                                                 <upper_included>true</upper_included>
                                                                                 <lower_unbounded>false</lower_unbounded>
                                                                                 <upper_unbounded>false</upper_unbounded>
-                                                                                <lower>1</lower>
+                                                                                <lower>0</lower>
                                                                                 <upper>1</upper>
                                                                             </existence>
                                                                             <match_negated>false</match_negated>
-                                                                            <children xsi:type="C_PRIMITIVE_OBJECT">
-                                                                                <rm_type_name>STRING</rm_type_name>
+                                                                            <children xsi:type="C_DV_QUANTITY">
+                                                                                <rm_type_name>DV_QUANTITY</rm_type_name>
                                                                                 <occurrences>
                                                                                     <lower_included>true</lower_included>
                                                                                     <upper_included>true</upper_included>
@@ -3407,9 +3194,6 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                                     <upper>1</upper>
                                                                                 </occurrences>
                                                                                 <node_id></node_id>
-                                                                                <item xsi:type="C_STRING">
-                                                                                    <list>Periode</list>
-                                                                                </item>
                                                                             </children>
                                                                         </attributes>
                                                                     </children>
@@ -3599,6 +3383,128 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                                             <upper>1</upper>
                                                                         </occurrences>
                                                                         <node_id></node_id>
+                                                                    </children>
+                                                                </attributes>
+                                                            </children>
+                                                            <children xsi:type="C_COMPLEX_OBJECT">
+                                                                <rm_type_name>ELEMENT</rm_type_name>
+                                                                <occurrences>
+                                                                    <lower_included>true</lower_included>
+                                                                    <upper_included>true</upper_included>
+                                                                    <lower_unbounded>false</lower_unbounded>
+                                                                    <upper_unbounded>false</upper_unbounded>
+                                                                    <lower>0</lower>
+                                                                    <upper>1</upper>
+                                                                </occurrences>
+                                                                <node_id>at0014</node_id>
+                                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                                    <rm_attribute_name>value</rm_attribute_name>
+                                                                    <existence>
+                                                                        <lower_included>true</lower_included>
+                                                                        <upper_included>true</upper_included>
+                                                                        <lower_unbounded>false</lower_unbounded>
+                                                                        <upper_unbounded>false</upper_unbounded>
+                                                                        <lower>0</lower>
+                                                                        <upper>1</upper>
+                                                                    </existence>
+                                                                    <match_negated>false</match_negated>
+                                                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                                                        <rm_type_name>DV_DURATION</rm_type_name>
+                                                                        <occurrences>
+                                                                            <lower_included>true</lower_included>
+                                                                            <upper_included>true</upper_included>
+                                                                            <lower_unbounded>false</lower_unbounded>
+                                                                            <upper_unbounded>false</upper_unbounded>
+                                                                            <lower>1</lower>
+                                                                            <upper>1</upper>
+                                                                        </occurrences>
+                                                                        <node_id></node_id>
+                                                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                                            <rm_attribute_name>value</rm_attribute_name>
+                                                                            <existence>
+                                                                                <lower_included>true</lower_included>
+                                                                                <upper_included>true</upper_included>
+                                                                                <lower_unbounded>false</lower_unbounded>
+                                                                                <upper_unbounded>false</upper_unbounded>
+                                                                                <lower>1</lower>
+                                                                                <upper>1</upper>
+                                                                            </existence>
+                                                                            <match_negated>false</match_negated>
+                                                                            <children xsi:type="C_PRIMITIVE_OBJECT">
+                                                                                <rm_type_name>DURATION</rm_type_name>
+                                                                                <occurrences>
+                                                                                    <lower_included>true</lower_included>
+                                                                                    <upper_included>true</upper_included>
+                                                                                    <lower_unbounded>false</lower_unbounded>
+                                                                                    <upper_unbounded>false</upper_unbounded>
+                                                                                    <lower>1</lower>
+                                                                                    <upper>1</upper>
+                                                                                </occurrences>
+                                                                                <node_id></node_id>
+                                                                                <item xsi:type="C_DURATION">
+                                                                                    <pattern>PTHMS</pattern>
+                                                                                    <range>
+                                                                                        <lower_included>true</lower_included>
+                                                                                        <upper_included>true</upper_included>
+                                                                                        <lower_unbounded>false</lower_unbounded>
+                                                                                        <upper_unbounded>false</upper_unbounded>
+                                                                                        <lower>PT0H</lower>
+                                                                                        <upper>PT24H</upper>
+                                                                                    </range>
+                                                                                </item>
+                                                                            </children>
+                                                                        </attributes>
+                                                                    </children>
+                                                                </attributes>
+                                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                                    <rm_attribute_name>name</rm_attribute_name>
+                                                                    <existence>
+                                                                        <lower_included>true</lower_included>
+                                                                        <upper_included>true</upper_included>
+                                                                        <lower_unbounded>false</lower_unbounded>
+                                                                        <upper_unbounded>false</upper_unbounded>
+                                                                        <lower>1</lower>
+                                                                        <upper>1</upper>
+                                                                    </existence>
+                                                                    <match_negated>false</match_negated>
+                                                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                                                        <rm_type_name>DV_TEXT</rm_type_name>
+                                                                        <occurrences>
+                                                                            <lower_included>true</lower_included>
+                                                                            <upper_included>true</upper_included>
+                                                                            <lower_unbounded>false</lower_unbounded>
+                                                                            <upper_unbounded>false</upper_unbounded>
+                                                                            <lower>1</lower>
+                                                                            <upper>1</upper>
+                                                                        </occurrences>
+                                                                        <node_id></node_id>
+                                                                        <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                                                            <rm_attribute_name>value</rm_attribute_name>
+                                                                            <existence>
+                                                                                <lower_included>true</lower_included>
+                                                                                <upper_included>true</upper_included>
+                                                                                <lower_unbounded>false</lower_unbounded>
+                                                                                <upper_unbounded>false</upper_unbounded>
+                                                                                <lower>1</lower>
+                                                                                <upper>1</upper>
+                                                                            </existence>
+                                                                            <match_negated>false</match_negated>
+                                                                            <children xsi:type="C_PRIMITIVE_OBJECT">
+                                                                                <rm_type_name>STRING</rm_type_name>
+                                                                                <occurrences>
+                                                                                    <lower_included>true</lower_included>
+                                                                                    <upper_included>true</upper_included>
+                                                                                    <lower_unbounded>false</lower_unbounded>
+                                                                                    <upper_unbounded>false</upper_unbounded>
+                                                                                    <lower>1</lower>
+                                                                                    <upper>1</upper>
+                                                                                </occurrences>
+                                                                                <node_id></node_id>
+                                                                                <item xsi:type="C_STRING">
+                                                                                    <list>Periode</list>
+                                                                                </item>
+                                                                            </children>
+                                                                        </attributes>
                                                                     </children>
                                                                 </attributes>
                                                             </children>

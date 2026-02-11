@@ -2,13 +2,14 @@ package com.medblocks.openfhir.customMappings;
 
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.fc.FhirConnectConst;
+import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
 import com.medblocks.openfhir.util.OpenEhrPopulator;
 import com.medblocks.openfhir.util.OpenFhirMapperUtils;
 import com.medblocks.openfhir.util.OpenFhirStringUtils;
+import java.util.List;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
 import org.hl7.fhir.r4.model.Ratio;
-import org.hl7.fhir.r4.model.TimeType;
 import org.hl7.fhir.r4.model.Timing;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,8 +52,8 @@ public class DosageCustomMappingsTest {
         Assert.assertEquals("mg/h", flat.get("rate|unit").getAsString());
 
         Assert.assertEquals("08:00:00", flat.get("timing/zeitpunkt").getAsString());
-        Assert.assertEquals(3.0, flat.get("timing/frequenz|magnitude").getAsDouble(), 0.0001);
-        Assert.assertEquals("1/d", flat.get("timing/frequenz|unit").getAsString());
+        Assert.assertEquals(3.0, flat.get("timing/frequenz/quantity_value|magnitude").getAsDouble(), 0.0001);
+        Assert.assertEquals("1/d", flat.get("timing/frequenz/quantity_value|unit").getAsString());
         Assert.assertEquals(1.0, flat.get("timing/periode|day").getAsDouble(), 0.0001);
         Assert.assertFalse("daily period should not use duration value format", flat.has("timing/periode/duration_value|value"));
     }
@@ -102,8 +103,10 @@ public class DosageCustomMappingsTest {
         Assert.assertEquals("mg/h", flat.get("rate|unit").getAsString());
 
         Assert.assertEquals("08:00:00", flat.get("timing/zeitpunkt").getAsString());
-        Assert.assertEquals(3.0, flat.get("timing/frequenz|magnitude").getAsDouble(), 0.0001);
-        Assert.assertEquals("1/h", flat.get("timing/frequenz|unit").getAsString());
+        Assert.assertEquals(3.0, flat.get("timing/frequenz/interval<dv_quantity>_value/lower|magnitude").getAsDouble(), 0.0001);
+        Assert.assertEquals(4.0, flat.get("timing/frequenz/interval<dv_quantity>_value/upper|magnitude").getAsDouble(), 0.0001);
+        Assert.assertEquals("1/h", flat.get("timing/frequenz/interval<dv_quantity>_value/lower|unit").getAsString());
+        Assert.assertEquals("1/h", flat.get("timing/frequenz/interval<dv_quantity>_value/upper|unit").getAsString());
         Assert.assertEquals(2.0, flat.get("timing/periode/lower|hour").getAsDouble(), 0.0001);
         Assert.assertEquals(3.0, flat.get("timing/periode/upper|hour").getAsDouble(), 0.0001);
 
@@ -128,4 +131,80 @@ public class DosageCustomMappingsTest {
         Assert.assertEquals(3.0, flat.get("timing/periode/upper|week").getAsDouble(), 0.0001);
         Assert.assertFalse("non-daily period should not use daily component format", flat.has("timing/periode|day"));
     }
+
+    @Test
+    public void fhirToOpenEhr_timingFrequencyMaxUsesIntervalDvQuantity() {
+        JsonObject flat = new JsonObject();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
+        repeat.setFrequency(3);
+        repeat.setFrequencyMax(3);
+        repeat.setPeriod(1);
+        repeat.setPeriodUnit(Timing.UnitsOfTime.D);
+        timing.setRepeat(repeat);
+
+        Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
+                "timingToDaily", "timing", timing, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
+
+        Assert.assertEquals(3.0, flat.get("timing/frequenz/interval<dv_quantity>_value/lower|magnitude").getAsDouble(), 0.0001);
+        Assert.assertEquals(3.0, flat.get("timing/frequenz/interval<dv_quantity>_value/upper|magnitude").getAsDouble(), 0.0001);
+        Assert.assertFalse(flat.has("timing/frequenz/quantity_value|magnitude"));
+    }
+
+    @Test
+    public void toFhirTiming_readsFrequencyIntervalAsFrequencyAndMax() {
+        JsonObject valueHolder = new JsonObject();
+        valueHolder.addProperty("timing/frequenz/interval<dv_quantity>_value/lower|magnitude", 3.0);
+        valueHolder.addProperty("timing/frequenz/interval<dv_quantity>_value/upper|magnitude", 4.0);
+        valueHolder.addProperty("timing/frequenz/interval<dv_quantity>_value/lower|unit", "1/d");
+
+        OpenEhrToFhirHelper.DataWithIndex mapped = mappings.applyOpenEhrToFhirMapping(
+                "timingToDaily",
+                List.of(
+                        "timing/frequenz/interval<dv_quantity>_value/lower|magnitude",
+                        "timing/frequenz/interval<dv_quantity>_value/upper|magnitude",
+                        "timing/frequenz/interval<dv_quantity>_value/lower|unit"),
+                valueHolder,
+                0,
+                "timing",
+                "Dosage",
+                "timing",
+                stringUtils,
+                mapperUtils);
+
+        Assert.assertNotNull(mapped);
+        Assert.assertTrue(mapped.getData() instanceof Timing);
+        Timing timing = (Timing) mapped.getData();
+        Assert.assertTrue(timing.hasRepeat());
+        Assert.assertEquals(3, timing.getRepeat().getFrequency());
+        Assert.assertEquals(4, timing.getRepeat().getFrequencyMax());
+    }
+
+    @Test
+    public void toFhirTiming_readsSingleFrequencyWithoutMax() {
+        JsonObject valueHolder = new JsonObject();
+        valueHolder.addProperty("timing/frequenz/quantity_value|magnitude", 3.0);
+        valueHolder.addProperty("timing/frequenz/quantity_value|unit", "1/d");
+
+        OpenEhrToFhirHelper.DataWithIndex mapped = mappings.applyOpenEhrToFhirMapping(
+                "timingToDaily",
+                List.of(
+                        "timing/frequenz/quantity_value|magnitude",
+                        "timing/frequenz/quantity_value|unit"),
+                valueHolder,
+                0,
+                "timing",
+                "Dosage",
+                "timing",
+                stringUtils,
+                mapperUtils);
+
+        Assert.assertNotNull(mapped);
+        Assert.assertTrue(mapped.getData() instanceof Timing);
+        Timing timing = (Timing) mapped.getData();
+        Assert.assertTrue(timing.hasRepeat());
+        Assert.assertEquals(3, timing.getRepeat().getFrequency());
+        Assert.assertFalse(timing.getRepeat().hasFrequencyMax());
+    }
+
 }

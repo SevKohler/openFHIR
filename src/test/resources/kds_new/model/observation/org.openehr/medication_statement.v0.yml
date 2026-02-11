@@ -22,7 +22,7 @@ mappings:
   #    hierarchy:
   #      fhirCreate: "resource"
   #      openehrCreate: "event"
-  #      uniqueValueFHIR: "[route, timing.event]" # if route value is different per dosage slice make a new event
+  #      uniqueValueFHIR: "[route, timing.event, doseAndRate]" # if route value is different per dosage slice make a new event
   #      uniqueValueOpenEHR: "['/data[at0003]/items[openEHR-EHR-CLUSTER.medication.v2]/items[at0132]']"
 
   # reference to party identified, not supported

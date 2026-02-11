@@ -53,29 +53,21 @@ final class TimingFlatMapper {
         if (flat == null || StringUtils.isBlank(basePath) || frequency == null) {
             return;
         }
-        FrequencyFormat format = detectFrequencyFormat(flat, basePath);
-        if (format == FrequencyFormat.INTERVAL_QUANTITY_VALUE || format == FrequencyFormat.QUANTITY_VALUE) {
-            String prefix = format == FrequencyFormat.INTERVAL_QUANTITY_VALUE
-                    ? basePath + "/interval<dv_quantity>_value"
-                    : basePath + "/quantity_value";
-            if (frequencyMax != null && !frequencyMax.equals(frequency)) {
-                set(flat, prefix + "/lower|magnitude", frequency);
-                set(flat, prefix + "/upper|magnitude", frequencyMax);
-                if (StringUtils.isNotBlank(unit)) {
-                    set(flat, prefix + "/lower|unit", unit);
-                    set(flat, prefix + "/upper|unit", unit);
-                }
-            } else {
-                set(flat, prefix + "|magnitude", frequency);
-                if (StringUtils.isNotBlank(unit)) {
-                    set(flat, prefix + "|unit", unit);
-                }
+        clearFrequency(flat, basePath);
+        if (frequencyMax != null) {
+            String prefix = basePath + "/interval<dv_quantity>_value";
+            set(flat, prefix + "/lower|magnitude", frequency);
+            set(flat, prefix + "/upper|magnitude", frequencyMax);
+            if (StringUtils.isNotBlank(unit)) {
+                set(flat, prefix + "/lower|unit", unit);
+                set(flat, prefix + "/upper|unit", unit);
             }
             return;
         }
-        set(flat, basePath + "|magnitude", frequency);
+        String prefix = basePath + "/quantity_value";
+        set(flat, prefix + "|magnitude", frequency);
         if (StringUtils.isNotBlank(unit)) {
-            set(flat, basePath + "|unit", unit);
+            set(flat, prefix + "|unit", unit);
         }
     }
 
@@ -190,14 +182,11 @@ final class TimingFlatMapper {
             return null;
         }
         String lowerMag = find(joinedValues, "interval<dv_quantity>_value/lower|magnitude");
-        if (lowerMag == null) lowerMag = find(joinedValues, "lower|magnitude");
         String upperMag = find(joinedValues, "interval<dv_quantity>_value/upper|magnitude");
-        if (upperMag == null) upperMag = find(joinedValues, "upper|magnitude");
-        String mag = find(joinedValues, "interval<dv_quantity>_value|magnitude");
-        if (mag == null) mag = find(joinedValues, "magnitude");
-        String unit = find(joinedValues, "interval<dv_quantity>_value/lower|unit");
-        if (unit == null) unit = find(joinedValues, "upper|unit");
-        if (unit == null) unit = find(joinedValues, "unit");
+        String mag = find(joinedValues, "quantity_value|magnitude");
+        String unit = find(joinedValues, "quantity_value|unit");
+        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/lower|unit");
+        if (unit == null) unit = find(joinedValues, "interval<dv_quantity>_value/upper|unit");
 
         Double lower = null;
         Double upper = null;
@@ -226,7 +215,9 @@ final class TimingFlatMapper {
         if (lower == null && upper == null && single == null) {
             return null;
         }
-        return new FrequencyValue(single != null ? single : lower, upper, unitVal);
+        Double frequency = single != null ? single : (lower != null ? lower : upper);
+        Double frequencyMax = upper;
+        return new FrequencyValue(frequency, frequencyMax, unitVal);
     }
 
     static DurationValue readDuration(JsonObject valueHolder, List<String> joinedValues, FhirValueReaders readers) {
@@ -331,6 +322,27 @@ final class TimingFlatMapper {
         } else {
             flat.addProperty(path, value.toString());
         }
+    }
+
+    private static void clearFrequency(JsonObject flat, String basePath) {
+        flat.remove(basePath + "|magnitude");
+        flat.remove(basePath + "|unit");
+        flat.remove(basePath + "/lower|magnitude");
+        flat.remove(basePath + "/lower|unit");
+        flat.remove(basePath + "/upper|magnitude");
+        flat.remove(basePath + "/upper|unit");
+        flat.remove(basePath + "/quantity_value|magnitude");
+        flat.remove(basePath + "/quantity_value|unit");
+        flat.remove(basePath + "/quantity_value/lower|magnitude");
+        flat.remove(basePath + "/quantity_value/lower|unit");
+        flat.remove(basePath + "/quantity_value/upper|magnitude");
+        flat.remove(basePath + "/quantity_value/upper|unit");
+        flat.remove(basePath + "/interval<dv_quantity>_value|magnitude");
+        flat.remove(basePath + "/interval<dv_quantity>_value|unit");
+        flat.remove(basePath + "/interval<dv_quantity>_value/lower|magnitude");
+        flat.remove(basePath + "/interval<dv_quantity>_value/lower|unit");
+        flat.remove(basePath + "/interval<dv_quantity>_value/upper|magnitude");
+        flat.remove(basePath + "/interval<dv_quantity>_value/upper|unit");
     }
 
     static final class FrequencyValue {

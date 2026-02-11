@@ -54,12 +54,12 @@ public class DosageCustomMappings extends CustomMapping {
         }
 
         return switch (mappingCode) {
-            case "dosageQuantityToRange" -> applyDosageQuantityToRange(openEhrPath, fhirValue, flat, populator);
-            case "ratio_to_dv_quantity" -> applyRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
-            case "ratio_to_dosage" -> applyRatioToDosage(openEhrPath, fhirValue, flat, populator);
-            case "timingToDaily" -> applyTimingToDaily(openEhrPath, fhirValue, flat, populator);
-            case "timingNonDaily" -> applyTimingToNonDaily(openEhrPath, fhirValue, flat, populator);
-            case "dosageDurationToAdministrationDuration" -> applyDurationToAdministration(openEhrPath, fhirValue, flat, populator);
+            case "dosageQuantityToRange" -> toOpenEhrDosageQuantityToRange(openEhrPath, fhirValue, flat, populator);
+            case "ratio_to_dv_quantity" -> toOpenEhrRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
+            case "ratio_to_dosage" -> toOpenEhrRatioToDosage(openEhrPath, fhirValue, flat, populator);
+            case "timingToDaily" -> toOpenEhrTimingDaily(openEhrPath, fhirValue, flat, populator);
+            case "timingNonDaily" -> toOpenEhrTimingNonDaily(openEhrPath, fhirValue, flat, populator);
+            case "dosageDurationToAdministrationDuration" -> toOpenEhrDurationToAdministrationDuration(openEhrPath, fhirValue, flat, populator);
             default -> false;
         };
     }
@@ -81,17 +81,17 @@ public class DosageCustomMappings extends CustomMapping {
             case "dosageQuantityToRange" -> toFhirDose(joinedValues, valueHolder, lastIndex, path, fhirPath, mapperUtils);
             case "ratio_to_dv_quantity" -> toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dosage" -> toFhirRatioDosage(joinedValues, valueHolder, lastIndex, path, mapperUtils);
-            case "timingToDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
-            case "timingNonDaily" -> toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "timingToDaily" -> toFhirTimingDaily(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "timingNonDaily" -> toFhirTimingNonDaily(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "dosageDurationToAdministrationDuration" -> toFhirTimingRepeat(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             default -> null;
         };
     }
 
-    private boolean applyDosageQuantityToRange(final String openEhrPath,
-                                               final Base fhirValue,
-                                               final JsonObject flat,
-                                               final OpenEhrPopulator populator) {
+    private boolean toOpenEhrDosageQuantityToRange(final String openEhrPath,
+                                                   final Base fhirValue,
+                                                   final JsonObject flat,
+                                                   final OpenEhrPopulator populator) {
         if (fhirValue instanceof Range range) {
             // If we previously mapped a single quantity, clear it to avoid conflicts.
             flat.remove(openEhrPath + "|magnitude");
@@ -127,10 +127,10 @@ public class DosageCustomMappings extends CustomMapping {
         return path;
     }
 
-    private boolean applyRatioToDvQuantity(final String openEhrPath,
-                                           final Base fhirValue,
-                                           final JsonObject flat,
-                                           final OpenEhrPopulator populator) {
+    private boolean toOpenEhrRatioToDvQuantity(final String openEhrPath,
+                                               final Base fhirValue,
+                                               final JsonObject flat,
+                                               final OpenEhrPopulator populator) {
         if (!(fhirValue instanceof Ratio ratio)) {
             return false;
         }
@@ -156,10 +156,10 @@ public class DosageCustomMappings extends CustomMapping {
         return true;
     }
 
-    private boolean applyRatioToDosage(final String openEhrPath,
-                                       final Base fhirValue,
-                                       final JsonObject flat,
-                                       final OpenEhrPopulator populator) {
+    private boolean toOpenEhrRatioToDosage(final String openEhrPath,
+                                           final Base fhirValue,
+                                           final JsonObject flat,
+                                           final OpenEhrPopulator populator) {
         if (!(fhirValue instanceof Ratio ratio)) {
             return false;
         }
@@ -213,10 +213,10 @@ public class DosageCustomMappings extends CustomMapping {
         return base + "/" + child;
     }
 
-    private boolean applyTimingToDaily(final String openEhrPath,
-                                       final Base fhirValue,
-                                       final JsonObject flat,
-                                       final OpenEhrPopulator populator) {
+    private boolean toOpenEhrTimingDaily(final String openEhrPath,
+                                         final Base fhirValue,
+                                         final JsonObject flat,
+                                         final OpenEhrPopulator populator) {
         TimingApplyContext ctx = buildTimingApplyContext(fhirValue, true);
         if (ctx == null) {
             return false;
@@ -226,11 +226,11 @@ public class DosageCustomMappings extends CustomMapping {
 
         // Frequency -> /frequenz (DV_QUANTITY)
         if (ctx.repeat.hasFrequency() || ctx.repeat.hasFrequencyMax()) {
-            Integer freq = ctx.repeat.getFrequency();
-            Integer freqMax = ctx.repeat.getFrequencyMax();
+            Integer freq = ctx.repeat.hasFrequency() ? ctx.repeat.getFrequency() : null;
+            Integer freqMax = ctx.repeat.hasFrequencyMax() ? ctx.repeat.getFrequencyMax() : null;
             if (freq != null || freqMax != null) {
                 Double frequency = freq != null ? freq.doubleValue() : (freqMax != null ? freqMax.doubleValue() : null);
-                Double frequencyMax = (freqMax != null && !freqMax.equals(freq)) ? freqMax.doubleValue() : null;
+                Double frequencyMax = freqMax != null ? freqMax.doubleValue() : null;
                 String unit = toFrequencyUnit(ctx.periodUnit);
                 TimingFlatMapper.writeFrequency(flat, openEhrPath + "/frequenz", frequency, frequencyMax, unit);
             }
@@ -239,10 +239,10 @@ public class DosageCustomMappings extends CustomMapping {
         return true;
     }
 
-    private boolean applyTimingToNonDaily(final String openEhrPath,
-                                          final Base fhirValue,
-                                          final JsonObject flat,
-                                          final OpenEhrPopulator populator) {
+    private boolean toOpenEhrTimingNonDaily(final String openEhrPath,
+                                            final Base fhirValue,
+                                            final JsonObject flat,
+                                            final OpenEhrPopulator populator) {
         TimingApplyContext ctx = buildTimingApplyContext(fhirValue, false);
         if (ctx == null) {
             return false;
@@ -326,10 +326,10 @@ public class DosageCustomMappings extends CustomMapping {
         }
     }
 
-    private boolean applyDurationToAdministration(final String openEhrPath,
-                                                  final Base fhirValue,
-                                                  final JsonObject flat,
-                                                  final OpenEhrPopulator populator) {
+    private boolean toOpenEhrDurationToAdministrationDuration(final String openEhrPath,
+                                                              final Base fhirValue,
+                                                              final JsonObject flat,
+                                                              final OpenEhrPopulator populator) {
         if (!(fhirValue instanceof Timing.TimingRepeatComponent repeat)) {
             return false;
         }
@@ -517,33 +517,55 @@ public class DosageCustomMappings extends CustomMapping {
         };
     }
 
+    private OpenEhrToFhirHelper.DataWithIndex toFhirTimingDaily(final List<String> joinedValues,
+                                                                final JsonObject valueHolder,
+                                                                final Integer lastIndex,
+                                                                final String path,
+                                                                final OpenFhirMapperUtils mapperUtils) {
+        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, false);
+    }
+
+    private OpenEhrToFhirHelper.DataWithIndex toFhirTimingNonDaily(final List<String> joinedValues,
+                                                                   final JsonObject valueHolder,
+                                                                   final Integer lastIndex,
+                                                                   final String path,
+                                                                   final OpenFhirMapperUtils mapperUtils) {
+        return toFhirTiming(joinedValues, valueHolder, lastIndex, path, mapperUtils, true, false);
+    }
+
     private OpenEhrToFhirHelper.DataWithIndex toFhirTiming(final List<String> joinedValues,
                                                            final JsonObject valueHolder,
                                                            final Integer lastIndex,
                                                            final String path,
-                                                           final OpenFhirMapperUtils mapperUtils) {
+                                                           final OpenFhirMapperUtils mapperUtils,
+                                                           final boolean includeZeitpunkt,
+                                                           final boolean inferPeriodFromFrequency) {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
 
-        String timePath = find(joinedValues, "zeitpunkt");
-        if (timePath != null) {
-            String time = readers.get(valueHolder, timePath);
-            if (StringUtils.isNotBlank(time)) {
-                repeat.addTimeOfDay(time);
+        if (includeZeitpunkt) {
+            String timePath = find(joinedValues, "zeitpunkt");
+            if (timePath != null) {
+                String time = readers.get(valueHolder, timePath);
+                if (StringUtils.isNotBlank(time)) {
+                    repeat.addTimeOfDay(time);
+                }
             }
         }
 
         TimingFlatMapper.FrequencyValue freq = TimingFlatMapper.readFrequency(valueHolder, joinedValues, readers);
         if (freq != null && freq.frequency != null) {
             setFrequency(repeat, freq.frequency, freq.frequencyMax);
-            Timing.UnitsOfTime unit = periodUnitFromFrequency(freq.unit);
-            if (unit != null) {
-                if (!repeat.hasPeriodUnit()) {
-                    repeat.setPeriodUnit(unit);
-                }
-                if (!repeat.hasPeriod()) {
-                    repeat.setPeriod(1d);
+            if (inferPeriodFromFrequency) {
+                Timing.UnitsOfTime unit = periodUnitFromFrequency(freq.unit);
+                if (unit != null) {
+                    if (!repeat.hasPeriodUnit()) {
+                        repeat.setPeriodUnit(unit);
+                    }
+                    if (!repeat.hasPeriod()) {
+                        repeat.setPeriod(1d);
+                    }
                 }
             }
         }
