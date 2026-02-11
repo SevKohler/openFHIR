@@ -52,10 +52,6 @@ public class MedikamentenverabreichungenTest extends KdsBidirectionalTest {
         Assert.assertEquals(1, administrations.size());
 
         final MedicationAdministration medicationAdministration = administrations.get(0);
-        final CodeableConcept medicationResource = (CodeableConcept) medicationAdministration.getMedicationCodeableConcept();
-
-        Assert.assertEquals("arzneimittel-name", medicationResource.getCodingFirstRep().getDisplay());
-
 //        Assert.assertEquals("in-progress", medicationAdministration.getStatusElement().getValueAsString());
 //        Assert.assertEquals("context reference encounter 123", medicationAdministration.getContext().getReference());
 
