@@ -59,6 +59,11 @@
         "effectiveDateTime": "2022-03-13T09:00:00+01:00",
         "request": {
           "reference": "MedicationRequest/mii-exa-test-data-patient-6-medrequest-2"
+        },
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationAdministration"
+          ]
         }
       }
     },

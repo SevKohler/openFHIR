@@ -102,6 +102,11 @@
         },
         "request": {
           "reference": "MedicationRequest/mii-exa-test-data-patient-1-medrequest-1"
+        },
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationAdministration"
+          ]
         }
       }
     },
