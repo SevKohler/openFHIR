@@ -67,9 +67,9 @@
                 "rateRatio": {
                   "numerator": {
                     "value": 150.0,
-                    "unit": "mL",
+                    "unit": "ml/h",
                     "system": "http://unitsofmeasure.org",
-                    "code": "mL"
+                    "code": "ml/h"
                   },
                   "denominator": {
                     "value": 1.0,

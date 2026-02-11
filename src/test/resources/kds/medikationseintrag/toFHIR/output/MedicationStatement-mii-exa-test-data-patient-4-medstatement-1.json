@@ -103,9 +103,9 @@
                 "rateRatio": {
                   "numerator": {
                     "value": 75.0,
-                    "unit": "mg/h",
+                    "unit": "mg",
                     "system": "http://unitsofmeasure.org",
-                    "code": "mg/h"
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 2.0,

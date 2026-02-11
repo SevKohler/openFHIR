@@ -571,10 +571,7 @@ public class DosageCustomMappings extends CustomMapping {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
 
         Quantity rateQuantity = readRateQuantity(readers, valueHolder, joinedValues);
-        if (rateQuantity == null || rateQuantity.getValue() == null) {
-            return null;
-        }
-
+        Quantity doseQuantity = readDoseQuantity(readers, valueHolder);
 
         String durationPath = findInValueHolder(valueHolder, "verabreichungsdauer|value");
         if (durationPath == null) durationPath = findInValueHolder(valueHolder, "verabreichungsdauer/duration_value|value");
@@ -589,10 +586,23 @@ public class DosageCustomMappings extends CustomMapping {
             return toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
         }
 
+        Quantity numeratorSource = null;
+        Double numeratorValue = null;
+        if (rateQuantity != null && rateQuantity.getValue() != null) {
+            numeratorSource = rateQuantity;
+            numeratorValue = rateQuantity.getValue().doubleValue() * parts.value;
+        } else if (doseQuantity != null && doseQuantity.getValue() != null) {
+            // If rate is missing, derive the ratio directly from dose and duration.
+            numeratorSource = doseQuantity;
+            numeratorValue = doseQuantity.getValue().doubleValue();
+        } else {
+            return toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+        }
+
         Quantity numerator = new Quantity();
-        numerator.setValue(rateQuantity.getValue().doubleValue() * parts.value);
-        numerator.setUnit(rateQuantity.getUnit());
-        numerator.setCode(rateQuantity.getCode());
+        numerator.setValue(numeratorValue);
+        numerator.setUnit(numeratorSource.getUnit());
+        numerator.setCode(numeratorSource.getCode());
         numerator.setSystem("http://unitsofmeasure.org");
 
         Quantity denominator = new Quantity();
@@ -629,6 +639,37 @@ public class DosageCustomMappings extends CustomMapping {
             }
         }
         return null;
+    }
+
+    private Quantity readDoseQuantity(final FhirValueReaders readers,
+                                      final JsonObject valueHolder) {
+        String magPath = findInValueHolder(valueHolder, "dosis/quantity_value|magnitude");
+        if (magPath == null) magPath = findInValueHolder(valueHolder, "dosis|magnitude");
+        String unitPath = findInValueHolder(valueHolder, "dosis/quantity_value|unit");
+        if (unitPath == null) unitPath = findInValueHolder(valueHolder, "dosis|unit");
+        String codePath = findInValueHolder(valueHolder, "dosis/quantity_value|code");
+        if (codePath == null) codePath = findInValueHolder(valueHolder, "dosis|code");
+        if (magPath == null) {
+            return null;
+        }
+        Object number = readers.number(readers.get(valueHolder, magPath));
+        if (!(number instanceof Number num)) {
+            return null;
+        }
+        Quantity quantity = new Quantity();
+        quantity.setValue(num.doubleValue());
+        String unit = unitPath != null ? readers.get(valueHolder, unitPath) : null;
+        String code = codePath != null ? readers.get(valueHolder, codePath) : null;
+        if (StringUtils.isNotBlank(unit)) {
+            quantity.setUnit(unit);
+        }
+        if (StringUtils.isNotBlank(code)) {
+            quantity.setCode(code);
+        } else if (StringUtils.isNotBlank(unit)) {
+            quantity.setCode(unit);
+        }
+        setUcumSystemIfPresent(quantity);
+        return quantity;
     }
 
     // resolveCanonicalPath now lives in CustomMapping
