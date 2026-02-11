@@ -459,18 +459,6 @@
                           "_type": "ELEMENT",
                           "name": {
                             "_type": "DV_TEXT",
-                            "value": "Bei Bedarf"
-                          },
-                          "value": {
-                            "_type": "DV_BOOLEAN",
-                            "value": true
-                          },
-                          "archetype_node_id": "at0024"
-                        },
-                        {
-                          "_type": "ELEMENT",
-                          "name": {
-                            "_type": "DV_TEXT",
                             "value": "Periode"
                           },
                           "value": {
@@ -478,6 +466,18 @@
                             "value": "P1D"
                           },
                           "archetype_node_id": "at0014"
+                        },
+                        {
+                          "_type": "ELEMENT",
+                          "name": {
+                            "_type": "DV_TEXT",
+                            "value": "Bei Bedarf"
+                          },
+                          "value": {
+                            "_type": "DV_BOOLEAN",
+                            "value": true
+                          },
+                          "archetype_node_id": "at0024"
                         }
                       ],
                       "archetype_node_id": "openEHR-EHR-CLUSTER.timing_daily.v1"

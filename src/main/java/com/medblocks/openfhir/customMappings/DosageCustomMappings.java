@@ -33,6 +33,7 @@ public class DosageCustomMappings extends CustomMapping {
             "ratio_to_dosage",
             "dosageDurationToAdministrationDuration"
     );
+    private static final Set<String> ALLOWED_RATE_UNITS = Set.of("l/h", "ml/h", "ml/s", "ml/min");
 
     @Override
     public Set<String> mappingCodes() {
@@ -200,16 +201,16 @@ public class DosageCustomMappings extends CustomMapping {
         double rate = numerator.getValue().doubleValue() / denomValue;
         Quantity rateQuantity = new Quantity();
         rateQuantity.setValue(rate);
-        if (StringUtils.isNotBlank(numerator.getUnit())) {
-            String unit = numerator.getUnit() + "/" + denominator.getUnit();
-            rateQuantity.setUnit(unit);
+        String numeratorUnit = unitOrCodePreferCode(numerator);
+        String denominatorUnit = unitOrCodePreferCode(denominator);
+        String combinedUnit = normalizeUcumUnit(buildUnit(numeratorUnit, denominatorUnit));
+        if (StringUtils.isNotBlank(combinedUnit) && isAllowedRateUnit(combinedUnit)) {
+            rateQuantity.setUnit(combinedUnit);
+            rateQuantity.setCode(combinedUnit);
+            setUcumSystemIfPresent(rateQuantity);
+            String ratePath = appendFlatChild(openEhrPath, "verabreichungsrate/quantity_value");
+            populator.setFhirPathValue(ratePath, rateQuantity, FhirConnectConst.DV_QUANTITY, flat);
         }
-        if (StringUtils.isNotBlank(numerator.getCode())) {
-            rateQuantity.setCode(numerator.getCode());
-        }
-        setUcumSystemIfPresent(rateQuantity);
-        String ratePath = appendFlatChild(openEhrPath, "verabreichungsrate/quantity_value");
-        populator.setFhirPathValue(ratePath, rateQuantity, FhirConnectConst.DV_QUANTITY, flat);
 
         String durationPath = appendFlatChild(openEhrPath, "verabreichungsdauer");
         populator.setFhirPathValue(durationPath, new StringType(duration), FhirConnectConst.DV_DURATION, flat);
@@ -899,8 +900,8 @@ public class DosageCustomMappings extends CustomMapping {
             return null;
         }
 
-        String lowUnit = bestUnit(low);
-        String highUnit = bestUnit(high);
+        String lowUnit = normalizeUcumUnit(bestUnit(low));
+        String highUnit = normalizeUcumUnit(bestUnit(high));
 
         if (low != null && low.getValue() != null && high != null && high.getValue() != null
                 && StringUtils.isNotBlank(lowUnit) && lowUnit.equals(highUnit)) {
@@ -926,7 +927,7 @@ public class DosageCustomMappings extends CustomMapping {
         if (quantity == null || quantity.getValue() == null) {
             return null;
         }
-        String unit = bestUnit(quantity);
+        String unit = normalizeUcumUnit(bestUnit(quantity));
         String value = stripTrailingZeros(quantity.getValue().doubleValue());
         if (StringUtils.isBlank(unit)) {
             return value;
@@ -1034,7 +1035,7 @@ public class DosageCustomMappings extends CustomMapping {
         Quantity quantity = new Quantity();
         quantity.setValue(magnitude);
         if (parts.length > 1 && StringUtils.isNotBlank(parts[1])) {
-            String unit = parts[1].trim();
+            String unit = normalizeUcumUnit(parts[1]);
             quantity.setUnit(unit);
             quantity.setCode(unit);
         }
@@ -1050,6 +1051,33 @@ public class DosageCustomMappings extends CustomMapping {
             return numeratorUnit;
         }
         return numeratorUnit + "/" + denominatorUnit;
+    }
+
+    private String unitOrCodePreferCode(final Quantity quantity) {
+        if (quantity == null) {
+            return null;
+        }
+        if (StringUtils.isNotBlank(quantity.getCode())) {
+            return quantity.getCode().trim();
+        }
+        if (StringUtils.isNotBlank(quantity.getUnit())) {
+            return quantity.getUnit().trim();
+        }
+        return null;
+    }
+
+    private boolean isAllowedRateUnit(final String unit) {
+        if (StringUtils.isBlank(unit)) {
+            return false;
+        }
+        return ALLOWED_RATE_UNITS.contains(normalizeUcumUnit(unit));
+    }
+
+    private String normalizeUcumUnit(final String unit) {
+        if (StringUtils.isBlank(unit)) {
+            return unit;
+        }
+        return unit.toLowerCase(Locale.ROOT).trim();
     }
 
     private String toFrequencyUnit(Timing.UnitsOfTime unit) {

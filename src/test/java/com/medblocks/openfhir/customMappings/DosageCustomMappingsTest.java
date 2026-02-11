@@ -216,7 +216,7 @@ public class DosageCustomMappingsTest {
 
         Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
                 "rangeToText", "rate_text", rateRange, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
-        Assert.assertEquals("150-300 mL/h", flat.get("rate_text").getAsString());
+        Assert.assertEquals("150-300 ml/h", flat.get("rate_text").getAsString());
     }
 
     @Test
@@ -240,8 +240,8 @@ public class DosageCustomMappingsTest {
         Range range = (Range) mapped.getData();
         Assert.assertEquals("150.0", range.getLow().getValue().toPlainString());
         Assert.assertEquals("300.0", range.getHigh().getValue().toPlainString());
-        Assert.assertEquals("mL/h", range.getLow().getUnit());
-        Assert.assertEquals("mL/h", range.getHigh().getUnit());
+        Assert.assertEquals("ml/h", range.getLow().getUnit());
+        Assert.assertEquals("ml/h", range.getHigh().getUnit());
         Assert.assertEquals("http://unitsofmeasure.org", range.getLow().getSystem());
         Assert.assertEquals("http://unitsofmeasure.org", range.getHigh().getSystem());
     }

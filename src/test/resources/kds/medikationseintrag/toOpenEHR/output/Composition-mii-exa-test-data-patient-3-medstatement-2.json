@@ -437,19 +437,6 @@
                       "_type": "ELEMENT",
                       "name": {
                         "_type": "DV_TEXT",
-                        "value": "Verabreichungsrate"
-                      },
-                      "value": {
-                        "_type": "DV_QUANTITY",
-                        "units": "mg/h",
-                        "magnitude": 21.73913043478261
-                      },
-                      "archetype_node_id": "at0134"
-                    },
-                    {
-                      "_type": "ELEMENT",
-                      "name": {
-                        "_type": "DV_TEXT",
                         "value": "Verabreichungsdauer"
                       },
                       "value": {

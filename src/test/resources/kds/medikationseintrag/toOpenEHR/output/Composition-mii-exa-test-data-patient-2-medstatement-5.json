@@ -300,7 +300,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "mL",
+                        "units": "ml/h",
                         "magnitude": 150.0
                       },
                       "archetype_node_id": "at0134"

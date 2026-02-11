@@ -40,10 +40,8 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
         Assert.assertEquals(1500.0, flat.get(doseMag).getAsDouble(), 0.0001);
         Assert.assertEquals("mg", flat.get(doseUnit).getAsString());
 
-        Assert.assertTrue("rate magnitude missing", flat.has(rateMag));
-        Assert.assertTrue("rate unit missing", flat.has(rateUnit));
-        Assert.assertEquals(50, flat.get(rateMag).getAsDouble(), 0.0001);
-        Assert.assertEquals("mg/Minuten", flat.get(rateUnit).getAsString());
+        Assert.assertFalse("rate magnitude should not be mapped for unsupported unit", flat.has(rateMag));
+        Assert.assertFalse("rate unit should not be mapped for unsupported unit", flat.has(rateUnit));
 
         Assert.assertTrue("duration missing", flat.has(durationValue) || flat.has(duration));
         String actualDuration = flat.has(durationValue)
@@ -63,7 +61,7 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
         String rateQuantityValue = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value";
 
         Assert.assertTrue("rate range should map to text_value", flat.has(rateText));
-        Assert.assertEquals("150-300 mL/h", flat.get(rateText).getAsString());
+        Assert.assertEquals("150-300 ml/h", flat.get(rateText).getAsString());
         Assert.assertFalse("rate range should not map to quantity_value", flat.has(rateQuantityValue));
     }
 }
