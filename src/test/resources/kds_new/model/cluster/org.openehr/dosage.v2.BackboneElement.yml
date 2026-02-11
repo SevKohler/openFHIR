@@ -35,11 +35,11 @@ mappings:
       openehr: "$archetype/items[at0134]"
       
 
-  - name: "rateRatio"
-    with:
-      fhir: "$fhirRoot.rate.as(Ratio)"
-      openehr: "$archetype"
-    mappingCode: "ratio_to_dosage"
+#  - name: "rateRatio" TODO add back in
+#    with:
+#      fhir: "$fhirRoot.rate.as(Ratio)"
+#      openehr: "$archetype"
+#    mappingCode: "ratio_to_dosage"
 
 #  - name: "rateRatio"
 #    with:

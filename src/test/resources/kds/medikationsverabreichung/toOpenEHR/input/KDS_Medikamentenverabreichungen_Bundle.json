@@ -194,34 +194,6 @@
         "method": "POST",
         "url": "Encounter"
       }
-    },
-    {
-      "fullUrl": "urn:uuid:70ca1d00-0d8b-42bb-9508-a8fc76e5c72d",
-      "resource": {
-        "resourceType": "MedicationStatement",
-        "id": "example-medicationstatement",
-        "status": "active",
-        "medicationCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-              "code": "1049630",
-              "display": "Aspirin 81 MG Oral Tablet"
-            }
-          ],
-          "text": "Aspirin 81 MG Oral Tablet"
-        },
-        "subject": {
-          "identifier": {
-            "system": "urn:ietf:rfc:4122",
-            "value": "4c7d0173-7378-42b2-a9fa-64cd2664674f"
-          }
-        }
-      },
-      "request": {
-        "method": "POST",
-        "url": "MedicationStatement"
-      }
     }
   ]
 }
