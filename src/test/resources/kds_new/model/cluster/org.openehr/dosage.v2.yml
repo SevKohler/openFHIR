@@ -72,7 +72,7 @@ mappings:
     with:
       fhir: "$fhirRoot.doseAndRate.rate.as(Range)"
       openehr: "$archetype/items[at0134]"
-    mappingCode: "rangeToQuantity"
+    mappingCode: "rangeToText"
 
   - name: "duration"
     with:

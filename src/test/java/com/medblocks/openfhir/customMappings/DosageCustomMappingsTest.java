@@ -207,4 +207,43 @@ public class DosageCustomMappingsTest {
         Assert.assertFalse(timing.getRepeat().hasFrequencyMax());
     }
 
+    @Test
+    public void fhirToOpenEhr_rangeToText_serializesReadableAndParsable() {
+        JsonObject flat = new JsonObject();
+        Range rateRange = new Range()
+                .setLow(new Quantity().setValue(150).setUnit("mL/h").setSystem("http://unitsofmeasure.org").setCode("mL/h"))
+                .setHigh(new Quantity().setValue(300).setUnit("mL/h").setSystem("http://unitsofmeasure.org").setCode("mL/h"));
+
+        Assert.assertTrue(mappings.applyFhirToOpenEhrMapping(
+                "rangeToText", "rate_text", rateRange, FhirConnectConst.DV_TEXT, flat, populator, mapperUtils, stringUtils));
+        Assert.assertEquals("150-300 mL/h", flat.get("rate_text").getAsString());
+    }
+
+    @Test
+    public void openEhrToFhir_rangeToText_parsesBackToRange() {
+        JsonObject valueHolder = new JsonObject();
+        valueHolder.addProperty("rate_text", "150-300 mL/h");
+
+        OpenEhrToFhirHelper.DataWithIndex mapped = mappings.applyOpenEhrToFhirMapping(
+                "rangeToText",
+                List.of("rate_text"),
+                valueHolder,
+                0,
+                "rate_text",
+                "Dosage",
+                "doseAndRate.rate.as(Range)",
+                stringUtils,
+                mapperUtils);
+
+        Assert.assertNotNull(mapped);
+        Assert.assertTrue(mapped.getData() instanceof Range);
+        Range range = (Range) mapped.getData();
+        Assert.assertEquals("150.0", range.getLow().getValue().toPlainString());
+        Assert.assertEquals("300.0", range.getHigh().getValue().toPlainString());
+        Assert.assertEquals("mL/h", range.getLow().getUnit());
+        Assert.assertEquals("mL/h", range.getHigh().getUnit());
+        Assert.assertEquals("http://unitsofmeasure.org", range.getLow().getSystem());
+        Assert.assertEquals("http://unitsofmeasure.org", range.getHigh().getSystem());
+    }
+
 }

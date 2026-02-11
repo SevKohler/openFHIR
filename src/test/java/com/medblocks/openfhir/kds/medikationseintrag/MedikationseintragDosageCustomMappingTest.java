@@ -51,4 +51,19 @@ public class MedikationseintragDosageCustomMappingTest extends KdsTest {
                 : flat.get(duration).getAsString();
         Assert.assertEquals("PT30M", actualDuration);
     }
+
+    @Test
+    public void mapsRateRangeToTextValueNotQuantityValue() {
+        JsonObject flat = fhirToOpenEhr.fhirToFlatJsonObject(
+                context,
+                getTestBundle("/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-4.json"),
+                operationaltemplate);
+
+        String rateText = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/text_value";
+        String rateQuantityValue = "medikamentenliste/aussage_zur_medikamenteneinnahme:0/dosierung:0/verabreichungsrate/quantity_value";
+
+        Assert.assertTrue("rate range should map to text_value", flat.has(rateText));
+        Assert.assertEquals("150-300 mL/h", flat.get(rateText).getAsString());
+        Assert.assertFalse("rate range should not map to quantity_value", flat.has(rateQuantityValue));
+    }
 }

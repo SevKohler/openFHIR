@@ -28,6 +28,7 @@ public class DosageCustomMappings extends CustomMapping {
             "timingToDaily",
             "timingNonDaily",
             "dosageQuantityToRange",
+            "rangeToText",
             "ratio_to_dv_quantity",
             "ratio_to_dosage",
             "dosageDurationToAdministrationDuration"
@@ -56,6 +57,7 @@ public class DosageCustomMappings extends CustomMapping {
 
         return switch (mappingCode) {
             case "dosageQuantityToRange" -> toOpenEhrDosageQuantityToRange(openEhrPath, fhirValue, flat, populator);
+            case "rangeToText" -> toOpenEhrRangeToText(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dv_quantity" -> toOpenEhrRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dosage" -> toOpenEhrRatioToDosage(openEhrPath, fhirValue, flat, populator);
             case "timingToDaily" -> toOpenEhrTimingDaily(openEhrPath, fhirValue, flat, populator);
@@ -80,6 +82,7 @@ public class DosageCustomMappings extends CustomMapping {
         }
         return switch (mappingCode) {
             case "dosageQuantityToRange" -> toFhirDose(joinedValues, valueHolder, lastIndex, path, fhirPath, mapperUtils);
+            case "rangeToText" -> toFhirRangeFromText(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dv_quantity" -> toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dosage" -> toFhirRatioDosage(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "timingToDaily" -> toFhirTimingDaily(joinedValues, valueHolder, lastIndex, path, mapperUtils);
@@ -126,6 +129,22 @@ public class DosageCustomMappings extends CustomMapping {
             return base + "/interval<dv_quantity>_value";
         }
         return path;
+    }
+
+    private boolean toOpenEhrRangeToText(final String openEhrPath,
+                                         final Base fhirValue,
+                                         final JsonObject flat,
+                                         final OpenEhrPopulator populator) {
+        if (!(fhirValue instanceof Range range)) {
+            return false;
+        }
+        String serialized = serializeRange(range);
+        if (StringUtils.isBlank(serialized)) {
+            return false;
+        }
+        String textPath = toTextValuePath(openEhrPath);
+        populator.setFhirPathValue(textPath, new StringType(serialized), FhirConnectConst.DV_TEXT, flat);
+        return true;
     }
 
     private boolean toOpenEhrRatioToDvQuantity(final String openEhrPath,
@@ -415,6 +434,132 @@ public class DosageCustomMappings extends CustomMapping {
         ratio.setNumerator(numerator);
         ratio.setDenominator(denominator);
         return new OpenEhrToFhirHelper.DataWithIndex(ratio, lastIndex == null ? -1 : lastIndex, path);
+    }
+
+    private OpenEhrToFhirHelper.DataWithIndex toFhirRangeFromText(final List<String> joinedValues,
+                                                                  final JsonObject valueHolder,
+                                                                  final Integer lastIndex,
+                                                                  final String path,
+                                                                  final OpenFhirMapperUtils mapperUtils) {
+        if (!hasTextLikeRangeSource(joinedValues, path, valueHolder)) {
+            return null;
+        }
+        FhirValueReaders readers = new FhirValueReaders(mapperUtils);
+        String text = extractRangeTextValue(joinedValues, valueHolder, path, readers);
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
+        Range range = parseRangeText(text);
+        if (range == null || (!range.hasLow() && !range.hasHigh())) {
+            return null;
+        }
+        return new OpenEhrToFhirHelper.DataWithIndex(range, lastIndex == null ? -1 : lastIndex, path);
+    }
+
+    private String extractRangeTextValue(final List<String> joinedValues,
+                                         final JsonObject valueHolder,
+                                         final String path,
+                                         final FhirValueReaders readers) {
+        if (joinedValues != null) {
+            for (String key : joinedValues) {
+                if (!isTextLikeRangeKey(key)) {
+                    continue;
+                }
+                if (StringUtils.isBlank(key) || valueHolder == null || !valueHolder.has(key)) {
+                    continue;
+                }
+                String value = readers.get(valueHolder, key);
+                if (StringUtils.isNotBlank(value)) {
+                    return value;
+                }
+            }
+        }
+        if (valueHolder == null || path == null) {
+            return null;
+        }
+        String textPath = toTextValuePath(path);
+        if (StringUtils.isNotBlank(textPath) && valueHolder.has(textPath)) {
+            String value = readers.get(valueHolder, textPath);
+            if (StringUtils.isNotBlank(value)) {
+                return value;
+            }
+        }
+        if (valueHolder.has(path)) {
+            String value = readers.get(valueHolder, path);
+            if (StringUtils.isNotBlank(value)) {
+                return value;
+            }
+        }
+        String prefixBase = stripValueSuffix(path);
+        String prefixed = prefixBase.endsWith("/") ? prefixBase : prefixBase + "/";
+        for (String key : valueHolder.keySet()) {
+            if (key.startsWith(prefixed)) {
+                if (!isTextLikeRangeKey(key)) {
+                    continue;
+                }
+                String value = readers.get(valueHolder, key);
+                if (StringUtils.isNotBlank(value)) {
+                    return value;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean hasTextLikeRangeSource(final List<String> joinedValues,
+                                           final String path,
+                                           final JsonObject valueHolder) {
+        if (joinedValues != null) {
+            for (String key : joinedValues) {
+                if (isTextLikeRangeKey(key)) {
+                    return true;
+                }
+            }
+        }
+        String textPath = toTextValuePath(path);
+        if (StringUtils.isNotBlank(textPath) && valueHolder != null && valueHolder.has(textPath)) {
+            return true;
+        }
+        return isTextLikeRangeKey(path);
+    }
+
+    private boolean isTextLikeRangeKey(final String key) {
+        if (StringUtils.isBlank(key)) {
+            return false;
+        }
+        if (key.endsWith("/text_value") || key.endsWith("text_value")) {
+            return true;
+        }
+        return !key.contains("|");
+    }
+
+    private String toTextValuePath(final String path) {
+        if (StringUtils.isBlank(path)) {
+            return path;
+        }
+        if (path.endsWith("/quantity_value")) {
+            return path.substring(0, path.length() - "/quantity_value".length()) + "/text_value";
+        }
+        if (path.endsWith("/interval<dv_quantity>_value")) {
+            return path.substring(0, path.length() - "/interval<dv_quantity>_value".length()) + "/text_value";
+        }
+        return path;
+    }
+
+    private String stripValueSuffix(final String path) {
+        if (StringUtils.isBlank(path)) {
+            return path;
+        }
+        if (path.endsWith("/quantity_value")) {
+            return path.substring(0, path.length() - "/quantity_value".length());
+        }
+        if (path.endsWith("/text_value")) {
+            return path.substring(0, path.length() - "/text_value".length());
+        }
+        if (path.endsWith("/interval<dv_quantity>_value")) {
+            return path.substring(0, path.length() - "/interval<dv_quantity>_value".length());
+        }
+        return path;
     }
 
     private OpenEhrToFhirHelper.DataWithIndex toFhirRatioDosage(final List<String> joinedValues,
@@ -742,6 +887,159 @@ public class DosageCustomMappings extends CustomMapping {
         if (StringUtils.isNotBlank(quantity.getCode()) || StringUtils.isNotBlank(quantity.getUnit())) {
             quantity.setSystem("http://unitsofmeasure.org");
         }
+    }
+
+    private String serializeRange(final Range range) {
+        if (range == null) {
+            return null;
+        }
+        Quantity low = range.getLow();
+        Quantity high = range.getHigh();
+        if ((low == null || low.getValue() == null) && (high == null || high.getValue() == null)) {
+            return null;
+        }
+
+        String lowUnit = bestUnit(low);
+        String highUnit = bestUnit(high);
+
+        if (low != null && low.getValue() != null && high != null && high.getValue() != null
+                && StringUtils.isNotBlank(lowUnit) && lowUnit.equals(highUnit)) {
+            return stripTrailingZeros(low.getValue().doubleValue()) + "-" + stripTrailingZeros(high.getValue().doubleValue()) + " " + lowUnit;
+        }
+
+        String lowPart = formatQuantityText(low);
+        String highPart = formatQuantityText(high);
+
+        if (StringUtils.isNotBlank(lowPart) && StringUtils.isNotBlank(highPart)) {
+            return lowPart + " - " + highPart;
+        }
+        if (StringUtils.isNotBlank(lowPart)) {
+            return ">= " + lowPart;
+        }
+        if (StringUtils.isNotBlank(highPart)) {
+            return "<= " + highPart;
+        }
+        return null;
+    }
+
+    private String formatQuantityText(final Quantity quantity) {
+        if (quantity == null || quantity.getValue() == null) {
+            return null;
+        }
+        String unit = bestUnit(quantity);
+        String value = stripTrailingZeros(quantity.getValue().doubleValue());
+        if (StringUtils.isBlank(unit)) {
+            return value;
+        }
+        return value + " " + unit;
+    }
+
+    private String bestUnit(final Quantity quantity) {
+        if (quantity == null) {
+            return null;
+        }
+        if (StringUtils.isNotBlank(quantity.getUnit())) {
+            return quantity.getUnit().trim();
+        }
+        if (StringUtils.isNotBlank(quantity.getCode())) {
+            return quantity.getCode().trim();
+        }
+        return null;
+    }
+
+    private Range parseRangeText(final String text) {
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
+        String value = text.trim();
+
+        if (value.startsWith(">=")) {
+            Quantity low = parseQuantityText(value.substring(2).trim());
+            if (low == null) return null;
+            Range range = new Range();
+            range.setLow(low);
+            return range;
+        }
+        if (value.startsWith("<=")) {
+            Quantity high = parseQuantityText(value.substring(2).trim());
+            if (high == null) return null;
+            Range range = new Range();
+            range.setHigh(high);
+            return range;
+        }
+
+        String[] parts = value.split("\\s*-\\s*", 2);
+        if (parts.length == 2) {
+            Quantity left = parseQuantityText(parts[0]);
+            Quantity right = parseQuantityText(parts[1]);
+
+            if (left != null && right != null) {
+                String leftUnit = bestUnit(left);
+                String rightUnit = bestUnit(right);
+                if (StringUtils.isBlank(leftUnit) && StringUtils.isNotBlank(rightUnit)) {
+                    left.setUnit(rightUnit);
+                    left.setCode(rightUnit);
+                    setUcumSystemIfPresent(left);
+                } else if (StringUtils.isBlank(rightUnit) && StringUtils.isNotBlank(leftUnit)) {
+                    right.setUnit(leftUnit);
+                    right.setCode(leftUnit);
+                    setUcumSystemIfPresent(right);
+                }
+                Range range = new Range();
+                range.setLow(left);
+                range.setHigh(right);
+                return range;
+            }
+
+            // Support compact format like "150-300 mL/h".
+            Double lowValue = parseDouble(parts[0].trim().replace(',', '.'));
+            Quantity rightWithUnit = parseQuantityText(parts[1]);
+            if (lowValue != null && rightWithUnit != null && rightWithUnit.getValue() != null) {
+                Quantity low = new Quantity();
+                low.setValue(lowValue);
+                if (StringUtils.isNotBlank(rightWithUnit.getUnit())) {
+                    low.setUnit(rightWithUnit.getUnit());
+                    low.setCode(rightWithUnit.getUnit());
+                }
+                setUcumSystemIfPresent(low);
+
+                Range range = new Range();
+                range.setLow(low);
+                range.setHigh(rightWithUnit);
+                return range;
+            }
+            return null;
+        }
+
+        // Single quantity is interpreted as lower bound.
+        Quantity single = parseQuantityText(value);
+        if (single == null) {
+            return null;
+        }
+        Range range = new Range();
+        range.setLow(single);
+        return range;
+    }
+
+    private Quantity parseQuantityText(final String text) {
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
+        String normalized = text.trim().replace(',', '.');
+        String[] parts = normalized.split("\\s+", 2);
+        Double magnitude = parseDouble(parts[0]);
+        if (magnitude == null) {
+            return null;
+        }
+        Quantity quantity = new Quantity();
+        quantity.setValue(magnitude);
+        if (parts.length > 1 && StringUtils.isNotBlank(parts[1])) {
+            String unit = parts[1].trim();
+            quantity.setUnit(unit);
+            quantity.setCode(unit);
+        }
+        setUcumSystemIfPresent(quantity);
+        return quantity;
     }
 
     private String buildUnit(String numeratorUnit, String denominatorUnit) {
