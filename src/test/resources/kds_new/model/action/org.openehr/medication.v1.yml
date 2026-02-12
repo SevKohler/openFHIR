@@ -342,7 +342,7 @@ mappings:
           - path: "value"
             value: "Active"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "in-progress"
@@ -359,7 +359,7 @@ mappings:
           - path: "value"
             value: "Cancelled"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "not-done"
@@ -376,7 +376,7 @@ mappings:
           - path: "value"
             value: "Suspended"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "on-hold"
@@ -393,7 +393,7 @@ mappings:
           - path: "value"
             value: "Completed"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "completed"
@@ -410,7 +410,7 @@ mappings:
           - path: "value"
             value: "Cancelled"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "entered-in-error"
@@ -427,7 +427,7 @@ mappings:
           - path: "value"
             value: "Aborted"
         fhirCondition:
-          targetRoot: "$fhirRoot"
+          targetRoot: "$resource"
           targetAttribute: "status"
           operator: "one of"
           criteria: "stopped"
@@ -447,18 +447,23 @@ mappings:
       #     - path: "value"
       #       value: "Initial"
       #   fhirCondition:
-      #     targetRoot: "$fhirRoot"
+      #     targetRoot: "$resource"
       #     targetAttribute: "status"
       #     operator: "one of"
       #     criteria: "unknown"
 
   - name: "ISMTransitionOpenEhrToFhir"
-    unidirectional: "openehr->fhir"
+    unidirectional: "openEHR->fhir"
     with:
       fhir: "$resource"
       openehr: "$archetype/ism_transition/current_state"
     manual:
       - name: "activeToInProgress"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "in-progress"
         fhir:
           - path: "status"
             value: "in-progress"
@@ -476,6 +481,11 @@ mappings:
             value: "Active"
 
       - name: "suspendedToOnHold"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "on-hold"
         fhir:
           - path: "status"
             value: "on-hold"
@@ -493,6 +503,11 @@ mappings:
             value: "Suspended"
 
       - name: "abortedToStopped"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "stopped"
         fhir:
           - path: "status"
             value: "stopped"
@@ -510,6 +525,11 @@ mappings:
             value: "Aborted"
 
       - name: "completedToCompleted"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "completed"
         fhir:
           - path: "status"
             value: "completed"
@@ -527,6 +547,11 @@ mappings:
             value: "Completed"
 
       - name: "cancelledToNotDone"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "not-done"
         fhir:
           - path: "status"
             value: "not-done"
@@ -544,6 +569,11 @@ mappings:
             value: "Cancelled"
 
       - name: "initialToUnknown"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "unknown"
         fhir:
           - path: "status"
             value: "unknown"
@@ -561,6 +591,11 @@ mappings:
             value: "Initial"
 
       - name: "plannedToUnknown"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "unknown"
         fhir:
           - path: "status"
             value: "unknown"
@@ -578,6 +613,11 @@ mappings:
             value: "Planned"
 
       - name: "postponedToUnknown"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "unknown"
         fhir:
           - path: "status"
             value: "unknown"
@@ -595,6 +635,11 @@ mappings:
             value: "Postponed"
 
       - name: "scheduledToUnknown"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "unknown"
         fhir:
           - path: "status"
             value: "unknown"
@@ -612,6 +657,11 @@ mappings:
             value: "Scheduled"
 
       - name: "expiredToUnknown"
+        fhirCondition:
+          targetRoot: "$resource"
+          targetAttribute: "status"
+          operator: "one of"
+          criteria: "unknown"
         fhir:
           - path: "status"
             value: "unknown"

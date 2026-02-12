@@ -35,8 +35,18 @@
             ]
           },
           {
-            "resourceType": "MedicationRequest",
+            "resourceType": "Encounter",
             "id": "2",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000007"
+              }
+            ]
+          },
+          {
+            "resourceType": "MedicationRequest",
+            "id": "3",
             "identifier": [
               {
                 "system": "https://www.charite.de/fhir/sid/MedicationOrders",
@@ -47,6 +57,7 @@
         ],
         "identifier": [
           {
+            "system": "https://www.charite.de/fhir/sid/MedicationAdministrations",
             "value": "MA_0000014"
           }
         ],
@@ -63,11 +74,12 @@
         "medicationReference": {
           "reference": "#1"
         },
-        "effectivePeriod": {
-          "start": "2026-02-11T21:19:57+01:00"
-        },
-        "request": {
+        "context": {
           "reference": "#2"
+        },
+        "effectiveDateTime": "2022-03-13T09:00:00+01:00",
+        "request": {
+          "reference": "#3"
         },
         "dosage": {
           "text": "Amoxicillin 500mg oral",
