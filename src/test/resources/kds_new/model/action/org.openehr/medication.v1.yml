@@ -29,23 +29,44 @@ mappings:
 #      fhir: "$resource.requester.as(Organization)"
 #      openehr: "$archetype.context._health_care_facility"
 
-  - name: "context"
+  - name: "effectivePeriodContext"
     with:
       fhir: "$resource.effective.as(Period)"
-      openehr: "$composition/context"
-      type: "NONE"
+      openehr: "$composition"
+    openehrCondition:
+      targetRoot: "$composition/context"
+      targetAttribute: "end_time"
+      operator: "not empty"
     followedBy:
       mappings:
-        - name: "contextStart"
-          with:
-            fhir: "start"
-            openehr: "start_time"
-
-
-        - name: "contextEnd"
+        - name: "effectiveEnd"
           with:
             fhir: "end"
-            openehr: "end_time"
+            openehr: "context/end_time"
+
+
+        - name: "effectiveStart"
+          with:
+            fhir: "start"
+            openehr: "context/start_time"
+
+  - name: "effectiveDateTimeContext"
+    unidirectional: "fhir->openehr"
+    with:
+      fhir: "$resource.effective.as(DateTimeType)"
+      openehr: "$composition/context/start_time"
+
+  - name: "effectivePeriod"
+    unidirectional: "fhir->openehr"
+    with:
+      fhir: "$resource.effective.as(Period).start"
+      openehr: "$archetype/time"
+
+  - name: "effectiveDateTime"
+    with:
+      fhir: "$resource.effective.as(DateTimeType)"
+      openehr: "$archetype/time"
+
 
 #party_identified to reference unsupported
 #  - name: "composer"

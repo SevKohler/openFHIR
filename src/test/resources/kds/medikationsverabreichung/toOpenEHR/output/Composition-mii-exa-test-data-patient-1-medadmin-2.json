@@ -76,8 +76,16 @@
             "value": "Bericht ID"
           },
           "value": {
-            "_type": "DV_TEXT",
-            "value": "MA_0000002"
+            "_type": "DV_CODED_TEXT",
+            "value": "MA_0000002",
+            "defining_code": {
+              "_type": "CODE_PHRASE",
+              "terminology_id": {
+                "_type": "TERMINOLOGY_ID",
+                "value": "https://www.charite.de/fhir/sid/MedicationAdministrations"
+              },
+              "code_string": "MA_0000002"
+            }
           },
           "archetype_node_id": "at0002"
         },
@@ -162,7 +170,7 @@
       },
       "time": {
         "_type": "DV_DATE_TIME",
-        "value": "2026-02-11T21:35:39.162577916+01:00"
+        "value": "2024-02-16T10:20:00"
       },
       "description": {
         "_type": "ITEM_TREE",
