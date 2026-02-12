@@ -181,7 +181,7 @@ Nicht für die Darstellung von Medikationsplänen, unvollständigen Verabreichun
                     <upper>1</upper>
                   </existence>
                   <children xsi:type="C_COMPLEX_OBJECT">
-                    <rm_type_name>DV_TEXT</rm_type_name>
+                    <rm_type_name>DV_CODED_TEXT</rm_type_name>
                     <occurrences>
                       <lower_included>true</lower_included>
                       <upper_included>true</upper_included>
@@ -345,8 +345,8 @@ Nicht für die Darstellung von Medikationsplänen, unvollständigen Verabreichun
                   <items id="text">Fall-Beginn</items>
                 </term_definitions>
                 <term_definitions code="at0003">
-                  <items id="description">Der Status des Falls. 
-Der Status "abgeschlossen" bedeutet, dass dem Patienten die entsprechende Fallnummer zugeordnet wurde. 
+                  <items id="description">Der Status des Falls.
+Der Status "abgeschlossen" bedeutet, dass dem Patienten die entsprechende Fallnummer zugeordnet wurde.
 Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnummer fälschlicherweise zugeordnet wurde.</items>
                   <items id="text">Status</items>
                 </term_definitions>
@@ -4542,7 +4542,7 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                     <upper>1</upper>
                                   </existence>
                                   <children xsi:type="C_COMPLEX_OBJECT">
-                                    <rm_type_name>DV_TEXT</rm_type_name>
+                                    <rm_type_name>DV_CODED_TEXT</rm_type_name>
                                     <occurrences>
                                       <lower_included>true</lower_included>
                                       <upper_included>true</upper_included>

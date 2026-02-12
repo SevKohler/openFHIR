@@ -12,7 +12,7 @@ mappings:
   - name: "berichtId"
     extension: "add"
     with:
-      fhir: "$resource.identifier.value"
+      fhir: "$resource.identifier"
       openehr: "$composition/context/other_context[at0001]/items[at0002]"
       
 
