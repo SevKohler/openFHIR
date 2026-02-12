@@ -134,14 +134,14 @@
               },
               "value": {
                 "_type": "DV_CODED_TEXT",
-                "value": "MII_0000001",
+                "value": "MII_0000005",
                 "defining_code": {
                   "_type": "CODE_PHRASE",
                   "terminology_id": {
                     "_type": "TERMINOLOGY_ID",
                     "value": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern"
                   },
-                  "code_string": "MII_0000001"
+                  "code_string": "MII_0000005"
                 }
               },
               "archetype_node_id": "at0001"
