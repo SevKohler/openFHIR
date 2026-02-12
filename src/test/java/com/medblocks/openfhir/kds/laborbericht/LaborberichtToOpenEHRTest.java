@@ -66,51 +66,91 @@ public class LaborberichtToOpenEHRTest extends KdsTest {
         standardsAsserter.assertCompositionWihtoutOPTValidataion(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-1-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR1() {
         assertToOpenEHRWihtoutOPTVal(0); //has null flavour instead of value=
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-2-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR2() {
         assertToOpenEHR(1);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-3-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR3() {
         assertToOpenEHR(2);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-4-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR4() {
         assertToOpenEHR(3);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-5-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR5() {
         assertToOpenEHR(4);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-6-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR6() {
         assertToOpenEHR(5);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-7-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR7() {
         assertToOpenEHR(6);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-8-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR8() {
         assertToOpenEHR(7);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-9-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR9() {
         assertToOpenEHR(8);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/input/DiagnosticReport-mii-exa-test-data-patient-10-labreport-1.json
+     * Expected: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-labreport-1.json
+     */
     @Test
     public void assertToOpenEHR10() {
         assertToOpenEHR(9);

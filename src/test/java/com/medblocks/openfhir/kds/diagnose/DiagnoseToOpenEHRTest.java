@@ -62,12 +62,20 @@ public class DiagnoseToOpenEHRTest extends KdsTest {
         webTemplate = new OPTParser(operationaltemplate).parse();
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/KDS_Diagnose_bundle.json
+     * Expected: /kds/diagnose/toOpenEHR/output/KDS_Diagnose_Composition_bundle.json
+     */
     @Test
     public void assertToOpenEHRBundle() {
         final Composition composition = fhirToOpenEhr.fhirToCompositionRm(context, getTestBundle(BUNDLE_SINGLE), operationaltemplate);
         standardsAsserter.assertComposition(composition, COMPOSITION_SINGLE, operationaltemplate);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/KDS_Diagnose_bundle_whole.json
+     * Expected: /kds/diagnose/toOpenEHR/output/KDS_Diagnose_Composition_bundle_whole.json
+     */
     @Ignore
     @Test
     public void assertToOpenEHRBundleWhole() {
@@ -81,51 +89,91 @@ public class DiagnoseToOpenEHRTest extends KdsTest {
         standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-1-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR1() {
         assertToOpenEHR(0);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-2-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR2() {
         assertToOpenEHR(1);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-3-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR3() {
         assertToOpenEHR(2);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-4-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR4() {
         assertToOpenEHR(3);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-5-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR5() {
         assertToOpenEHR(4);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-6-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR6() {
         assertToOpenEHR(5);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-7-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR7() {
         assertToOpenEHR(6);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-8-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR8() {
         assertToOpenEHR(7);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-9-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR9() {
         assertToOpenEHR(8);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/input/Condition-mii-exa-test-data-patient-10-diagnose-1.json
+     * Expected: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-diagnose-1.json
+     */
     @Test
     public void assertToOpenEHR10() {
         assertToOpenEHR(9);

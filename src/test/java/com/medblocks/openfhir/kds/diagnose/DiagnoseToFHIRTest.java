@@ -74,6 +74,10 @@ public class DiagnoseToFHIRTest extends KdsTest {
     }
 
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/KDS_Diagnose_Composition_bundle.json
+     * Expected: /kds/diagnose/toFHIR/output/KDS_Diagnose_bundle.json
+     */
     @SneakyThrows
     @Test
     public void assertToFHIRBundle(){
@@ -83,6 +87,10 @@ public class DiagnoseToFHIRTest extends KdsTest {
     }
 
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/KDS_Diagnose_Composition_bundle_whole.json
+     * Expected: /kds/diagnose/toFHIR/output/KDS_Diagnose_bundle_whole.json
+     */
     @SneakyThrows
     @Test
     @Ignore // Needs major file clean up
@@ -102,51 +110,91 @@ public class DiagnoseToFHIRTest extends KdsTest {
         standardsAsserter.assertBundle(bundle, FHIR_CONDITIONS[index]);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-1-diagnose-1.json
+     */
     @Test
     public void assertToFHIR1(){
         assertToFHIR(0);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-2-diagnose-1.json
+     */
     @Test
     public void assertToFHIR2(){
         assertToFHIR(1);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-3-diagnose-1.json
+     */
     @Test
     public void assertToFHIR3(){
         assertToFHIR(2);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-4-diagnose-1.json
+     */
     @Test
     public void assertToFHIR4(){
         assertToFHIR(3);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-5-diagnose-1.json
+     */
     @Test
     public void assertToFHIR5(){
         assertToFHIR(4);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-6-diagnose-1.json
+     */
     @Test
     public void assertToFHIR6(){
         assertToFHIR(5);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-7-diagnose-1.json
+     */
     @Test
     public void assertToFHIR7(){
         assertToFHIR(6);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-8-diagnose-1.json
+     */
     @Test
     public void assertToFHIR8(){
         assertToFHIR(7);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-9-diagnose-1.json
+     */
     @Test
     public void assertToFHIR9(){
         assertToFHIR(8);
     }
 
+    /**
+     * Input: /kds/diagnose/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-diagnose-1.json
+     * Expected: /kds/diagnose/toFHIR/output/Condition-mii-exa-test-data-patient-10-diagnose-1.json
+     */
     @Test
     public void assertToFHIR10(){
         assertToFHIR(9);

@@ -135,50 +135,142 @@ public class MedikamentenverabreichungenToFHIRTest extends KdsTest {
         JSONAssert.assertEquals(expected.toString(), actual.toString(), JSONCompareMode.STRICT);
     }
 
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_1() { assertToFHIR(0); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_2() { assertToFHIR(1); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_3() { assertToFHIR(2); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_4() { assertToFHIR(3); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_5() { assertToFHIR(4); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_6() { assertToFHIR(5); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-3.json
+     */
     @Test
     public void assertToFHIR_7() { assertToFHIR(6); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_8() { assertToFHIR(7); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_9() { assertToFHIR(8); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-3.json
+     */
     @Test
     public void assertToFHIR_10() { assertToFHIR(9); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-4-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_11() { assertToFHIR(10); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-4-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_12() { assertToFHIR(11); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-5-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_13() { assertToFHIR(12); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-5-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_14() { assertToFHIR(13); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-6-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_15() { assertToFHIR(14); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-6-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_16() { assertToFHIR(15); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-7-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_17() { assertToFHIR(16); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-7-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_18() { assertToFHIR(17); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_19() { assertToFHIR(18); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_20() { assertToFHIR(19); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-3.json
+     */
     @Test
     public void assertToFHIR_21() { assertToFHIR(20); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-1.json
+     */
     @Test
     public void assertToFHIR_22() { assertToFHIR(21); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toFHIR/output/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-2.json
+     */
     @Test
     public void assertToFHIR_23() { assertToFHIR(22); }
 

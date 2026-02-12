@@ -86,50 +86,142 @@ public class MedikamentenverabreichungenToOpenEHRTest extends KdsTest {
         standardsAsserter.assertCompositionWihtoutOPTValidataion(composition, OPENEHR_OUTPUTS[index], operationaltemplate);
     }
 
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_1() { assertToOpenEHR(0); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_2() { assertToOpenEHR(1); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_3() { assertToOpenEHR(2); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_4() { assertToOpenEHR(3); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-3.json
+     */
     @Test
     public void assertToOpenEHR_5() { assertToOpenEHR(4); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_6() { assertToOpenEHR(5); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_7() { assertToOpenEHR(6); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-3-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medadmin-3.json
+     */
     @Test
     public void assertToOpenEHR_8() { assertToOpenEHR(7); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-4-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_9() { assertToOpenEHR(8); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-4-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_10() { assertToOpenEHR(9); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-5-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_11() { assertToOpenEHR(10); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-5-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_12() { assertToOpenEHR(11); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-6-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_13() { assertToOpenEHR(12); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-6-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_14() { assertToOpenEHR(13); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-7-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_15() { assertToOpenEHR(14); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-7-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_16() { assertToOpenEHR(15); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_17() { assertToOpenEHR(16); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_18() { assertToOpenEHR(17); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-3.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-3.json
+     */
     @Test
     public void assertToOpenEHR_19() { assertToOpenEHR(18); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_20() { assertToOpenEHR(19); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_21() { assertToOpenEHR(20); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-1.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-1.json
+     */
     @Test
     public void assertToOpenEHR_22() { assertToOpenEHR(21); }
+    /**
+     * Input: /kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-2.json
+     * Expected: /kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-2.json
+     */
     @Test
     public void assertToOpenEHR_23() { assertToOpenEHR(22); }
 

@@ -66,6 +66,10 @@ public class LaborberichtToFHIRTest extends KdsTest {
         webTemplate = new OPTParser(operationaltemplate).parse();
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-KDS_Laborbericht_bundle.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-KDS_Laborbericht_bundle.json
+     */
     @SneakyThrows
     @Test
     public void assertToFHIRBundle() {
@@ -83,51 +87,91 @@ public class LaborberichtToFHIRTest extends KdsTest {
         standardsAsserter.assertBundle(bundle, FHIR_BUNDLES[index]);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-1-labreport-1.json
+     */
     @Test
     public void assertToFHIR1() {
         assertToFHIR(0);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-2-labreport-1.json
+     */
     @Test
     public void assertToFHIR2() {
         assertToFHIR(1);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-3-labreport-1.json
+     */
     @Test
     public void assertToFHIR3() {
         assertToFHIR(2);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-4-labreport-1.json
+     */
     @Test
     public void assertToFHIR4() {
         assertToFHIR(3);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-5-labreport-1.json
+     */
     @Test
     public void assertToFHIR5() {
         assertToFHIR(4);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-6-labreport-1.json
+     */
     @Test
     public void assertToFHIR6() {
         assertToFHIR(5);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-7-labreport-1.json
+     */
     @Test
     public void assertToFHIR7() {
         assertToFHIR(6);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-8-labreport-1.json
+     */
     @Test
     public void assertToFHIR8() {
         assertToFHIR(7);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-9-labreport-1.json
+     */
     @Test
     public void assertToFHIR9() {
         assertToFHIR(8);
     }
 
+    /**
+     * Input: /kds/laborbericht/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-labreport-1.json
+     * Expected: /kds/laborbericht/toFHIR/output/DiagnosticReport-mii-exa-test-data-patient-10-labreport-1.json
+     */
     @Test
     public void assertToFHIR10() {
         assertToFHIR(9);

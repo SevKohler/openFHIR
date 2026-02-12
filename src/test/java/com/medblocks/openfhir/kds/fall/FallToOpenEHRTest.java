@@ -82,56 +82,100 @@ public class FallToOpenEHRTest extends KdsTest {
         standardsAsserter.assertComposition(composition, OPENEHR_COMPOSITIONS[index], operationaltemplate);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR1() {
         assertToOpenEHR(0);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-1-encounter-2.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-encounter-2.json
+     */
     @Test
     public void assertToOpenEHR2() {
         assertToOpenEHR(1);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-2-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR3() {
         assertToOpenEHR(2);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-3-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR4() {
         assertToOpenEHR(3);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-4-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR5() {
         assertToOpenEHR(4);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-5-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR6() {
         assertToOpenEHR(5);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-6-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR7() {
         assertToOpenEHR(6);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-7-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR8() {
         assertToOpenEHR(7);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-8-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR9() {
         assertToOpenEHR(8);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-9-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR10() {
         assertToOpenEHR(9);
     }
 
+    /**
+     * Input: /kds/fall/toOpenEHR/input/Encounter-mii-exa-test-data-patient-10-encounter-1.json
+     * Expected: /kds/fall/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-encounter-1.json
+     */
     @Test
     public void assertToOpenEHR11() {
         assertToOpenEHR(10);

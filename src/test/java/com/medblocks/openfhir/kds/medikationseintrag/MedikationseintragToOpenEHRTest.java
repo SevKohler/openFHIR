@@ -104,141 +104,253 @@ public class MedikationseintragToOpenEHRTest extends KdsTest {
         standardsAsserter.assertCompositionWihtoutOPTValidataion(composition, OPENEHR_OUTPUTS[index], operationaltemplate);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_1() {
         assertToOpenEHRWihtoutOPTVal(0); // since flat path parser does not accept emtpy width which is the spec definition for void
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_2() {
         assertToOpenEHR(1);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-3.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-3.json
+     */
     @Test
     public void assertToOpenEHR_3() {
         assertToOpenEHRWihtoutOPTVal(2);// since flat path parser does not accept emtpy width which is the spec definition for void
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_4() {
         assertToOpenEHR(3);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_5() {
         assertToOpenEHR(4);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-3.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-3.json
+     */
     @Test
     public void assertToOpenEHR_6() {
         assertToOpenEHR(5);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-4.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-4.json
+     */
     @Test
     public void assertToOpenEHR_7() {
         assertToOpenEHR(6);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-5.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-5.json
+     */
     @Test
     public void assertToOpenEHR_8() {
         assertToOpenEHR(7);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-3-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_9() {
-        assertToOpenEHR(8);
+        assertToOpenEHRWihtoutOPTVal(8);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-3-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_10() {
         assertToOpenEHR(9);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-3-medstatement-3.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-3.json
+     */
     @Test
     public void assertToOpenEHR_11() {
         assertToOpenEHRWihtoutOPTVal(10);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-3-medstatement-4.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-3-medstatement-4.json
+     */
     @Test
     public void assertToOpenEHR_12() {
         assertToOpenEHR(11);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-4-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_13() {
         assertToOpenEHR(12);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-4-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-4-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_14() {
         assertToOpenEHR(13);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-5-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_15() {
         assertToOpenEHR(14);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-5-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-5-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_16() {
         assertToOpenEHR(15);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-6-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_17() {
         assertToOpenEHR(16);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-6-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_18() {
         assertToOpenEHR(17);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-6-medstatement-3.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-6-medstatement-3.json
+     */
     @Test
     public void assertToOpenEHR_19() {
         assertToOpenEHR(18);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-7-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_20() {
         assertToOpenEHR(19);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-7-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-7-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_21() {
         assertToOpenEHR(20);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-8-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_22() {
         assertToOpenEHR(21);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-8-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_23() {
         assertToOpenEHR(22);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-8-medstatement-3.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-3.json
+     */
     @Test
     public void assertToOpenEHR_24() {
         assertToOpenEHR(23);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-9-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_25() {
         assertToOpenEHR(24);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_26() {
         assertToOpenEHR(25);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-1.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-1.json
+     */
     @Test
     public void assertToOpenEHR_27() {
         assertToOpenEHR(26);
     }
 
+    /**
+     * Input: /kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-2.json
+     * Expected: /kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-2.json
+     */
     @Test
     public void assertToOpenEHR_28() {
         assertToOpenEHR(27);
