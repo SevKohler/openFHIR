@@ -21,8 +21,6 @@ public class MedikamentenverabreichungenToOpenEHRTest extends KdsTest {
     final String[] FHIR_INPUTS = {
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-1.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-1-medadmin-2.json",
-            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-1.json",
-            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-1.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-2-medadmin-3.json",
@@ -41,14 +39,14 @@ public class MedikamentenverabreichungenToOpenEHRTest extends KdsTest {
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-8-medadmin-3.json",
             "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-1.json",
-            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-2.json"
+            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-9-medadmin-2.json",
+            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-1.json",
+            "/kds/medikationsverabreichung/toOpenEHR/input/MedicationAdministration-mii-exa-test-data-patient-10-medadmin-2.json"
     };
 
     final String[] OPENEHR_OUTPUTS = {
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-1.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medadmin-2.json",
-            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-1.json",
-            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-1.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medadmin-3.json",
@@ -67,7 +65,9 @@ public class MedikamentenverabreichungenToOpenEHRTest extends KdsTest {
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-2.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medadmin-3.json",
             "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-1.json",
-            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-2.json"
+            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medadmin-2.json",
+            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-1.json",
+            "/kds/medikationsverabreichung/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medadmin-2.json"
     };
 
     @SneakyThrows

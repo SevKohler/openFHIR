@@ -23,8 +23,6 @@ public class MedikationseintragToOpenEHRTest extends KdsTest {
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-1.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-1-medstatement-3.json",
-            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-1.json",
-            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-1.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-2-medstatement-3.json",
@@ -47,15 +45,15 @@ public class MedikationseintragToOpenEHRTest extends KdsTest {
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-8-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-8-medstatement-3.json",
             "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-9-medstatement-1.json",
-            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json"
+            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-9-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/input/MedicationStatement-mii-exa-test-data-patient-10-medstatement-2.json"
     };
 
     final String[] OPENEHR_OUTPUTS = {
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-1.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-1-medstatement-3.json",
-            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-1.json",
-            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-1.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-2-medstatement-3.json",
@@ -78,7 +76,9 @@ public class MedikationseintragToOpenEHRTest extends KdsTest {
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-2.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-8-medstatement-3.json",
             "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-1.json",
-            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json"
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-9-medstatement-2.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-1.json",
+            "/kds/medikationseintrag/toOpenEHR/output/Composition-mii-exa-test-data-patient-10-medstatement-2.json"
     };
 
     @SneakyThrows

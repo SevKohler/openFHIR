@@ -26,29 +26,149 @@
   - FHIR -> openEHR: `Dosage.doseAndRate.doseRange.low/high` -> `.../dose/interval<dv_quantity>_value/lower|upper`.
   - FHIR -> openEHR: `Dosage.doseAndRate.doseQuantity` -> `.../dose/quantity_value`.
   - Behavior: if a range is present, quantity keys are removed to avoid mixed interval+scalar dose.
+  - Example:
+    ```json
+    // input (FHIR)
+    { "doseAndRate": [ { "doseRange": { "low": { "value": 5, "unit": "mg" }, "high": { "value": 10, "unit": "mg" } } } ] }
+    ```
+    ```json
+    // output (openEHR flat)
+    {
+      ".../dose/interval<dv_quantity>_value/lower|magnitude": 5.0,
+      ".../dose/interval<dv_quantity>_value/upper|magnitude": 10.0
+    }
+    ```
 - `rangeToText`:
   - FHIR -> openEHR: `Dosage.doseAndRate.rateRange.low/high + unit` -> `.../administration_rate/text_value`.
   - Calculation: serializes to a human-readable string (for example `150-300 ml/h`).
+  - Example:
+    ```json
+    // input (FHIR)
+    { "doseAndRate": [ { "rateRange": { "low": { "value": 150, "unit": "ml/h" }, "high": { "value": 300, "unit": "ml/h" } } } ] }
+    ```
+    ```json
+    // output (openEHR flat)
+    { ".../administration_rate/text_value": "150-300 ml/h" }
+    ```
 - `ratio_to_dosage`:
   - FHIR -> openEHR: `Dosage.doseAndRate.rateRatio.numerator` + `denominator` -> `.../administration_rate/quantity_value` + `.../administration_duration`.
   - Calculation (write): `rate = numerator.value / denominator.value`.
   - Calculation (write): `duration` is derived from denominator (`s|min|h|d`) and written as ISO duration to `administration_duration`.
+  - Write constraint: rate quantity is only written for allowed units: `l/h`, `ml/h`, `ml/s`, `ml/min`.
   - Calculation (read): reconstruct `rateRatio` from `rate * duration`; if rate is missing, use `dose` as numerator fallback.
-- `ratio_to_dv_quantity`:
-  - FHIR -> openEHR: `Dosage.doseAndRate.rateRatio` -> `CLUSTER.dosage.v2/items[at0134]`.
-  - Calculation: keeps numerator magnitude and builds unit/code as `numeratorUnit/denominatorUnit`.
+  - Example A (FHIR -> openEHR, allowed `ml/h`):
+    ```json
+    // input (FHIR)
+    {
+      "doseAndRate": [
+        {
+          "rateRatio": {
+            "numerator": { "value": 200, "unit": "ml" },
+            "denominator": { "value": 2, "unit": "h" }
+          }
+        }
+      ]
+    }
+    ```
+    ```json
+    // output (openEHR flat)
+    {
+      ".../dosage/administration_rate/quantity_value|magnitude": 100.0,
+      ".../dosage/administration_rate/quantity_value|unit": "ml/h",
+      ".../dosage/administration_duration": "PT2H"
+    }
+    ```
+  - Example B (FHIR -> openEHR, `mg/h` case):
+    ```json
+    // input (FHIR)
+    {
+      "doseAndRate": [
+        {
+          "rateRatio": {
+            "numerator": { "value": 100, "unit": "mg" },
+            "denominator": { "value": 2, "unit": "h" }
+          }
+        }
+      ]
+    }
+    ```
+    ```json
+    // output (openEHR flat)
+    {
+      ".../dosage/dose/quantity_value|magnitude": 100.0,
+      ".../dosage/dose/quantity_value|unit": "mg",
+      ".../dosage/administration_duration": "PT2H"
+    }
+    ```
+    Note: In this `mg/h` case, `ratio_to_dosage` itself writes duration, while dose quantity comes from regular dose mapping and is used as fallback for reconstruction.
+  - Example C (openEHR -> FHIR):
+    ```json
+    // input (openEHR flat)
+    {
+      ".../dosage/administration_rate/quantity_value|magnitude": 100.0,
+      ".../dosage/administration_rate/quantity_value|unit": "ml/h",
+      ".../dosage/administration_duration": "PT2H"
+    }
+    ```
+    ```json
+    // output (FHIR)
+    {
+      "doseAndRate": [
+        {
+          "rateRatio": {
+            "numerator": { "value": 200, "unit": "ml" },
+            "denominator": { "value": 2, "unit": "h" }
+          }
+        }
+      ]
+    }
+    ```
 - `dosageDurationToAdministrationDuration`:
   - FHIR -> openEHR: `Dosage.timing.repeat.duration` (+ unit) -> `.../administration_duration`.
   - openEHR -> FHIR: `.../administration_duration` -> `Dosage.timing.repeat.duration` / `durationMax`.
   - Calculation: numeric duration + unit converted to ISO duration and back (`s|min|h|d`).
+  - Example:
+    ```json
+    // input (FHIR)
+    { "timing": { "repeat": { "duration": 2, "durationUnit": "h" } } }
+    ```
+    ```json
+    // output (openEHR flat)
+    { ".../administration_duration": "PT2H" }
+    ```
 - `timingToDaily`:
   - FHIR -> openEHR: `Dosage.timing.repeat.frequency`, `frequencyMax`, `period`, `periodMax`, `periodUnit`, `timeOfDay`, `when`
     -> daily slot keys (`frequency`, `period`, `administration_time_interval`, `specific_event`).
   - Calculation: frequency/period values are normalized into daily timing structure.
+  - Example:
+    ```json
+    // input (FHIR)
+    { "timing": { "repeat": { "frequency": 1, "period": 1, "periodUnit": "d", "timeOfDay": ["08:00:00"] } } }
+    ```
+    ```json
+    // output (openEHR flat)
+    {
+      ".../frequency|magnitude": 1.0,
+      ".../period|value": "P1D",
+      ".../time": "08:00:00"
+    }
+    ```
 - `timingNonDaily`:
   - FHIR -> openEHR: same `Dosage.timing.repeat` inputs as above, for non-daily period units
     -> non-daily slot keys.
   - Calculation: same timing normalization logic as daily, but written to non-daily slot.
+  - Example:
+    ```json
+    // input (FHIR)
+    { "timing": { "repeat": { "frequency": 1, "period": 2, "periodUnit": "wk", "timeOfDay": ["08:00:00"] } } }
+    ```
+    ```json
+    // output (openEHR flat)
+    {
+      ".../period|value": "P2W",
+      ".../time": "08:00:00"
+    }
+    ```
 
 ## Coverage of `MedicationStatement.dosage` (DosageDE)
 
@@ -91,17 +211,17 @@ Classification basis:
 
 ### Partly mapped
 
-| FHIR field | Status | Notes |
-|---|---|---|
-| `asNeeded[x]` | partly mapped | Implemented in `timing_daily.v1`; no equivalent row in `timing_non_daily.yml`. |
-| `asNeededBoolean` | partly mapped | Same limitation as above. |
-| `asNeededCodeableConcept` | partly mapped | Same limitation as above. |
-| `route` | partly mapped | `dosage.route` is mapped at MedicationStatement event level, but not fully decomposed into all profile slices. |
-| `route.coding` | partly mapped | CodeableConcept is transferred, but slicing-specific constraints (EDQM/SNOMED cardinalities) are not explicitly mapped field-by-field. |
-| `route.text` | partly mapped | May be preserved through concept mapping, but no dedicated text-only rule. |
-| `doseAndRate.rateRatio.numerator` | partly mapped | Reconstructed/calculated; exact structure depends on ratio conversion path. |
-| `doseAndRate.rateRatio.denominator` | partly mapped | Reconstructed from administration duration; normalized units (`s|min|h|d`). |
-| `value/unit/system/code` on quantity-like children | partly mapped | Present for mapped quantity fields, but only where source type/path is supported. |
+| FHIR field | Status | Notes                                                                                                                                                                                                                                                                               |
+|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `asNeeded[x]` | partly mapped | Implemented in `timing_daily.v1`; no equivalent row in `timing_non_daily.yml`.                                                                                                                                                                                                      |
+| `asNeededBoolean` | partly mapped | Same limitation as above.                                                                                                                                                                                                                                                           |
+| `asNeededCodeableConcept` | partly mapped | Same limitation as above.                                                                                                                                                                                                                                                           |
+| `route` | partly mapped | `dosage.route` is mapped at MedicationStatement event level, but not fully decomposed into all profile slices. Hierarchical difference openEHR has that on the Medication itself and fhir as part of the dosage. So for each differenting route one archetype needs to be populated |
+| `route.coding` | partly mapped | CodeableConcept is transferred, but slicing-specific constraints (EDQM/SNOMED cardinalities) are not explicitly mapped field-by-field.                                                                                                                                              |
+| `route.text` | partly mapped | May be preserved through concept mapping, but no dedicated text-only rule.                                                                                                                                                                                                          |
+| `doseAndRate.rateRatio.numerator` | partly mapped | Reconstructed/calculated; exact structure depends on ratio conversion path.                                                                                                                                                                                                         |
+| `doseAndRate.rateRatio.denominator` | partly mapped | Reconstructed from administration duration; normalized units (`s                                                                                                                                                                                                                    |min|h|d`). |
+| `value/unit/system/code` on quantity-like children | partly mapped | Present for mapped quantity fields, but only where source type/path is supported.                                                                                                                                                                                                   |
 
 ### Not mapped
 
