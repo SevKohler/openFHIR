@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Clarithromycin 250mg 2x täglich"
+            "text": "Clarithromycin 250mg 2x täglich",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 250.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

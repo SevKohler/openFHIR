@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Ibuprofen 400mg bis zu 3x täglich bei Bedarf"
+            "text": "Ibuprofen 400mg bis zu 3x täglich bei Bedarf",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 400.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

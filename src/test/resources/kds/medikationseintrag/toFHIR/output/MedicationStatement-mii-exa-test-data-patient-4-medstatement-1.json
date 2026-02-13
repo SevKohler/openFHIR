@@ -110,6 +110,11 @@
             "text": "Cisplatin 75mg/m² IV über 2 Stunden",
             "doseAndRate": [
               {
+                "doseQuantity": {
+                  "value": 75.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                },
                 "rateRatio": {
                   "numerator": {
                     "value": 75.0,

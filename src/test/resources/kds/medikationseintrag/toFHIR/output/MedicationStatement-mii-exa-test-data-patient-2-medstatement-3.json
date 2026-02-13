@@ -110,6 +110,11 @@
             "text": "Paclitaxel 175mg IV über 3 Stunden",
             "doseAndRate": [
               {
+                "doseQuantity": {
+                  "value": 175.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                },
                 "rateRatio": {
                   "numerator": {
                     "value": 175.0,

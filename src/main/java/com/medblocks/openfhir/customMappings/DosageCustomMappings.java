@@ -972,26 +972,43 @@ public class DosageCustomMappings extends CustomMapping {
                                                                  final String path,
                                                                  final OpenFhirMapperUtils mapperUtils) {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
-        String durationPath = find(joinedValues, "duration");
-        if (durationPath == null) {
-            durationPath = find(joinedValues, "value");
+        TimingFlatMapper.DurationValue duration = TimingFlatMapper.readDuration(valueHolder, joinedValues, readers);
+        if ((duration == null || StringUtils.isBlank(duration.value))
+                && valueHolder != null
+                && StringUtils.isNotBlank(path)) {
+            List<String> scoped = valueHolder.keySet().stream()
+                    .filter(k -> k.startsWith(path + "/") || k.startsWith(path + "|"))
+                    .toList();
+            if (!scoped.isEmpty()) {
+                duration = TimingFlatMapper.readDuration(valueHolder, scoped, readers);
+            }
         }
-        if (durationPath == null) {
-            durationPath = find(joinedValues, "magnitude");
+        if ((duration == null || StringUtils.isBlank(duration.value))
+                && valueHolder != null
+                && StringUtils.isNotBlank(path)) {
+            String direct = readers.get(valueHolder, path);
+            if (StringUtils.isBlank(direct)) {
+                direct = readers.get(valueHolder, path + "|value");
+            }
+            if (StringUtils.isBlank(direct)) {
+                direct = readers.get(valueHolder, path + "/duration_value|value");
+            }
+            if (StringUtils.isNotBlank(direct)) {
+                duration = new TimingFlatMapper.DurationValue(direct, null);
+            }
         }
-        if (durationPath == null) {
-            durationPath = find(joinedValues, "periode");
-        }
-        if (durationPath == null) {
-            return null;
-        }
-
-        String duration = readers.get(valueHolder, durationPath);
-        if (StringUtils.isBlank(duration)) {
+        if (duration == null || StringUtils.isBlank(duration.value)) {
             return null;
         }
         Timing.TimingRepeatComponent repeat = new Timing.TimingRepeatComponent();
-        parseDurationValue(duration, repeat);
+        parseDurationValue(duration.value, repeat);
+        if (StringUtils.isNotBlank(duration.valueMax)) {
+            DurationParts start = parseIsoDuration(duration.value);
+            DurationParts end = parseIsoDuration(duration.valueMax);
+            if (start != null && end != null && end.unit == start.unit && !end.value.equals(start.value)) {
+                repeat.setDurationMax(end.value);
+            }
+        }
         return repeat.isEmpty() ? null : new OpenEhrToFhirHelper.DataWithIndex(repeat, lastIndex == null ? -1 : lastIndex, path);
     }
 

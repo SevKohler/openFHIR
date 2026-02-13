@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Heparin 5000 IE s.c. alle 12 Stunden"
+            "text": "Heparin 5000 IE s.c. alle 12 Stunden",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 5000.0,
+                  "unit": "IU",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

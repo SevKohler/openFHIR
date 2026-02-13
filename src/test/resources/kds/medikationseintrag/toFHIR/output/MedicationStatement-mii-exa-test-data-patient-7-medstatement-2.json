@@ -107,7 +107,16 @@
             }
           },
           {
-            "text": "Salbutamol 2 Hubs inhalativ bei Bedarf"
+            "text": "Salbutamol 2 Hubs inhalativ bei Bedarf",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 200.0,
+                  "unit": "μg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

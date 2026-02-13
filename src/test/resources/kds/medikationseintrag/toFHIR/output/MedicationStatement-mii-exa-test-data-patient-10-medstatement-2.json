@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Topiramat 50mg 2x täglich zur Prophylaxe"
+            "text": "Topiramat 50mg 2x täglich zur Prophylaxe",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 50.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

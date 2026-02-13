@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Morphin 10mg alle 6 Stunden bei Bedarf"
+            "text": "Morphin 10mg alle 6 Stunden bei Bedarf",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 10.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

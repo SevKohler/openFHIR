@@ -117,7 +117,16 @@
             }
           },
           {
-            "text": "Omeprazol 20mg 1x täglich morgens"
+            "text": "Omeprazol 20mg 1x täglich morgens",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 20.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

@@ -110,6 +110,11 @@
             "text": "Carboplatin 450mg IV über 1 Stunde",
             "doseAndRate": [
               {
+                "doseQuantity": {
+                  "value": 450.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                },
                 "rateRatio": {
                   "numerator": {
                     "value": 450.0,

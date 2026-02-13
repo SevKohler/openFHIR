@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Amoxicillin 500mg 3x täglich"
+            "text": "Amoxicillin 500mg 3x täglich",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 500.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

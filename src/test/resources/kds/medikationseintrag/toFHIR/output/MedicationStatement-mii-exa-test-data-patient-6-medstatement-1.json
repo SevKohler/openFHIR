@@ -117,7 +117,16 @@
             }
           },
           {
-            "text": "Pantoprazol 40mg 1x täglich morgens"
+            "text": "Pantoprazol 40mg 1x täglich morgens",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 40.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

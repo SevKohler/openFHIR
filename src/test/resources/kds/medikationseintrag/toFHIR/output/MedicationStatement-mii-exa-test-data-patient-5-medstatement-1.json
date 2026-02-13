@@ -107,7 +107,16 @@
             }
           },
           {
-            "text": "Leuprorelin 3,75mg s.c. alle 4 Wochen"
+            "text": "Leuprorelin 3,75mg s.c. alle 4 Wochen",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 3.75,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

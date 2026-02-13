@@ -114,7 +114,16 @@
             }
           },
           {
-            "text": "Metoprolol 50mg 2x täglich"
+            "text": "Metoprolol 50mg 2x täglich",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 50.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

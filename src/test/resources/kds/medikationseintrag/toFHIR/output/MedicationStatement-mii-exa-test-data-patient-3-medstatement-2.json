@@ -110,6 +110,11 @@
             "text": "5-FU 1000mg/m² IV über 46 Stunden",
             "doseAndRate": [
               {
+                "doseQuantity": {
+                  "value": 1000.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                },
                 "rateRatio": {
                   "numerator": {
                     "value": 1000.0,

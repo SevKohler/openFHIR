@@ -82,7 +82,6 @@
           "reference": "#3"
         },
         "dosage": {
-          "text": "Carboplatin 450mg IV über 1 Stunde",
           "route": {
             "coding": [
               {
@@ -90,13 +89,29 @@
                 "code": "20045000",
                 "display": "Intravenous use"
               }
-            ],
-            "text": "Intravenous use"
+            ]
+          },
+          "rateRatio": {
+            "numerator": {
+              "system": "http://unitsofmeasure.org",
+              "value": 450,
+              "code": "mg",
+              "unit": "mg"
+            },
+            "denominator": {
+              "system": "http://unitsofmeasure.org",
+              "value": 1,
+              "code": "h",
+              "unit": "h"
+            }
           },
           "dose": {
-            "value": 450.0,
+            "system": "http://unitsofmeasure.org",
+            "value": 450,
+            "code": "mg",
             "unit": "mg"
-          }
+          },
+          "text": "Carboplatin 450mg IV über 1 Stunde"
         }
       }
     }

@@ -105,6 +105,11 @@
             "text": "Dalbavancin 1500 mg als 30-minütige Infusion",
             "doseAndRate": [
               {
+                "doseQuantity": {
+                  "value": 1500.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                },
                 "rateRatio": {
                   "numerator": {
                     "value": 1500.0,

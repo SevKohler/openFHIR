@@ -107,7 +107,16 @@
             }
           },
           {
-            "text": "Sumatriptan 50mg bei Migräne-Attacke"
+            "text": "Sumatriptan 50mg bei Migräne-Attacke",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 50.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

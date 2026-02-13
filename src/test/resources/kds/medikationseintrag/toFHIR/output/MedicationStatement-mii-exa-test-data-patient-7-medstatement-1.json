@@ -126,7 +126,16 @@
             }
           },
           {
-            "text": "Amoxicillin/Clavulansäure 1,2g IV alle 8 Stunden"
+            "text": "Amoxicillin/Clavulansäure 1,2g IV alle 8 Stunden",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1.2,
+                  "unit": "g",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }

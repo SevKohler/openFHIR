@@ -111,7 +111,16 @@
             }
           },
           {
-            "text": "Paracetamol 500mg bei Bedarf"
+            "text": "Paracetamol 500mg bei Bedarf",
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 500.0,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org"
+                }
+              }
+            ]
           }
         ]
       }
