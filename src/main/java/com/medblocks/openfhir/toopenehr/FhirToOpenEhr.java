@@ -246,7 +246,8 @@ public class FhirToOpenEhr {
                     for (FhirToOpenEhrHelper fhirToOpenEhrHelper : artifactHelpers) {
                         final Condition openEhrTypeCondition = fhirToOpenEhrHelper.getTypeCondition();
                         if (openEhrTypeCondition != null
-                                && openEhrTypeCondition.getCriteria().equals(fhirToOpenEhrHelper.getOpenEhrType())) {
+                                && fhirToOpenEhrHelper.getMappingCode() == null
+                                && !openEhrTypeCondition.getCriteria().equals(fhirToOpenEhrHelper.getOpenEhrType())) {
                             continue;
                         }
 
@@ -288,7 +289,8 @@ public class FhirToOpenEhr {
             for (final FhirToOpenEhrHelper fhirToOpenEhrHelper : artifactHelpers) {
                 final Condition openEhrTypeCondition = fhirToOpenEhrHelper.getTypeCondition();
                 if (openEhrTypeCondition != null
-                        && openEhrTypeCondition.getCriteria().equals(fhirToOpenEhrHelper.getOpenEhrType())) {
+                        && fhirToOpenEhrHelper.getMappingCode() == null
+                        && !openEhrTypeCondition.getCriteria().equals(fhirToOpenEhrHelper.getOpenEhrType())) {
                     continue;
                 }
 
@@ -736,6 +738,7 @@ public class FhirToOpenEhr {
                 for (FhirToOpenEhrHelper fhirToOpenEhrHelper : helper.getFhirToOpenEhrHelpers()) {
                     final Condition openEhrTypeCondition = fhirToOpenEhrHelper.getTypeCondition();
                     if (openEhrTypeCondition != null
+                            && fhirToOpenEhrHelper.getMappingCode() == null
                             && !openEhrTypeCondition.getCriteria().equals(fhirToOpenEhrHelper.getOpenEhrType())) {
                         continue;
                     }

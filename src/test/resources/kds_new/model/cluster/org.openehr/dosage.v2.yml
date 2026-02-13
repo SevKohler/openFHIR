@@ -43,7 +43,7 @@ mappings:
             mappings:
               - name: "doseQuantitySystem"
                 with:
-                  fhir: "dose.as(Quantity)"
+                  fhir: "$fhirRoot"
                 manual:
                   - name: "ucumSystem"
                     fhir:
