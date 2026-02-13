@@ -31,6 +31,7 @@ public class DosageCustomMappings extends CustomMapping {
             "rangeToText",
             "ratio_to_dv_quantity",
             "ratio_to_dosage",
+            "ratio_to_dosage_action",
             "dosageDurationToAdministrationDuration"
     );
     private static final Set<String> ALLOWED_RATE_UNITS = Set.of("l/h", "ml/h", "ml/s", "ml/min");
@@ -61,6 +62,7 @@ public class DosageCustomMappings extends CustomMapping {
             case "rangeToText" -> toOpenEhrRangeToText(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dv_quantity" -> toOpenEhrRatioToDvQuantity(openEhrPath, fhirValue, flat, populator);
             case "ratio_to_dosage" -> toOpenEhrRatioToDosage(openEhrPath, fhirValue, flat, populator);
+            case "ratio_to_dosage_action" -> toOpenEhrRatioToDosageAction(openEhrPath, fhirValue, flat, populator);
             case "timingToDaily" -> toOpenEhrTimingDaily(openEhrPath, fhirValue, flat, populator);
             case "timingNonDaily" -> toOpenEhrTimingNonDaily(openEhrPath, fhirValue, flat, populator);
             case "dosageDurationToAdministrationDuration" -> toOpenEhrDurationToAdministrationDuration(openEhrPath, fhirValue, flat, populator);
@@ -86,6 +88,7 @@ public class DosageCustomMappings extends CustomMapping {
             case "rangeToText" -> toFhirRangeFromText(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dv_quantity" -> toFhirRatio(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "ratio_to_dosage" -> toFhirRatioDosage(joinedValues, valueHolder, lastIndex, path, mapperUtils);
+            case "ratio_to_dosage_action" -> toFhirRatioDosageAction(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "timingToDaily" -> toFhirTimingDaily(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "timingNonDaily" -> toFhirTimingNonDaily(joinedValues, valueHolder, lastIndex, path, mapperUtils);
             case "dosageDurationToAdministrationDuration" -> toFhirTimingRepeat(joinedValues, valueHolder, lastIndex, path, mapperUtils);
@@ -181,6 +184,37 @@ public class DosageCustomMappings extends CustomMapping {
                                            final Base fhirValue,
                                            final JsonObject flat,
                                            final OpenEhrPopulator populator) {
+        return toOpenEhrRatioToDosageInternal(
+                openEhrPath,
+                fhirValue,
+                flat,
+                populator,
+                "verabreichungsrate/quantity_value",
+                "verabreichungsdauer",
+                false);
+    }
+
+    private boolean toOpenEhrRatioToDosageAction(final String openEhrPath,
+                                                 final Base fhirValue,
+                                                 final JsonObject flat,
+                                                 final OpenEhrPopulator populator) {
+        return toOpenEhrRatioToDosageInternal(
+                openEhrPath,
+                fhirValue,
+                flat,
+                populator,
+                "verabreichungsrate/quantity_value",
+                "verabreichungsdauer",
+                true);
+    }
+
+    private boolean toOpenEhrRatioToDosageInternal(final String openEhrPath,
+                                                   final Base fhirValue,
+                                                   final JsonObject flat,
+                                                   final OpenEhrPopulator populator,
+                                                   final String rateChildPath,
+                                                   final String durationChildPath,
+                                                   final boolean useDurationInputSuffixes) {
         if (!(fhirValue instanceof Ratio ratio)) {
             return false;
         }
@@ -208,12 +242,81 @@ public class DosageCustomMappings extends CustomMapping {
             rateQuantity.setUnit(combinedUnit);
             rateQuantity.setCode(combinedUnit);
             setUcumSystemIfPresent(rateQuantity);
-            String ratePath = appendFlatChild(openEhrPath, "verabreichungsrate/quantity_value");
+            String ratePath = appendFlatChild(openEhrPath, rateChildPath);
             populator.setFhirPathValue(ratePath, rateQuantity, FhirConnectConst.DV_QUANTITY, flat);
         }
 
-        String durationPath = appendFlatChild(openEhrPath, "verabreichungsdauer");
-        populator.setFhirPathValue(durationPath, new StringType(duration), FhirConnectConst.DV_DURATION, flat);
+        String durationPath = appendFlatChild(openEhrPath, durationChildPath);
+        if (useDurationInputSuffixes) {
+            if (!writeDurationInputs(durationPath, denominator, flat)) {
+                populator.setFhirPathValue(durationPath, new StringType(duration), FhirConnectConst.DV_DURATION, flat);
+            }
+        } else {
+            populator.setFhirPathValue(durationPath, new StringType(duration), FhirConnectConst.DV_DURATION, flat);
+        }
+        return true;
+    }
+
+    private boolean writeDurationInputs(final String basePath, final Quantity denominator, final JsonObject flat) {
+        if (StringUtils.isBlank(basePath) || denominator == null || denominator.getValue() == null || flat == null) {
+            return false;
+        }
+        Timing.UnitsOfTime unit = unitFromString(unitOrCodePreferCode(denominator));
+        if (unit == null) {
+            return false;
+        }
+
+        Double raw = denominator.getValue().doubleValue();
+        if (raw == null || raw <= 0d) {
+            return false;
+        }
+
+        long totalSeconds;
+        switch (unit) {
+            case D -> totalSeconds = Math.round(raw * 86400d);
+            case H -> totalSeconds = Math.round(raw * 3600d);
+            case MIN -> totalSeconds = Math.round(raw * 60d);
+            case S -> totalSeconds = Math.round(raw);
+            default -> {
+                return false;
+            }
+        }
+        if (totalSeconds <= 0L) {
+            return false;
+        }
+
+        long days = totalSeconds / 86400L;
+        long remainder = totalSeconds % 86400L;
+        long hours = remainder / 3600L;
+        remainder = remainder % 3600L;
+        long minutes = remainder / 60L;
+        long seconds = remainder % 60L;
+
+        String durationValuePath = basePath + "/duration_value";
+        flat.remove(basePath + "|day");
+        flat.remove(basePath + "|hour");
+        flat.remove(basePath + "|minute");
+        flat.remove(basePath + "|second");
+        flat.remove(durationValuePath + "|day");
+        flat.remove(durationValuePath + "|hour");
+        flat.remove(durationValuePath + "|minute");
+        flat.remove(durationValuePath + "|second");
+        flat.remove(basePath);
+        flat.remove(basePath + "|value");
+        flat.remove(basePath + "/duration_value|value");
+
+        if (days > 0L) {
+            flat.addProperty(durationValuePath + "|day", days);
+        }
+        if (hours > 0L) {
+            flat.addProperty(durationValuePath + "|hour", hours);
+        }
+        if (minutes > 0L) {
+            flat.addProperty(durationValuePath + "|minute", minutes);
+        }
+        if (seconds > 0L) {
+            flat.addProperty(durationValuePath + "|second", seconds);
+        }
         return true;
     }
 
@@ -568,14 +671,32 @@ public class DosageCustomMappings extends CustomMapping {
                                                                 final Integer lastIndex,
                                                                 final String path,
                                                                 final OpenFhirMapperUtils mapperUtils) {
+        return toFhirRatioDosageInternal(joinedValues, valueHolder, lastIndex, path, mapperUtils, false);
+    }
+
+    private OpenEhrToFhirHelper.DataWithIndex toFhirRatioDosageAction(final List<String> joinedValues,
+                                                                      final JsonObject valueHolder,
+                                                                      final Integer lastIndex,
+                                                                      final String path,
+                                                                      final OpenFhirMapperUtils mapperUtils) {
+        return toFhirRatioDosageInternal(joinedValues, valueHolder, lastIndex, path, mapperUtils, true);
+    }
+
+    private OpenEhrToFhirHelper.DataWithIndex toFhirRatioDosageInternal(final List<String> joinedValues,
+                                                                        final JsonObject valueHolder,
+                                                                        final Integer lastIndex,
+                                                                        final String path,
+                                                                        final OpenFhirMapperUtils mapperUtils,
+                                                                        final boolean actionPaths) {
         FhirValueReaders readers = new FhirValueReaders(mapperUtils);
 
-        Quantity rateQuantity = readRateQuantity(readers, valueHolder, joinedValues);
+        Quantity rateQuantity = readRateQuantity(readers, valueHolder, actionPaths);
         Quantity doseQuantity = readDoseQuantity(readers, valueHolder);
 
-        String durationPath = findInValueHolder(valueHolder, "verabreichungsdauer|value");
-        if (durationPath == null) durationPath = findInValueHolder(valueHolder, "verabreichungsdauer/duration_value|value");
-        if (durationPath == null) durationPath = findInValueHolder(valueHolder, "verabreichungsdauer");
+        String durationPath = findAnyInValueHolder(valueHolder,
+                "verabreichungsdauer|value",
+                "verabreichungsdauer/duration_value|value",
+                "verabreichungsdauer");
         String duration = durationPath != null ? readers.get(valueHolder, durationPath) : null;
         if (StringUtils.isBlank(duration)) {
             // fallback to existing ratio parsing if duration is missing
@@ -619,11 +740,13 @@ public class DosageCustomMappings extends CustomMapping {
 
     private Quantity readRateQuantity(final FhirValueReaders readers,
                                       final JsonObject valueHolder,
-                                      final List<String> joinedValues) {
-        String magPath = findInValueHolder(valueHolder, "verabreichungsrate/quantity_value|magnitude");
-        if (magPath == null) magPath = findInValueHolder(valueHolder, "verabreichungsrate|magnitude");
-        String unitPath = findInValueHolder(valueHolder, "verabreichungsrate/quantity_value|unit");
-        if (unitPath == null) unitPath = findInValueHolder(valueHolder, "verabreichungsrate|unit");
+                                      final boolean actionPaths) {
+        String magPath = findAnyInValueHolder(valueHolder,
+                "verabreichungsrate/quantity_value|magnitude",
+                "verabreichungsrate|magnitude");
+        String unitPath = findAnyInValueHolder(valueHolder,
+                "verabreichungsrate/quantity_value|unit",
+                "verabreichungsrate|unit");
         if (magPath != null) {
             Object number = readers.number(readers.get(valueHolder, magPath));
             if (number instanceof Number num) {
@@ -1193,6 +1316,19 @@ public class DosageCustomMappings extends CustomMapping {
     private String findInValueHolder(JsonObject valueHolder, String suffix) {
         if (valueHolder == null || valueHolder.keySet() == null) return null;
         return valueHolder.keySet().stream().filter(s -> s.endsWith(suffix)).findFirst().orElse(null);
+    }
+
+    private String findAnyInValueHolder(final JsonObject valueHolder, final String... suffixes) {
+        if (suffixes == null) {
+            return null;
+        }
+        for (String suffix : suffixes) {
+            String found = findInValueHolder(valueHolder, suffix);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 
     private void setFrequency(Timing.TimingRepeatComponent repeat, Double frequency, Double frequencyMax) {

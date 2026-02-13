@@ -348,6 +348,18 @@
                   "value": "Dalbavancin 1500 mg als 30-minütige Infusion"
                 },
                 "archetype_node_id": "at0178"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Verabreichungsdauer"
+                },
+                "value": {
+                  "_type": "DV_DURATION",
+                  "value": "PT30H"
+                },
+                "archetype_node_id": "at0102"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"

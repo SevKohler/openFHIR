@@ -384,6 +384,18 @@
                   "value": "Paclitaxel 175mg IV über 3 Stunden"
                 },
                 "archetype_node_id": "at0178"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Verabreichungsdauer"
+                },
+                "value": {
+                  "_type": "DV_DURATION",
+                  "value": "PT3H"
+                },
+                "archetype_node_id": "at0102"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v2"
