@@ -40,6 +40,21 @@ mappings:
             operator: "type"
             criteria: "DV_QUANTITY"
 
+        - name: "doseQuantitySystem"
+          with:
+            fhir: "dose.as(Quantity)"
+            openehr: "items[at0144]"
+          manual:
+            - name: "ucumSystem"
+              fhir:
+                - path: "system"
+                  value: "http://unitsofmeasure.org"
+          openehrCondition:
+            targetRoot: "$openehrRoot"
+            targetAttribute: "items[at0144]"
+            operator: "type"
+            criteria: "DV_QUANTITY"
+
         - name: "doseRangeValue"
           with:
             fhir: "dose.as(Range)"
