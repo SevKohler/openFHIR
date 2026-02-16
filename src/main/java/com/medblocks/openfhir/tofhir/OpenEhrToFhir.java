@@ -1095,6 +1095,11 @@ public class OpenEhrToFhir {
                                                                                                         == null
                                                                                                         ? firstFlatPath
                                                                                                         : parentFollowedByOpenEhrWithOutAqlPath);
+            final boolean ratioToDosageAction = "ratio_to_dosage_action".equals(mapping.getMappingCode());
+            final JsonObject extractionJsonObject =
+                    ratioToDosageAction && (flatJsonObject == null || flatJsonObject.size() == 0)
+                            ? originalFlatJsonObject
+                            : flatJsonObject;
 
             final String rmType = getRmType(openehrAqlPath, mapping, webTemplate);
 
@@ -1112,7 +1117,7 @@ public class OpenEhrToFhir {
                 handleReferenceMapping(mapping, resourceType, parentFollowedByFhir, parentFollowedByOpenEhr, theMapper,
                                        firstFlatPath, definedMappingWithOpenEhr, fhirPath, isFollowedBy, helpers,
                                        webTemplate,
-                                       flatJsonObject, slotContext, openEhrForReferenceMappings, possibleRecursion);
+                                       extractionJsonObject, slotContext, openEhrForReferenceMappings, possibleRecursion);
             } else {
                 boolean manuallyAddingOccurrence = openehr.contains(RECURRING_SYNTAX);
                 if (manuallyAddingOccurrence) {
@@ -1129,7 +1134,7 @@ public class OpenEhrToFhir {
                                       openFhirStringUtils.getFhirPathWithConditions(fhirPath,
                                                                                     mapping.getFhirCondition(),
                                                                                     resourceType, parentFollowedByFhir),
-                                      helpers, webTemplate, flatJsonObject, slotContext, openEhrForReferenceMappings,
+                                      helpers, webTemplate, extractionJsonObject, slotContext, openEhrForReferenceMappings,
                                       possibleRecursion);
                 } else {
                     // adds regex pattern to simplified path in a way that we can extract data from a given flat path
@@ -1137,7 +1142,7 @@ public class OpenEhrToFhir {
 
                     // get all entries from the flat path that match the simplified flat path with regex pattern
                     final List<String> matchingEntries = openFhirStringUtils.getAllEntriesThatMatch(withRegex,
-                                                                                                    flatJsonObject);
+                                                                                                    extractionJsonObject);
                     final Map<String, List<String>> joinedEntries = openFhirStringUtils.joinValuesThatAreOne(
                             matchingEntries);
                     handleRegularMapping(mapping, resourceType, parentFollowedByFhir,
@@ -1145,7 +1150,7 @@ public class OpenEhrToFhir {
                                          theMapper,
                                          firstFlatPath, definedMappingWithOpenEhr, fhirPath, isFollowedBy, helpers,
                                          webTemplate,
-                                         flatJsonObject, slotContext, openehr, joinedEntries, rmType, hardcodedValue,
+                                         extractionJsonObject, slotContext, openehr, joinedEntries, rmType, hardcodedValue,
                                          possibleRecursion);
                 }
             }

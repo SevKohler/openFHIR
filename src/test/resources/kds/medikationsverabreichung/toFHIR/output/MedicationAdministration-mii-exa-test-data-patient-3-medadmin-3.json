@@ -97,6 +97,20 @@
             "value": 85.0,
             "unit": "mg",
             "system": "http://unitsofmeasure.org"
+          },
+          "rateRatio": {
+            "numerator": {
+              "value": 85.0,
+              "unit": "mg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mg"
+            },
+            "denominator": {
+              "value": 2.0,
+              "unit": "h",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
           }
         }
       }

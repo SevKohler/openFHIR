@@ -696,6 +696,7 @@ public class DosageCustomMappings extends CustomMapping {
         String durationPath = findAnyInValueHolder(valueHolder,
                 "verabreichungsdauer|value",
                 "verabreichungsdauer/duration_value|value",
+                "verabreichungsdauer/duration_value",
                 "verabreichungsdauer");
         String duration = durationPath != null ? readers.get(valueHolder, durationPath) : null;
         if (StringUtils.isBlank(duration)) {
