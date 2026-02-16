@@ -95,7 +95,8 @@
           },
           "dose": {
             "value": 1.0,
-            "unit": "1"
+            "unit": "1",
+            "system": "http://unitsofmeasure.org"
           }
         }
       }

@@ -95,7 +95,8 @@
           },
           "dose": {
             "value": 5000.0,
-            "unit": "IU"
+            "unit": "IU",
+            "system": "http://unitsofmeasure.org"
           }
         }
       }

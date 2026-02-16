@@ -1727,30 +1727,46 @@ public class OpenEhrToFhir {
                     log.warn("No CustomMapping found for mapping code: {}", mapping.getMappingCode());
                     values = new ArrayList<>();
                 } else {
-                    values = joinedEntries.entrySet().stream()
-                            .map(entry -> {
-                                final List<String> strings = entry.getValue();
-                                final String key = entry.getKey();
+                    if (joinedEntries.isEmpty()) {
+                        final String fallbackPath = mapping.getWith() == null ? null : mapping.getWith().getOpenehr();
+                        final OpenEhrToFhirHelper.DataWithIndex fallback = customMapping.applyOpenEhrToFhirMapping(
+                                mapping.getMappingCode(),
+                                Collections.emptyList(),
+                                flatJsonObject,
+                                -1,
+                                fallbackPath,
+                                resourceType,
+                                fhirPath,
+                                openFhirStringUtils,
+                                openFhirMapperUtils
+                        );
+                        values = fallback == null ? new ArrayList<>() : new ArrayList<>(List.of(fallback));
+                    } else {
+                        values = joinedEntries.entrySet().stream()
+                                .map(entry -> {
+                                    final List<String> strings = entry.getValue();
+                                    final String key = entry.getKey();
 
-                                if (!evaluateOpenehrEmptyNotEmptyCondition(mapping, key, flatJsonObject)) {
-                                    return null;
-                                }
+                                    if (!evaluateOpenehrEmptyNotEmptyCondition(mapping, key, flatJsonObject)) {
+                                        return null;
+                                    }
 
-                                final Integer lastIndex = openFhirStringUtils.getLastIndex(key);
-                                return customMapping.applyOpenEhrToFhirMapping(
-                                        mapping.getMappingCode(),
-                                        strings,
-                                        flatJsonObject,
-                                        lastIndex,
-                                        key,
-                                        resourceType,
-                                        fhirPath,
-                                        openFhirStringUtils,
-                                        openFhirMapperUtils
-                                );
-                            })
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
+                                    final Integer lastIndex = openFhirStringUtils.getLastIndex(key);
+                                    return customMapping.applyOpenEhrToFhirMapping(
+                                            mapping.getMappingCode(),
+                                            strings,
+                                            flatJsonObject,
+                                            lastIndex,
+                                            key,
+                                            resourceType,
+                                            fhirPath,
+                                            openFhirStringUtils,
+                                            openFhirMapperUtils
+                                    );
+                                })
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toList());
+                    }
                 }
             }
 

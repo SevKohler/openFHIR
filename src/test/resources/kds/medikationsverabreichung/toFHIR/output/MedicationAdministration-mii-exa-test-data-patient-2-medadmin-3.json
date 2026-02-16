@@ -95,7 +95,8 @@
           },
           "dose": {
             "value": 175.0,
-            "unit": "mg"
+            "unit": "mg",
+            "system": "http://unitsofmeasure.org"
           }
         }
       }

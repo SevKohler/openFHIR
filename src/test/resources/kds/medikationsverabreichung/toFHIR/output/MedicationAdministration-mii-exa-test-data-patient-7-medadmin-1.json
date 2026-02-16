@@ -95,7 +95,8 @@
           },
           "dose": {
             "value": 1.2,
-            "unit": "g"
+            "unit": "g",
+            "system": "http://unitsofmeasure.org"
           }
         }
       }
