@@ -34,11 +34,15 @@
                 "strength": {
                   "numerator": {
                     "value": 85.0,
-                    "unit": "mg"
+                    "unit": "mg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 250.0,
-                    "unit": "milliliter"
+                    "unit": "milliliter",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "milliliter"
                   }
                 }
               }
@@ -102,7 +106,8 @@
                 "doseQuantity": {
                   "value": 50.0,
                   "unit": "mg/kilogram",
-                  "system": "http://unitsofmeasure.org"
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg/kilogram"
                 }
               }
             ]

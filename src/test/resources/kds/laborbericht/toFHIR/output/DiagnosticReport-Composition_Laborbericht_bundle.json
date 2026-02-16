@@ -94,7 +94,9 @@
             "issued": "2022-02-03T05:05:06.000+01:00",
             "valueQuantity": {
               "value": 7.4,
-              "unit": "g/dL"
+              "unit": "g/dL",
+              "system": "http://unitsofmeasure.org",
+              "code": "g/dL"
             },
             "interpretation": [
               {

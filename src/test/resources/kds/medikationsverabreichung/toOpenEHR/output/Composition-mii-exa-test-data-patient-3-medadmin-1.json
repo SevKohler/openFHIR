@@ -316,7 +316,7 @@
                         },
                         "value": {
                           "_type": "DV_QUANTITY",
-                          "units": "milligram",
+                          "units": "mg",
                           "magnitude": 500.0
                         },
                         "archetype_node_id": "at0153"
@@ -329,7 +329,7 @@
                         },
                         "value": {
                           "_type": "DV_QUANTITY",
-                          "units": "Film-coated tablet",
+                          "units": "10221000",
                           "magnitude": 1.0
                         },
                         "archetype_node_id": "at0157"

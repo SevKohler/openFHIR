@@ -316,7 +316,7 @@
                         },
                         "value": {
                           "_type": "DV_QUANTITY",
-                          "units": "IU",
+                          "units": "[iU]",
                           "magnitude": 25000.0
                         },
                         "archetype_node_id": "at0153"
@@ -364,7 +364,7 @@
                 },
                 "value": {
                   "_type": "DV_QUANTITY",
-                  "units": "IU",
+                  "units": "[iU]",
                   "magnitude": 5000.0
                 },
                 "archetype_node_id": "at0144"

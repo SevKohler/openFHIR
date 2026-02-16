@@ -353,7 +353,7 @@
                 },
                 "value": {
                   "_type": "DV_QUANTITY",
-                  "units": "mg/Stunde",
+                  "units": "mg/h",
                   "magnitude": 1500.0
                 },
                 "archetype_node_id": "at0134"

@@ -402,7 +402,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "/nanoliter",
+                        "units": "/nL",
                         "magnitude": 17.0
                       },
                       "archetype_node_id": "at0001"
@@ -548,7 +548,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "/nanoLiters",
+                        "units": "/pL",
                         "magnitude": 5.0
                       },
                       "archetype_node_id": "at0001"
@@ -694,7 +694,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "percent",
+                        "units": "%",
                         "magnitude": 45.0
                       },
                       "archetype_node_id": "at0001"
@@ -840,7 +840,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "gram per deciliter",
+                        "units": "g/dL",
                         "magnitude": 45.0
                       },
                       "archetype_node_id": "at0001"
@@ -986,7 +986,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "/nanoliter",
+                        "units": "/nL",
                         "magnitude": 355.0
                       },
                       "archetype_node_id": "at0001"

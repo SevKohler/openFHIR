@@ -368,7 +368,7 @@
                               },
                               "value": {
                                 "_type": "DV_QUANTITY",
-                                "units": "μg",
+                                "units": "ug",
                                 "magnitude": 100.0
                               },
                               "archetype_node_id": "at0153"
@@ -416,7 +416,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "μg",
+                        "units": "ug",
                         "magnitude": 200.0
                       },
                       "archetype_node_id": "at0144"

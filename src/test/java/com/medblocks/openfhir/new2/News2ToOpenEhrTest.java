@@ -86,7 +86,7 @@ public class News2ToOpenEhrTest extends GenericTest {
 
         final String systolicArchPath = "/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value"; // DvQuantity
         final DvQuantity systolicQ = (DvQuantity) composition.itemAtPath(systolicArchPath);
-        Assert.assertEquals("millimeter of mercury", systolicQ.getUnits());
+        Assert.assertEquals("mm[Hg]", systolicQ.getUnits());
         Assert.assertEquals(Double.valueOf(120.0), systolicQ.getMagnitude());
 
         final String locationOfMeasurementPath = "/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/protocol[at0011]/items[at0014]/value";
@@ -95,12 +95,12 @@ public class News2ToOpenEhrTest extends GenericTest {
 
         final String tempArchPath = "/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value"; // DvQuantity
         final DvQuantity temp = (DvQuantity) composition.itemAtPath(tempArchPath);
-        Assert.assertEquals("degree Celsius", temp.getUnits());
+        Assert.assertEquals("Cel", temp.getUnits());
         Assert.assertEquals(Double.valueOf(37.5), temp.getMagnitude());
 
         final String pulseArchPath = "/content[openEHR-EHR-OBSERVATION.pulse.v2]/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value"; // DvQuantity
         final DvQuantity pulseQ = (DvQuantity) composition.itemAtPath(pulseArchPath);
-        Assert.assertEquals("heart beats per minute", pulseQ.getUnits());
+        Assert.assertEquals("{beats}/min", pulseQ.getUnits());
         Assert.assertEquals(Double.valueOf(95.0), pulseQ.getMagnitude());
 
         final String spo2ArchPath = "/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value"; // DvProportion

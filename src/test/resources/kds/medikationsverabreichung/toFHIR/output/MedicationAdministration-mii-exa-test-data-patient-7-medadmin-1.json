@@ -24,11 +24,15 @@
                 "strength": {
                   "numerator": {
                     "value": 1000.0,
-                    "unit": "mg"
+                    "unit": "mg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 100.0,
-                    "unit": "ml"
+                    "unit": "ml",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "ml"
                   }
                 }
               }
@@ -96,7 +100,8 @@
           "dose": {
             "value": 1.2,
             "unit": "g",
-            "system": "http://unitsofmeasure.org"
+            "system": "http://unitsofmeasure.org",
+            "code": "g"
           }
         }
       }

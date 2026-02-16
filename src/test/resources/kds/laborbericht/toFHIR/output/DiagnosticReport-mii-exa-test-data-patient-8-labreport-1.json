@@ -109,7 +109,9 @@
             "issued": "2023-11-12T08:15:00.000+01:00",
             "valueQuantity": {
               "value": 13.8,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {
@@ -164,7 +166,9 @@
             "issued": "2023-11-12T08:15:00.000+01:00",
             "valueQuantity": {
               "value": 2.8,
-              "unit": "nanogram per milliliter"
+              "unit": "ng/mL",
+              "system": "http://unitsofmeasure.org",
+              "code": "ng/mL"
             },
             "interpretation": [
               {
@@ -224,7 +228,9 @@
             "issued": "2023-11-12T08:15:00.000+01:00",
             "valueQuantity": {
               "value": 85.0,
-              "unit": "unit per liter"
+              "unit": "U/L",
+              "system": "http://unitsofmeasure.org",
+              "code": "U/L"
             },
             "interpretation": [
               {

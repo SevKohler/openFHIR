@@ -45,11 +45,15 @@
                 "strength": {
                   "numerator": {
                     "value": 100.0,
-                    "unit": "μg"
+                    "unit": "μg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "μg"
                   },
                   "denominator": {
                     "value": 1.0,
-                    "unit": "1"
+                    "unit": "1",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "1"
                   }
                 }
               }
@@ -113,7 +117,8 @@
                 "doseQuantity": {
                   "value": 200.0,
                   "unit": "μg",
-                  "system": "http://unitsofmeasure.org"
+                  "system": "http://unitsofmeasure.org",
+                  "code": "μg"
                 }
               }
             ]

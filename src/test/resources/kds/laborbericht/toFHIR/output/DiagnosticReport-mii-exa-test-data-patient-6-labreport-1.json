@@ -109,7 +109,9 @@
             "issued": "2022-03-14T09:30:00.000+01:00",
             "valueQuantity": {
               "value": 9.1,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {
@@ -164,7 +166,9 @@
             "issued": "2022-03-14T09:30:00.000+01:00",
             "valueQuantity": {
               "value": 45.0,
-              "unit": "unit per liter"
+              "unit": "U/L",
+              "system": "http://unitsofmeasure.org",
+              "code": "U/L"
             },
             "interpretation": [
               {
@@ -219,7 +223,9 @@
             "issued": "2022-03-14T09:30:00.000+01:00",
             "valueQuantity": {
               "value": 38.0,
-              "unit": "unit per liter"
+              "unit": "U/L",
+              "system": "http://unitsofmeasure.org",
+              "code": "U/L"
             },
             "interpretation": [
               {

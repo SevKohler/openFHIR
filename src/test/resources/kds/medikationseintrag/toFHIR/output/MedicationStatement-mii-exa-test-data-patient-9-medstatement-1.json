@@ -45,11 +45,15 @@
                 "strength": {
                   "numerator": {
                     "value": 0.03,
-                    "unit": "mg"
+                    "unit": "mg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 1.0,
-                    "unit": "1"
+                    "unit": "1",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "1"
                   }
                 }
               },
@@ -57,11 +61,15 @@
                 "strength": {
                   "numerator": {
                     "value": 0.15,
-                    "unit": "mg"
+                    "unit": "mg",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 1.0,
-                    "unit": "1"
+                    "unit": "1",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "1"
                   }
                 }
               }
@@ -132,7 +140,8 @@
                 "doseQuantity": {
                   "value": 1.0,
                   "unit": "1",
-                  "system": "http://unitsofmeasure.org"
+                  "system": "http://unitsofmeasure.org",
+                  "code": "1"
                 }
               }
             ]

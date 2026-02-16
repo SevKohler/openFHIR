@@ -463,7 +463,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "/nanoliter",
+                        "units": "/nL",
                         "magnitude": 12.5
                       },
                       "archetype_node_id": "at0001"
@@ -597,7 +597,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "unit per liter",
+                        "units": "U/L",
                         "magnitude": 156.0
                       },
                       "archetype_node_id": "at0001"
@@ -731,7 +731,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "milligram per deciliter",
+                        "units": "mg/dL",
                         "magnitude": 2.8
                       },
                       "archetype_node_id": "at0001"

@@ -109,7 +109,9 @@
             "issued": "2019-05-16T10:45:00.000+02:00",
             "valueQuantity": {
               "value": 8.9,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {
@@ -164,7 +166,9 @@
             "issued": "2019-05-16T10:45:00.000+02:00",
             "valueQuantity": {
               "value": 14.2,
-              "unit": "gram per deciliter"
+              "unit": "g/dL",
+              "system": "http://unitsofmeasure.org",
+              "code": "g/dL"
             },
             "interpretation": [
               {
@@ -219,7 +223,9 @@
             "issued": "2019-05-16T10:45:00.000+02:00",
             "valueQuantity": {
               "value": 1.1,
-              "unit": "milligram per deciliter"
+              "unit": "mg/dL",
+              "system": "http://unitsofmeasure.org",
+              "code": "mg/dL"
             },
             "interpretation": [
               {

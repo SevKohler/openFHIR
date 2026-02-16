@@ -109,7 +109,9 @@
             "issued": "2024-02-22T09:00:00.000+01:00",
             "valueQuantity": {
               "value": 6.8,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {
@@ -164,7 +166,9 @@
             "issued": "2024-02-22T09:00:00.000+01:00",
             "valueQuantity": {
               "value": 12.8,
-              "unit": "gram per deciliter"
+              "unit": "g/dL",
+              "system": "http://unitsofmeasure.org",
+              "code": "g/dL"
             },
             "interpretation": [
               {
@@ -219,7 +223,9 @@
             "issued": "2024-02-22T09:00:00.000+01:00",
             "valueQuantity": {
               "value": 285.0,
-              "unit": "picomole per liter"
+              "unit": "pmol/L",
+              "system": "http://unitsofmeasure.org",
+              "code": "pmol/L"
             },
             "interpretation": [
               {

@@ -108,7 +108,8 @@
                 "doseQuantity": {
                   "value": 1500.0,
                   "unit": "mg",
-                  "system": "http://unitsofmeasure.org"
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
                 },
                 "rateRatio": {
                   "numerator": {

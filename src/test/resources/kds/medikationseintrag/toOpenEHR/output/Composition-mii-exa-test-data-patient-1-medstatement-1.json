@@ -379,7 +379,7 @@
                               },
                               "value": {
                                 "_type": "DV_QUANTITY",
-                                "units": "milligram",
+                                "units": "mg",
                                 "magnitude": 100.0
                               },
                               "archetype_node_id": "at0153"
@@ -392,7 +392,7 @@
                               },
                               "value": {
                                 "_type": "DV_QUANTITY",
-                                "units": "Tablet",
+                                "units": "10219000",
                                 "magnitude": 1.0
                               },
                               "archetype_node_id": "at0157"

@@ -2,6 +2,7 @@ package com.medblocks.openfhir.tofhir.parser;
 
 import com.google.gson.JsonObject;
 import com.medblocks.openfhir.tofhir.OpenEhrToFhirHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.Quantity;
 
@@ -61,6 +62,13 @@ public class QuantityParser {
         if (unitPath != null) q.setUnit(fhirValueReaders.get(valueHolder, unitPath));
         if (valuePath != null) q.setUnit(fhirValueReaders.get(valueHolder, valuePath)); // preserves your existing behavior
         if (codePath != null) q.setCode(fhirValueReaders.get(valueHolder, codePath));
+        if (StringUtils.isBlank(q.getCode()) && StringUtils.isNotBlank(q.getUnit())) {
+            q.setCode(q.getUnit());
+        }
+        if (StringUtils.isBlank(q.getSystem()) && (StringUtils.isNotBlank(q.getCode()) || StringUtils.isNotBlank(q.getUnit()))) {
+            // openEHR DV_QUANTITY defaults to UCUM when no unit system is explicitly carried.
+            q.setSystem("http://unitsofmeasure.org");
+        }
 
         // fallback if no extra fields are present
         if (magnitudePath == null && ordinalPath == null && unitPath == null && valuePath == null && codePath == null) {

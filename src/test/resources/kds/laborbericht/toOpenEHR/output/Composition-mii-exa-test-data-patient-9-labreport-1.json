@@ -463,7 +463,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "/nanoliter",
+                        "units": "/nL",
                         "magnitude": 6.8
                       },
                       "archetype_node_id": "at0001"
@@ -597,7 +597,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "gram per deciliter",
+                        "units": "g/dL",
                         "magnitude": 12.8
                       },
                       "archetype_node_id": "at0001"
@@ -731,7 +731,7 @@
                       },
                       "value": {
                         "_type": "DV_QUANTITY",
-                        "units": "picomole per liter",
+                        "units": "pmol/L",
                         "magnitude": 285.0
                       },
                       "archetype_node_id": "at0001"

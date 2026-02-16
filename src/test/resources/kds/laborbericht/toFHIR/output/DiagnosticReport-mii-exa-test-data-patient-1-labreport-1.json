@@ -95,7 +95,9 @@
             "issued": "2024-02-15T12:00:00.000+01:00",
             "valueQuantity": {
               "value": 17.0,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {
@@ -155,7 +157,9 @@
             "issued": "2024-02-15T12:00:00.000+01:00",
             "valueQuantity": {
               "value": 5.0,
-              "unit": "/nanoLiters"
+              "unit": "/pL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/pL"
             },
             "interpretation": [
               {
@@ -215,7 +219,9 @@
             "issued": "2024-02-15T12:00:00.000+01:00",
             "valueQuantity": {
               "value": 45.0,
-              "unit": "percent"
+              "unit": "%",
+              "system": "http://unitsofmeasure.org",
+              "code": "%"
             },
             "interpretation": [
               {
@@ -275,7 +281,9 @@
             "issued": "2024-02-15T12:00:00.000+01:00",
             "valueQuantity": {
               "value": 45.0,
-              "unit": "gram per deciliter"
+              "unit": "g/dL",
+              "system": "http://unitsofmeasure.org",
+              "code": "g/dL"
             },
             "interpretation": [
               {
@@ -335,7 +343,9 @@
             "issued": "2024-02-15T12:00:00.000+01:00",
             "valueQuantity": {
               "value": 355.0,
-              "unit": "/nanoliter"
+              "unit": "/nL",
+              "system": "http://unitsofmeasure.org",
+              "code": "/nL"
             },
             "interpretation": [
               {

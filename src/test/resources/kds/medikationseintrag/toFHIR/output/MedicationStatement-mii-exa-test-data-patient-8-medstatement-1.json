@@ -45,11 +45,15 @@
                 "strength": {
                   "numerator": {
                     "value": 25000.0,
-                    "unit": "IU"
+                    "unit": "IU",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "IU"
                   },
                   "denominator": {
                     "value": 5.0,
-                    "unit": "ml"
+                    "unit": "ml",
+                    "system": "http://unitsofmeasure.org",
+                    "code": "ml"
                   }
                 }
               }
@@ -120,7 +124,8 @@
                 "doseQuantity": {
                   "value": 5000.0,
                   "unit": "IU",
-                  "system": "http://unitsofmeasure.org"
+                  "system": "http://unitsofmeasure.org",
+                  "code": "IU"
                 }
               }
             ]

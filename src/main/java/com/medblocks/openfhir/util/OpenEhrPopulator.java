@@ -267,9 +267,11 @@ public class OpenEhrPopulator {
             if (quantity.getValue() != null) {
                 addToConstructingFlatDouble(path + "|magnitude", quantity.getValue().doubleValue(), flat);
             }
-            String unit = quantity.getUnit();
+            // openEHR DV_QUANTITY.units expects the canonical unit code (UCUM by default),
+            // therefore prefer FHIR Quantity.code and fall back to unit display text.
+            String unit = quantity.getCode();
             if (StringUtils.isBlank(unit)) {
-                unit = quantity.getCode();
+                unit = quantity.getUnit();
             }
             addToConstructingFlat(path + "|unit", unit, flat);
             return true;
