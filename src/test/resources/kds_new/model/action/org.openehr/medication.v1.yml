@@ -82,28 +82,28 @@ mappings:
   - name: "category"
     with:
       fhir: "$resource.category.coding"
-      openehr: "$composition/context/setting"
+      openehr: "$composition/context/setting" # TODO Incorrect mapping should be cluster ? Since we got no inpatient or outpatient as category
     manual:
       - name: "outpatient"
         fhir:
           - path: "code"
-            value: "outpatient"
+            value: "inpatient"
           - path: "system"
             value: "http://terminology.hl7.org/CodeSystem/medication-admin-category"
           - path: "display"
-            value: "Outpatient"
+            value: "Inpatient"
         openehrCondition:
-          targetRoot: "$openehrRoot"
-          targetAttribute: "defining_code/code_string"
+          targetRoot: "$composition/context"
+          targetAttribute: "setting|code"
           operator: "one of"
           criteria: "228"
         openehr:
           - path: "defining_code/terminology_id"
             value: "openehr"
           - path: "defining_code/code_string"
-            value: "228"
+            value: "232"
           - path: "value"
-            value: "primary medical care"
+            value: "secondary medical care"
         fhirCondition:
           targetRoot: "$resource"
           targetAttribute: "category.coding.code"
@@ -119,8 +119,8 @@ mappings:
           - path: "display"
             value: "Inpatient"
         openehrCondition:
-          targetRoot: "$openehrRoot"
-          targetAttribute: "defining_code/code_string"
+          targetRoot: "$composition/context"
+          targetAttribute: "setting|code"
           operator: "one of"
           criteria: "232"
         openehr:
@@ -145,8 +145,8 @@ mappings:
           - path: "display"
             value: "Community"
         openehrCondition:
-          targetRoot: "$openehrRoot"
-          targetAttribute: "defining_code/code_string"
+          targetRoot: "$composition/context"
+          targetAttribute: "setting|code"
           operator: "one of"
           criteria: "238"
         openehr:

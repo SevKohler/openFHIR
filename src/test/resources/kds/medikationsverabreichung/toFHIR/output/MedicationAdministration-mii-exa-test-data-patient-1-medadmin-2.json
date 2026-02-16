@@ -52,8 +52,8 @@
           "coding": [
             {
               "system": "http://terminology.hl7.org/CodeSystem/medication-admin-category",
-              "code": "community",
-              "display": "Community"
+              "code": "inpatient",
+              "display": "Inpatient"
             }
           ]
         },
