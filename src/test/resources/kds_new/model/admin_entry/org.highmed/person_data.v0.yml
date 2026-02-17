@@ -11,6 +11,7 @@ spec:
     revision: 0.0.1-alpha
   fhirConfig:
     structureDefinition: http://hl7.org/fhir/StructureDefinition/Patient
+    multiple: false # Workaround since the content $composition calls in KDS produces several patients.
 
 #preprocessor: Logic not supported yet
 #  fhirCondition:
