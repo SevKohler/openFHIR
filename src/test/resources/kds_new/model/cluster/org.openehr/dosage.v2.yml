@@ -39,17 +39,6 @@ mappings:
             targetAttribute: "items[at0144]"
             operator: "type"
             criteria: "DV_QUANTITY"
-          followedBy:
-            mappings:
-              - name: "doseQuantitySystem"
-                with:
-                  fhir: "$fhirRoot"
-                manual:
-                  - name: "ucumSystem"
-                    fhir:
-                      - path: "system"
-                        value: "http://unitsofmeasure.org"
-
 
         - name: "doseRangeValue"
           with:
