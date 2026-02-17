@@ -5,6 +5,11 @@
     {
       "resource": {
         "resourceType": "MedicationAdministration",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationAdministration"
+          ]
+        },
         "contained": [
           {
             "resourceType": "Medication",
@@ -97,25 +102,25 @@
             ],
             "text": "Intravenous use"
           },
-          "rateRatio": {
-            "numerator": {
-              "system": "http://unitsofmeasure.org",
-              "value": 1000,
-              "code": "mg",
-              "unit": "mg"
-            },
-            "denominator": {
-              "system": "http://unitsofmeasure.org",
-              "value": 46,
-              "code": "h",
-              "unit": "h"
-            }
-          },
           "dose": {
             "value": 1000.0,
             "unit": "mg",
             "system": "http://unitsofmeasure.org",
             "code": "mg"
+          },
+          "rateRatio": {
+            "numerator": {
+              "value": 1000.0,
+              "unit": "mg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mg"
+            },
+            "denominator": {
+              "value": 46.0,
+              "unit": "h",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
           }
         }
       }

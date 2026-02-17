@@ -5,6 +5,11 @@
     {
       "resource": {
         "resourceType": "MedicationAdministration",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationAdministration"
+          ]
+        },
         "contained": [
           {
             "resourceType": "Medication",

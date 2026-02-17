@@ -5,34 +5,11 @@
     {
       "resource": {
         "resourceType": "Patient",
-        "identifier": [
-          {
-            "type": {
-              "coding": [
-                {
-                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
-                }
-              ]
-            },
-            "system": "http://fhir.de/sid/gkv/kvid-10",
-            "value": "A123456780"
-          }
-        ],
-        "name": [
-          {
-            "given": [
-              "Ludwig"
-            ]
-          }
-        ],
-        "gender": "male",
-        "birthDate": "1977-05-24",
-        "deceasedDateTime": "2024-02-22T00:00:00+01:00"
-      }
-    },
-    {
-      "resource": {
-        "resourceType": "Patient",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient"
+          ]
+        },
         "identifier": [
           {
             "type": {
@@ -55,7 +32,8 @@
           },
           {
             "given": [
-              "Christian"
+              "Christian",
+              "Ludwig"
             ]
           }
         ],
