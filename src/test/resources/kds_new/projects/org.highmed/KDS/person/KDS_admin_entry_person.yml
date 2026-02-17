@@ -26,23 +26,6 @@ mappings:
       fhir: "$resource.identifier"
       openehr: "$composition/context/other_context[at0003]/items[at0004]"
 
-    fhirCondition:
-      targetRoot: "$resource.identifier"
-      targetAttribute: "type.coding.code"
-      operator: "one of"
-      criteria: "MR"
-    followedBy:
-      mappings:
-        - name: "type"
-          with:
-            fhir: "type.coding"
-          manual:
-            - name: "typeMR"
-              fhir:
-                - path: "system"
-                  value: "http://terminology.hl7.org/CodeSystem/v2-0203"
-                - path: "code"
-                  value: "MR"
 
   - name: "versicherungsInformationen"
     extension: "add"

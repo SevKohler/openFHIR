@@ -45,14 +45,30 @@
                 "identifier": {
                   "value": "example-practitioner"
                 }
-              }
+              },
+              "collectedDateTime": "2024-08-24T11:00:00+02:00"
             }
           }
         ],
         "identifier": [
           {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
             "system": "https://fhir.acme.org/identifiers/patient",
-            "value": "123456-0_KH"
+            "value": "123456-0_KH",
+            "assigner": {
+              "identifier": {
+                "system": "http://openehr.org/identifier/assigner",
+                "value": "Example Laboratory"
+              },
+              "display": "Example Laboratory"
+            }
           }
         ],
         "status": "completed",

@@ -33,6 +33,7 @@ import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
 import org.hl7.fhir.r4.model.Ratio;
+import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.TimeType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -679,6 +680,8 @@ public class OpenEhrPopulator {
         if (value instanceof Identifier identifier) {
             addToConstructingFlat(path + "|id", identifier.getValue(), flat);
             addToConstructingFlat(path + "|issuer", normalizeIdentifierSystem(identifier.getSystem()), flat);
+            addToConstructingFlat(path + "|type", buildIdentifierTypeString(identifier), flat);
+            addToConstructingFlat(path + "|assigner", buildIdentifierAssignerString(identifier), flat);
             return true;
         } else if (value instanceof StringType identifier) {
             addToConstructingFlat(path + "|id", identifier.getValue(), flat);
@@ -702,6 +705,43 @@ public class OpenEhrPopulator {
             return trimmed;
         }
         return system;
+    }
+
+    private String buildIdentifierTypeString(final Identifier identifier) {
+        if (identifier == null || !identifier.hasType() || !identifier.getType().hasCoding()) {
+            return null;
+        }
+        final Coding coding = identifier.getType().getCodingFirstRep();
+        final String code = coding.getCode();
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+        if (StringUtils.isNotBlank(coding.getSystem())) {
+            return coding.getSystem() + "::" + code;
+        }
+        return code;
+    }
+
+    private String buildIdentifierAssignerString(final Identifier identifier) {
+        if (identifier == null || !identifier.hasAssigner()) {
+            return null;
+        }
+        final Reference assigner = identifier.getAssigner();
+        final String display = assigner.getDisplay();
+        if (!assigner.hasIdentifier()) {
+            return display;
+        }
+        final Identifier assignerIdentifier = assigner.getIdentifier();
+        final String system = assignerIdentifier.getSystem();
+        final String value = assignerIdentifier.getValue();
+        final String chosenValue = StringUtils.isNotBlank(value) ? value : display;
+        if (StringUtils.isBlank(chosenValue)) {
+            return null;
+        }
+        if (StringUtils.isNotBlank(system)) {
+            return system + "::" + chosenValue;
+        }
+        return chosenValue;
     }
 
     private boolean handlePartyIdentifier(final String path, final Base value, final JsonObject flat) {

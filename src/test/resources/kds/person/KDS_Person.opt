@@ -40,7 +40,7 @@
             <keywords>Geburtsname</keywords>
             <keywords>Kontaktdaten</keywords>
             <use>Zur Repräsentation von demografischen Daten und anderen administrativen Informationen zu einer Person, die im Kontext einer Gesundheitseinrichtung relevant sein können. Das Template PERSON ist explizit für PATIENTEN modelliert und zum Zwecke der Führung eines standortübergreifenden Master Patient Index auf der Basis von identifizierenden Daten (IDAT) vorgesehen.</use>
-            <misuse>Nicht in anderen Kontexten außer Gesundheitseinrichtung verwenden. 
+            <misuse>Nicht in anderen Kontexten außer Gesundheitseinrichtung verwenden.
 
 Nicht für die Repräsentation von pseudonymisierten / anonymisierten Patienten verwenden.
 </misuse>
