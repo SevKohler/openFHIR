@@ -49,15 +49,15 @@
                 "strength": {
                   "numerator": {
                     "value": 100.0,
-                    "unit": "milligram",
+                    "unit": "mg",
                     "system": "http://unitsofmeasure.org",
-                    "code": "milligram"
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 1.0,
-                    "unit": "Tablet",
+                    "unit": "10219000",
                     "system": "http://unitsofmeasure.org",
-                    "code": "Tablet"
+                    "code": "10219000"
                   }
                 }
               }

@@ -24,9 +24,9 @@
                 "strength": {
                   "numerator": {
                     "value": 25000.0,
-                    "unit": "IU",
+                    "unit": "[iU]",
                     "system": "http://unitsofmeasure.org",
-                    "code": "IU"
+                    "code": "[iU]"
                   },
                   "denominator": {
                     "value": 5.0,
@@ -99,9 +99,9 @@
           },
           "dose": {
             "value": 5000.0,
-            "unit": "IU",
+            "unit": "[iU]",
             "system": "http://unitsofmeasure.org",
-            "code": "IU"
+            "code": "[iU]"
           }
         }
       }

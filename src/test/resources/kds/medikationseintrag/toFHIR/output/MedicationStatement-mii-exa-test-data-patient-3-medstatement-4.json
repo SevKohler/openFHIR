@@ -40,9 +40,9 @@
                   },
                   "denominator": {
                     "value": 250.0,
-                    "unit": "milliliter",
+                    "unit": "mL",
                     "system": "http://unitsofmeasure.org",
-                    "code": "milliliter"
+                    "code": "mL"
                   }
                 }
               }
@@ -105,9 +105,9 @@
               {
                 "doseQuantity": {
                   "value": 50.0,
-                  "unit": "mg/kilogram",
+                  "unit": "mg/kg",
                   "system": "http://unitsofmeasure.org",
-                  "code": "mg/kilogram"
+                  "code": "mg/kg"
                 }
               }
             ]

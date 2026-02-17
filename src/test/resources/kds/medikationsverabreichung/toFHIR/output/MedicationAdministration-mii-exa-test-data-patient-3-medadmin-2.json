@@ -97,6 +97,20 @@
             ],
             "text": "Intravenous use"
           },
+          "rateRatio": {
+            "numerator": {
+              "system": "http://unitsofmeasure.org",
+              "value": 1000,
+              "code": "mg",
+              "unit": "mg"
+            },
+            "denominator": {
+              "system": "http://unitsofmeasure.org",
+              "value": 46,
+              "code": "h",
+              "unit": "h"
+            }
+          },
           "dose": {
             "value": 1000.0,
             "unit": "mg",

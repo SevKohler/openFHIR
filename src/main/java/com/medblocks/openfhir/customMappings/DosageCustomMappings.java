@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Base;
@@ -35,6 +37,9 @@ public class DosageCustomMappings extends CustomMapping {
             "dosageDurationToAdministrationDuration"
     );
     private static final Set<String> ALLOWED_RATE_UNITS = Set.of("l/h", "ml/h", "ml/s", "ml/min");
+    private static final Pattern ISO_DAY_TIME_DURATION = Pattern.compile(
+            "^P(?:(\\d+(?:\\.\\d+)?)D)?(?:T(?:(\\d+(?:\\.\\d+)?)H)?(?:(\\d+(?:\\.\\d+)?)M)?(?:(\\d+(?:\\.\\d+)?)S)?)?$"
+    );
 
     @Override
     public Set<String> mappingCodes() {
@@ -1463,6 +1468,10 @@ public class DosageCustomMappings extends CustomMapping {
         if (!trimmed.startsWith("P")) {
             return null;
         }
+        DurationParts compoundParts = parseCompoundIsoDuration(trimmed);
+        if (compoundParts != null) {
+            return compoundParts;
+        }
         String val;
         char unitChar = trimmed.charAt(trimmed.length() - 1);
         boolean timeBased = trimmed.startsWith("PT");
@@ -1477,6 +1486,42 @@ public class DosageCustomMappings extends CustomMapping {
             return null;
         }
         return new DurationParts(value, unit);
+    }
+
+    private DurationParts parseCompoundIsoDuration(final String text) {
+        Matcher matcher = ISO_DAY_TIME_DURATION.matcher(text);
+        if (!matcher.matches()) {
+            return null;
+        }
+        Double days = parseDouble(matcher.group(1));
+        Double hours = parseDouble(matcher.group(2));
+        Double minutes = parseDouble(matcher.group(3));
+        Double seconds = parseDouble(matcher.group(4));
+        if (days == null && hours == null && minutes == null && seconds == null) {
+            return null;
+        }
+
+        double d = days == null ? 0d : days;
+        double h = hours == null ? 0d : hours;
+        double m = minutes == null ? 0d : minutes;
+        double s = seconds == null ? 0d : seconds;
+
+        // Preserve day-only durations as days.
+        if (d > 0d && h == 0d && m == 0d && s == 0d) {
+            return new DurationParts(d, Timing.UnitsOfTime.D);
+        }
+
+        double totalSeconds = (d * 86400d) + (h * 3600d) + (m * 60d) + s;
+        if (totalSeconds <= 0d) {
+            return null;
+        }
+        if (totalSeconds >= 3600d) {
+            return new DurationParts(totalSeconds / 3600d, Timing.UnitsOfTime.H);
+        }
+        if (totalSeconds >= 60d) {
+            return new DurationParts(totalSeconds / 60d, Timing.UnitsOfTime.MIN);
+        }
+        return new DurationParts(totalSeconds, Timing.UnitsOfTime.S);
     }
 
     private Timing.UnitsOfTime unitFromIso(char unit, boolean timeBased) {

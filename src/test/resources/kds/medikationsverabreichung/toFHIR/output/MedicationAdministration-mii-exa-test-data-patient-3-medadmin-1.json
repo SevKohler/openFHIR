@@ -24,15 +24,15 @@
                 "strength": {
                   "numerator": {
                     "value": 500.0,
-                    "unit": "milligram",
+                    "unit": "mg",
                     "system": "http://unitsofmeasure.org",
-                    "code": "milligram"
+                    "code": "mg"
                   },
                   "denominator": {
                     "value": 1.0,
-                    "unit": "Film-coated tablet",
+                    "unit": "10221000",
                     "system": "http://unitsofmeasure.org",
-                    "code": "Film-coated tablet"
+                    "code": "10221000"
                   }
                 }
               }

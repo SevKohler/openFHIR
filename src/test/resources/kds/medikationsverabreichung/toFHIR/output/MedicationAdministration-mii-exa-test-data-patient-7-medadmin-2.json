@@ -24,9 +24,9 @@
                 "strength": {
                   "numerator": {
                     "value": 100.0,
-                    "unit": "μg",
+                    "unit": "ug",
                     "system": "http://unitsofmeasure.org",
-                    "code": "μg"
+                    "code": "ug"
                   },
                   "denominator": {
                     "value": 1.0,
@@ -99,9 +99,9 @@
           },
           "dose": {
             "value": 200.0,
-            "unit": "μg",
+            "unit": "ug",
             "system": "http://unitsofmeasure.org",
-            "code": "μg"
+            "code": "ug"
           }
         }
       }

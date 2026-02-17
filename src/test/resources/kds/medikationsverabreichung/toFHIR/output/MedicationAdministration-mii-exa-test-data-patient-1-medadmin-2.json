@@ -108,9 +108,9 @@
           },
           "rateQuantity": {
             "value": 1500.0,
-            "unit": "mg/Stunde",
+            "unit": "mg/h",
             "system": "http://unitsofmeasure.org",
-            "code": "mg/Stunde"
+            "code": "mg/h"
           }
         }
       }
