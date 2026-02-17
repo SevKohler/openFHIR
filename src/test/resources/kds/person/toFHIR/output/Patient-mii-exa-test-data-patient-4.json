@@ -1,0 +1,26 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "gender": "male",
+        "birthDate": "1962-01-01",
+        "address": [
+          {
+            "_city": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                  "valueCode": "masked"
+                }
+              ]
+            },
+            "postalCode": "10"
+          }
+        ]
+      }
+    }
+  ]
+}

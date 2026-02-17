@@ -1,0 +1,47 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "E456789012"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Anna"
+            ]
+          },
+          {
+            "given": [
+              "Anna"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1992-07-15",
+        "address": [
+          {
+            "line": [
+              "Gartenstraße 56"
+            ],
+            "city": "Köln",
+            "postalCode": "50667"
+          }
+        ]
+      }
+    }
+  ]
+}

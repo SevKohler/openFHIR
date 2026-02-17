@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "C200919710"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Maria"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1985-03-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "C200919710"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Sabine",
+              "Maria"
+            ]
+          },
+          {
+            "given": [
+              "Sabine"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1985-03-12",
+        "address": [
+          {
+            "line": [
+              "Kantstraße 47"
+            ],
+            "city": "München",
+            "postalCode": "80636"
+          }
+        ]
+      }
+    }
+  ]
+}

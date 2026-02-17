@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "D345678901"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Michael"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1975-11-08"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "D345678901"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Thomas",
+              "Michael"
+            ]
+          },
+          {
+            "given": [
+              "Thomas"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1975-11-08",
+        "address": [
+          {
+            "line": [
+              "Hauptstraße 134"
+            ],
+            "city": "Hamburg",
+            "postalCode": "20095"
+          }
+        ]
+      }
+    }
+  ]
+}

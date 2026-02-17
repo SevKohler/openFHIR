@@ -1,0 +1,47 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "H789012345"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Markus"
+            ]
+          },
+          {
+            "given": [
+              "Markus"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1969-09-17",
+        "address": [
+          {
+            "line": [
+              "Am Park 12"
+            ],
+            "city": "Frankfurt am Main",
+            "postalCode": "60311"
+          }
+        ]
+      }
+    }
+  ]
+}

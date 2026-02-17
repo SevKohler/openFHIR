@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "A123456780"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Ludwig"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1977-05-24"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "A123456780"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Christian",
+              "Ludwig"
+            ]
+          },
+          {
+            "given": [
+              "Christian"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1977-05-24",
+        "address": [
+          {
+            "line": [
+              "Malchow"
+            ],
+            "city": "Berlin",
+            "postalCode": "13051"
+          }
+        ]
+      }
+    }
+  ]
+}

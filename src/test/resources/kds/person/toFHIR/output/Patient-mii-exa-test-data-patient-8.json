@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "F567890123"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Peter"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1958-02-28"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "F567890123"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Hans",
+              "Peter"
+            ]
+          },
+          {
+            "given": [
+              "Hans"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1958-02-28",
+        "address": [
+          {
+            "line": [
+              "Bahnhofstraße 89"
+            ],
+            "city": "Stuttgart",
+            "postalCode": "70173"
+          }
+        ]
+      }
+    }
+  ]
+}

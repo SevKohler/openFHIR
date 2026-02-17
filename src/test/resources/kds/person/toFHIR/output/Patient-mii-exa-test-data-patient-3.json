@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "Z234567890"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Josephine"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1968-09-13"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "Z234567890"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Clara",
+              "Josephine"
+            ]
+          },
+          {
+            "given": [
+              "Clara"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1968-09-13",
+        "address": [
+          {
+            "line": [
+              "Schöneberger Ufer 22"
+            ],
+            "city": "Berlin",
+            "postalCode": "10785"
+          }
+        ]
+      }
+    }
+  ]
+}

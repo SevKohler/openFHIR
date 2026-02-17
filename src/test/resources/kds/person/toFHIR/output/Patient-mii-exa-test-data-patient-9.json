@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "G678901234"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Elisabeth"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1981-12-03"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                }
+              ]
+            },
+            "system": "http://fhir.de/sid/gkv/kvid-10",
+            "value": "G678901234"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Petra",
+              "Elisabeth"
+            ]
+          },
+          {
+            "given": [
+              "Petra"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1981-12-03",
+        "address": [
+          {
+            "line": [
+              "Müllerstraße 23"
+            ],
+            "city": "Dresden",
+            "postalCode": "01067"
+          }
+        ]
+      }
+    }
+  ]
+}
