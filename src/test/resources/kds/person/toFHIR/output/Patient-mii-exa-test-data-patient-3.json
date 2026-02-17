@@ -26,7 +26,8 @@
           }
         ],
         "gender": "female",
-        "birthDate": "1968-09-13"
+        "birthDate": "1968-09-13",
+        "deceasedBoolean": false
       }
     },
     {
@@ -60,6 +61,7 @@
         ],
         "gender": "female",
         "birthDate": "1968-09-13",
+        "deceasedBoolean": false,
         "address": [
           {
             "line": [

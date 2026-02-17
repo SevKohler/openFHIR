@@ -232,6 +232,8 @@ public class FhirInstancePopulator {
             instantType.setValueAsString(data.getValueAsString());
         } else if (toPopulate instanceof IntegerType integerType) {
             integerType.setValue(Integer.valueOf(data.getValue()));
+        } else if (toPopulate instanceof BooleanType booleanType) {
+            booleanType.setValue(Boolean.valueOf(data.getValue()));
         } else if (toPopulate instanceof PrimitiveType<?> primitiveType) {
             ((PrimitiveType<String>) primitiveType).setValue(data.getValue());
         } else if (toPopulate instanceof XhtmlNode xhtmlNode) {

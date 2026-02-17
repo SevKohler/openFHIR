@@ -26,7 +26,8 @@
           }
         ],
         "gender": "male",
-        "birthDate": "1958-02-28"
+        "birthDate": "1958-02-28",
+        "deceasedBoolean": true
       }
     },
     {
@@ -60,6 +61,7 @@
         ],
         "gender": "male",
         "birthDate": "1958-02-28",
+        "deceasedBoolean": true,
         "address": [
           {
             "line": [

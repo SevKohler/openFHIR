@@ -26,7 +26,8 @@
           }
         ],
         "gender": "female",
-        "birthDate": "1981-12-03"
+        "birthDate": "1981-12-03",
+        "deceasedBoolean": false
       }
     },
     {
@@ -60,6 +61,7 @@
         ],
         "gender": "female",
         "birthDate": "1981-12-03",
+        "deceasedBoolean": false,
         "address": [
           {
             "line": [

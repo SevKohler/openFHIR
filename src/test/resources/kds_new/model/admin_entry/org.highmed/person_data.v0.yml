@@ -31,23 +31,28 @@ mappings:
       openehr: "$archetype/data[at0001]/items[openEHR-EHR-CLUSTER.person.v1]"
     slotArchetype: "CLUSTER.person.v1"
 
+
   - name: "death"
     with:
       fhir: "$resource"
       openehr: "$archetype/data[at0001]/items[at0024]"
-      type: "None"
+      type: "NONE"
     followedBy:
       mappings:
         - name: "deathBoolean"
           with:
-            fhir: "deceased.as(Boolean)"
+            fhir: "deceased.as(BooleanType)"
             openehr: "items[at0025]"
-            
+          openehrCondition:
+            targetRoot: "$openehrRoot"
+            targetAttribute: "items[openEHR-EHR-CLUSTER.death_details.v1]/items[at0001]"
+            operator: "empty"
         - name: "deathTime"
           with:
             fhir: "deceased.as(DateTimeType)"
-            openehr: "items[openEHR-EHR-CLUSTER.death_details.v1]"
+            openehr: "$archetype/data[at0001]/items[at0024]/items[openEHR-EHR-CLUSTER.death_details.v1]"
           slotArchetype: "CLUSTER.death_details.v1"
+
 
   - name: "personBirthDate"
     with:

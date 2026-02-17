@@ -48,7 +48,7 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2026-02-17T15:43:02.333073029+01:00"
+      "value": "2026-02-17T17:43:39.180924624+01:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
@@ -412,7 +412,7 @@
                 },
                 "value": {
                   "_type": "DV_BOOLEAN",
-                  "value": true
+                  "value": false
                 },
                 "archetype_node_id": "at0025"
               }

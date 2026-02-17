@@ -26,7 +26,8 @@
           }
         ],
         "gender": "male",
-        "birthDate": "1977-05-24"
+        "birthDate": "1977-05-24",
+        "deceasedDateTime": "2024-02-22T00:00:00+01:00"
       }
     },
     {
@@ -60,6 +61,7 @@
         ],
         "gender": "male",
         "birthDate": "1977-05-24",
+        "deceasedDateTime": "2024-02-22T00:00:00+01:00",
         "address": [
           {
             "line": [

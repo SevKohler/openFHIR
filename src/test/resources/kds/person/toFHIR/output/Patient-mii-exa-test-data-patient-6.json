@@ -26,7 +26,8 @@
           }
         ],
         "gender": "male",
-        "birthDate": "1975-11-08"
+        "birthDate": "1975-11-08",
+        "deceasedBoolean": false
       }
     },
     {
@@ -60,6 +61,7 @@
         ],
         "gender": "male",
         "birthDate": "1975-11-08",
+        "deceasedBoolean": false,
         "address": [
           {
             "line": [

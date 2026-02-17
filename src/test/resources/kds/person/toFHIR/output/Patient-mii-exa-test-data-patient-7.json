@@ -32,6 +32,7 @@
         ],
         "gender": "female",
         "birthDate": "1992-07-15",
+        "deceasedBoolean": false,
         "address": [
           {
             "line": [

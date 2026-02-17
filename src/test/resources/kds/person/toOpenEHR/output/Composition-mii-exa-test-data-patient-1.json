@@ -48,7 +48,7 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2026-02-17T15:43:02.534245432+01:00"
+      "value": "2026-02-17T17:43:39.34164092+01:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
@@ -429,16 +429,32 @@
             },
             "items": [
               {
-                "_type": "ELEMENT",
+                "_type": "CLUSTER",
                 "name": {
                   "_type": "DV_TEXT",
-                  "value": "Verstorben?"
+                  "value": "Angaben zum Tod"
                 },
-                "value": {
-                  "_type": "DV_BOOLEAN",
-                  "value": true
+                "archetype_details": {
+                  "archetype_id": {
+                    "value": "openEHR-EHR-CLUSTER.death_details.v1"
+                  },
+                  "rm_version": "1.0.4"
                 },
-                "archetype_node_id": "at0025"
+                "items": [
+                  {
+                    "_type": "ELEMENT",
+                    "name": {
+                      "_type": "DV_TEXT",
+                      "value": "Sterbedatum"
+                    },
+                    "value": {
+                      "_type": "DV_DATE_TIME",
+                      "value": "2024-02-22T00:00:00"
+                    },
+                    "archetype_node_id": "at0001"
+                  }
+                ],
+                "archetype_node_id": "openEHR-EHR-CLUSTER.death_details.v1"
               }
             ],
             "archetype_node_id": "at0024"

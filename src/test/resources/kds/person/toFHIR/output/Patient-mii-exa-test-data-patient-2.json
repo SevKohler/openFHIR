@@ -19,7 +19,8 @@
           }
         ],
         "gender": "other",
-        "birthDate": "2000-06-30"
+        "birthDate": "2000-06-30",
+        "deceasedBoolean": true
       }
     }
   ]
