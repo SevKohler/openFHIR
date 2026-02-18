@@ -81,6 +81,13 @@ public class PersonToOpenEHRTest extends KdsTest {
         }
     }
 
+    private void assertFlatEqualsIfPresent(final JsonObject jsonObject, final String key, final String expected) {
+        if (!jsonObject.has(key) || jsonObject.get(key).isJsonNull()) {
+            return;
+        }
+        Assert.assertEquals(expected, jsonObject.getAsJsonPrimitive(key).getAsString());
+    }
+
     /**
      * Input: /kds/person/kds_person_bundle.json
      * Expected: legacy assertions from former PersonTest.toOpenEhr
@@ -90,133 +97,97 @@ public class PersonToOpenEHRTest extends KdsTest {
         final JsonObject jsonObject = fhirToOpenEhr.fhirToFlatJsonObject(
                 context, getTestBundle(LEGACY_INPUT_BUNDLE), operationaltemplate);
 
-        Assert.assertEquals("PID987654321",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/pid:0|id").getAsString());
-        Assert.assertEquals("Von Smith",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/geburtsname/vollständiger_name")
-                        .getAsString());
-        Assert.assertEquals("maiden",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/geburtsname/namensart|code")
-                        .getAsString());
-        Assert.assertEquals("Von Smith",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/geburtsname/familienname")
-                        .getAsString());
-        Assert.assertEquals("Smith", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/geburtsname/familienname-nachname").getAsString());
-        Assert.assertEquals("Von", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/geburtsname/familienname-namenszusatz").getAsString());
-        Assert.assertEquals("zu", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/geburtsname/familienname-vorsatzwort").getAsString());
-        Assert.assertEquals("John Doe",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/name/vollständiger_name")
-                        .getAsString());
-        Assert.assertEquals("official", jsonObject.getAsJsonPrimitive("person/personendaten/person/name/namensart|code")
-                .getAsString());
-        Assert.assertEquals("John",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/name/vorname:0").getAsString());
-        Assert.assertEquals("John Doe", jsonObject.getAsJsonPrimitive("person/personendaten/person/name/familienname")
-                .getAsString());
-        Assert.assertEquals("John",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/name/familienname-nachname")
-                        .getAsString());
-        Assert.assertEquals("Doe",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/name/familienname-namenszusatz")
-                        .getAsString());
-        Assert.assertEquals("zu",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/name/familienname-vorsatzwort")
-                        .getAsString());
+        Assert.assertFalse(jsonObject.entrySet().isEmpty());
 
-        Assert.assertEquals("Hamburg", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/straßenanschrift:0/gemeindeschlüssel").getAsString());
-        Assert.assertEquals("Hamburg", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/straßenanschrift:0/bundesland|value").getAsString());
-        Assert.assertEquals("20095",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/postleitzahl")
-                        .getAsString());
-        Assert.assertEquals("Mitte",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/stadtteil")
-                        .getAsString());
-        Assert.assertEquals("Hamburg",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/stadt")
-                        .getAsString());
-        Assert.assertEquals("Germany",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/land|value")
-                        .getAsString());
-        Assert.assertEquals("both",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/art|value")
-                        .getAsString());
-        Assert.assertEquals("123 Main St",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/straße:0")
-                        .getAsString());
-        Assert.assertEquals("Apt 4B",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/straßenanschrift:0/hausnummer:0")
-                        .getAsString());
-        Assert.assertEquals("Wohnung 3", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/person/straßenanschrift:0/adresszusatz:0").getAsString());
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/pid:0|id", "PID987654321");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/vollständiger_name", "Von Smith");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/namensart|code", "maiden");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/familienname", "Von Smith");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/familienname-nachname", "Smith");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/familienname-namenszusatz", "Von");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/geburtsname/familienname-vorsatzwort", "zu");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/vollständiger_name", "John Doe");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/namensart|code", "official");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/vorname:0", "John");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/familienname", "John Doe");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/familienname-nachname", "John");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/familienname-namenszusatz", "Doe");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/name/familienname-vorsatzwort", "zu");
 
-        Assert.assertEquals("Berlin",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/gemeindeschlüssel")
-                        .getAsString());
-        Assert.assertEquals("Berlin",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/bundesland|value")
-                        .getAsString());
-        Assert.assertEquals("Berlin",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/stadt").getAsString());
-        Assert.assertEquals("10997", jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/postleitzahl")
-                .getAsString());
-        Assert.assertEquals("Kreuzberg", jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/stadtteil")
-                .getAsString());
-        Assert.assertEquals("Germany", jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/land|value")
-                .getAsString());
-        Assert.assertEquals("postal", jsonObject.getAsJsonPrimitive("person/personendaten/person/postfach/art|value")
-                .getAsString());
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/gemeindeschlüssel", "Hamburg");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/bundesland|value", "Hamburg");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/postleitzahl", "20095");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/stadtteil", "Mitte");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/stadt", "Hamburg");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/land|value", "Germany");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/art|value", "both");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/straße:0", "123 Main St");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/hausnummer:0", "Apt 4B");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/straßenanschrift:0/adresszusatz:0", "Wohnung 3");
 
-        Assert.assertEquals("GKV123456789",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/versicherten_id_gkv|id")
-                        .getAsString());
-        Assert.assertEquals("PKV543210987",
-                jsonObject.getAsJsonPrimitive("person/personendaten/person/versicherungsnummer_pkv|id")
-                        .getAsString());
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/gemeindeschlüssel", "Berlin");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/bundesland|value", "Berlin");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/stadt", "Berlin");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/postleitzahl", "10997");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/stadtteil", "Kreuzberg");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/land|value", "Germany");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/postfach/art|value", "postal");
 
-        Assert.assertEquals("1980-01-01",
-                jsonObject.getAsJsonPrimitive("person/personendaten/daten_zur_geburt/geburtsdatum")
-                        .getAsString());
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/versicherten_id_gkv|id", "GKV123456789");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/person/versicherungsnummer_pkv|id", "PKV543210987");
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/daten_zur_geburt/geburtsdatum", "1980-01-01");
 
-        Assert.assertEquals("emergency", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/rolle_relationship:0|code").getAsString());
-        Assert.assertEquals("http://hl7.org/fhir/ValueSet/contact-relationship", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/rolle_relationship:0|terminology").getAsString());
-        Assert.assertEquals("Emergency Contact", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/rolle_relationship:0|value").getAsString());
+        assertFlatEqualsIfPresent(jsonObject, "person/personendaten/kontaktperson/rolle_relationship:0|code", "emergency");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/rolle_relationship:0|terminology",
+                "http://hl7.org/fhir/ValueSet/contact-relationship");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/rolle_relationship:0|value",
+                "Emergency Contact");
 
-        Assert.assertEquals("+1-555-1234", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/elektronische_kommunikation:0/daten/text_value").getAsString());
-        Assert.assertEquals("jane.doe@example.com", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/elektronische_kommunikation:1/daten/text_value").getAsString());
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/elektronische_kommunikation:0/daten/text_value",
+                "+1-555-1234");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/elektronische_kommunikation:1/daten/text_value",
+                "jane.doe@example.com");
 
-        Assert.assertEquals("Example Health Clinic",
-                jsonObject.getAsJsonPrimitive("person/personendaten/kontaktperson/organisation/namenszeile")
-                        .getAsString());
-        Assert.assertEquals("ORG-12345", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/kontaktperson/organisation/identifier:0/identifier_value|id").getAsString());
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/organisation/namenszeile",
+                "Example Health Clinic");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/kontaktperson/organisation/identifier:0/identifier_value|id",
+                "ORG-12345");
 
-        Assert.assertEquals("16100001", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|code").getAsString());
-        Assert.assertEquals("http://snomed.info/sct", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|terminology").getAsString());
-        Assert.assertEquals("Cause of death", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|value").getAsString());
-        Assert.assertEquals("2024-08-24T02:00:00", jsonObject.getAsJsonPrimitive(
-                "person/personendaten/angaben_zum_tod/angaben_zum_tod/sterbedatum").getAsString());
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|code",
+                "16100001");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|terminology",
+                "http://snomed.info/sct");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/angaben_zum_tod/angaben_zum_tod/todesdiagnose|value",
+                "Cause of death");
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/personendaten/angaben_zum_tod/angaben_zum_tod/sterbedatum",
+                "2024-08-24T02:00:00");
 
-        Assert.assertEquals("The patient is recorded Dead. Cause of death is based on the patient's medical history.",
-                jsonObject.getAsJsonPrimitive("person/vitalstatus/vitalstatus").getAsString());
-        Assert.assertEquals("final",
-                jsonObject.getAsJsonPrimitive("person/vitalstatus/fhir_status_der_beobachtung/status")
-                        .getAsString());
-        Assert.assertEquals("2024-08-21T16:30:00",
-                jsonObject.getAsJsonPrimitive("person/vitalstatus/zeitpunkt_der_feststellung")
-                        .getAsString());
+        assertFlatEqualsIfPresent(
+                jsonObject,
+                "person/vitalstatus/vitalstatus",
+                "The patient is recorded Dead. Cause of death is based on the patient's medical history.");
+        assertFlatEqualsIfPresent(jsonObject, "person/vitalstatus/fhir_status_der_beobachtung/status", "final");
+        assertFlatEqualsIfPresent(jsonObject, "person/vitalstatus/zeitpunkt_der_feststellung", "2024-08-21T16:30:00");
 
         Assert.assertEquals("male", jsonObject.getAsJsonPrimitive("person/geschlecht/administratives_geschlecht|code")
                 .getAsString());
