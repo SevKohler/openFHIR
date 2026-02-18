@@ -9,37 +9,13 @@ spec:
   extends: ADMIN_ENTRY.person_data.v0
 
 mappings:
-  - name: "metaURL"
-    extension: "add"
-    unidirectional: "openEHR->fhir"
-    with:
-      fhir: "$resource.meta"
-    manual:
-      - name: "profileUrl"
-        fhir:
-          - path: "profile"
-            value: "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient"
 
-  - name: "pid"
-    extension: "add"
-    with:
-      fhir: "$resource.identifier"
-      openehr: "$composition/context/other_context[at0003]/items[at0004]"
-
-
-  - name: "versicherungsInformationen"
-    extension: "add"
-    with:
-      fhir: "$resource.identifier"
-      openehr: "$composition/content[openEHR-EHR-ADMIN_ENTRY.versicherungsinformationen.v0]"
-    slotArchetype: "ADMIN_ENTRY.versicherungsinformationen.v0"
-
-  - name: "gender"
-    extension: "add"
-    with:
-      fhir: "$resource"
-      openehr: "$composition/content[openEHR-EHR-EVALUATION.gender.v1]"
-    slotArchetype: "EVALUATION.gender.v1"
+#  - name: "gender"
+#    extension: "add"
+#    with:
+#      fhir: "$resource"
+#      openehr: "$composition/content[openEHR-EHR-EVALUATION.gender.v1]"
+#    slotArchetype: "EVALUATION.gender.v1"
 
 #  - name: "identifier"
 #    with:

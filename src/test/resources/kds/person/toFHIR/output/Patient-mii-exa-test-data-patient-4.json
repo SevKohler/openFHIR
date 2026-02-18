@@ -20,7 +20,7 @@
                 }
               ]
             },
-            "system": "https://www.charite.de/fhir/sid/pseudonyme",
+            "system": "http://fhir.de/sid/gkv/kvid-10",
             "value": "CP5712840020128"
           }
         ],

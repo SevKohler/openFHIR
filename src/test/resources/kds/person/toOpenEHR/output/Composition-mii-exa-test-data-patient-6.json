@@ -48,7 +48,7 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2026-02-17T18:57:03.80448539+01:00"
+      "value": "2026-02-18T11:36:00.727138962+01:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
@@ -81,21 +81,6 @@
             "assigner": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier::Charité",
             "id": "456789123",
             "type": "http://terminology.hl7.org/CodeSystem/v2-0203::MR"
-          },
-          "archetype_node_id": "at0004"
-        },
-        {
-          "_type": "ELEMENT",
-          "name": {
-            "_type": "DV_TEXT",
-            "value": "Patient ID"
-          },
-          "value": {
-            "_type": "DV_IDENTIFIER",
-            "issuer": "http://fhir.de/sid/gkv/kvid-10",
-            "assigner": "http://fhir.de/sid/arge-ik/iknr::123456789",
-            "id": "D345678901",
-            "type": "http://fhir.de/CodeSystem/identifier-type-de-basis::KVZ10"
           },
           "archetype_node_id": "at0004"
         }
@@ -213,7 +198,7 @@
                 "_type": "CODE_PHRASE",
                 "terminology_id": {
                   "_type": "TERMINOLOGY_ID",
-                  "value": "ValueSet/$expand?url=http://hl7.org/fhir/ValueSet/administrative-gender"
+                  "value": "ValueSet/$expand?url=http://terminology.hl7.org/ValueSet/v2-0001"
                 },
                 "code_string": "male"
               }

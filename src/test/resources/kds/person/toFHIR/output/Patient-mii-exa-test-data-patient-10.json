@@ -20,7 +20,7 @@
                 }
               ]
             },
-            "system": "https://www.medizininformatik-initiative.de/fhir/sid/patienten",
+            "system": "http://fhir.de/sid/gkv/kvid-10",
             "value": "654987321",
             "assigner": {
               "identifier": {
@@ -34,25 +34,8 @@
             "type": {
               "coding": [
                 {
-                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
-                }
-              ]
-            },
-            "system": "http://fhir.de/sid/gkv/kvid-10",
-            "value": "H789012345",
-            "assigner": {
-              "identifier": {
-                "system": "http://fhir.de/sid/arge-ik/iknr",
-                "value": "456789012"
-              },
-              "display": "456789012"
-            }
-          },
-          {
-            "type": {
-              "coding": [
-                {
-                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+                  "system": "http://fhir.de/CodeSystem/identifier-type-de-basis",
+                  "code": "KVZ10"
                 }
               ]
             },

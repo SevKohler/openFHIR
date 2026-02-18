@@ -298,4 +298,5 @@ public class PersonToOpenEHRTest extends KdsTest {
      */
     @Test
     public void assertToOpenEHR_11() { assertToOpenEHR(10); }
+
 }
