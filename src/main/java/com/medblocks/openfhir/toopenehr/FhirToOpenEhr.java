@@ -1101,7 +1101,7 @@ public class FhirToOpenEhr {
 
         createFollowedByMappings(mapping, openehr, mainOpenEhrPath);
 
-        initialHelper.setOpenEhrPath(openFhirStringUtils.fixOpenEhrPath(openehr, mainOpenEhrPath));
+        initialHelper.setOpenEhrPath(openFhirStringUtils.fixOpenEhrPath(openehr, mainOpenEhrPath, templateId));
         initialHelper.setFhirPath(openFhirStringUtils.fixFhirPath(fhirPath));
 
         initialHelper.setMultiple(multiple);
@@ -1163,7 +1163,7 @@ public class FhirToOpenEhr {
 
             initialHelper.setFhirToOpenEhrHelpers(innerHelpers);
 
-            initialHelper.setOpenEhrPath(openFhirStringUtils.fixOpenEhrPath(openehr, mainOpenEhrPath));
+            initialHelper.setOpenEhrPath(openFhirStringUtils.fixOpenEhrPath(openehr, mainOpenEhrPath, templateId));
             initialHelper.setFhirPath(openFhirStringUtils.fixFhirPath(fhirPath));
 
             fixLimitingCriteriaForInnerCreatedResources(fhirConnectMapper.getFhirConfig().getResource(), initialHelper);
