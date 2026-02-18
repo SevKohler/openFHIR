@@ -10,16 +10,6 @@
             "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient"
           ]
         },
-        "extension": [
-          {
-            "url": null,
-            "extension": [
-              {
-                "url": "http://fhir.de/StructureDefinition/gender-amtlich-de"
-              }
-            ]
-          }
-        ],
         "identifier": [
           {
             "type": {
@@ -60,25 +50,20 @@
             }
           }
         ],
+        "gender": "other",
         "_gender": {
           "extension": [
             {
-              "url": null,
-              "valueCodeableConcept": {
-                "coding": [
-                  {
-                    "system": "http://fhir.de/CodeSystem/gender-amtlich-de",
-                    "code": "D",
-                    "display": "D"
-                  }
-                ],
-                "text": "D"
+              "url": "http://fhir.de/StructureDefinition/gender-amtlich-de",
+              "valueCoding": {
+                "system": "http://fhir.de/CodeSystem/gender-amtlich-de",
+                "code": "D"
               }
             }
           ]
         },
         "birthDate": "2000-06-30",
-        "deceasedBoolean": true
+        "deceasedBoolean": true 
       }
     }
   ]

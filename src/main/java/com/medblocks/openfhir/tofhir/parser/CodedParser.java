@@ -75,6 +75,11 @@ public class CodedParser {
         String system = fhirValueReaders.cleanVersionFromSystem(systemRaw);
         String version = fhirValueReaders.version(systemRaw);
 
+        // Avoid emitting redundant display values when openEHR text equals the code.
+        if (display != null && code != null && display.equals(code)) {
+            display = null;
+        }
+
         Coding coding = new Coding(system, code, display);
         if (version != null) coding.setVersion(version);
 
