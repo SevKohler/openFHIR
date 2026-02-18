@@ -80,7 +80,7 @@
           {
             "resourceType": "Observation",
             "id": "3",
-            "status": "entered-in-error",
+            "status": "final",
             "code": {
               "coding": [
                 {

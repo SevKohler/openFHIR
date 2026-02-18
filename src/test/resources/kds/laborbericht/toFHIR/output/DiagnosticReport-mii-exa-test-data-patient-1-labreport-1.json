@@ -81,7 +81,7 @@
           {
             "resourceType": "Observation",
             "id": "3",
-            "status": "entered-in-error",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -144,6 +144,7 @@
           {
             "resourceType": "Observation",
             "id": "5",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -206,6 +207,7 @@
           {
             "resourceType": "Observation",
             "id": "7",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -268,6 +270,7 @@
           {
             "resourceType": "Observation",
             "id": "9",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -330,6 +333,7 @@
           {
             "resourceType": "Observation",
             "id": "11",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -392,6 +396,7 @@
           {
             "resourceType": "Observation",
             "id": "13",
+            "status": "final",
             "code": {
               "coding": [
                 {

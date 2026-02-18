@@ -199,7 +199,7 @@ mappings:
           - path: "defining_code/code_string"
             value: "at0022"
           - path: "value"
-            value: "Entered in error"
+            value: "entered-in-error"
         fhirCondition:
           targetRoot: "$fhirRoot"
           targetAttribute: "status"
@@ -229,28 +229,6 @@ mappings:
 #          operator: "one of"
 #          criteria: "unknown"
 
-
-      - name: "entered-in-error"
-        fhir:
-          - path: "status"
-            value: "entered-in-error"
-        openehrCondition:
-          targetRoot: "$archetype"
-          targetAttribute: "items[at0005]/defining_code/code_string"
-          operator: "one of"
-          criteria: "at0022"
-        openehr:
-          - path: "defining_code/terminology_id"
-            value: "local"
-          - path: "defining_code/code_string"
-            value: "at0022"
-          - path: "value"
-            value: "Entered in error"
-        fhirCondition:
-          targetRoot: "$fhirRoot"
-          targetAttribute: "status"
-          operator: "one of"
-          criteria: "entered-in-error"
 
   - name: "issued"
     with:

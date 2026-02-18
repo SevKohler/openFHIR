@@ -43,4 +43,3 @@ mappings:
             fhir: "family"
             openehr: "items[at0005]"
             
-

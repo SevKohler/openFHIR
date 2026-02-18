@@ -1704,27 +1704,35 @@ public class OpenEhrToFhir {
             if (StringUtils.isNotEmpty(hardcodedValue) && !joinedEntries.isEmpty()) {
                 values = new ArrayList<>();
                 final Condition openehrCondition = mapping.getOpenehrCondition();
-                final String fullOpenEhrPath;
                 if (openehrCondition == null) {
-                    fullOpenEhrPath = OPENEHR_ARCHETYPE_FC;
+                    int index = getHardcodedIndex(mapping, flatJsonObject);
+                    if (index == -1) {
+                        // get outer most index of all indexes in flatJsonObject that is the same for all entries, because
+                        // while -1 means it has to be for all entries, it more than that means it has to be for all entries
+                        // on the currently evaluated items!
+                        index = openFhirStringUtils.getLastMostCommonIndex(new ArrayList<>(flatJsonObject.keySet()));
+                    }
+                    values.add(new OpenEhrToFhirHelper.DataWithIndex(new StringType(hardcodedValue), index,
+                                                                     OPENEHR_ARCHETYPE_FC));
                 } else {
-                    final List<String> targetAttributes = mapping.getOpenehrCondition().getTargetAttributes();
-                    final String targetRoot = mapping.getOpenehrCondition().getTargetRoot();
-//                    final String rootWithAttrs = targetRoot + ((targetAttributes != null && !targetAttributes.isEmpty()) ? "" : ("/" + targetAttributes.get(0)));
+                    final String targetRoot = openehrCondition.getTargetRoot();
                     final String piped = openFhirStringUtils.addRegexPatternToSimplifiedFlatFormat(targetRoot);
-                    final List<String> allEntriesThatMatch = openFhirStringUtils.getAllEntriesThatMatch(piped,
-                                                                                                        flatJsonObject);
-                    fullOpenEhrPath = allEntriesThatMatch.get(0);
+                    final List<String> allEntriesThatMatch = openFhirStringUtils.getAllEntriesThatMatch(
+                            piped,
+                            flatJsonObject).stream().distinct().toList();
+
+                    for (final String fullOpenEhrPath : allEntriesThatMatch) {
+                        Integer index = openFhirStringUtils.getLastIndex(fullOpenEhrPath);
+                        if (index == null || index == -1) {
+                            index = getHardcodedIndex(mapping, flatJsonObject);
+                        }
+                        if (index == null || index == -1) {
+                            index = openFhirStringUtils.getLastMostCommonIndex(new ArrayList<>(flatJsonObject.keySet()));
+                        }
+                        values.add(new OpenEhrToFhirHelper.DataWithIndex(new StringType(hardcodedValue), index,
+                                                                         fullOpenEhrPath));
+                    }
                 }
-                int index = getHardcodedIndex(mapping, flatJsonObject);
-                if (index == -1) {
-                    // get outer most index of all indexes in flatJsonObject that is the same for all entries, because
-                    // while -1 means it has to be for all entries, it more than that means it has to be for all entries
-                    // on the currently evaluated items!
-                    index = openFhirStringUtils.getLastMostCommonIndex(new ArrayList<>(flatJsonObject.keySet()));
-                }
-                values.add(new OpenEhrToFhirHelper.DataWithIndex(new StringType(hardcodedValue), index,
-                                                                 fullOpenEhrPath));
             }
             else if (mapping.getMappingCode() != null) {
                 CustomMapping customMapping = customMappingRegistry.find(mapping.getMappingCode()).orElse(null);

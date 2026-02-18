@@ -66,6 +66,7 @@
                 "value": "BP_000019"
               }
             ],
+            "status": "available",
             "type": {
               "coding": [
                 {
@@ -95,7 +96,7 @@
           {
             "resourceType": "Observation",
             "id": "4",
-            "status": "entered-in-error",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -153,6 +154,7 @@
           {
             "resourceType": "Observation",
             "id": "6",
+            "status": "final",
             "code": {
               "coding": [
                 {
@@ -210,6 +212,7 @@
           {
             "resourceType": "Observation",
             "id": "8",
+            "status": "final",
             "code": {
               "coding": [
                 {
