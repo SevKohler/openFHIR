@@ -112,7 +112,7 @@ public class OpenEhrConditionEvaluator {
         if (StringUtils.isBlank(mainOpenEhrPath)) {
             return targetRoot.replace(FhirConnectConst.REFERENCE + "/", "");
         }
-        return openFhirStringUtils.fixOpenEhrPath(targetRoot, mainOpenEhrPath);
+        return openFhirStringUtils.fixOpenEhrPath(targetRoot, mainOpenEhrPath, null);
     }
 
     private List<String> getTargetAttributes(final Condition condition) {
