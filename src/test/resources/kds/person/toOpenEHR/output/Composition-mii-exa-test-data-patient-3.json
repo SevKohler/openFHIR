@@ -48,7 +48,7 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2026-02-18T11:35:59.71000558+01:00"
+      "value": "2026-02-18T16:28:36.944901722+01:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
@@ -297,6 +297,58 @@
                       "value": "Josephine"
                     },
                     "archetype_node_id": "at0002"
+                  },
+                  {
+                    "_type": "ELEMENT",
+                    "name": {
+                      "_type": "DV_TEXT",
+                      "value": "Familienname"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "Schumann"
+                    },
+                    "archetype_node_id": "at0005"
+                  },
+                  {
+                    "_type": "ELEMENT",
+                    "name": {
+                      "_type": "DV_TEXT",
+                      "value": "Familienname-Nachname"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "Schumann"
+                    },
+                    "archetype_node_id": "at0005"
+                  }
+                ],
+                "archetype_node_id": "openEHR-EHR-CLUSTER.structured_name.v1"
+              },
+              {
+                "_type": "CLUSTER",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Geburtsname"
+                },
+                "archetype_details": {
+                  "archetype_id": {
+                    "value": "openEHR-EHR-CLUSTER.structured_name.v1"
+                  },
+                  "rm_version": "1.0.4"
+                },
+                "items": [
+                  {
+                    "_type": "ELEMENT",
+                    "name": {
+                      "_type": "DV_TEXT",
+                      "value": "Familienname"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "Wieck"
+                    },
+                    "archetype_node_id": "at0005"
                   }
                 ],
                 "archetype_node_id": "openEHR-EHR-CLUSTER.structured_name.v1"

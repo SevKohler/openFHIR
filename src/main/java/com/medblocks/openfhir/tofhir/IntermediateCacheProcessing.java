@@ -156,19 +156,30 @@ public class IntermediateCacheProcessing {
         if (lastIndex != -1) {
             boolean lastIsDigit = Character.isDigit(preparedParentOpenEhrPath.charAt(preparedParentOpenEhrPath.length() - 1));
             final String openEhrPath = lastIsDigit ? preparedParentOpenEhrPath.substring(0, preparedParentOpenEhrPath.lastIndexOf(":")) : preparedParentOpenEhrPath;
-            // because its a list, we don't want where's (the last one) in there
             final String originalPath = path + "." + hardcodedReturn.getPath();
-            final String lastWhere = openFhirStringUtils.extractWhereCondition(originalPath, true);
-            final String fhirPath = lastWhere != null ? originalPath.replace("." + lastWhere, "") : originalPath;
-            instantiatedIntermediateElements.put(createKeyForIntermediateElements(objectRef, fhirPath,
-                            openEhrPath),
-                    hardcodedReturn.getReturning());
+            final String fhirPath;
+            if (originalPath.contains(".given")) {
+                // Keep full path (including where()) for HumanName.given: removing where() makes the cache resolve
+                // to a previously cached StringType child and overwrites values instead of appending to the list.
+                // This branch is intentionally narrow because changing cache-key normalization globally affects many
+                // other followedBy/list mappings that rely on the current normalization behavior.
+                fhirPath = originalPath;
+            } else {
+                final String lastWhere = openFhirStringUtils.extractWhereCondition(originalPath, true);
+                fhirPath = lastWhere != null ? originalPath.replace("." + lastWhere, "") : originalPath;
+            }
+            final String listCacheKey = createKeyForIntermediateElements(objectRef, fhirPath, openEhrPath);
+            instantiatedIntermediateElements.put(listCacheKey, hardcodedReturn.getReturning());
 
             final List returningList = (List) hardcodedReturn.getReturning();
-            final Object toAddToCache = returningList.get(returningList.size() - 1); // take last one
-            instantiatedIntermediateElements.put(createKeyForIntermediateElements(objectRef, path + "." + hardcodedReturn.getPath(),
-                            preparedParentOpenEhrPath),
-                    toAddToCache);
+            final Object toAddToCache = returningList.get(returningList.size() - 1);
+            final String singleItemCacheKey = createKeyForIntermediateElements(objectRef,
+                    path + "." + hardcodedReturn.getPath(),
+                    preparedParentOpenEhrPath);
+            // Prevent list cache overwrite when both keys normalize to the same value.
+            if (!singleItemCacheKey.equals(listCacheKey)) {
+                instantiatedIntermediateElements.put(singleItemCacheKey, toAddToCache);
+            }
 
         } else {
             // parent is apparently non-repeating; still add the list to parent path just in case
@@ -275,8 +286,9 @@ public class IntermediateCacheProcessing {
                     if (key.startsWith(keyToCheckFor)) {
                         return true;
                     } else if (keyToCheckFor.startsWith(key)) {
+                        final String difference = keyToCheckFor.replace(key, "");
                         // this is also fine, as long as the digit isn't the only difference.
-                        final String isThisDigitOnly = keyToCheckFor.replace(key, "").replace(":", "");
+                        final String isThisDigitOnly = difference.replace(":", "");
                         if (Character.isDigit(isThisDigitOnly.charAt(0)) && !isThisDigitOnly.contains("|")) {
                             return false;
                         }

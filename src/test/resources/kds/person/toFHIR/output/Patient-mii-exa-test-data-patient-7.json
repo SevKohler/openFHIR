@@ -52,9 +52,13 @@
         ],
         "name": [
           {
+            "family": "Hoffmann",
             "given": [
               "Anna"
             ]
+          },
+          {
+            "family": "Schmidt"
           }
         ],
         "gender": "female",

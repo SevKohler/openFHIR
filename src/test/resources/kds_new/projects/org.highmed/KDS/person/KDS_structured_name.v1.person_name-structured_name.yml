@@ -9,11 +9,12 @@ spec:
   extends: CLUSTER.structured_name.v1
 
 mappings:
-  - name: "name.prefix"
+
+  - name: "prefix"
     extension: "overwrite"
     with:
       fhir: "$fhirRoot.prefix.extension"
-      openehr: "$openehrRoot/items[at0006]"
+      openehr: "$archetype/items[at0006]"
     fhirCondition:
       targetRoot: "$fhirRoot.prefix.extension"
       targetAttribute: "url"
@@ -30,11 +31,23 @@ mappings:
                 - path: "url"
                   value: "http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier"
 
-  - name: "appendFamily"
-    extension: "append"
-    appendTo: "name.familyName"
+  - name: "familyName"
+    extension: "overwrite"
+    with:
+      fhir: "$resource.family"
+      openehr: "$archetype"
+      type: "NONE"
     followedBy:
       mappings:
+        - name: "family"
+          with:
+            fhir: "$fhirRoot"
+            openehr: "items[at0005 and name/value='Familienname']"
+          fhirCondition:
+            targetRoot: "$fhirRoot"
+            targetAttribute: "extension"
+            operator: "empty"
+
         - name: "familiennameZusatz"
           with:
             fhir: "extension"
@@ -48,7 +61,7 @@ mappings:
             mappings:
               - name: "staticExtensionUrl"
                 with:
-                  fhir: "extension"
+                  fhir: "$fhirRoot"
                 manual:
                   - name: "staticUrl"
                     fhir:
@@ -69,7 +82,7 @@ mappings:
             mappings:
               - name: "staticExtensionUrl"
                 with:
-                  fhir: "extension"
+                  fhir: "$fhirRoot"
                 manual:
                   - name: "staticUrl"
                     fhir:
@@ -89,11 +102,9 @@ mappings:
             mappings:
               - name: "staticExtensionUrl"
                 with:
-                  fhir: "extension"
+                  fhir: "$fhirRoot"
                 manual:
                   - name: "staticUrl"
                     fhir:
                       - path: "url"
                         value: "http://hl7.org/fhir/StructureDefinition/humanname-own-prefix"
-
-

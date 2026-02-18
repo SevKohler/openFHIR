@@ -52,10 +52,14 @@
         ],
         "name": [
           {
+            "family": "Klein",
             "given": [
               "Petra",
               "Elisabeth"
             ]
+          },
+          {
+            "family": "Fischer"
           }
         ],
         "gender": "female",

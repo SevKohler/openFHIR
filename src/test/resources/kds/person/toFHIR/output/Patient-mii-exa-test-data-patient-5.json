@@ -52,10 +52,14 @@
         ],
         "name": [
           {
+            "family": "Weber",
             "given": [
               "Sabine",
               "Maria"
             ]
+          },
+          {
+            "family": "Müller"
           }
         ],
         "gender": "female",

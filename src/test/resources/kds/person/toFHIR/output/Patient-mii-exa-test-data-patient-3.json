@@ -52,10 +52,22 @@
         ],
         "name": [
           {
+            "family": "Schumann",
+            "_family": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/humanname-own-name",
+                  "valueString": "Schumann"
+                }
+              ]
+            },
             "given": [
               "Clara",
               "Josephine"
             ]
+          },
+          {
+            "family": "Wieck"
           }
         ],
         "gender": "female",

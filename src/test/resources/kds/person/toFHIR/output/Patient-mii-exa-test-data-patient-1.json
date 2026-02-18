@@ -52,6 +52,23 @@
         ],
         "name": [
           {
+            "family": "Markgraf von Brandenburg-Schwedt",
+            "_family": {
+              "extension": [
+                {
+                  "url": "http://fhir.de/StructureDefinition/humanname-namenszusatz",
+                  "valueString": "Markgraf"
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/humanname-own-name",
+                  "valueString": "Brandenburg-Schwedt"
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/humanname-own-prefix",
+                  "valueString": "von"
+                }
+              ]
+            },
             "given": [
               "Christian",
               "Ludwig"
