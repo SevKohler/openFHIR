@@ -19,6 +19,7 @@ mappings:
       fhir: "$resource.date"
       openehr: "$composition/context/start_time"
 
+
   - name: "sectionActiveProblems"
     with:
       fhir: "$resource.section"
@@ -28,9 +29,15 @@ mappings:
         - name: "entry"
           with:
             fhir: "entry.as(Condition)"
-            openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
-            type: "NONE"
-          slotArchetype: "EVALUATION.problem_diagnosis.v1"
+            openehr: "$reference"
+          reference:
+            resourceType: "Condition"
+            mappings:
+              - name: "condition"
+                with:
+                  fhir: "$fhirRoot"
+                  openehr: "$composition/content[openEHR-EHR-EVALUATION.problem_diagnosis.v1]"
+                slotArchetype: "EVALUATION.problem_diagnosis.v1"
         - name: "title"
           with:
             fhir: "$fhirRoot"

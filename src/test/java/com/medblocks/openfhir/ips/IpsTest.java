@@ -54,7 +54,7 @@ public class IpsTest extends GenericTest {
         final BundleEntryComponent firstEntry = bundle.getEntry().get(0);
         assertNotNull("First entry should not be null", firstEntry);
         assertTrue("First entry should be a Composition",
-                   firstEntry.getResource() instanceof org.hl7.fhir.r4.model.Composition);
+                firstEntry.getResource() instanceof org.hl7.fhir.r4.model.Composition);
 
         final org.hl7.fhir.r4.model.Composition compositionResource =
                 (org.hl7.fhir.r4.model.Composition) firstEntry.getResource();
@@ -74,14 +74,14 @@ public class IpsTest extends GenericTest {
         // Assert section code (LOINC)
         assertFalse("Section code should have codings", section.getCode().getCoding().isEmpty());
         assertEquals("Section code system should be LOINC",
-                     "http://loinc.org",
-                     section.getCode().getCodingFirstRep().getSystem());
+                "http://loinc.org",
+                section.getCode().getCodingFirstRep().getSystem());
         assertEquals("Section code should be '11450-4'",
-                     "11450-4",
-                     section.getCode().getCodingFirstRep().getCode());
+                "11450-4",
+                section.getCode().getCodingFirstRep().getCode());
         assertEquals("Section code display should be 'Problem list Reported'",
-                     "Problem list Reported",
-                     section.getCode().getCodingFirstRep().getDisplay());
+                "Problem list Reported",
+                section.getCode().getCodingFirstRep().getDisplay());
 
         // Assert Composition.section.entry points to Condition
         assertNotNull("Section should have entries", section.getEntry());
@@ -93,45 +93,45 @@ public class IpsTest extends GenericTest {
         assertNotNull("Condition should not be null", condition);
         assertNotNull("Condition should have text", condition.getText());
         assertEquals("Condition text status should be 'generated'",
-                     "generated",
-                     condition.getText().getStatusElement().getValueAsString());
+                "generated",
+                condition.getText().getStatusElement().getValueAsString());
 
         // Assert clinical status
         assertNotNull("Condition should have clinicalStatus", condition.getClinicalStatus());
         assertFalse("Condition clinicalStatus should have codings",
-                    condition.getClinicalStatus().getCoding().isEmpty());
+                condition.getClinicalStatus().getCoding().isEmpty());
 
         // Assert verification status
         assertNotNull("Condition should have verificationStatus", condition.getVerificationStatus());
         assertFalse("Condition verificationStatus should have codings",
-                    condition.getVerificationStatus().getCoding().isEmpty());
+                condition.getVerificationStatus().getCoding().isEmpty());
 
         // Assert severity
         assertNotNull("Condition should have severity", condition.getSeverity());
         assertFalse("Condition severity should have codings",
-                    condition.getSeverity().getCoding().isEmpty());
+                condition.getSeverity().getCoding().isEmpty());
 
         // Assert code (diagnosis)
         assertNotNull("Condition should have a code", condition.getCode());
         assertFalse("Condition code should have codings", condition.getCode().getCoding().isEmpty());
         assertEquals("Condition code system should be SNOMED CT",
-                     "http://snomed.info/sct",
-                     condition.getCode().getCodingFirstRep().getSystem());
+                "http://snomed.info/sct",
+                condition.getCode().getCodingFirstRep().getSystem());
         assertEquals("Condition code should be '709044004'",
-                     "709044004",
-                     condition.getCode().getCodingFirstRep().getCode());
+                "709044004",
+                condition.getCode().getCodingFirstRep().getCode());
         assertEquals("Condition code display should be 'Chronic Kidney Disease'",
-                     "Chronic Kidney Disease",
-                     condition.getCode().getCodingFirstRep().getDisplay());
+                "Chronic Kidney Disease",
+                condition.getCode().getCodingFirstRep().getDisplay());
 
         // Assert body site
         assertNotNull("Condition should have bodySite", condition.getBodySite());
         assertFalse("Condition should have at least one bodySite", condition.getBodySite().isEmpty());
         assertFalse("Condition bodySite should have codings",
-                    condition.getBodySiteFirstRep().getCoding().isEmpty());
+                condition.getBodySiteFirstRep().getCoding().isEmpty());
         assertEquals("Body site system should be SNOMED CT",
-                     "http://snomed.info/sct",
-                     condition.getBodySiteFirstRep().getCodingFirstRep().getSystem());
+                "http://snomed.info/sct",
+                condition.getBodySiteFirstRep().getCodingFirstRep().getSystem());
 
         // Assert dates
         assertNotNull("Condition should have onsetDateTime", condition.getOnsetDateTimeType());
