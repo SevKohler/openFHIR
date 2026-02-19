@@ -667,14 +667,10 @@ public class FhirToOpenEhr {
                 continue;
             }
 
-            // Now check the conditions explicitly as separate steps to see which one's evaluating true
             boolean isHardcodingCondition = StringUtils.isNotEmpty(helper.getHardcodingValue());
             boolean isMappingCodeCondition = helper.getMappingCode() != null;
 
-
-            // Original logic but with debug outputs
             if (isHardcodingCondition) {
-                System.out.println("Entering hardcoding branch");
                 log.debug("Hardcoding value {} to path: {}", helper.getHardcodingValue(), thePath);
                 // is it ok we use string type here? could it be something else? probably it could be..
                 openEhrPopulator.setFhirPathValue(thePath, new StringType(helper.getHardcodingValue()),

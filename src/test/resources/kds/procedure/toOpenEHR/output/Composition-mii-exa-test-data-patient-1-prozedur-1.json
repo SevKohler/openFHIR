@@ -147,7 +147,7 @@
       },
       "time": {
         "_type": "DV_DATE_TIME",
-        "value": "2026-02-19T12:46:45.193788884+01:00"
+        "value": "2024-02-20T12:47:00"
       },
       "description": {
         "_type": "ITEM_TREE",
@@ -225,6 +225,18 @@
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.anatomical_location.v1"
+          },
+          {
+            "_type": "ELEMENT",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Enddatum/-uhrzeit"
+            },
+            "value": {
+              "_type": "DV_DATE_TIME",
+              "value": "2024-02-20T12:47:00"
+            },
+            "archetype_node_id": "at0060"
           },
           {
             "_type": "ELEMENT",

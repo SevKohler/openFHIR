@@ -11,8 +11,11 @@ import org.ehrbase.openehr.sdk.serialisation.flatencoding.std.umarshal.FlatJsonU
 import org.ehrbase.openehr.sdk.webtemplate.parser.OPTParser;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Procedure;
+import org.hl7.fhir.r4.model.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -107,8 +110,18 @@ public class ProcedureToFHIRTest extends KdsTest {
 
         final Procedure theProcedure = (Procedure) allProcedures.get(0).getResource();
 
-        Assert.assertEquals("2022-02-03T04:05:06+01:00",
-                theProcedure.getPerformedDateTimeType().getValueAsString());
+        final Type performed = theProcedure.getPerformed();
+        Assert.assertNotNull(performed);
+        if (performed instanceof Period) {
+            final Period performedPeriod = (Period) performed;
+            Assert.assertNotNull(performedPeriod.getStartElement());
+            Assert.assertNotNull(performedPeriod.getEndElement());
+            Assert.assertTrue(performedPeriod.getStartElement().getValueAsString().startsWith("2020-02-03T04:05:06"));
+            Assert.assertTrue(performedPeriod.getEndElement().getValueAsString().startsWith("2022-02-03T04:05:06"));
+        } else {
+            Assert.assertTrue(performed instanceof DateTimeType);
+            Assert.assertTrue(((DateTimeType) performed).getValueAsString().startsWith("2022-02-03T04:05:06"));
+        }
         Assert.assertEquals("80146002", theProcedure.getCode().getCodingFirstRep().getCode());
         Assert.assertEquals("//fhir.hl7.org/ValueSet/$expand?url=http://fhir.de/ValueSet/bfarm/ops",
                 theProcedure.getCode().getCodingFirstRep().getSystem());

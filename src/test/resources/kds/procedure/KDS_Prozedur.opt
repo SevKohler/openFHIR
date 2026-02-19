@@ -27,7 +27,7 @@
         <other_details id="MD5-CAM-1.0.1">105b78a70a1e618d6c7621d58670358f</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">005501C1FA493A4838F5F1121F2870EC</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
-        <other_details id="sem_ver">17.0.0</other_details>
+        <other_details id="sem_ver">18.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <details>
             <language>
@@ -2141,6 +2141,42 @@ In den meisten Fällen wird es sich um eine einzige spezifische Stelle handeln. 
                                                 </item>
                                             </children>
                                         </attributes>
+                                    </children>
+                                </attributes>
+                            </children>
+                            <children xsi:type="C_COMPLEX_OBJECT">
+                                <rm_type_name>ELEMENT</rm_type_name>
+                                <occurrences>
+                                    <lower_included>true</lower_included>
+                                    <upper_included>true</upper_included>
+                                    <lower_unbounded>false</lower_unbounded>
+                                    <upper_unbounded>false</upper_unbounded>
+                                    <lower>0</lower>
+                                    <upper>1</upper>
+                                </occurrences>
+                                <node_id>at0060</node_id>
+                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
+                                    <rm_attribute_name>value</rm_attribute_name>
+                                    <existence>
+                                        <lower_included>true</lower_included>
+                                        <upper_included>true</upper_included>
+                                        <lower_unbounded>false</lower_unbounded>
+                                        <upper_unbounded>false</upper_unbounded>
+                                        <lower>0</lower>
+                                        <upper>1</upper>
+                                    </existence>
+                                    <match_negated>false</match_negated>
+                                    <children xsi:type="C_COMPLEX_OBJECT">
+                                        <rm_type_name>DV_DATE_TIME</rm_type_name>
+                                        <occurrences>
+                                            <lower_included>true</lower_included>
+                                            <upper_included>true</upper_included>
+                                            <lower_unbounded>false</lower_unbounded>
+                                            <upper_unbounded>false</upper_unbounded>
+                                            <lower>1</lower>
+                                            <upper>1</upper>
+                                        </occurrences>
+                                        <node_id></node_id>
                                     </children>
                                 </attributes>
                             </children>

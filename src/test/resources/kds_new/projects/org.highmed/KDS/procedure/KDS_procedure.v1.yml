@@ -76,8 +76,7 @@ mappings:
     extension: "add"
     with:
       fhir: "$resource.extension"
-      openehr: "$composition/context/start_time"
-
+      openehr: "$composition/context/start_time" # should be versioned object submission time.
     fhirCondition:
       targetRoot: "$resource.extension"
       targetAttribute: "url"

@@ -61,41 +61,63 @@ mappings:
 #      fhir: "$resource.performer.actor"
 #      openehr: "$composition/provider"  # reference to party_identified NOT SUPPORTED since 1..1 whole mapping is commented out
 
-  - name: "contextStartTime"
-    with:
-      fhir: "$resource.performed.as(DateTimeType)"
-      openehr: "$composition/context/start_time"
-      
-
-  - name: "performed"
-    with:
-      fhir: "$resource.performed.as(Period)"
-      openehr: "$composition/context"
-      type: "NONE"
-    followedBy:
-      mappings:
-        - name: "contextStart"
-          with:
-            fhir: "start"
-            openehr: "start_time"
-            
-
-        - name: "contextEnd"
-          with:
-            fhir: "end"
-            openehr: "$composition/context/end_time"
-            
-
-  - name: "actionPerformed"
-    with:
-      fhir: "$resource.performed.as(DateTimeType)"
-      openehr: "$archetype/time" # this field is more fiting then start_time thats why it overwrites the initial performed in fhir.
-
-  # reference to party_identified NOT SUPPORTED since 1..1 whole mapping is commented out
+# reference to party_identified NOT SUPPORTED since 1..1 whole mapping is commented out
 #  - name: "composer"
 #    with:
 #      fhir: "$resource.recorder"
 #      openehr: "$composition/composer"
+
+
+
+
+  - name: "effectivePeriodContext"
+    with:
+      fhir: "$resource.performed.as(Period)"
+      openehr: "$composition"
+      type: "NONE"
+    openehrCondition:
+      targetRoot: "$composition/context"
+      targetAttribute: "end_time"
+      operator: "not empty"
+    followedBy:
+      mappings:
+        - name: "period"
+          with:
+            fhir: "end"
+            openehr: "context/end_time"
+
+        - name: "start"
+          with:
+            fhir: "start"
+            openehr: "context/start_time"
+
+        - name: "ending date"
+          unidirectional: "fhir->openEHR"
+          with:
+            fhir: "end"
+            openehr: "$archetype/description[at0001]/items[at0060]"
+
+  - name: "contextStart"
+    with:
+      fhir: "$resource.performed.as(DateTimeType)"
+      openehr: "$composition/context/start_time" # this field is more fiting then start_time thats why it overwrites the initial performed in fhir.
+    openehrCondition:
+      targetRoot: "$composition/context"
+      targetAttribute: "end_time"
+      operator: "empty"
+
+  - name: "actionTimeFromPerformedEnd"
+    unidirectional: "fhir->openEHR"
+    with:
+      fhir: "$resource.performed.as(Period).end"
+      openehr: "$archetype/time"
+
+  - name: "actionPerformed"
+    unidirectional: "fhir->openEHR"
+    with:
+      fhir: "$resource.performed.as(DateTimeType)"
+      openehr: "$archetype/time" # this field is more fiting then start_time thats why it overwrites the initial performed in fhir.
+
 
   - name: "ISMTransition"
     with:
@@ -346,8 +368,3 @@ mappings:
       fhir: "$resource.bodySite"
       openehr: "$archetype/description[at0001]/items[at0063]"
       
-
-  - name: "performedEnd"
-    with:
-      fhir: "$resource.performed.end" # better fiting then performed end from context since this covers all procedures, overwrites performed.end
-      openehr: "$archetype/description[at0001]/items[at0060]"

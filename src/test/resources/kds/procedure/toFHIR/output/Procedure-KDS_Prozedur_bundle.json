@@ -49,6 +49,16 @@
         "code": {
           "coding": [
             {
+              "extension": [
+                {
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
+                  "valueCoding": {
+                    "system": "https://fhir.kbv.de/ValueSet/KBV_VS_SFHIR_ICD_SEITENLOKALISATION",
+                    "code": "B",
+                    "display": "beiderseits"
+                  }
+                }
+              ],
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
               "version": "20200131",
               "code": "5-470",
