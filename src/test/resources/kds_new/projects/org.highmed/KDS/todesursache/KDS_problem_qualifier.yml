@@ -13,6 +13,6 @@ mappings:
     extension: "add"
     with:
       fhir: "$resource.clinicalStatus"
-      openehr: "$archetype/items[at0003]" #/data[at0001]/items[at0073]
-      
+      openehr: "$archetype/items[at0003]"
+
 
