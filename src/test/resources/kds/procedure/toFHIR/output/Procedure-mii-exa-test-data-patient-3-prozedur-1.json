@@ -36,7 +36,10 @@
             "valueDateTime": "2022-03-15T08:30:00+01:00"
           }
         ],
-        "status": "unknown",
+        "status": "not-done",
+        "statusReason": {
+          "text": "expired"
+        },
         "category": {
           "coding": [
             {

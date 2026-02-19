@@ -36,7 +36,10 @@
             "valueDateTime": "2023-07-13T09:00:00+02:00"
           }
         ],
-        "status": "unknown",
+        "status": "not-done",
+        "statusReason": {
+          "text": "expired"
+        },
         "category": {
           "coding": [
             {
