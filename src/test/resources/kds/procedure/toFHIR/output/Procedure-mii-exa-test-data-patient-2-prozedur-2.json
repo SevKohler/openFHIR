@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "182810003",
+              "display": "182810003"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2024",
-              "code": "8-930",
-              "display": "8-930"
+              "code": "8-930"
             }
-          ]
+          ],
+          "text": "182810003"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:57+01:00",
+        "performedDateTime": "2026-02-19T12:46:44+01:00",
         "bodySite": [
           {
             "coding": [

@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "41339005",
+              "display": "41339005"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2023",
-              "code": "8-837.m0",
-              "display": "8-837.m0"
+              "code": "8-837.m0"
             }
-          ]
+          ],
+          "text": "41339005"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:56+01:00",
+        "performedDateTime": "2026-02-19T12:46:43+01:00",
         "bodySite": [
           {
             "coding": [

@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "281790008",
+              "display": "281790008"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2024",
-              "code": "6-00g.33",
-              "display": "6-00g.33"
+              "code": "6-00g.33"
             }
-          ]
+          ],
+          "text": "281790008"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:57+01:00",
+        "performedDateTime": "2026-02-19T12:46:44+01:00",
         "bodySite": [
           {
             "coding": [

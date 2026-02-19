@@ -102,67 +102,21 @@ mappings:
     slotArchetype: "CLUSTER.anatomical_location.v1"
 
 
-#  - name: "nameStein"
-#    extension: "append"
-#    appendTo: "name"
-#    followedBy:
-#      mappings:
-#        - name: "nameSeitenl"
-#          unidirectional: "openEHR->fhir"
-#          with:
-#            fhir: "coding"
-#            openehr: "$archetype/description[at0001]/items[openEHR-EHR-CLUSTER.anatomical_location.v1]/items[at0002]"
-#            type: "NONE"
-#          openehrCondition:
-#            targetRoot: "defining_code"
-#            targetAttribute: "terminology_id/value"
-#            operator: "one of"
-#            criterias:
-#              - "http://fhir.de/CodeSystem/bfarm/ops"
-#              - "http://fhir.de/CodeSystem/bfarm/ops (2024)"
-#          followedBy:
-#            mappings:
-#              - name: "seitenlokalisationExtension"
-#                with:
-#                  fhir: "extension"
-#                  openehr: "$openehrRoot"
-#                  type: "NONE"
-#                followedBy:
-#                  mappings:
-#                    - name: "seitenlokalisationValue"
-#                      with:
-#                        fhir: "value.as(Coding)"
-#                        openehr: "$openehrRoot"
-#                    - name: "seitenlokalisationUrl"
-#                      with:
-#                        fhir: "$fhirRoot"
-#                      manual:
-#                        - name: "staticUrl"
-#                          fhir:
-#                            - path: "url"
-#                              value: "http://fhir.de/StructureDefinition/seitenlokalisation"
-
-
-  - name: "name"
-    extension: "overwrite"
-    with:
-      fhir: "$resource.code"
-      openehr: "$archetype/description[at0001]/items[at0002]"
+  - name: "bfarm"
+    extension: "append"
+    appendTo: "name"
     followedBy:
       mappings:
-        - name: "nameSeitenl"
-          unidirectional: "openEHR->fhir"
+        - name: "codingBfarm"
           with:
             fhir: "coding"
-            openehr: "$archetype/description[at0001]/items[openEHR-EHR-CLUSTER.anatomical_location.v1]/items[at0002]"
+            openehr: "$archetype"
             type: "NONE"
-          openehrCondition:
-            targetRoot: "defining_code"
-            targetAttribute: "terminology_id/value"
+          fhirCondition:
+            targetRoot: "coding"
+            targetAttribute: "system"
             operator: "one of"
-            criterias:
-              - "http://fhir.de/CodeSystem/bfarm/ops"
-              - "http://fhir.de/CodeSystem/bfarm/ops (2024)"
+            criteria: "http://fhir.de/CodeSystem/bfarm/ops"
           followedBy:
             mappings:
               - name: "seitenlokalisationExtension"
@@ -175,7 +129,7 @@ mappings:
                     - name: "seitenlokalisationValue"
                       with:
                         fhir: "value.as(Coding)"
-                        openehr: "$openehrRoot"
+                        openehr: "description[at0001]/items[openEHR-EHR-CLUSTER.anatomical_location.v1]/items[at0002]"
                     - name: "seitenlokalisationUrl"
                       with:
                         fhir: "$fhirRoot"
@@ -184,4 +138,3 @@ mappings:
                           fhir:
                             - path: "url"
                               value: "http://fhir.de/StructureDefinition/seitenlokalisation"
-

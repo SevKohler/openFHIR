@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "83985009",
+              "display": "83985009"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2020",
-              "code": "5-437.11",
-              "display": "5-437.11"
+              "code": "5-437.11"
             }
-          ]
+          ],
+          "text": "83985009"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:57+01:00",
+        "performedDateTime": "2026-02-19T12:46:44+01:00",
         "bodySite": [
           {
             "coding": [

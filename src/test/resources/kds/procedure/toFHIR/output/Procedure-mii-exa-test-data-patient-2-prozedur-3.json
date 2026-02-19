@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "182836005",
+              "display": "182836005"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2024",
-              "code": "8-800.61",
-              "display": "8-800.61"
+              "code": "8-800.61"
             }
-          ]
+          ],
+          "text": "182836005"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:58+01:00",
+        "performedDateTime": "2026-02-19T12:46:45+01:00",
         "bodySite": [
           {
             "coding": [

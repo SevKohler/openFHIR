@@ -46,6 +46,11 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "code": "726428009",
+              "version": "http://snomed.info/sct/900000000000207008/version/20230731"
+            },
+            {
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",

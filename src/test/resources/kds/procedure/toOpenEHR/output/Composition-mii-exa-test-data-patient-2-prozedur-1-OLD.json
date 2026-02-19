@@ -48,7 +48,11 @@
     "_type": "EVENT_CONTEXT",
     "start_time": {
       "_type": "DV_DATE_TIME",
-      "value": "2019-05-15T16:30:00"
+      "value": "2024-03-05T08:00:00"
+    },
+    "end_time": {
+      "_type": "DV_DATE_TIME",
+      "value": "2024-03-05T12:30:00"
     },
     "setting": {
       "_type": "DV_CODED_TEXT",
@@ -90,14 +94,14 @@
               },
               "value": {
                 "_type": "DV_CODED_TEXT",
-                "value": "MII_0000011",
+                "value": "MII_0000004",
                 "defining_code": {
                   "_type": "CODE_PHRASE",
                   "terminology_id": {
                     "_type": "TERMINOLOGY_ID",
                     "value": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern"
                   },
-                  "code_string": "MII_0000011"
+                  "code_string": "MII_0000004"
                 }
               },
               "archetype_node_id": "at0001"
@@ -143,7 +147,7 @@
       },
       "time": {
         "_type": "DV_DATE_TIME",
-        "value": "2019-05-15T16:30:00"
+        "value": "2026-02-19T12:46:43.859082311+01:00"
       },
       "description": {
         "_type": "ITEM_TREE",
@@ -160,7 +164,7 @@
             },
             "value": {
               "_type": "DV_CODED_TEXT",
-              "value": "169066007",
+              "value": "726428009",
               "mappings": [
                 {
                   "_type": "TERM_MAPPING",
@@ -169,9 +173,9 @@
                     "_type": "CODE_PHRASE",
                     "terminology_id": {
                       "_type": "TERMINOLOGY_ID",
-                      "value": "http://fhir.de/CodeSystem/bfarm/ops (2019)"
+                      "value": "http://fhir.de/CodeSystem/bfarm/ops (2024)"
                     },
-                    "code_string": "3-200"
+                    "code_string": "5-322.d1"
                   }
                 }
               ],
@@ -181,7 +185,7 @@
                   "_type": "TERMINOLOGY_ID",
                   "value": "http://snomed.info/sct (20230731)"
                 },
-                "code_string": "169066007"
+                "code_string": "726428009"
               }
             },
             "archetype_node_id": "at0002"
@@ -207,17 +211,37 @@
                 },
                 "value": {
                   "_type": "DV_CODED_TEXT",
-                  "value": "89546000",
+                  "value": "39607008",
                   "defining_code": {
                     "_type": "CODE_PHRASE",
                     "terminology_id": {
                       "_type": "TERMINOLOGY_ID",
                       "value": "http://snomed.info/sct (20230731)"
                     },
-                    "code_string": "89546000"
+                    "code_string": "39607008"
                   }
                 },
                 "archetype_node_id": "at0001"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Lateralität"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "R",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION"
+                    },
+                    "code_string": "R"
+                  }
+                },
+                "archetype_node_id": "at0002"
               }
             ],
             "archetype_node_id": "openEHR-EHR-CLUSTER.anatomical_location.v1"
@@ -230,14 +254,14 @@
             },
             "value": {
               "_type": "DV_CODED_TEXT",
-              "value": "165197003",
+              "value": "387713003",
               "defining_code": {
                 "_type": "CODE_PHRASE",
                 "terminology_id": {
                   "_type": "TERMINOLOGY_ID",
                   "value": "http://snomed.info/sct (20230731)"
                 },
-                "code_string": "165197003"
+                "code_string": "387713003"
               }
             },
             "archetype_node_id": "at0067"
@@ -250,14 +274,14 @@
             },
             "value": {
               "_type": "DV_CODED_TEXT",
-              "value": "Diagnostic intent",
+              "value": "Therapeutic",
               "defining_code": {
                 "_type": "CODE_PHRASE",
                 "terminology_id": {
                   "_type": "TERMINOLOGY_ID",
                   "value": "http://snomed.info/sct (20230731)"
                 },
-                "code_string": "261004008"
+                "code_string": "262202000"
               }
             },
             "archetype_node_id": "at0014"
@@ -270,7 +294,7 @@
             },
             "value": {
               "_type": "DV_TEXT",
-              "value": "Kraniale CT zum Ausschluss struktureller Ursachen der Kopfschmerzen"
+              "value": "Thorakotomie mit Lobektomie des rechten Oberlappens bei Lungenkarzinom"
             },
             "archetype_node_id": "at0005"
           }

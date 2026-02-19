@@ -147,7 +147,7 @@
       },
       "time": {
         "_type": "DV_DATE_TIME",
-        "value": "2026-02-18T20:21:57.87853926+01:00"
+        "value": "2026-02-19T12:46:44.824411879+01:00"
       },
       "description": {
         "_type": "ITEM_TREE",
@@ -164,37 +164,67 @@
             },
             "value": {
               "_type": "DV_CODED_TEXT",
-              "value": "5-485.02",
-              "defining_code": {
-                "_type": "CODE_PHRASE",
-                "terminology_id": {
-                  "_type": "TERMINOLOGY_ID",
-                  "value": "http://fhir.de/CodeSystem/bfarm/ops (2022)"
-                },
-                "code_string": "5-485.02"
-              }
-            },
-            "archetype_node_id": "at0002"
-          },
-          {
-            "_type": "ELEMENT",
-            "name": {
-              "_type": "DV_TEXT",
-              "value": "Körperstelle"
-            },
-            "value": {
-              "_type": "DV_CODED_TEXT",
-              "value": "34402009",
+              "value": "265414003",
+              "mappings": [
+                {
+                  "_type": "TERM_MAPPING",
+                  "match": "?",
+                  "target": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://fhir.de/CodeSystem/bfarm/ops (2022)"
+                    },
+                    "code_string": "5-485.02"
+                  }
+                }
+              ],
               "defining_code": {
                 "_type": "CODE_PHRASE",
                 "terminology_id": {
                   "_type": "TERMINOLOGY_ID",
                   "value": "http://snomed.info/sct (20230731)"
                 },
-                "code_string": "34402009"
+                "code_string": "265414003"
               }
             },
-            "archetype_node_id": "at0063"
+            "archetype_node_id": "at0002"
+          },
+          {
+            "_type": "CLUSTER",
+            "name": {
+              "_type": "DV_TEXT",
+              "value": "Anatomische Lokalisation"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.anatomical_location.v1"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Name der Körperstelle"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "34402009",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://snomed.info/sct (20230731)"
+                    },
+                    "code_string": "34402009"
+                  }
+                },
+                "archetype_node_id": "at0001"
+              }
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.anatomical_location.v1"
           },
           {
             "_type": "ELEMENT",

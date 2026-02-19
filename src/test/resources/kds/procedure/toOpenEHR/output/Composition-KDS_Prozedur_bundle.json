@@ -160,7 +160,22 @@
             },
             "value": {
               "_type": "DV_CODED_TEXT",
-              "value": "Interventional neurovascular procedures,",
+              "value": "Appendectomy",
+              "mappings": [
+                {
+                  "_type": "TERM_MAPPING",
+                  "match": "?",
+                  "target": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://snomed.info/sct (20200131)"
+                    },
+                    "code_string": "80146002",
+                    "preferred_term": "Appendectomy"
+                  }
+                }
+              ],
               "defining_code": {
                 "_type": "CODE_PHRASE",
                 "terminology_id": {
@@ -173,24 +188,60 @@
             "archetype_node_id": "at0002"
           },
           {
-            "_type": "ELEMENT",
+            "_type": "CLUSTER",
             "name": {
               "_type": "DV_TEXT",
-              "value": "Körperstelle"
+              "value": "Anatomische Lokalisation"
             },
-            "value": {
-              "_type": "DV_CODED_TEXT",
-              "value": "Abdomen",
-              "defining_code": {
-                "_type": "CODE_PHRASE",
-                "terminology_id": {
-                  "_type": "TERMINOLOGY_ID",
-                  "value": "http://snomed.info/sct"
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.anatomical_location.v1"
+              },
+              "rm_version": "1.0.4"
+            },
+            "items": [
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Name der Körperstelle"
                 },
-                "code_string": "818981001"
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "Abdomen",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "http://snomed.info/sct"
+                    },
+                    "code_string": "818981001"
+                  }
+                },
+                "archetype_node_id": "at0001"
+              },
+              {
+                "_type": "ELEMENT",
+                "name": {
+                  "_type": "DV_TEXT",
+                  "value": "Lateralität"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "beiderseits",
+                  "defining_code": {
+                    "_type": "CODE_PHRASE",
+                    "terminology_id": {
+                      "_type": "TERMINOLOGY_ID",
+                      "value": "https://fhir.kbv.de/ValueSet/KBV_VS_SFHIR_ICD_SEITENLOKALISATION"
+                    },
+                    "code_string": "B"
+                  }
+                },
+                "archetype_node_id": "at0002"
               }
-            },
-            "archetype_node_id": "at0063"
+            ],
+            "archetype_node_id": "openEHR-EHR-CLUSTER.anatomical_location.v1"
           },
           {
             "_type": "ELEMENT",

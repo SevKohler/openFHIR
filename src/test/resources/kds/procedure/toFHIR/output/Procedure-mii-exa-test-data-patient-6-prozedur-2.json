@@ -51,12 +51,17 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "408652004",
+              "display": "408652004"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2022",
-              "code": "1-760",
-              "display": "1-760"
+              "code": "1-760"
             }
-          ]
+          ],
+          "text": "408652004"
         },
         "encounter": {
           "reference": "#1"

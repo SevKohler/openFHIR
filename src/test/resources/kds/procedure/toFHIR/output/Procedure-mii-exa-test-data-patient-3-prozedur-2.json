@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "265414003",
+              "display": "265414003"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2022",
-              "code": "5-485.02",
-              "display": "5-485.02"
+              "code": "5-485.02"
             }
-          ]
+          ],
+          "text": "265414003"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:57+01:00",
+        "performedDateTime": "2026-02-19T12:46:44+01:00",
         "bodySite": [
           {
             "coding": [

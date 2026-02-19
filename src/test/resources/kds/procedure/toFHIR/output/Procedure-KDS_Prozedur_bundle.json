@@ -52,9 +52,15 @@
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
               "version": "20200131",
               "code": "5-470",
-              "display": "Interventional neurovascular procedures,"
+              "display": "Appendectomy"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "80146002",
+              "display": "Appendectomy"
             }
-          ]
+          ],
+          "text": "Appendectomy"
         },
         "encounter": {
           "reference": "#1"

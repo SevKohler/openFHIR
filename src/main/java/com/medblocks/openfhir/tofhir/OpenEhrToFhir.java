@@ -1086,6 +1086,10 @@ public class OpenEhrToFhir {
 
             if (!isSupportedFhirConditionForToFhir(mapping.getFhirCondition(), mapping)
                     || !isSupportedOpenEhrConditionForToFhir(mapping.getOpenehrCondition(), mapping)) {
+                log.debug("Skipping mapping '{}' because condition type is not supported for toFHIR. fhirCondition={}, openEhrCondition={}",
+                          mapping.getName(),
+                          mapping.getFhirCondition(),
+                          mapping.getOpenehrCondition());
                 continue;
             }
             final String definedMappingWithOpenEhr = with.getOpenehr();
@@ -1113,6 +1117,22 @@ public class OpenEhrToFhir {
             }
             final Condition openEhrCondition = mapping.getOpenehrCondition();
             prepareOpenEhrCondition(openEhrCondition, firstFlatPath, webTemplate);
+            if (openEhrCondition != null) {
+                log.debug("Prepared openEHR condition for mapping '{}': operator='{}', targetRoot='{}', targetAttribute='{}', targetAttributes={}, criteria={}",
+                          mapping.getName(),
+                          openEhrCondition.getOperator(),
+                          openEhrCondition.getTargetRoot(),
+                          openEhrCondition.getTargetAttribute(),
+                          openEhrCondition.getTargetAttributes(),
+                          openEhrCondition.getCriteria());
+                if ("nameSeitenl".equals(mapping.getName())) {
+                    log.info("[nameSeitenl] Prepared condition: operator='{}', targetRoot='{}', targetAttribute='{}', criteria={}",
+                             openEhrCondition.getOperator(),
+                             openEhrCondition.getTargetRoot(),
+                             openEhrCondition.getTargetAttribute(),
+                             openEhrCondition.getCriteria());
+                }
+            }
 
             final JsonObject flatJsonObject = openEhrConditionEvaluator.splitByOpenEhrCondition(originalFlatJsonObject,
                                                                                                 openEhrCondition,
@@ -1126,6 +1146,14 @@ public class OpenEhrToFhir {
                     ratioToDosageAction && (flatJsonObject == null || flatJsonObject.size() == 0)
                             ? originalFlatJsonObject
                             : flatJsonObject;
+            log.debug("Mapping '{}' extraction context resolved. ratioToDosageAction={}, conditionFilteredSize={}, extractionSize={}",
+                      mapping.getName(),
+                      ratioToDosageAction,
+                      flatJsonObject == null ? -1 : flatJsonObject.size(),
+                      extractionJsonObject == null ? -1 : extractionJsonObject.size());
+            if ("nameSeitenl".equals(mapping.getName())) {
+                log.info("[nameSeitenl] extractionJsonObject size={}", extractionJsonObject == null ? -1 : extractionJsonObject.size());
+            }
 
             final String rmType = getRmType(openehrAqlPath, mapping, webTemplate);
 
@@ -1292,6 +1320,19 @@ public class OpenEhrToFhir {
                                       final boolean possibleRecursion) {
         String openEhrPath = null;
         List<OpenEhrToFhirHelper.DataWithIndex> values = extractValues(mapping, joinedEntries, rmType, flatJsonObject, hardcodedValue, resourceType, fhirPath);
+        log.debug("handleRegularMapping '{}' extracted {} values for openehr='{}' and fhir='{}'",
+                  mapping.getName(),
+                  values == null ? 0 : values.size(),
+                  openehr,
+                  fhirPath);
+        if ("nameSeitenl".equals(mapping.getName()) || "seitenlokalisationExtension".equals(mapping.getName())
+                || "seitenlokalisationValue".equals(mapping.getName())) {
+            log.info("[{}] values={}, openehr='{}', fhir='{}'",
+                     mapping.getName(),
+                     values == null ? 0 : values.size(),
+                     openehr,
+                     fhirPath);
+        }
 //        if(values != null && openehr.equals(parentFollowedByOpenEhr) && rmType!=null  ){
 //           values.clear();
 //        }
@@ -1401,6 +1442,11 @@ public class OpenEhrToFhir {
 
         if (mapping.getFollowedBy() != null) {
             final List<Mapping> followedByMappings = mapping.getFollowedBy().getMappings();
+            log.debug("Mapping '{}' enters followedBy with {} child mappings. parentFHIR='{}', parentOpenEHR='{}'",
+                      mapping.getName(),
+                      followedByMappings == null ? 0 : followedByMappings.size(),
+                      fhirPath,
+                      definedMappingWithOpenEhr);
 
             openFhirMapperUtils.prepareFollowedByMappings(followedByMappings,
                                                           fhirPath,
@@ -1424,6 +1470,8 @@ public class OpenEhrToFhir {
                                         slotContext,
                                         possibleRecursion,
                                         false);
+        } else {
+            log.debug("Mapping '{}' has no followedBy block to process.", mapping.getName());
         }
     }
 

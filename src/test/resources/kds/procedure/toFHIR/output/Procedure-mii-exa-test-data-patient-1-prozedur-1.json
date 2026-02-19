@@ -51,17 +51,22 @@
         "code": {
           "coding": [
             {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "726427004",
+              "display": "726427004"
+            },
+            {
               "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2023",
-              "code": "5-323.51",
-              "display": "5-323.51"
+              "code": "5-323.51"
             }
-          ]
+          ],
+          "text": "726427004"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-18T20:21:58+01:00",
+        "performedDateTime": "2026-02-19T12:46:45+01:00",
         "bodySite": [
           {
             "coding": [
