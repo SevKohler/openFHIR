@@ -1,0 +1,86 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "contained": [
+          {
+            "resourceType": "Encounter",
+            "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000011"
+              },
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000011"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Durchfuehrungsabsicht",
+            "valueCoding": {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "261004008",
+              "display": "Diagnostic intent"
+            }
+          },
+          {
+            "url": "http://fhir.de/StructureDefinition/ProzedurDokumentationsdatum",
+            "valueDateTime": "2019-05-15T16:30:00+02:00"
+          }
+        ],
+        "status": "unknown",
+        "category": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "165197003",
+              "display": "165197003"
+            }
+          ],
+          "text": "165197003"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/ops",
+              "version": "2019",
+              "code": "3-200",
+              "display": "3-200"
+            }
+          ]
+        },
+        "encounter": {
+          "reference": "#1"
+        },
+        "performedDateTime": "2019-05-15T16:30:00+02:00",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "version": "20230731",
+                "code": "89546000",
+                "display": "89546000"
+              }
+            ],
+            "text": "89546000"
+          }
+        ],
+        "note": [
+          {
+            "text": "Kraniale CT zum Ausschluss struktureller Ursachen der Kopfschmerzen"
+          }
+        ]
+      }
+    }
+  ]
+}

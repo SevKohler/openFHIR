@@ -1,0 +1,86 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "contained": [
+          {
+            "resourceType": "Encounter",
+            "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000001"
+              },
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000001"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Durchfuehrungsabsicht",
+            "valueCoding": {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "262202000",
+              "display": "262202000"
+            }
+          },
+          {
+            "url": "http://fhir.de/StructureDefinition/ProzedurDokumentationsdatum",
+            "valueDateTime": "2024-02-16T10:20:00+01:00"
+          }
+        ],
+        "status": "unknown",
+        "category": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "18629005",
+              "display": "18629005"
+            }
+          ],
+          "text": "18629005"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/ops",
+              "version": "2024",
+              "code": "6-00g.33",
+              "display": "6-00g.33"
+            }
+          ]
+        },
+        "encounter": {
+          "reference": "#1"
+        },
+        "performedDateTime": "2026-02-18T20:21:57+01:00",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "version": "20230731",
+                "code": "789218009",
+                "display": "789218009"
+              }
+            ],
+            "text": "789218009"
+          }
+        ],
+        "note": [
+          {
+            "text": "Dalbavancin parenteral"
+          }
+        ]
+      }
+    }
+  ]
+}

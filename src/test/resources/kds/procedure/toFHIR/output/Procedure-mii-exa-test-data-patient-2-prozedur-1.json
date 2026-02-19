@@ -1,0 +1,86 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "contained": [
+          {
+            "resourceType": "Encounter",
+            "id": "1",
+            "identifier": [
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000004"
+              },
+              {
+                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
+                "value": "MII_0000004"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Durchfuehrungsabsicht",
+            "valueCoding": {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "262202000",
+              "display": "Therapeutic"
+            }
+          },
+          {
+            "url": "http://fhir.de/StructureDefinition/ProzedurDokumentationsdatum",
+            "valueDateTime": "2024-03-05T08:00:00+01:00"
+          }
+        ],
+        "status": "unknown",
+        "category": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "387713003",
+              "display": "387713003"
+            }
+          ],
+          "text": "387713003"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/ops",
+              "version": "2024",
+              "code": "5-322.d1",
+              "display": "5-322.d1"
+            }
+          ]
+        },
+        "encounter": {
+          "reference": "#1"
+        },
+        "performedDateTime": "2026-02-18T20:21:58+01:00",
+        "bodySite": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "version": "20230731",
+                "code": "39607008",
+                "display": "39607008"
+              }
+            ],
+            "text": "39607008"
+          }
+        ],
+        "note": [
+          {
+            "text": "Thorakotomie mit Lobektomie des rechten Oberlappens bei Lungenkarzinom"
+          }
+        ]
+      }
+    }
+  ]
+}
