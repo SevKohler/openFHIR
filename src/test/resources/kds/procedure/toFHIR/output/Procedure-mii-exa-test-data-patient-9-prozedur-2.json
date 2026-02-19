@@ -36,7 +36,7 @@
             "valueDateTime": "2024-02-23T10:30:00+01:00"
           }
         ],
-        "status": "not-done",
+        "status": "completed",
         "statusReason": {
           "text": "expired"
         },

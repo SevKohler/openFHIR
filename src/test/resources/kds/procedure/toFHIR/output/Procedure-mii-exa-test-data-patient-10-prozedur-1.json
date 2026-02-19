@@ -36,7 +36,7 @@
             "valueDateTime": "2019-05-15T16:30:00+02:00"
           }
         ],
-        "status": "not-done",
+        "status": "completed",
         "statusReason": {
           "text": "expired"
         },

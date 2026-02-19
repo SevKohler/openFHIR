@@ -37,6 +37,9 @@
           }
         ],
         "status": "completed",
+        "statusReason": {
+          "text": "expired"
+        },
         "category": {
           "coding": [
             {
