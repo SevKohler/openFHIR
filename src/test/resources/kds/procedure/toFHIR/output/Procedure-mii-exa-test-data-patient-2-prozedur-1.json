@@ -51,27 +51,32 @@
         "code": {
           "coding": [
             {
-              "system": "http://fhir.de/CodeSystem/bfarm/ops",
-              "version": "2024",
-              "code": "5-322.d1",
-              "display": "5-322.d1",
+              "system": "http://snomed.info/sct",
+              "version": "20230731",
+              "code": "726428009",
+              "display": "726428009"
+            },
+            {
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
                   "valueCoding": {
+                    "system": "https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION",
                     "code": "R",
-                    "system": "https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION"
+                    "display": "R"
                   }
                 }
-              ]
+              ],
+              "system": "http://fhir.de/CodeSystem/bfarm/ops",
+              "code": "5-322.d1"
             }
           ],
-          "text": "5-322.d1"
+          "text": "726428009"
         },
         "encounter": {
           "reference": "#1"
         },
-        "performedDateTime": "2026-02-19T12:46:45+01:00",
+        "performedDateTime": "2026-02-19T13:28:13+01:00",
         "bodySite": [
           {
             "coding": [

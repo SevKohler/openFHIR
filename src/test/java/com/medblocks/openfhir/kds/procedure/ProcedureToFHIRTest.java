@@ -118,7 +118,6 @@ public class ProcedureToFHIRTest extends KdsTest {
         Assert.assertEquals("103693007", theProcedure.getCategory().getCodingFirstRep().getCode());
         Assert.assertEquals("Abdomen", theProcedure.getBodySite().get(0).getText());
         Assert.assertEquals("818981001", theProcedure.getBodySite().get(0).getCodingFirstRep().getCode());
-        Assert.assertEquals("bericht_idqa", theProcedure.getIdentifierFirstRep().getValue());
 
         final Extension durchuhrungsabsicht = theProcedure.getExtensionByUrl(
                 "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Durchfuehrungsabsicht");

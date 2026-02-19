@@ -24,10 +24,10 @@
         <other_details id="Sign off"></other_details>
         <other_details id="Speciality"></other_details>
         <other_details id="User roles"></other_details>
-        <other_details id="MD5-CAM-1.0.1">0b34fe21a17dd511ebd2f530aa8b57ca</other_details>
+        <other_details id="MD5-CAM-1.0.1">105b78a70a1e618d6c7621d58670358f</other_details>
         <other_details id="PARENT:MD5-CAM-1.0.1">005501C1FA493A4838F5F1121F2870EC</other_details>
         <other_details id="original_language">ISO_639-1::de</other_details>
-        <other_details id="sem_ver">16.0.0</other_details>
+        <other_details id="sem_ver">17.0.0</other_details>
         <other_details id="build_uid"></other_details>
         <details>
             <language>
@@ -1793,35 +1793,6 @@ Der Status "abgebrochen" bedeutet, dass dem Patienten die entsprechende Fallnumm
                                                     <upper>1</upper>
                                                 </occurrences>
                                                 <node_id></node_id>
-                                                <attributes xsi:type="C_SINGLE_ATTRIBUTE">
-                                                    <rm_attribute_name>defining_code</rm_attribute_name>
-                                                    <existence>
-                                                        <lower_included>true</lower_included>
-                                                        <upper_included>true</upper_included>
-                                                        <lower_unbounded>false</lower_unbounded>
-                                                        <upper_unbounded>false</upper_unbounded>
-                                                        <lower>1</lower>
-                                                        <upper>1</upper>
-                                                    </existence>
-                                                    <match_negated>false</match_negated>
-                                                    <children xsi:type="C_CODE_PHRASE">
-                                                        <rm_type_name>CODE_PHRASE</rm_type_name>
-                                                        <occurrences>
-                                                            <lower_included>true</lower_included>
-                                                            <upper_included>true</upper_included>
-                                                            <lower_unbounded>false</lower_unbounded>
-                                                            <upper_unbounded>false</upper_unbounded>
-                                                            <lower>1</lower>
-                                                            <upper>1</upper>
-                                                        </occurrences>
-                                                        <node_id></node_id>
-                                                        <terminology_id>
-                                                            <value>local</value>
-                                                        </terminology_id>
-                                                        <code_list>at0003</code_list>
-                                                        <code_list>at0004</code_list>
-                                                    </children>
-                                                </attributes>
                                             </children>
                                         </attributes>
                                     </children>
@@ -2057,22 +2028,6 @@ In den meisten Fällen wird es sich um eine einzige spezifische Stelle handeln. 
                                                 <value>SNOMED-CT</value>
                                             </terminology_id>
                                             <code_string>[SNOMED-CT::272741003]</code_string>
-                                        </value>
-                                    </items>
-                                    <items code="at0003">
-                                        <value>
-                                            <terminology_id>
-                                                <value>SNOMED-CT</value>
-                                            </terminology_id>
-                                            <code_string>[SNOMED-CT::7771000]</code_string>
-                                        </value>
-                                    </items>
-                                    <items code="at0004">
-                                        <value>
-                                            <terminology_id>
-                                                <value>SNOMED-CT</value>
-                                            </terminology_id>
-                                            <code_string>[SNOMED-CT::24028007]</code_string>
                                         </value>
                                     </items>
                                 </term_bindings>

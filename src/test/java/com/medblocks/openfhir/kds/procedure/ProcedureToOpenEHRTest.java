@@ -124,7 +124,7 @@ public class ProcedureToOpenEHRTest extends KdsTest {
 
         Assert.assertEquals("5-470", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|code")
                 .getAsString());
-        Assert.assertEquals("Interventional neurovascular procedures,", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|value")
+        Assert.assertEquals("Appendectomy", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|value")
                 .getAsString());
         Assert.assertEquals("http://fhir.de/CodeSystem/bfarm/ops (20200131)",
                 jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/name_der_prozedur|terminology")
@@ -150,13 +150,14 @@ public class ProcedureToOpenEHRTest extends KdsTest {
         Assert.assertEquals("Durchfuehrungsabsicht",
                 jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/durchführungsabsicht|terminology")
                         .getAsString());
-        Assert.assertEquals("818981001", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/körperstelle:0|code")
+        Assert.assertEquals("818981001", jsonObject.getAsJsonPrimitive(
+                "kds_prozedur/prozedur:0/anatomische_lokalisation/name_der_körperstelle|code")
                 .getAsString());
         Assert.assertEquals("http://snomed.info/sct",
-                jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/körperstelle:0|terminology")
+                jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/anatomische_lokalisation/name_der_körperstelle|terminology")
                         .getAsString());
-        Assert.assertEquals("Abdomen", jsonObject.getAsJsonPrimitive("kds_prozedur/prozedur:0/körperstelle:0|value")
-                .getAsString());
+        Assert.assertEquals("Abdomen", jsonObject.getAsJsonPrimitive(
+                "kds_prozedur/prozedur:0/anatomische_lokalisation/name_der_körperstelle|value").getAsString());
     }
 
     /**

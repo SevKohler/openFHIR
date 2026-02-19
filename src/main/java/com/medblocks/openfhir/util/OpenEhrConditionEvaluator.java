@@ -274,31 +274,18 @@ public class OpenEhrConditionEvaluator {
         }
 
         final List<String> narrowingCriteria = narrowingCriteria(openEhrCondition, firstFlatPath, fullFlatPath);
-        log.debug("splitByOpenEhrCondition: operator='{}', targetRoot='{}', targetAttribute='{}', targetAttributes={}, criteria={}, rootMatches={}",
-                  openEhrCondition.getOperator(),
-                  openEhrCondition.getTargetRoot(),
-                  openEhrCondition.getTargetAttribute(),
-                  openEhrCondition.getTargetAttributes(),
-                  openEhrCondition.getCriteria(),
-                  narrowingCriteria.size());
 
         switch (openEhrCondition.getOperator()) {
             case FhirConnectConst.CONDITION_OPERATOR_ONE_OF -> {
-                final JsonObject result = handleOneOfOperatorSplit(openEhrCondition,
-                                                                   narrowingCriteria,
-                                                                   fullFlatPath);
-                log.debug("splitByOpenEhrCondition one_of result size={}", result == null ? -1 : result.size());
-                return result;
+                return handleOneOfOperatorSplit(openEhrCondition,
+                                                narrowingCriteria,
+                                                fullFlatPath);
             }
             case FhirConnectConst.CONDITION_OPERATOR_EMPTY -> {
-                final JsonObject result = handleEmptyOperatorSplit(openEhrCondition, narrowingCriteria, fullFlatPath);
-                log.debug("splitByOpenEhrCondition empty result size={}", result == null ? -1 : result.size());
-                return result;
+                return handleEmptyOperatorSplit(openEhrCondition, narrowingCriteria, fullFlatPath);
             }
             case FhirConnectConst.CONDITION_OPERATOR_NOT_EMPTY -> {
-                final JsonObject result = handleNotEmptyOperatorSplit(openEhrCondition, narrowingCriteria, fullFlatPath);
-                log.debug("splitByOpenEhrCondition not_empty result size={}", result == null ? -1 : result.size());
-                return result;
+                return handleNotEmptyOperatorSplit(openEhrCondition, narrowingCriteria, fullFlatPath);
             }
         }
         return fullFlatPath;
