@@ -326,22 +326,8 @@ mappings:
   - name: "name"
     with:
       fhir: "$resource.code"
-      openehr: "$archetype"
-      type: "NONE"
-    followedBy:
-      mappings:
-        - name: "Name"
-          with:
-            fhir: "coding"
-            openehr: "description[at0001]/items[at0002]"
-            
-          fhirCondition:
-            targetRoot: "coding"
-            targetAttribute: "system"
-            operator: "one of"
-            criterias:
-              - "http://fhir.de/CodeSystem/bfarm/ops"
-              - "http://snomed.info/sct"
+      openehr: "$archetype/description[at0001]/items[at0002]"
+
 
   - name: "comment"
     with:

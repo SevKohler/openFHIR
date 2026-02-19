@@ -1120,6 +1120,7 @@ public class OpenEhrToFhir {
                                                                                                         == null
                                                                                                         ? firstFlatPath
                                                                                                         : parentFollowedByOpenEhrWithOutAqlPath);
+            // workaround needs generalization this mapping reqiures full context.
             final boolean ratioToDosageAction = "ratio_to_dosage_action".equals(mapping.getMappingCode());
             final JsonObject extractionJsonObject =
                     ratioToDosageAction && (flatJsonObject == null || flatJsonObject.size() == 0)
