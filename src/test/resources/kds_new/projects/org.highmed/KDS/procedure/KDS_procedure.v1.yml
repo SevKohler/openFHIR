@@ -2,8 +2,8 @@ grammar: FHIRConnect/v0.9.0
 type: extension
 metadata:
   name:  KDS_procedure.v1
-  version: 0.0.1-alpha 
-spec: 
+  version: 0.0.1-alpha
+spec:
   system: FHIR
   version: R4
   extends: ACTION.procedure.v1
@@ -44,7 +44,7 @@ mappings:
     with:
       fhir: "$resource.identifier.value"
       openehr: "$composition/context/other_context[at0001]/items[at0002]"
-      
+
 
   - name: "durchführungsabsicht"
     extension: "add"
@@ -77,7 +77,7 @@ mappings:
     with:
       fhir: "$resource.extension"
       openehr: "$composition/context/start_time"
-      
+
     fhirCondition:
       targetRoot: "$resource.extension"
       targetAttribute: "url"
@@ -93,3 +93,46 @@ mappings:
               fhir:
                 - path: "url"
                   value: "http://fhir.de/StructureDefinition/ProzedurDokumentationsdatum"
+
+  - name: "bodySite"
+    extension: "overwrite"
+    with:
+      fhir: "$resource"
+      openehr: "$archetype/description[at0001]/items[openEHR-EHR-CLUSTER.anatomical_location.v1]"
+    slotArchetype: "CLUSTER.anatomical_location.v1"
+
+
+
+#  - name: "seitenlokalisationToOpsCode"
+#    unidirectional: "openehr->fhir"
+#    extension: "add"
+#    with:
+#      fhir: "$resource.code.coding"
+#      openehr: "$archetype/description[at0001]/items[openEHR-EHR-CLUSTER.anatomical_location.v1]/items[at0002]"
+#      type: "NONE"
+#    fhirCondition:
+#      targetRoot: "$fhirRoot"
+#      targetAttribute: "system"
+#      operator: "one of"
+#      criteria: "http://fhir.de/CodeSystem/bfarm/ops"
+#    followedBy:
+#      mappings:
+#        - name: "seitenlokalisationExtension"
+#          with:
+#            fhir: "extension"
+#            openehr: "$openehrRoot"
+#            type: "NONE"
+#          followedBy:
+#            mappings:
+#              - name: "seitenlokalisationValue"
+#                with:
+#                  fhir: "value.as(Coding)"
+#                  openehr: "$openehrRoot"
+#              - name: "seitenlokalisationUrl"
+#                with:
+#                  fhir: "$fhirRoot"
+#                manual:
+#                  - name: "staticUrl"
+#                    fhir:
+#                      - path: "url"
+#                        value: "http://fhir.de/StructureDefinition/seitenlokalisation"
