@@ -5,6 +5,11 @@
     {
       "resource": {
         "resourceType": "Procedure",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Procedure"
+          ]
+        },
         "contained": [
           {
             "resourceType": "Encounter",

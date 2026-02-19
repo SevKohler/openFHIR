@@ -9,6 +9,17 @@ spec:
   extends: ACTION.procedure.v1
 
 mappings:
+  - name: "metaURL"
+    extension: "add"
+    unidirectional: "openEHR->fhir"
+    with:
+      fhir: "$resource.meta"
+    manual:
+      - name: "profileUrl"
+        fhir:
+          - path: "profile"
+            value: "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Procedure"
+
    # Dokumentationsdatum
   - name: "fallIdentifikationIdentifier"
     extension: "add"

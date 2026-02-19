@@ -31,7 +31,6 @@ mappings:
             fhir: "line"
             openehr: "items[at0001]"
 
-
         - name: "type"
           with:
             fhir: "type"
