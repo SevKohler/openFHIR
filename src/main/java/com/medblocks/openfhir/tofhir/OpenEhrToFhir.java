@@ -709,6 +709,9 @@ public class OpenEhrToFhir {
         if(!fhirPath.contains(WHERE)) {
             return;
         }
+        if(findingOuterMost.getLastObject() instanceof List) {
+            return;
+        }
         final String where = new OpenFhirStringUtils().extractWhereCondition(fhirPath);
         final String fhirPathToEvaluate = fhirPath.substring(0, fhirPath.indexOf(where)) + where;
         final String withoutLeadingDot = fhirPathToEvaluate.startsWith(".") ? fhirPathToEvaluate.substring(1) : fhirPathToEvaluate;
