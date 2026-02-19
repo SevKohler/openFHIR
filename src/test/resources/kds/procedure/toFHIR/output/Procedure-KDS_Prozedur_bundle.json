@@ -18,10 +18,6 @@
               {
                 "system": "http://hospital.smarthealthit.org",
                 "value": "encounter-id-1245"
-              },
-              {
-                "system": "http://hospital.smarthealthit.org",
-                "value": "encounter-id-1245"
               }
             ]
           }

@@ -24,7 +24,7 @@ mappings:
   - name: "fallIdentifikationIdentifier"
     extension: "add"
     with:
-      fhir: "$resource.encounter.identifier"
+      fhir: "$resource.encounter.as(Reference).identifier"
       openehr: "$composition/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.case_identification.v0]"
     slotArchetype: "CLUSTER.case_identification.v0"
 
@@ -33,7 +33,7 @@ mappings:
     with:
       fhir: "$resource.encounter"
       openehr: "$reference"
-    reference:
+    reference: #type None
       resourceType: "Encounter"
       mappings:
         - name: "identifierInReference"

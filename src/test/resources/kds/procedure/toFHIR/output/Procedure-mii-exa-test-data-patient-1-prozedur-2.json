@@ -18,10 +18,6 @@
               {
                 "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
                 "value": "MII_0000001"
-              },
-              {
-                "system": "https://www.charite.de/fhir/NamingSystem/Aufnahmenummern",
-                "value": "MII_0000001"
               }
             ]
           }
