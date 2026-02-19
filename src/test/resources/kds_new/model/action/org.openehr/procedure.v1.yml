@@ -292,17 +292,6 @@ mappings:
           operator: "one of"
           criteria: "531"
 
-
-      - name: "completedToCompleted"
-        fhir:
-          - path: "status"
-            value: "completed"
-        openehrCondition:
-          targetRoot: "$openehrRoot"
-          targetAttribute: "defining_code/code_string"
-          operator: "one of"
-          criteria: "532"
-
       - name: "cancelledToNotDone"
         fhir:
           - path: "status"
@@ -375,6 +364,15 @@ mappings:
           operator: "one of"
           criteria: "533"
 
+      - name: "completedToCompleted"
+        fhir:
+          - path: "status"
+            value: "completed"
+        openehrCondition:
+          targetRoot: "$openehrRoot"
+          targetAttribute: "defining_code/code_string"
+          operator: "one of"
+          criteria: "532"
 
   - name: "name"
     with:
