@@ -108,6 +108,7 @@ mappings:
     followedBy:
       mappings:
         - name: "codingBfarm"
+          unidirectional: "openEHR->fhir"
           with:
             fhir: "coding"
             openehr: "$archetype"
