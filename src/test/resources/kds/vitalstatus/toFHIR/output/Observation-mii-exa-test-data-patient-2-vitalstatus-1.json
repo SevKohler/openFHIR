@@ -5,6 +5,11 @@
     {
       "resource": {
         "resourceType": "Observation",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus"
+          ]
+        },
         "status": "final",
         "category": [
           {
