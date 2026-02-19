@@ -34,10 +34,8 @@
             {
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
               "code": "C16.9",
-              "display": "C16.9"
-            },
-            {
-              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+              "display": "C16.9",
+              "version": "2022"
             }
           ],
           "text": "C16.9"

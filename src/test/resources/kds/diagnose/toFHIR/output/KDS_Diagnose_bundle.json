@@ -62,34 +62,33 @@
             {
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
               "code": "C34.1",
-              "display": "Malignant neoplasm of the upper lobe of the lung",
+              "display": "Secondary malignant neoplasm of lymph node",
               "extension": [
                 {
-                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen",
-                  "valueCoding": {
-                    "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm-mc",
-                    "code": "†",
-                    "display": "Primary code in multiple coding"
-                  }
-                },
-                {
-                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCoding": {
-                    "system": "http://fhir.de/CodeSystem/dimdi/seitenlokalisation",
-                    "code": "L",
-                    "display": "Left side"
-                  }
-                },
-                {
-                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit",
                   "valueCoding": {
                     "system": "http://fhir.de/CodeSystem/dimdi/diagnosesicherheit",
                     "code": "G",
                     "display": "Confirmed diagnosis"
-                  }
+                  },
+                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-diagnosesicherheit"
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://fhir.de/CodeSystem/icd-10-gm-mehrfachcodierungs-kennzeichen",
+                    "code": "!",
+                    "display": "!"
+                  },
+                  "url": "http://fhir.de/StructureDefinition/icd-10-gm-mehrfachcodierungs-kennzeichen"
+                },
+                {
+                  "valueCoding": {
+                    "system": "http://fhir.de/CodeSystem/dimdi/seitenlokalisation",
+                    "code": "L",
+                    "display": "Left side"
+                  },
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation"
                 }
-              ]
-            },
+              ]            },
             {
               "system": "http://terminology.hl7.org/CodeSystem/icd-o-3",
               "code": "C77.0",

@@ -39,12 +39,13 @@
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCoding": {
+                  "valueCodeableConcept": {
                     "coding": [
                       {
                         "system": "http://snomed.info/sct",
                         "code": "80891009",
-                        "display": "Heart structure (body structure)"
+                        "display": "Heart structure (body structure)",
+                        "version": "20230731"
                       }
                     ],
                     "text": "Heart structure (body structure)"
@@ -72,7 +73,8 @@
               {
                 "system": "http://snomed.info/sct",
                 "code": "80891009",
-                "display": "Heart structure (body structure)"
+                "display": "Heart structure (body structure)",
+                "version": "20230731"
               }
             ],
             "text": "Heart structure (body structure)"

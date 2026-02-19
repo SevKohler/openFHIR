@@ -668,7 +668,7 @@ public class OpenEhrToFhir {
     private void handleReturnedListWithWhereCondition(final FindingOuterMost findingOuterMost) {
         if (findingOuterMost.getLastObject() instanceof List<?> && (
                 findingOuterMost.getRemovedPath().startsWith("." + WHERE) || findingOuterMost.getRemovedPath()
-                        .startsWith("where"))) {
+                        .startsWith(WHERE))) {
             // i.e., returned found element was an array of extensions and what we're looking for is a very specific extension, not necessarily the one within the list
             String where = openFhirStringUtils.extractWhereCondition(findingOuterMost.getRemovedPath());
             if (where.startsWith(".")) {
@@ -697,6 +697,26 @@ public class OpenEhrToFhir {
                     log.error("Error trying to handle returning list with a where condition", e);
                 }
             }
+        }
+    }
+
+    /**
+     * Get removedPath and iterate thhrough wheres in there and try to find a match if one exists
+     * @param findingOuterMost
+     */
+    void handleWhereInFhirPath(final FindingOuterMost findingOuterMost) {
+        final String fhirPath = findingOuterMost.getRemovedPath();
+        if(!fhirPath.contains(WHERE)) {
+            return;
+        }
+        final String where = new OpenFhirStringUtils().extractWhereCondition(fhirPath);
+        final String fhirPathToEvaluate = fhirPath.substring(0, fhirPath.indexOf(where)) + where;
+        final String withoutLeadingDot = fhirPathToEvaluate.startsWith(".") ? fhirPathToEvaluate.substring(1) : fhirPathToEvaluate;
+        final List<Base> evaluated = fhirPathR4.evaluate((Base) findingOuterMost.getLastObject(), withoutLeadingDot,
+                                                         Base.class);
+        if(!evaluated.isEmpty()) {
+            findingOuterMost.setRemovedPath(fhirPath.replace(fhirPathToEvaluate, ""));
+            findingOuterMost.setLastObject(evaluated.get(0));
         }
     }
 
@@ -748,6 +768,11 @@ public class OpenEhrToFhir {
                 parentOpenEhr);
 
         if (existing.getLastObject() != null) {
+
+            handleReturnedListWithWhereCondition(existing);
+
+            handleWhereInFhirPath(existing);
+
             final FhirInstanceCreator.InstantiateAndSetReturn hardcodedReturn = fhirInstanceCreator.instantiateAndSetElement(
                     existing.getLastObject(),
                     existing.getLastObject().getClass(),
@@ -1937,6 +1962,8 @@ public class OpenEhrToFhir {
 
         handleReturnedListWithWhereCondition(findingOuterMost);
 
+        handleWhereInFhirPath(findingOuterMost);
+
         // instantiate an element defined in the findingOuterMost.getRemovedPath
         FhirInstanceCreator.InstantiateAndSetReturn hardcodedReturn = fhirInstanceCreator.instantiateAndSetElement(
                 findingOuterMost.getLastObject(),
@@ -1966,6 +1993,12 @@ public class OpenEhrToFhir {
 
         } else {
             filterHardcodedReturnBasedOnWhere(hardcodedReturn);
+        }
+
+
+
+        if (StringUtils.isBlank(findingOuterMost.getRemovedPath())) {
+            return hardcodedReturn;
         }
 
         cacheReturnedItems(findingOuterMost,

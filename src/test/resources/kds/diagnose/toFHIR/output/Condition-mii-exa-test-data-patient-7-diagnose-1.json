@@ -39,12 +39,13 @@
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCoding": {
+                  "valueCodeableConcept": {
                     "coding": [
                       {
                         "system": "http://snomed.info/sct",
                         "code": "955009",
-                        "display": "Bronchial structure (body structure)"
+                        "display": "Bronchial structure (body structure)",
+                        "version": "20230731"
                       }
                     ],
                     "text": "Bronchial structure (body structure)"
@@ -71,7 +72,8 @@
               {
                 "system": "http://snomed.info/sct",
                 "code": "955009",
-                "display": "Bronchial structure (body structure)"
+                "display": "Bronchial structure (body structure)",
+                "version": "20230731"
               }
             ],
             "text": "Bronchial structure (body structure)"

@@ -81,6 +81,7 @@
             "coding": [
               {
                 "system": "http://snomed.info/sct",
+                "version": "20230731",
                 "code": "25342003",
                 "display": "Middle ear structure (body structure)"
               }

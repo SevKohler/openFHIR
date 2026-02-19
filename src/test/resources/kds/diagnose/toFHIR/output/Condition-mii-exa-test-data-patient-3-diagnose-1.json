@@ -39,12 +39,13 @@
               "extension": [
                 {
                   "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCoding": {
+                  "valueCodeableConcept": {
                     "coding": [
                       {
                         "system": "http://snomed.info/sct",
                         "code": "281088000",
-                        "display": "Structure of anus and/or rectum (body structure)"
+                        "display": "Structure of anus and/or rectum (body structure)",
+                        "version": "20230731"
                       }
                     ],
                     "text": "Structure of anus and/or rectum (body structure)"
@@ -72,7 +73,8 @@
               {
                 "system": "http://snomed.info/sct",
                 "code": "281088000",
-                "display": "Structure of anus and/or rectum (body structure)"
+                "display": "Structure of anus and/or rectum (body structure)",
+                "version": "20230731"
               }
             ],
             "text": "Structure of anus and/or rectum (body structure)"

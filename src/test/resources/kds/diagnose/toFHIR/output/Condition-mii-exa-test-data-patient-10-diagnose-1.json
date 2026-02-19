@@ -44,7 +44,8 @@
                       {
                         "system": "http://snomed.info/sct",
                         "code": "281231009",
-                        "display": "Vascular structure of head (body structure)"
+                        "display": "Vascular structure of head (body structure)",
+                        "version": "20230731"
                       }
                     ],
                     "text": "Vascular structure of head (body structure)"
@@ -71,7 +72,8 @@
               {
                 "system": "http://snomed.info/sct",
                 "code": "281231009",
-                "display": "Vascular structure of head (body structure)"
+                "display": "Vascular structure of head (body structure)",
+                "version": "20230731"
               }
             ],
             "text": "Vascular structure of head (body structure)"

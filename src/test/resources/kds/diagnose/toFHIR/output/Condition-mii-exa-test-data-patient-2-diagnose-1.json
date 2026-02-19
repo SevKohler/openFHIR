@@ -32,10 +32,26 @@
         "code": {
           "coding": [
             {
+              "extension": [
+                {
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://snomed.info/sct",
+                        "code": "45653009",
+                        "display": "Structure of upper lobe of lung (body structure)",
+                        "version": "20230731"
+                      }
+                    ],
+                    "text": "Structure of upper lobe of lung (body structure)"
+                  },
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation"
+                }
+              ],
               "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
-              "version": "2024",
               "code": "C34.1",
-              "display": "C34.1"
+              "display": "C34.1",
+              "version": "2024"
             },
             {
               "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
@@ -46,24 +62,6 @@
               "system": "http://snomed.info/sct",
               "code": "254637007",
               "display": "Non-small cell lung cancer (disorder)"
-            },
-            {
-              "extension": [
-                {
-                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
-                  "valueCodeableConcept": {
-                    "coding": [
-                      {
-                        "system": "http://snomed.info/sct",
-                        "code": "45653009",
-                        "display": "Structure of upper lobe of lung (body structure)"
-                      }
-                    ],
-                    "text": "Structure of upper lobe of lung (body structure)"
-                  }
-                }
-              ],
-              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
             }
           ],
           "text": "C34.1"
@@ -74,6 +72,7 @@
               {
                 "system": "http://snomed.info/sct",
                 "code": "45653009",
+                "version": "20230731",
                 "display": "Structure of upper lobe of lung (body structure)"
               }
             ],
